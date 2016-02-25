@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">摆龙门阵</string>
+    <string name="action_settings">设置</string>
+    <string name="tab1_main">动态</string>
+    <string name="tab2_main">通讯录</string>
+    <string name="tab3_main">发现</string>
+    <string name="tab4_main">我</string>
+    <string name="title_activity_my_banner">MyBannerActivity</string>
+</resources>
