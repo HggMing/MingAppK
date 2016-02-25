@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".banner.Tab4About">
+    tools:context=".activity.TestActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".banner.Tab4About"
+        tools:context=".activity.TestActivity"
         tools:showIn="@layout/activity_my_banner">
         <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:layout_width="wrap_content"
