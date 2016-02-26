@@ -26,4 +26,6 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile files('libs/volley.jar')
     compile files('libs/org.apache.http.legacy.jar')
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'in.srain.cube:cube-sdk:1.0.44.38'
 }
