@@ -6,6 +6,6 @@
     <dimen name="tab_image_padding">6dp</dimen>
     <dimen name="tab_height">36dp</dimen>
 
-    <!--发布的图片高度-->
+    <!--发布消息界面的图片宽度-->
     <dimen name="image_add_maopao_width">62dp</dimen>
 </resources>
