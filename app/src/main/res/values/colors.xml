@@ -12,17 +12,11 @@
     <color name="line_bottom">#5a676767</color>
     <!--文字透明黑色背景-->
     <color name="transparent">#64000000</color>
-
-    <!--界面背景-->
+    <!--Tab4界面背景-->
     <color name="view_background">#efefef</color>
     <color name="view_line">#dddddd</color>
     <color name="view_background_white">#ffffff</color>
     <color name="view_textColor">#666666</color>
-    <!--临时使用-->
-    <color name="main_blue_light">#96a4de</color>
-    <color name="main_blue_dark">#96a4de</color>
-    <color name="main_white">#FFFFFF</color>
-    <color name="main_black">#000000</color>
-    <color name="main_black_grey">#6D6D6D</color>
-
+    <!--发布消息界面颜色-->
+    <color name="input_background">#ffe8e8e8</color>
 </resources>
