@@ -5,5 +5,8 @@
     <string name="tab2_main">通讯录</string>
     <string name="tab3_main">发现</string>
     <string name="tab4_main">我</string>
-    <string name="title_activity_my_banner">MyBannerActivity</string>
+
+    <!--Activity页面lable-->
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
