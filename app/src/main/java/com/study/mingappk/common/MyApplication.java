@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
-import com.study.mingappk.activity.Activity_Base;
+import com.study.mingappk.activity.BaseActivity;
 import com.study.mingappk.model.MessageInfo;
 import com.study.mingappk.model.UserInfo;
 
@@ -185,17 +185,17 @@ public class MyApplication extends Application {
         return this.isInMsgActivity;
     }
 
-    private Activity_Base mCurrentActivity = null;
+    private BaseActivity mCurrentActivity = null;
 
 
-    public Activity_Base getCurrentActivity() {
+    public BaseActivity getCurrentActivity() {
         return mCurrentActivity;
     }
     /**
      * 设置Activity_Base的一个实例
      * @param mCurrentActivity
      */
-    public void setCurrentActivity(Activity_Base mCurrentActivity) {
+    public void setCurrentActivity(BaseActivity mCurrentActivity) {
         this.mCurrentActivity = mCurrentActivity;
     }
 

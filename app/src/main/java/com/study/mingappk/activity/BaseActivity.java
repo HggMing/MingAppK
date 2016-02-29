@@ -5,21 +5,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.study.mingappk.common.MyApplication;
 import com.study.mingappk.R;
 
-public class Activity_Base extends Activity {
+public class BaseActivity extends Activity {
     /* protected ImageButton leftButton;// 左按键
      protected ImageButton rightButton;// 右按键
      protected ImageButton rightButton1;*/
@@ -86,7 +80,7 @@ public class Activity_Base extends Activity {
     }
 
     private void clearReferences() {
-        Activity_Base currActivity = MyApplication.getInstance().getCurrentActivity();
+        BaseActivity currActivity = MyApplication.getInstance().getCurrentActivity();
         if (currActivity != null && currActivity.equals(this))
             MyApplication.getInstance().setCurrentActivity(null);
     }
