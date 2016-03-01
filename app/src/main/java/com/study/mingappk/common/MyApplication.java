@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Vector;
 
 import com.study.mingappk.activity.BaseActivity;
-import com.study.mingappk.model.MessageInfo;
-import com.study.mingappk.model.UserInfo;
 
 
 import android.app.Activity;
@@ -193,7 +191,7 @@ public class MyApplication extends Application {
     }
     /**
      * 设置Activity_Base的一个实例
-     * @param mCurrentActivity
+     * @param mCurrentActivity 基础Activity的实例
      */
     public void setCurrentActivity(BaseActivity mCurrentActivity) {
         this.mCurrentActivity = mCurrentActivity;

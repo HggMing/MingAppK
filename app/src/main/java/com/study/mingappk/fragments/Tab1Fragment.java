@@ -1,5 +1,6 @@
 package com.study.mingappk.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,8 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.study.mingappk.R;
+import com.study.mingappk.activity.LoginActivity;
 
 
 public class Tab1Fragment extends Fragment {
@@ -32,10 +35,20 @@ public class Tab1Fragment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_tab1);
         mActivity.setSupportActionBar(toolbar);
 
+
         initViews();//初始化组件
     }
 
     private void initViews() {
+        Button button = (Button) getView().findViewById(R.id.button_tab1);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 }

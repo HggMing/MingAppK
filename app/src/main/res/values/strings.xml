@@ -10,4 +10,7 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_main">MainActivity</string>
 
+    <!--网络相关-->
+    <string name="postUrl">http://121.40.105.149:9901/</string>
+
 </resources>
