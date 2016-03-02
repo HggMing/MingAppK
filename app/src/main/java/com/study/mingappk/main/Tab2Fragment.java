@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.study.mingappk.R;
-import com.study.mingappk.tab3.SlideShowView;
+import com.study.mingappk.tab2.SlideShowView;
 
 
 public class Tab2Fragment extends Fragment {

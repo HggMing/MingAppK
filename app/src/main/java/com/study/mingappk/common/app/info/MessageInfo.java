@@ -1,4 +1,4 @@
-package com.study.mingappk.app.info;
+package com.study.mingappk.common.app.info;
 
 
 public class MessageInfo 

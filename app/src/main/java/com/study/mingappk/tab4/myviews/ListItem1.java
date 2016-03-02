@@ -14,7 +14,6 @@ import com.study.mingappk.R;
 
 
 /**
- * Created by chenchao on 15/5/28.
  * listview item，带一个 icon 和一行文字
  */
 public class ListItem1 extends FrameLayout {

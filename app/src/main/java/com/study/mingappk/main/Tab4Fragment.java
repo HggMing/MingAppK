@@ -4,49 +4,61 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.study.mingappk.R;
 import com.study.mingappk.tab4.TestActivity;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class Tab4Fragment extends Fragment {
 
-	private AppCompatActivity mActivity;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_tab4, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
 
-	public Tab4Fragment() {
-	}
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_tab4, container, false);
-	}
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 
-	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		/*mActivity = (AppCompatActivity) getActivity();
-		super.onViewCreated(view, savedInstanceState);
-		Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_tab4);
-		mActivity.setSupportActionBar(toolbar);*/
+    @OnClick(R.id.click_about)
+    public void onClick() {
 
-		initViews();//初始化组件
-	}
+    }
 
-	private void initViews() {
-		View mLogout = getView().findViewById(R.id.btn_exit);
-		mLogout.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				//Class跳转：应用内部跳转
-				Intent intent = new Intent(getActivity(), TestActivity.class);
-				// intent.getExtras("key","value");//跳转时传的参数
-				startActivity(intent);
-			}
-		});
-	}
+    @OnClick({R.id.icon_head, R.id.click_changepwd, R.id.click_identity_binding, R.id.click_advice, R.id.click_check_version, R.id.click_about, R.id.btn_exit})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.icon_head:
+                break;
+            case R.id.click_changepwd:
+                break;
+            case R.id.click_identity_binding:
+                break;
+            case R.id.click_advice:
+                break;
+            case R.id.click_check_version:
+                break;
+            case R.id.click_about:
+                Intent intent = new Intent(getActivity(), TestActivity.class);
+                // intent.getExtras("key","value");//跳转时传的参数
+                startActivity(intent);
+                break;
+            case R.id.btn_exit:
+                break;
+        }
+    }
 }

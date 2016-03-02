@@ -4,6 +4,8 @@
     <color name="colorPrimary">#6DACEA</color>
     <color name="colorPrimaryDark">#6DACEA</color>
     <color name="colorAccent">#6DACEA</color>
+    <!--BaseActivity页面-->
+    <color name="font_black_9">#999999</color>
     <!--首页tab按钮颜色-->
     <color name="tab_bnt0">#676767</color>
     <color name="tab_bnt1">#6dacea</color>
@@ -29,4 +31,6 @@
     <color name="white_pressed">#ffd5d5d5</color>
     <!--发布消息界面颜色-->
     <color name="input_background">#ffe8e8e8</color>
+    <!--about界面-->
+    <color name="task_list_head">#ffe4e4e4</color>
 </resources>

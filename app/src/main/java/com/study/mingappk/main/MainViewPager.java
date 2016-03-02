@@ -36,9 +36,8 @@ public class MainViewPager extends ViewPager {
     }
 
     /**
-     * @param isSlipping
-     * @Title: setSlipping
-     * @Description: TODO设置ViewPager是否可滑动
+     * 设置ViewPager是否可滑动
+     * @param isSlipping 是否滑动
      */
     public void setSlipping(boolean isSlipping) {
         this.isSlipping = isSlipping;

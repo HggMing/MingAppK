@@ -1,4 +1,4 @@
-package com.study.mingappk.app;
+package com.study.mingappk.common.app;
 
 
 import android.app.Activity;

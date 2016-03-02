@@ -3,10 +3,9 @@ package com.study.mingappk.userlogin.request;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.study.mingappk.app.info.UserInfo;
+import com.study.mingappk.common.app.info.UserInfo;
 import com.study.mingappk.common.net.RequsetBase;
 import com.study.mingappk.common.utils.AndroidUtils;
-import com.study.mingappk.userlogin.request.ResultPacket;
 
 import org.json.JSONObject;
 

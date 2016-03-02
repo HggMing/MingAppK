@@ -25,18 +25,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public MainViewPager viewPager;
-    private int displayWidth, displayHeight;
-    private int zero = 0;// 动画图片偏移量
-    private int one, two, three;//单个(2,3个)水平动画位移
     private ImageView mTab1, mTab2, mTab3, mTab4;
+    private TextView tTab1, tTab2, tTab3, tTab4;
     public List<Fragment> fragments = new ArrayList<Fragment>();
     private FragmentManager fragmentManager;
     private int currIndex = 0;// 当前页卡编号
-    private TextView tTab1, tTab2, tTab3, tTab4;
 
     /**
-     * @ClassName: MyOnClickListener
-     * @Description: TODO头标点击监听
+     * 点击监听
      */
     private class MyOnClickListener implements View.OnClickListener {
         private int index = 0;
@@ -47,15 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            viewPager.setCurrentItem(index);
+            viewPager.setCurrentItem(index);//选中index页
         }
     }
 
-
     /**
-     * @author Panyy
-     * @ClassName: MyOnPageChangeListener
-     * @Description: TODO页卡切换监听
+     * 页卡切换监听
      */
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override
@@ -67,40 +60,28 @@ public class MainActivity extends AppCompatActivity {
                     tTab1.setTextColor(getResources().getColor(R.color.tab_bnt1));   //选中时的字体颜色
 
                     if (currIndex == 1) {
-                        animation = new TranslateAnimation(one, 0, 0, 0);
-                        mTab2.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab2_btn0));
+                        mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab2_btn0));
                         tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     } else if (currIndex == 2) {
-                        animation = new TranslateAnimation(two, 0, 0, 0);
-                        mTab3.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab3_btn0));
+                        mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab3_btn0));
                         tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     } else if (currIndex == 3) {
-                        animation = new TranslateAnimation(three, 0, 0, 0);
-                        mTab4.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab4_btn0));
+                        mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab4_btn0));
                         tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     }
                     break;
                 case 1:
-                    mTab2.setImageDrawable(getResources().getDrawable(
-                            R.drawable.tab2_btn1));
+                    mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab2_btn1));
                     tTab2.setTextColor(getResources().getColor(R.color.tab_bnt1));
+
                     if (currIndex == 0) {
-                        animation = new TranslateAnimation(zero, one, 0, 0);
-                        mTab1.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab1_btn0));
+                        mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab1_btn0));
                         tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     } else if (currIndex == 2) {
-                        animation = new TranslateAnimation(two, one, 0, 0);
-                        mTab3.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab3_btn0));
+                        mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab3_btn0));
                         tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     } else if (currIndex == 3) {
-                        animation = new TranslateAnimation(three, one, 0, 0);
-                        mTab4.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab4_btn0));
+                        mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab4_btn0));
                         tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     }
                     break;
@@ -109,17 +90,14 @@ public class MainActivity extends AppCompatActivity {
                             R.drawable.tab3_btn1));
                     tTab3.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     if (currIndex == 0) {
-                        animation = new TranslateAnimation(zero, two, 0, 0);
                         mTab1.setImageDrawable(getResources().getDrawable(
                                 R.drawable.tab1_btn0));
                         tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     } else if (currIndex == 1) {
-                        animation = new TranslateAnimation(one, two, 0, 0);
                         mTab2.setImageDrawable(getResources().getDrawable(
                                 R.drawable.tab2_btn0));
                         tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     } else if (currIndex == 3) {
-                        animation = new TranslateAnimation(three, two, 0, 0);
                         mTab4.setImageDrawable(getResources().getDrawable(
                                 R.drawable.tab4_btn0));
                         tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
@@ -130,17 +108,14 @@ public class MainActivity extends AppCompatActivity {
                             R.drawable.tab4_btn1));
                     tTab4.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     if (currIndex == 0) {
-                        animation = new TranslateAnimation(zero, three, 0, 0);
                         mTab1.setImageDrawable(getResources().getDrawable(
                                 R.drawable.tab1_btn0));
                         tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     } else if (currIndex == 1) {
-                        animation = new TranslateAnimation(one, three, 0, 0);
                         mTab2.setImageDrawable(getResources().getDrawable(
                                 R.drawable.tab2_btn0));
                         tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
                     } else if (currIndex == 2) {
-                        animation = new TranslateAnimation(two, three, 0, 0);
                         mTab3.setImageDrawable(getResources().getDrawable(
                                 R.drawable.tab3_btn0));
                         tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
@@ -148,8 +123,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             currIndex = arg0;
-            animation.setFillAfter(true);// True:图片停在动画结束位置
-            animation.setDuration(150);
         }
 
         @Override
@@ -162,10 +135,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * @ClassName: MyPagerAdapter
-     * @Description: TODO填充ViewPager的数据适配器
+     * 填充ViewPager的数据适配器
      */
     private class MyPagerAdapter extends PagerAdapter {
+        /**
+         * 获取要滑动的控件的数量，在这里我们以滑动的广告栏为例，那么这里就应该是展示的广告图片的ImageView数量
+         * @return
+         */
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
         /**
          * 来判断显示的是否是同一张图片，这里我们将两个参数相比较返回即可
          * @param arg0
@@ -178,15 +159,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /**
-         * 获取要滑动的控件的数量，在这里我们以滑动的广告栏为例，那么这里就应该是展示的广告图片的ImageView数量
-         * @return
-         */
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        /**
          * PagerAdapter只缓存三张要显示的图片，如果滑动的图片超出了缓存的范围，就会调用这个方法，将图片销毁
          * @param container
          * @param position
@@ -194,8 +166,7 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public void destroyItem(View container, int position, Object object) {
-            ((ViewPager) container).removeView(fragments.get(position)
-                    .getView());
+            ((ViewPager) container).removeView(fragments.get(position).getView());
         }
 
         /**
@@ -233,20 +204,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
-
-        Display currDisplay = getWindowManager().getDefaultDisplay();//获取屏幕当前分辨率
-        Point size = new Point();
-        currDisplay.getSize(size);
-        displayWidth = size.x;
-        displayHeight = size.y;
-        one = displayWidth / 4; //设置水平动画平移大小
-        two = one * 2;
-        three = one * 3;
 
         initViews();//初始化控件
-
 
         fragments.add(new Tab1Fragment());
         fragments.add(new Tab2Fragment());
@@ -287,9 +246,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }*/
 
+
     /**
-     * @Title: initViews
-     * @Description: TODO初始化控件
+     * 初始化控件
      */
     public void initViews() {
         final RelativeLayout tab1Layout = (RelativeLayout) findViewById(R.id.tab1Layout);

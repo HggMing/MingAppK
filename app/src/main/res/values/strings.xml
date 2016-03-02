@@ -5,10 +5,12 @@
     <string name="tab2_main">通讯录</string>
     <string name="tab3_main">发现</string>
     <string name="tab4_main">我</string>
+    <!--BaseActivity-->
+    <string name="hint_loading">正在加载中…</string>
 
     <!--Activity页面lable-->
-    <string name="title_activity_test">TestActivity</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_test">测试页</string>
+    <string name="title_activity_main">跳龙门</string>
 
     <!--网络相关-->
     <string name="postUrl">http://121.40.105.149:9901/</string>

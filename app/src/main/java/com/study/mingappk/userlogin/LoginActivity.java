@@ -27,11 +27,11 @@ import android.widget.Toast;
 
 import com.igexin.sdk.PushManager;
 import com.study.mingappk.R;
-import com.study.mingappk.app.MyApplication;
+import com.study.mingappk.common.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.main.MainActivity;
 import com.study.mingappk.userlogin.request.ResultPacket;
-import com.study.mingappk.app.info.UserInfo;
+import com.study.mingappk.common.app.info.UserInfo;
 import com.study.mingappk.userlogin.request.Request_PushReg;
 import com.study.mingappk.userlogin.request.Request_UserLogin;
 import com.study.mingappk.common.utils.MarketUtils;

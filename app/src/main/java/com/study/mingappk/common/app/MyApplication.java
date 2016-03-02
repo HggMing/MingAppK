@@ -1,4 +1,4 @@
-package com.study.mingappk.app;
+package com.study.mingappk.common.app;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,8 +9,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.widget.Toast;
 
-import com.study.mingappk.app.info.MessageInfo;
-import com.study.mingappk.app.info.UserInfo;
+import com.study.mingappk.common.app.info.MessageInfo;
+import com.study.mingappk.common.app.info.UserInfo;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
