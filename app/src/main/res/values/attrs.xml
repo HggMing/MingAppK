@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ListItem1">
+        <attr name="itemIcon" format="reference" />
+        <attr name="itemTitle" format="string" />
+        <attr name="itemCenter" format="boolean" />
+    </declare-styleable>
+
+
+
+</resources>

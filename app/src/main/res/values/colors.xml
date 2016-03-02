@@ -17,6 +17,16 @@
     <color name="view_line">#dddddd</color>
     <color name="view_background_white">#ffffff</color>
     <color name="view_textColor">#666666</color>
+    <!--tab4背景-->
+    <color name="divide">#ffeeeeee</color>
+    <color name="white">#ffffffff</color>
+    <color name="stand_bg">#fff6f6f6</color>
+    <!--tab4文字-->
+    <color name="font_black_comment">#ff666666</color>
+    <color name="font_black_content">#ff222222</color>
+    <color name="divide_line">#ffdddddd</color>
+    <color name="font_green">#ff3bbd79</color>
+    <color name="white_pressed">#ffd5d5d5</color>
     <!--发布消息界面颜色-->
     <color name="input_background">#ffe8e8e8</color>
 </resources>

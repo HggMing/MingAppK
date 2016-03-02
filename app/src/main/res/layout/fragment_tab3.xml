@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".fragments.Tab3Fragment">
+    tools:context=".main.Tab3Fragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".fragments.Tab3Fragment">
+        tools:context=".main.Tab3Fragment">
 
         <TextView
             android:layout_width="wrap_content"

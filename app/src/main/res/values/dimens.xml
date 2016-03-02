@@ -6,6 +6,12 @@
     <dimen name="tab_image_padding">6dp</dimen>
     <dimen name="tab_height">36dp</dimen>
 
+    <dimen name="divide_section_15">15dp</dimen>
+    <!--Item菜单自定义-->
+    <dimen name="project_icon_width">23dp</dimen>
+    <dimen name="project_icon_text">15sp</dimen>
+    <dimen name="project_item_height">45dp</dimen>
+
     <!--发布消息界面的图片宽度-->
     <dimen name="image_add_maopao_width">62dp</dimen>
 </resources>

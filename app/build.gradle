@@ -30,4 +30,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.0'
     compile 'com.google.code.gson:gson:2.6.2'
     compile files('libs/GetuiSDK2.7.0.0.jar')
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile files('libs/android-viewbadger.jar')
+    compile 'com.jakewharton:butterknife:7.0.1'
 }
