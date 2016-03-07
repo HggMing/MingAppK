@@ -14,5 +14,6 @@
 
     <!--网络相关-->
     <string name="postUrl">http://121.40.105.149:9901/</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 </resources>

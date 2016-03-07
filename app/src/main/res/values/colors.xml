@@ -9,20 +9,15 @@
     <!--首页tab按钮颜色-->
     <color name="tab_bnt0">#676767</color>
     <color name="tab_bnt1">#6dacea</color>
-    <color name="tab_background">#ffffff</color>
+    <color name="tab_background">#ffffffff</color>
     <!--tab分割线颜色-->
-    <color name="line_bottom">#5a676767</color>
+    <color name="line_bottom">#c7c7c7</color>
     <!--文字透明黑色背景-->
     <color name="transparent">#64000000</color>
-    <!--Tab4界面背景-->
-    <color name="view_background">#efefef</color>
-    <color name="view_line">#dddddd</color>
-    <color name="view_background_white">#ffffff</color>
-    <color name="view_textColor">#666666</color>
     <!--tab4背景-->
     <color name="divide">#ffeeeeee</color>
     <color name="white">#ffffffff</color>
-    <color name="stand_bg">#fff6f6f6</color>
+    <color name="stand_bg">#ffffffff</color>
     <!--tab4文字-->
     <color name="font_black_comment">#ff666666</color>
     <color name="font_black_content">#ff222222</color>

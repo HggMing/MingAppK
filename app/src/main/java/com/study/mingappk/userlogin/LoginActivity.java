@@ -25,7 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.igexin.sdk.PushManager;
+//import com.igexin.sdk.PushManager;
 import com.study.mingappk.R;
 import com.study.mingappk.common.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
@@ -90,7 +90,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_userlogin);
         MyApplication.getInstance().addActivity(this);
 
-        PushManager.getInstance().initialize(this.getApplicationContext());
+      //  PushManager.getInstance().initialize(this.getApplicationContext());
 
 
         sp = getSharedPreferences("setting", MODE_PRIVATE);

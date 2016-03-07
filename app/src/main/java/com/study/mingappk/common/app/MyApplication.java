@@ -1,16 +1,15 @@
 package com.study.mingappk.common.app;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Vector;
-
-
 import android.app.Activity;
 import android.app.Application;
 import android.widget.Toast;
 
 import com.study.mingappk.common.app.info.MessageInfo;
 import com.study.mingappk.common.app.info.UserInfo;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
@@ -182,20 +181,6 @@ public class MyApplication extends Application {
 
     public boolean get_isInMsgActivity() {
         return this.isInMsgActivity;
-    }
-
-    private BaseActivity mCurrentActivity = null;
-
-
-    public BaseActivity getCurrentActivity() {
-        return mCurrentActivity;
-    }
-    /**
-     * 设置Activity_Base的一个实例
-     * @param mCurrentActivity 基础Activity的实例
-     */
-    public void setCurrentActivity(BaseActivity mCurrentActivity) {
-        this.mCurrentActivity = mCurrentActivity;
     }
 
 

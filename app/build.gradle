@@ -22,15 +22,21 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile files('libs/volley.jar')
+    // http client  采用retrofit+okhttp替换
     compile files('libs/org.apache.http.legacy.jar')
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    // Android 图标上面添加提醒
+    compile files('libs/android-viewbadger.jar')
+    // android官方兼容库
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
+    // 下拉刷新框架
     compile 'in.srain.cube:ultra-ptr:1.0.11'
-    compile 'com.android.support:support-v4:23.2.0'
-    compile 'com.google.code.gson:gson:2.6.2'
-    compile files('libs/GetuiSDK2.7.0.0.jar')
+    //    图片处理成圆形
     compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile files('libs/android-viewbadger.jar')
+    //    快速构造view插件依赖
     compile 'com.jakewharton:butterknife:7.0.1'
+
 }

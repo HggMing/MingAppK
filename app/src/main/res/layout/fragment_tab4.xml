@@ -13,9 +13,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/stand_bg"
-            android:paddingBottom="17dp">
+            android:paddingBottom="17dp"
+            android:layout_weight="1">
 
             <FrameLayout
                 android:id="@+id/userBackgroundLayout"
@@ -80,14 +81,16 @@
         </RelativeLayout>
 
 
-        <include layout="@layout/divide_15_top_bottom" />
+        <include layout="@layout/divide_15_top_bottom"
+            android:layout_weight="1" />
 
 
         <LinearLayout xmlns:listItem1="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="@color/stand_bg"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <com.study.mingappk.tab4.myviews.ListItem1
                 android:id="@+id/click_changepwd"
@@ -140,16 +143,18 @@
 
         </LinearLayout>
 
-        <include layout="@layout/divide_15_top" />
+        <include layout="@layout/divide_15_top"
+            android:layout_weight="1" />
 
         <RelativeLayout
             android:id="@+id/layout_logout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="@color/divide"
             android:paddingBottom="15dp"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingRight="15dp"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/btn_exit"

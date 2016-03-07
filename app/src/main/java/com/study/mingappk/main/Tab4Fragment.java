@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.study.mingappk.R;
+import com.study.mingappk.common.base.BaseActivity;
+import com.study.mingappk.tab4.AboutActivity;
 import com.study.mingappk.tab4.TestActivity;
 
 import butterknife.ButterKnife;
@@ -39,23 +41,27 @@ public class Tab4Fragment extends Fragment {
 
     }
 
-    @OnClick({R.id.icon_head, R.id.click_changepwd, R.id.click_identity_binding, R.id.click_advice, R.id.click_check_version, R.id.click_about, R.id.btn_exit})
+    @OnClick({R.id.icon_head, R.id.click_changepwd, R.id.click_identity_binding,
+            R.id.click_advice, R.id.click_check_version, R.id.click_about, R.id.btn_exit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.icon_head:
                 break;
             case R.id.click_changepwd:
+                Intent intent = new Intent(getActivity(), TestActivity.class);
+                startActivity(intent);
                 break;
             case R.id.click_identity_binding:
                 break;
             case R.id.click_advice:
                 break;
             case R.id.click_check_version:
+                Intent intent4 = new Intent(getActivity(), BaseActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.click_about:
-                Intent intent = new Intent(getActivity(), TestActivity.class);
-                // intent.getExtras("key","value");//跳转时传的参数
-                startActivity(intent);
+                Intent intent5 = new Intent(getActivity(), AboutActivity.class);
+                startActivity(intent5);
                 break;
             case R.id.btn_exit:
                 break;

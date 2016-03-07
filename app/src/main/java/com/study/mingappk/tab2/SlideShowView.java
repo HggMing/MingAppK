@@ -40,6 +40,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import retrofit2.http.GET;
+
 
 /**
 * ViewPager实现的轮播图广告自定义视图，如京东首页的广告轮播图效果；
@@ -80,7 +82,6 @@ public class SlideShowView extends FrameLayout {
 
         @Override
         public void handleMessage(Message msg) {
-            // TODO Auto-generated method stub
             super.handleMessage(msg);
             Log.i("currentItem","currentItem"+currentItem);
             viewPager.setCurrentItem(currentItem);
@@ -89,11 +90,9 @@ public class SlideShowView extends FrameLayout {
 
     public SlideShowView(Context context) {
         this(context,null);
-        // TODO Auto-generated constructor stub
     }
     public SlideShowView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        // TODO Auto-generated constructor stub
     }
     public SlideShowView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -199,7 +198,7 @@ public class SlideShowView extends FrameLayout {
         viewPager = (ViewPager) findViewById(R.id.viewPager_dot);
         viewPager.setFocusable(true);
         viewPager.setAdapter(new MyPagerAdapter());
-        viewPager.setOnPageChangeListener(new MyPageChangeListener());
+        viewPager.addOnPageChangeListener(new MyPageChangeListener());
     }
 
     /**
@@ -428,6 +427,7 @@ public class SlideShowView extends FrameLayout {
 
         @Override
         protected Bitmap doInBackground(String... params) {
+
             Bitmap bitmap = null;
             HttpClient httpClient=new DefaultHttpClient();
             if (params[0]!=null) {

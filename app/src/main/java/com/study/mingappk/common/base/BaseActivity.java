@@ -1,54 +1,93 @@
 package com.study.mingappk.common.base;
 
-//import android.app.ProgressDialog;
-//import android.content.DialogInterface;
-//import android.os.Bundle;
-//import android.support.v7.app.ActionBar;
-//import android.support.v7.app.AlertDialog;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.widget.ImageView;
-//import android.widget.PopupWindow;
-
-//import com.loopj.android.http.RequestParams;
-//import com.nostra13.universalimageloader.core.DisplayImageOptions;
-//import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-
-//import com.study.mingappk.common.base.FootUpdate;
-//import com.study.mingappk.R;
-//import com.study.mingappk.common.base.DialogUtil;
-//import com.study.mingappk.common.base.Global;
-//import com.study.mingappk.common.base.GlobalSetting;
-//import com.study.mingappk.common.base.ImageLoadTool;
-//import com.study.mingappk.common.base.StartActivity;
-//import com.study.mingappk.common.base.UnreadNotify;
-//import com.study.mingappk.common.base.network.NetworkCallback;
-//import com.study.mingappk.common.base.network.NetworkImpl;
-//import com.study.mingappk.common.base.umeng.UmengActivity;
-//import com.study.mingappk.common.base.util.SingleToast;
-//import com.study.mingappk.model.RequestData;
-//import com.study.mingappk.user.UserDetailActivity_;
-
-
+import android.app.Activity;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.study.mingappk.R;
 
-/**
- * Created by cc191954 on 14-8-16.
- * 封装了图片下载并缓存
- */
-public class BaseActivity extends AppCompatActivity implements  NetworkCallback,StartActivity {
+import java.util.ArrayList;
+import java.util.List;
 
-    //*******************************************************************************************************************************************
+public class BaseActivity extends AppCompatActivity {
+    /**
+     * 一键退出:
+     */
+    //新建一个 ActivityCollector 类 作为 Activity 管理器
+    public static class ActivityCollector {
+
+        public static List<Activity> activities = new ArrayList<Activity>();
+
+        public static void addActivity(Activity activity) {
+            activities.add(activity);
+        }
+
+        public static void removeActivity(Activity activity) {
+            activities.remove(activity);
+        }
+
+        /**
+         * 在需要一键退出的地方调用 ActivityCollector.finishAll()
+         */
+        public static void finishAll() {
+            for (Activity activity : activities) {
+                if (!activity.isFinishing()) {
+                    activity.finish();
+                }
+            }
+        }
+    }
+
+    //重写 onCreate()、onDestroy() 方法，代码如下
     @Override
-    public void parseJson(int code, JSONObject respanse, String tag, int pos, Object data) throws JSONException {
-
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 
     @Override
-    public void getNetwork(String uri, String tag) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);//添加activity，便于一键退出
+        initContentView(R.layout.activity_base);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_base);
+        setSupportActionBar(toolbar);
     }
-    //*******************************************************************************************************************************************
+
+    private LinearLayout parentLayout;//把父类activity和子类activity的view都add到这里
+
+    /**
+     * 初始化contentview
+     */
+    private void initContentView(int layoutResID) {
+        ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content);
+     //   viewGroup.removeAllViews();
+        parentLayout = new LinearLayout(this);
+        parentLayout.setOrientation(LinearLayout.VERTICAL);
+        viewGroup.addView(parentLayout);
+        LayoutInflater.from(this).inflate(layoutResID, parentLayout, true);
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        LayoutInflater.from(this).inflate(layoutResID, parentLayout, true);
+    }
+
+    @Override
+    public void setContentView(View view) {
+        parentLayout.addView(view);
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        parentLayout.addView(view, params);
+    }
+
+
 }
