@@ -19,9 +19,6 @@ public class Tab1Fragment extends Fragment {
 
     private AppCompatActivity mActivity;
 
-    public Tab1Fragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_tab1, container, false);
@@ -40,15 +37,7 @@ public class Tab1Fragment extends Fragment {
     }
 
     private void initViews() {
-        Button button = (Button) getView().findViewById(R.id.button_tab1);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mActivity, LoginActivity.class);
-                startActivity(intent);
 
-            }
-        });
 
     }
 }

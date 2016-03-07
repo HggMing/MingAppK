@@ -45,12 +45,6 @@ public class BaseActivity extends AppCompatActivity {
 
     //重写 onCreate()、onDestroy() 方法，代码如下
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ActivityCollector.removeActivity(this);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityCollector.addActivity(this);//添加activity，便于一键退出
@@ -60,6 +54,13 @@ public class BaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
+
     private LinearLayout parentLayout;//把父类activity和子类activity的view都add到这里
 
     /**
@@ -67,7 +68,7 @@ public class BaseActivity extends AppCompatActivity {
      */
     private void initContentView(int layoutResID) {
         ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content);
-     //   viewGroup.removeAllViews();
+        //   viewGroup.removeAllViews();
         parentLayout = new LinearLayout(this);
         parentLayout.setOrientation(LinearLayout.VERTICAL);
         viewGroup.addView(parentLayout);

@@ -1,11 +1,7 @@
 package com.study.mingappk.common.base;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuItem;
-
-import com.study.mingappk.R;
 
 
 public class BackActivity extends BaseActivity {
@@ -23,8 +19,8 @@ public class BackActivity extends BaseActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
-            //case R.id.action_settings:
-               // return true;
+                //case R.id.action_settings:
+                // return true;
 
             default:
                 return super.onOptionsItemSelected(item);

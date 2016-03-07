@@ -28,4 +28,6 @@
     <color name="input_background">#ffe8e8e8</color>
     <!--about界面-->
     <color name="task_list_head">#ffe4e4e4</color>
+    <!--动态页面-->
+    <color name="font_black">#010101</color>
 </resources>

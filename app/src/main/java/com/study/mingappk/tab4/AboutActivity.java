@@ -44,9 +44,10 @@ public class AboutActivity extends BackActivity {
             version.setText(versionString);
 
         } catch (Exception e) {
-           errorLog(e);
+            errorLog(e);
         }
     }
+
     public static void errorLog(Exception e) {
         if (e == null) {
             return;
@@ -54,5 +55,5 @@ public class AboutActivity extends BackActivity {
         e.printStackTrace();
         Log.e("", "" + e);
     }
-    }
+}
 
