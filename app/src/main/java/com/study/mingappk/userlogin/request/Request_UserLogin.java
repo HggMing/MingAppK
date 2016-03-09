@@ -10,39 +10,33 @@ import com.study.mingappk.common.utils.AndroidUtils;
 import org.json.JSONObject;
 
 public class Request_UserLogin extends RequsetBase {
-	private Context _context;
 	private String _phone;
 	private String _pwd;
-	private String _imei;
 
 	public UserInfo userInfo;
 
-	public Request_UserLogin(Context Context, String phone, String pwd,
-							 String imei) {
+	public Request_UserLogin(Context Context, String phone, String pwd) {
 		super(Context);
-		_context = Context;
 		this._phone = phone;
 		this._pwd = pwd;
-		this._imei = imei;
-
 		_url += "user/login";
 	}
 
-	public JSONObject DoBeforeSendData() {
+
+	@Override
+	public JSONObject getRequestJson() {
 		_requestJson = new JSONObject();
 		try {
 			_requestJson.put("logname", _phone);
 			_requestJson.put("pwd", _pwd);
-//			_requestJson.put("_imei", _imei);
-//			_requestJson.put("_os", 0);
-//			_requestJson.put("_ver", android.os.Build.VERSION.RELEASE);
-//			_requestJson.put("_vers", MarketUtils.GetClientVersionName(_context));
 
 		} catch (Exception e) {
 
 		}
-		return _requestJson;
+		return super.getRequestJson();
 	}
+
+
 
 	@Override
 	public ResultPacket DoResponseData(String data) {
@@ -68,44 +62,13 @@ public class Request_UserLogin extends RequsetBase {
 				return result;
 			}
 
-//			String net = jsonObject.getString("net");
-//			if (net != null) 
-//			{
-//				MyApplication.getInstance().set_Net(net);
-//			}
-//			
-//			String push = jsonObject.getString("push");
-//			if (net != null) 
-//			{
-//				MyApplication.getInstance().set_Push(push);
-//			}
-//			
-//			String pop = jsonObject.getString("pop");
-//			if (pop!=null)
-//			{
-//				MyApplication.getInstance().Set_pop(pop);
-//			}
-			
-			
-			//userInfo.bdyhk = AndroidUtils.getJsonInt(jsonObject, "card", 0);
-			//JSONObject info = jsonObject.getJSONObject("info");
-
-//			userInfo.uid = AndroidUtils.getJsonInt(info, "uid", 0);
-//			userInfo.phone = AndroidUtils.getJsonString(info, "phone", "");
-//			userInfo.cid = AndroidUtils.getJsonString(info, "cid", "");
-//			userInfo.uname = AndroidUtils.getJsonString(info, "uname", "");
-//			userInfo.sex = AndroidUtils.getJsonInt(info, "sex", 0);
-//			userInfo.star = AndroidUtils.getJsonString(info, "star", "");
-//			userInfo.headpic = AndroidUtils.getJsonString(info, "face", "");
-//			userInfo.is_public = AndroidUtils.getJsonString(info, "is_public", "0");
 			
 			String infoString =   AndroidUtils.getJsonString(jsonObject, "info", "");
 			
 			Gson gson = new Gson();
 			userInfo = gson.fromJson(infoString, UserInfo.class);
 			userInfo.auth = AndroidUtils.getJsonString(jsonObject, "auth", "");
-			
-			
+
 			return result;
 		} catch (Exception e) {
 			result.setIsError(true);

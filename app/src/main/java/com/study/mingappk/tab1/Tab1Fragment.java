@@ -1,4 +1,4 @@
-package com.study.mingappk.main;
+package com.study.mingappk.tab1;
 
 import android.content.Intent;
 import android.os.Bundle;

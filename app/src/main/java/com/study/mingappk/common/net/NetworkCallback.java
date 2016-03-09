@@ -1,4 +1,4 @@
-package com.study.mingappk.common.base;
+package com.study.mingappk.common.net;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -160,7 +160,6 @@ public class MarketUtils
 	
 	/**
      * 判断是否为电话号码
-     *
      * @return boolean 
      */
 	public static boolean checkPhone(String phone)
@@ -225,7 +224,6 @@ public class MarketUtils
 	
 	/**
 	 * 获取手机mac地址
-	 * 
 	 * @return
 	 */
 	public static String GetMacAddress(Context context)
@@ -240,13 +238,10 @@ public class MarketUtils
 	}
 	
 	/**
-	 * 
-	 * @param source
-	 *            要被压缩的图片
-	 * @param width
-	 *            压缩的宽度
-	 * @param height
-	 *            压缩的高度
+	 * 压缩图片
+	 * @param source 要被压缩的图片
+	 * @param width  压缩的宽
+	 * @param height 压缩的高度
 	 * @return
 	 */
 	public static Bitmap transImage(Bitmap source, int width, int height,
@@ -289,12 +284,9 @@ public class MarketUtils
 	
 	/**
 	 * 
-	 * @param source
-	 *            要被压缩的图片
-	 * @param width
-	 *            压缩的宽度
-	 * @param height
-	 *            压缩的高度
+	 * @param source 要被压缩的图片
+	 * @param width 压缩的宽度
+	 * @param height 压缩的高度
 	 * @return
 	 */
 	public static Bitmap transImagefordraggrid(Bitmap source, int width, int height,
@@ -356,8 +348,6 @@ public class MarketUtils
     
     /**
      * 以图片中心截取扇形
-     *
-     *
      */
     public static Bitmap toRoundCorner(Bitmap bitmap, float pixels,int startAngle,int sweepAngle)
     {
@@ -382,8 +372,14 @@ public class MarketUtils
 
         return output;
     }
-    
-	// 比较时间
+
+	/**
+	 * 比较时间
+	 * @param datepart
+	 * @param beginCal
+	 * @param endCal
+     * @return
+     */
 	public static long dateDiff(String datepart, Calendar beginCal,
 			Calendar endCal) {
 		long retVal = 0;
@@ -453,7 +449,12 @@ public class MarketUtils
 		}
 		return String.format("%.2f", f);
 	}
-	public static void closeInput(Activity context) {// 关闭输入法
+
+	/**
+	 *  关闭输入法
+	 * @param context
+     */
+	public static void closeInput(Activity context) {
 
 		try {
 			InputMethodManager imm = (InputMethodManager) context

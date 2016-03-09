@@ -123,7 +123,7 @@ public class SlideShowView extends FrameLayout {
     /**
      * 初始化相关Data
      */
-    private void initData(){
+     void initData(){
         System.gc();
         textViews=new ArrayList<TextView>();
         imageViewsList = new ArrayList<ImageView>();

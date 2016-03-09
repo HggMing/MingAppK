@@ -81,8 +81,7 @@
         </RelativeLayout>
 
 
-        <include layout="@layout/divide_15_top_bottom"
-            android:layout_weight="1" />
+        <include layout="@layout/divide_15_top_bottom" />
 
 
         <LinearLayout xmlns:listItem1="http://schemas.android.com/apk/res-auto"
@@ -144,7 +143,7 @@
         </LinearLayout>
 
         <include layout="@layout/divide_15_top"
-            android:layout_weight="1" />
+            />
 
         <RelativeLayout
             android:id="@+id/layout_logout"
@@ -156,7 +155,7 @@
             android:paddingRight="15dp"
             android:layout_weight="1">
 
-            <TextView
+            <Button
                 android:id="@+id/btn_exit"
                 android:layout_width="match_parent"
                 android:layout_height="47dp"

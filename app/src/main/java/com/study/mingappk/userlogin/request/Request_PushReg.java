@@ -25,7 +25,7 @@ public class Request_PushReg extends RequsetBase
 		super.SetIsNeedCode(false);
 	}
 	
-	public JSONObject DoBeforeSendData()
+	public JSONObject getJSONObject()
 	{
 		_requestJson = new JSONObject();
 		try 

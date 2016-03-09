@@ -1,6 +1,5 @@
 package com.study.mingappk.main;
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,16 +7,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.study.mingappk.R;
+import com.study.mingappk.tab1.Tab1Fragment;
+import com.study.mingappk.tab2.Tab2Fragment;
+import com.study.mingappk.tab3.Tab3Fragment;
+import com.study.mingappk.tab4.Tab4Fragment;
 
 import java.util.ArrayList;
 import java.util.List;

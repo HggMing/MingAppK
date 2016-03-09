@@ -1,4 +1,4 @@
-package com.study.mingappk.main;
+package com.study.mingappk.tab3;
 
 import android.graphics.Color;
 import android.os.Bundle;

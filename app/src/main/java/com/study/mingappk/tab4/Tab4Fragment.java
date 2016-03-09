@@ -1,4 +1,4 @@
-package com.study.mingappk.main;
+package com.study.mingappk.tab4;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.study.mingappk.R;
-import com.study.mingappk.common.base.BaseActivity;
-import com.study.mingappk.tab4.AboutActivity;
-import com.study.mingappk.tab4.TestActivity;
+import com.study.mingappk.main.BaseActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,8 +54,6 @@ public class Tab4Fragment extends Fragment {
             case R.id.click_advice:
                 break;
             case R.id.click_check_version:
-                Intent intent4 = new Intent(getActivity(), BaseActivity.class);
-                startActivity(intent4);
                 break;
             case R.id.click_about:
                 Intent intent5 = new Intent(getActivity(), AboutActivity.class);

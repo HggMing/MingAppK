@@ -1,4 +1,4 @@
-package com.study.mingappk.common.base;
+package com.study.mingappk.main;
 
 import android.app.Activity;
 import android.os.Bundle;

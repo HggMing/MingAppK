@@ -2,14 +2,11 @@ package com.study.mingappk.tab4;
 
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.common.base.BackActivity;
+import com.study.mingappk.main.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,7 +25,7 @@ public class AboutActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
-        getSupportActionBar().setTitle("关于我们");
+       // getSupportActionBar().setTitle("关于我们");
         initAboutActivity();
     }
 
