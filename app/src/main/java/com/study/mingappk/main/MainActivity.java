@@ -1,6 +1,8 @@
 package com.study.mingappk.main;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +15,7 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.study.mingappk.R;
 import com.study.mingappk.tab1.Tab1Fragment;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public List<Fragment> fragments = new ArrayList<Fragment>();
     private FragmentManager fragmentManager;
     private int currIndex = 0;// 当前页卡编号
+    private boolean isExit;//是否退出
 
     /**
      * 点击监听
@@ -269,6 +273,23 @@ public class MainActivity extends AppCompatActivity {
         tTab2.setOnClickListener(new MyOnClickListener(1));
         tTab3.setOnClickListener(new MyOnClickListener(2));
         tTab4.setOnClickListener(new MyOnClickListener(3));
-
     }
+
+    @Override
+    public void onBackPressed() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            super.onBackPressed();
+        }
+    }
+        Handler mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                isExit = false;
+            }
+        };
 }

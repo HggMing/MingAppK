@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context=".main.MainActivity"
     tools:ignore="ContentDescription">
+
     <android.support.v7.widget.LinearLayoutCompat
         android:id="@+id/content_main_view"
         android:layout_width="match_parent"
@@ -41,130 +42,123 @@
             android:layout_height="0.5dp"
             android:background="@color/line_bottom" />
 
-        <RelativeLayout
 
-            android:id="@+id/main_bottom"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/tab_background">
+            android:background="@color/tab_background"
+            android:baselineAligned="true"
+            android:paddingBottom="@dimen/tab_image_padding">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:id="@+id/tab1Layout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:baselineAligned="true"
-                android:paddingBottom="@dimen/tab_image_padding">
+                android:layout_weight="1">
 
-                <RelativeLayout
-                    android:id="@+id/tab1Layout"
-                    android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/img_tab1_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/tab_height"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="true"
+                    android:paddingTop="@dimen/tab_image_padding"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tab1_btn1" />
+
+                <TextView
+                    android:id="@+id/text_tab1_main"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_below="@id/img_tab1_main"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/tab1_main"
+                    android:textColor="@color/tab_bnt1"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/img_tab1_main"
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/tab_height"
-                        android:layout_centerHorizontal="true"
-                        android:clickable="true"
-                        android:paddingTop="@dimen/tab_image_padding"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/tab1_btn1" />
+                <ImageView
+                    android:id="@+id/img_tab2_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/tab_height"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="true"
+                    android:paddingTop="@dimen/tab_image_padding"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tab2_btn0" />
 
-                    <TextView
-                        android:id="@+id/text_tab1_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/img_tab1_main"
-                        android:layout_centerHorizontal="true"
-                        android:text="@string/tab1_main"
-                        android:textColor="@color/tab_bnt1"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/text_tab2_main"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal">
+                    android:layout_below="@id/img_tab2_main"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/tab2_main"
+                    android:textColor="@color/tab_bnt0"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/img_tab2_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/tab_height"
-                        android:layout_centerHorizontal="true"
-                        android:clickable="true"
-                        android:paddingTop="@dimen/tab_image_padding"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/tab2_btn0" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
 
-                    <TextView
-                        android:id="@+id/text_tab2_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/img_tab2_main"
-                        android:layout_centerHorizontal="true"
-                        android:text="@string/tab2_main"
-                        android:textColor="@color/tab_bnt0"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/img_tab3_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/tab_height"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="true"
+                    android:paddingTop="@dimen/tab_image_padding"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tab3_btn0" />
 
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/text_tab3_main"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal">
+                    android:layout_below="@id/img_tab3_main"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/tab3_main"
+                    android:textColor="@color/tab_bnt0"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/img_tab3_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/tab_height"
-                        android:layout_centerHorizontal="true"
-                        android:clickable="true"
-                        android:paddingTop="@dimen/tab_image_padding"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/tab3_btn0" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
 
-                    <TextView
-                        android:id="@+id/text_tab3_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/img_tab3_main"
-                        android:layout_centerHorizontal="true"
-                        android:text="@string/tab3_main"
-                        android:textColor="@color/tab_bnt0"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/img_tab4_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/tab_height"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="true"
+                    android:paddingTop="@dimen/tab_image_padding"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tab4_btn0" />
 
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/text_tab4_main"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal">
+                    android:layout_below="@id/img_tab4_main"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/tab4_main"
+                    android:textColor="@color/tab_bnt0"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/img_tab4_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/tab_height"
-                        android:layout_centerHorizontal="true"
-                        android:clickable="true"
-                        android:paddingTop="@dimen/tab_image_padding"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/tab4_btn0" />
-
-                    <TextView
-                        android:id="@+id/text_tab4_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/img_tab4_main"
-                        android:layout_centerHorizontal="true"
-                        android:text="@string/tab4_main"
-                        android:textColor="@color/tab_bnt0"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-            </LinearLayout>
-        </RelativeLayout>
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.design.widget.CoordinatorLayout>

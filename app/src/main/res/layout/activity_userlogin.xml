@@ -44,86 +44,87 @@
                 android:textStyle="bold"
                 android:visibility="invisible" />
 
-            <ImageView
-                android:id="@+id/imgview_btnphoneleft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/tv_1"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/loginleftphone"
-                android:padding="10dp" />
-
-            <ImageView
-                android:id="@+id/imgview_btnphoneright"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/tv_1"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/loginright"
-                android:padding="10dp" />
-
-            <EditText
-                android:id="@+id/et_name"
+            <LinearLayout
+                android:id="@+id/layout_phonenumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_1"
-                android:layout_marginTop="40dp"
-                android:layout_toLeftOf="@id/imgview_btnphoneright"
-                android:layout_toRightOf="@id/imgview_btnphoneleft"
-                android:background="@drawable/loginback"
-                android:hint="手机号"
-                android:inputType="phone"
+                android:layout_marginTop="40dp">
 
-                android:padding="10dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff" />
+                <ImageView
+                    android:id="@+id/imgview_btnphoneleft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="40dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/loginleftphone" />
 
-            <ImageView
-                android:id="@+id/imgview_btnpwdleft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/et_name"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/loginleftpwd"
-                android:padding="10dp" />
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/loginback"
+                    android:hint="手机号"
+                    android:inputType="phone"
+                    android:padding="10dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff" />
 
-            <ImageView
-                android:id="@+id/imgview_btnpwdright"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/et_name"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/loginright"
-                android:padding="10dp" />
+                <ImageView
+                    android:id="@+id/imgview_btnphoneright"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="40dp"
+                    android:src="@drawable/loginright" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/et_pwd"
+            <LinearLayout
+                android:id="@+id/layout_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/et_name"
-                android:layout_marginTop="20dp"
-                android:layout_toLeftOf="@id/imgview_btnpwdright"
-                android:layout_toRightOf="@id/imgview_btnpwdleft"
-                android:background="@drawable/loginback"
-                android:hint="密码"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff" />
+                android:layout_height="match_parent"
+                android:layout_below="@id/layout_phonenumber"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/imgview_btnpwdleft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="40dp"
+                    android:background="@drawable/loginleftpwd"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/et_pwd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/loginback"
+                    android:hint="密码"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff" />
+
+                <ImageView
+                    android:id="@+id/imgview_btnpwdright"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/loginright"
+                    android:padding="10dp" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/layout_jzmm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/et_pwd"
+                android:layout_below="@id/layout_password"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="20dp">

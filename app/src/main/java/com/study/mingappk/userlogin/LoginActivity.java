@@ -24,6 +24,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.common.app.MyApplication;
 import com.study.mingappk.common.app.info.UserInfo;
 import com.study.mingappk.common.dialog.Dialog_Model;
+import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MarketUtils;
 import com.study.mingappk.main.MainActivity;
 import com.study.mingappk.userlogin.request.Request_PushReg;
@@ -71,7 +72,8 @@ public class LoginActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // requestWindowFeature(Window.FEATURE_NO_TITLE);
+        BaseTools.setFullScreen(this);//隐藏状态栏
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userlogin);
         ButterKnife.bind(this);
@@ -80,7 +82,8 @@ public class LoginActivity extends Activity {
 
         sp = getSharedPreferences("setting", MODE_PRIVATE);
         status_jzmm = sp.getBoolean("status_jzmm", true);//初始默认记住密码
-
+        loginname = sp.getString("loginname", "");
+        loginpwd = sp.getString("loginpwd", "");
 
         isAutoLogin = getIntent().getBooleanExtra("isAutoLogin", false);
 
@@ -148,19 +151,19 @@ public class LoginActivity extends Activity {
                     startActivity(intent);
                     LoginActivity.this.finish();
                     super.handleMessage(msg);
-            break;
+                    break;
 
                 case 444:
-            onClick(btn_login);
+                    onClick(btn_login);
                     break;
 
 
                 case 998://手机未注册
-            if (progressDialog != null) {
-                progressDialog.dismiss(); // 关闭进度�?
-                progressDialog.hide();
-            }
-            SetCanEdit(true);
+                    if (progressDialog != null) {
+                        progressDialog.dismiss(); // 关闭进度�?
+                        progressDialog.hide();
+                    }
+                    SetCanEdit(true);
 
             /*Animation scaleAnimation2 = new ScaleAnimation(0f, 1f, 0f, 1f,
                     Animation.RELATIVE_TO_SELF, 0.5f,
@@ -181,51 +184,51 @@ public class LoginActivity extends Activity {
             animationRight.setFillAfter(true);*/
 
 
-            btn_login.setText("登录");
-            //btn_login.startAnimation(scaleAnimation2);
+                    btn_login.setText("登录");
+                    //btn_login.startAnimation(scaleAnimation2);
 
-            Dialog_Model.Builder builder1 = new Dialog_Model.Builder(
-                    LoginActivity.this);
-            builder1.setTitle("提示");
-            builder1.setCannel(false);
-            builder1.setMessage(msg.obj.toString());
-            builder1.setPositiveButton("确定",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog,
-                                            int which) {
-                            btn_login.setClickable(true);
-                            btn_login.setText("登录");
+                    Dialog_Model.Builder builder1 = new Dialog_Model.Builder(
+                            LoginActivity.this);
+                    builder1.setTitle("提示");
+                    builder1.setCannel(false);
+                    builder1.setMessage(msg.obj.toString());
+                    builder1.setPositiveButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    btn_login.setClickable(true);
+                                    btn_login.setText("登录");
 
                            /* Intent intent = new Intent();
                             intent.setClass(LoginActivity.this, Activity_CheckPhone.class);
                             intent.putExtra("loginname", loginname);
                             startActivity(intent);*/
-                            dialog.dismiss();
-                        }
+                                    dialog.dismiss();
+                                }
 
-                    });
-            if (!isFinishing()) {
-                builder1.create().show();
-            }
-            super.handleMessage(msg);
+                            });
+                    if (!isFinishing()) {
+                        builder1.create().show();
+                    }
+                    super.handleMessage(msg);
                     break;
 
                 case 999://除了手机未注册外的其他认证错误
-            try {
+                    try {
 
-                if (progressDialog != null) {
-                    progressDialog.dismiss(); // 关闭进度�?
-                    progressDialog.hide();
-                }
-                SetCanEdit(true);
+                        if (progressDialog != null) {
+                            progressDialog.dismiss(); // 关闭进度�?
+                            progressDialog.hide();
+                        }
+                        SetCanEdit(true);
 
                 /*Animation scaleAnimation3 = new ScaleAnimation(0f, 1f, 0f,
                         1f, Animation.RELATIVE_TO_SELF, 0.5f,
                         Animation.RELATIVE_TO_SELF, 0.5f);
                 scaleAnimation3.setDuration(10);
                 scaleAnimation3.setFillAfter(true);*/
-                btn_login.setText("登录");
+                        btn_login.setText("登录");
 
                /* TranslateAnimation animationLeft1 = new TranslateAnimation(
                         0, 1, 0, 0);
@@ -240,28 +243,28 @@ public class LoginActivity extends Activity {
                 animationRight1.setFillAfter(true);
                 btn_login.startAnimation(scaleAnimation3);*/
 
-                Dialog_Model.Builder builder = new Dialog_Model.Builder(
-                        LoginActivity.this);
-                builder.setTitle("提示");
-                builder.setCannel(false);
-                builder.setMessage(msg.obj.toString());
-                builder.setPositiveButton("确定",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog,
-                                                int which) {
-                                btn_login.setClickable(true);
-                                btn_login.setText("登录");
-                                dialog.dismiss();
-                            }
-                        });
-                if (!isFinishing()) {
-                    builder.create().show();
-                }
+                        Dialog_Model.Builder builder = new Dialog_Model.Builder(
+                                LoginActivity.this);
+                        builder.setTitle("提示");
+                        builder.setCannel(false);
+                        builder.setMessage(msg.obj.toString());
+                        builder.setPositiveButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,
+                                                        int which) {
+                                        btn_login.setClickable(true);
+                                        btn_login.setText("登录");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        if (!isFinishing()) {
+                            builder.create().show();
+                        }
 
-            } catch (Exception e) {
-            }
-            super.handleMessage(msg);
+                    } catch (Exception e) {
+                    }
+                    super.handleMessage(msg);
                     break;
             }
         }
@@ -269,159 +272,159 @@ public class LoginActivity extends Activity {
     };
 
 
-        @Override
-        protected void onResume() {
-            super.onResume();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-            int[] location = new int[2];
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                    location[0], location[1]);
-            if (isAutoLogin) {
-                Message message = new Message();
-                message.what = 444;
-                handler.sendMessageDelayed(message, 500);
-            }
+        int[] location = new int[2];
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                location[0], location[1]);
+        if (isAutoLogin) {
+            Message message = new Message();
+            message.what = 444;
+            handler.sendMessageDelayed(message, 500);
         }
+    }
 
-        public boolean onKeyDown(int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                MyApplication.getInstance().exit();
-                return true;
-            }
-            return super.onKeyDown(keyCode, event);
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            MyApplication.getInstance().exit();
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
+    }
 
 
-        private void loginThread() {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    ResultPacket resultPacket=new ResultPacket();
+    private void loginThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ResultPacket resultPacket = new ResultPacket();
 
-                    Request_UserLogin request = new Request_UserLogin(LoginActivity.this, loginname, loginpwd);
-                    resultPacket = request.DealProcess();
-                    if (!resultPacket.getIsError()) {
-                        Thread.currentThread().interrupt();
+                Request_UserLogin request = new Request_UserLogin(LoginActivity.this, loginname, loginpwd);
+                resultPacket = request.DealProcess();
+                if (!resultPacket.getIsError()) {
+                    Thread.currentThread().interrupt();
+                    Message message = new Message();
+                    message.what = 100;
+                    message.obj = request.userInfo;
+                    handler.sendMessage(message);
+                    return;
+                } else {
+                    Thread.currentThread().interrupt();
+                    if (resultPacket.getResultCode().equals("99")) {
                         Message message = new Message();
-                        message.what = 100;
-                        message.obj = request.userInfo;
+                        message.what = 999;
+                        message.obj = resultPacket.getDescription();
                         handler.sendMessage(message);
                         return;
-                    } else {
-                        Thread.currentThread().interrupt();
-                        if (resultPacket.getResultCode().equals("99")) {
-                            Message message = new Message();
-                            message.what = 999;
-                            message.obj = resultPacket.getDescription();
-                            handler.sendMessage(message);
-                            return;
-                        } else if (resultPacket.getResultCode()
-                                .equals("98")) {
-                            Message message = new Message();
-                            message.what = 998;
-                            message.obj = resultPacket.getDescription();
-                            handler.sendMessage(message);
-                            return;
-                        }
+                    } else if (resultPacket.getResultCode()
+                            .equals("98")) {
+                        Message message = new Message();
+                        message.what = 998;
+                        message.obj = resultPacket.getDescription();
+                        handler.sendMessage(message);
+                        return;
                     }
                 }
-            }).start();
-        }
+            }
+        }).start();
+    }
 
 
-        private void PushReg() {
-            new Thread(new Runnable() {
+    private void PushReg() {
+        new Thread(new Runnable() {
 
-                @Override
-                public void run() {
-                    ResultPacket resultPacket = new ResultPacket();
-                    if (MyApplication.getInstance().get_userInfo() != null && MyApplication.getInstance().get_ClientID() != null && MyApplication.getInstance().get_ClientID().length() > 0) {
-                        Request_PushReg request = new Request_PushReg(
-                                LoginActivity.this, String.valueOf(MyApplication.getInstance().get_userInfo().uid), "yxj",
-                                MyApplication.getInstance().get_ClientID());
-                        resultPacket = request.DealProcess();
-                    }
+            @Override
+            public void run() {
+                ResultPacket resultPacket = new ResultPacket();
+                if (MyApplication.getInstance().get_userInfo() != null && MyApplication.getInstance().get_ClientID() != null && MyApplication.getInstance().get_ClientID().length() > 0) {
+                    Request_PushReg request = new Request_PushReg(
+                            LoginActivity.this, String.valueOf(MyApplication.getInstance().get_userInfo().uid), "yxj",
+                            MyApplication.getInstance().get_ClientID());
+                    resultPacket = request.DealProcess();
+                }
+            }
+
+        }).start();
+    }
+
+    private void SetCanEdit(boolean bool) {
+        et_name.setEnabled(bool);
+        et_name.setClickable(bool);
+        et_pwd.setEnabled(bool);
+        et_pwd.setClickable(bool);
+    }
+
+    @OnClick({R.id.img_jzmm, R.id.tv_reg, R.id.btn_login, R.id.btn_facelogin, R.id.tv_forgetpwd})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_login:
+                btn_login.setClickable(false);
+                btn_login.setText("登录中...");
+
+                loginname = et_name.getEditableText().toString();
+
+                if (loginname.equals("")) {
+                    btn_login.setClickable(true);
+                    btn_login.setText("登录");
+                    Toast.makeText(this, "登录名不能为空", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
-            }).start();
-        }
+                if (!MarketUtils.checkPhone(loginname)) {
+                    btn_login.setClickable(true);
+                    btn_login.setText("登录");
+                    Toast.makeText(this, "登录名不是标准的手机号码格式", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        private void SetCanEdit(boolean bool) {
-            et_name.setEnabled(bool);
-            et_name.setClickable(bool);
-            et_pwd.setEnabled(bool);
-            et_pwd.setClickable(bool);
-        }
+                loginpwd = et_pwd.getEditableText().toString();
 
-        @OnClick({R.id.img_jzmm, R.id.tv_reg, R.id.btn_login, R.id.btn_facelogin, R.id.tv_forgetpwd})
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.btn_login:
-                    btn_login.setClickable(false);
-                    btn_login.setText("登录中...");
+                if (loginpwd.equals("")) {
+                    btn_login.setClickable(true);
+                    btn_login.setText("登录");
+                    Toast.makeText(this, "登录密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                    loginname = et_name.getEditableText().toString();
+                loginThread();
 
-                    if (loginname.equals("")) {
-                        btn_login.setClickable(true);
-                        btn_login.setText("登录");
-                        Toast.makeText(this, "登录名不能为空", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    if (!MarketUtils.checkPhone(loginname)) {
-                        btn_login.setClickable(true);
-                        btn_login.setText("登录");
-                        Toast.makeText(this, "登录名不是标准的手机号码格式", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    loginpwd = et_pwd.getEditableText().toString();
-
-                    if (loginpwd.equals("")) {
-                        btn_login.setClickable(true);
-                        btn_login.setText("登录");
-                        Toast.makeText(this, "登录密码不能为空", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    loginThread();
-
-                    break;
-                case R.id.btn_facelogin:
+                break;
+            case R.id.btn_facelogin:
 //                Intent intent2 = new Intent();
 //                intent2.setClass(Activity_Login.this, Activity_FaceLogin.class);
 //                startActivity(intent2);
 //                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                    break;
-                case R.id.img_jzmm:
-                    if (status_jzmm) {
-                        status_jzmm = false;
-                        editor = sp.edit();
-                        editor.putBoolean("status_jzmm", status_jzmm);
-                        editor.commit();
-                        img_jzmm.setBackgroundResource(R.drawable.agree_no);
-                    } else {
-                        status_jzmm = true;
-                        editor = sp.edit();
-                        editor.putBoolean("status_jzmm", status_jzmm);
-                        editor.commit();
-                        img_jzmm.setBackgroundResource(R.drawable.agree);
-                    }
-                    break;
-                case R.id.tv_reg:
+                break;
+            case R.id.img_jzmm:
+                if (status_jzmm) {
+                    status_jzmm = false;
+                    editor = sp.edit();
+                    editor.putBoolean("status_jzmm", status_jzmm);
+                    editor.commit();
+                    img_jzmm.setBackgroundResource(R.drawable.agree_no);
+                } else {
+                    status_jzmm = true;
+                    editor = sp.edit();
+                    editor.putBoolean("status_jzmm", status_jzmm);
+                    editor.commit();
+                    img_jzmm.setBackgroundResource(R.drawable.agree);
+                }
+                break;
+            case R.id.tv_reg:
 //                intent = new Intent();
 //                intent.setClass(this, Activity_CheckPhone.class);
 //                intent.putExtra("type", 1);
 //                startActivity(intent);
-                    break;
-                case R.id.tv_forgetpwd:
+                break;
+            case R.id.tv_forgetpwd:
 //                intent = new Intent();
 //                intent.setClass(this, Activity_CheckPhone.class);
 //                intent.putExtra("type", 2);
 //                startActivity(intent);
-                    break;
-            }
+                break;
         }
-
     }
+
+}

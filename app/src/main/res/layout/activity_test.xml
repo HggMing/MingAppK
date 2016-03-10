@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".tab4.TestActivity">
+    tools:context=".test.TestActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -27,10 +27,29 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_test">
+
         <android.support.v7.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/et_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/app_name"/>
+            android:layout_centerVertical="true"
+            android:hint="输入手机号查询归属地" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/et_phone"
+            android:text="显示获取到的信息" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击查询"
+            android:id="@+id/button"
+            android:layout_above="@+id/textView"
+            android:layout_toRightOf="@+id/et_phone"
+            android:layout_toEndOf="@+id/et_phone" />
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton

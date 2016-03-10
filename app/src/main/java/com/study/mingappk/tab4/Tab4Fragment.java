@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.study.mingappk.R;
-import com.study.mingappk.main.BaseActivity;
+import com.study.mingappk.test.TestActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
