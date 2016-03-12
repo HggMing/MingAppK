@@ -21,7 +21,7 @@ public class BaseActivity extends AppCompatActivity {
     //新建一个 ActivityCollector 类 作为 Activity 管理器
     public static class ActivityCollector {
 
-        public static List<Activity> activities = new ArrayList<Activity>();
+        public static List<Activity> activities = new ArrayList<>();
 
         public static void addActivity(Activity activity) {
             activities.add(activity);
@@ -68,7 +68,7 @@ public class BaseActivity extends AppCompatActivity {
      */
     private void initContentView(int layoutResID) {
         ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content);
-        //   viewGroup.removeAllViews();
+        viewGroup.removeAllViews();
         parentLayout = new LinearLayout(this);
         parentLayout.setOrientation(LinearLayout.VERTICAL);
         viewGroup.addView(parentLayout);

@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,108 +25,109 @@ import com.study.mingappk.tab4.Tab4Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity {
 
-    public MainViewPager viewPager;
-    private ImageView mTab1, mTab2, mTab3, mTab4;
-    private TextView tTab1, tTab2, tTab3, tTab4;
-    public List<Fragment> fragments = new ArrayList<Fragment>();
+    @Bind(R.id.viewPager_main)
+    MainViewPager viewPager;
+    @Bind(R.id.img_tab1_main)
+    ImageView mTab1;
+    @Bind(R.id.text_tab1_main)
+    TextView tTab1;
+    @Bind(R.id.img_tab2_main)
+    ImageView mTab2;
+    @Bind(R.id.text_tab2_main)
+    TextView tTab2;
+    @Bind(R.id.img_tab3_main)
+    ImageView mTab3;
+    @Bind(R.id.text_tab3_main)
+    TextView tTab3;
+    @Bind(R.id.img_tab4_main)
+    ImageView mTab4;
+    @Bind(R.id.text_tab4_main)
+    TextView tTab4;
+    public List<Fragment> fragments = new ArrayList<>();
     private FragmentManager fragmentManager;
-    private int currIndex = 0;// 当前页卡编号
     private boolean isExit;//是否退出
 
-    /**
-     * 点击监听
-     */
-    private class MyOnClickListener implements View.OnClickListener {
-        private int index = 0;
-
-        public MyOnClickListener(int i) {
-            index = i;
-        }
-
-        @Override
-        public void onClick(View v) {
-            viewPager.setCurrentItem(index);//选中index页
+    @OnClick({R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tab1Layout:
+                viewPager.setCurrentItem(0);//选中index页
+                break;
+            case R.id.tab2Layout:
+                viewPager.setCurrentItem(1);
+                break;
+            case R.id.tab3Layout:
+                viewPager.setCurrentItem(2);
+                break;
+            case R.id.tab4Layout:
+                viewPager.setCurrentItem(3);
+                break;
         }
     }
 
     /**
-     * 页卡切换监听
+     * 页卡切换监听,点击改变图标外观
      */
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageSelected(int arg0) {
-            Animation animation = null;
             switch (arg0) {
                 case 0:
                     mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab1_btn1));
                     tTab1.setTextColor(getResources().getColor(R.color.tab_bnt1));   //选中时的字体颜色
-
-                    if (currIndex == 1) {
-                        mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab2_btn0));
-                        tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    } else if (currIndex == 2) {
-                        mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab3_btn0));
-                        tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    } else if (currIndex == 3) {
-                        mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab4_btn0));
-                        tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    }
+                    setTab2ToB();
+                    setTab3ToB();
+                    setTab4ToB();
                     break;
                 case 1:
                     mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab2_btn1));
                     tTab2.setTextColor(getResources().getColor(R.color.tab_bnt1));
-
-                    if (currIndex == 0) {
-                        mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab1_btn0));
-                        tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    } else if (currIndex == 2) {
-                        mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab3_btn0));
-                        tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    } else if (currIndex == 3) {
-                        mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab4_btn0));
-                        tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    }
+                    setTab1ToB();
+                    setTab3ToB();
+                    setTab4ToB();
                     break;
                 case 2:
-                    mTab3.setImageDrawable(getResources().getDrawable(
-                            R.drawable.tab3_btn1));
+                    mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab3_btn1));
                     tTab3.setTextColor(getResources().getColor(R.color.tab_bnt1));
-                    if (currIndex == 0) {
-                        mTab1.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab1_btn0));
-                        tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    } else if (currIndex == 1) {
-                        mTab2.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab2_btn0));
-                        tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    } else if (currIndex == 3) {
-                        mTab4.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab4_btn0));
-                        tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    }
+                    setTab1ToB();
+                    setTab2ToB();
+                    setTab4ToB();
                     break;
                 case 3:
-                    mTab4.setImageDrawable(getResources().getDrawable(
-                            R.drawable.tab4_btn1));
+                    mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab4_btn1));
                     tTab4.setTextColor(getResources().getColor(R.color.tab_bnt1));
-                    if (currIndex == 0) {
-                        mTab1.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab1_btn0));
-                        tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    } else if (currIndex == 1) {
-                        mTab2.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab2_btn0));
-                        tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    } else if (currIndex == 2) {
-                        mTab3.setImageDrawable(getResources().getDrawable(
-                                R.drawable.tab3_btn0));
-                        tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
-                    }
+                    setTab1ToB();
+                    setTab2ToB();
+                    setTab3ToB();
                     break;
             }
-            currIndex = arg0;
+        }
+
+
+        private void setTab1ToB() {
+            mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab1_btn0));
+            tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
+        }
+
+        private void setTab2ToB() {
+            mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab2_btn0));
+            tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
+        }
+
+        private void setTab3ToB() {
+            mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab3_btn0));
+            tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
+        }
+
+        private void setTab4ToB() {
+            mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab4_btn0));
+            tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
         }
 
         @Override
@@ -144,8 +144,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private class MyPagerAdapter extends PagerAdapter {
         /**
-         * 获取要滑动的控件的数量，在这里我们以滑动的广告栏为例，那么这里就应该是展示的广告图片的ImageView数量
-         * @return
+         * 获取要滑动的控件的数量
+         *
+         * @return 页数
          */
         @Override
         public int getCount() {
@@ -153,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /**
-         * 来判断显示的是否是同一张图片，这里我们将两个参数相比较返回即可
+         * 来判断显示的是否是同一页，这里我们将两个参数相比较返回即可
+         *
          * @param arg0
          * @param arg1
          * @return
@@ -164,18 +166,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /**
-         * PagerAdapter只缓存三张要显示的图片，如果滑动的图片超出了缓存的范围，就会调用这个方法，将图片销毁
+         * PagerAdapter只缓存四页Tab图，如果滑动的Fragment超出了缓存的范围，就会调用这个方法，将其销毁
+         *
          * @param container
          * @param position
          * @param object
          */
         @Override
-        public void destroyItem(View container, int position, Object object) {
-            ((ViewPager) container).removeView(fragments.get(position).getView());
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView(fragments.get(position).getView());
         }
 
         /**
-         * 当要显示的图片可以进行缓存的时候，会调用这个方法进行显示图片的初始化，我们将要显示的ImageView加入到ViewGroup中，然后作为返回值返回即可
+         * 当要页面可以进行缓存的时候，会调用这个方法进行显示Tab的初始化，我们将要显示的Fragment加入到ViewGroup中，然后作为返回值返回即可
+         *
          * @param container
          * @param position
          * @return
@@ -208,8 +212,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        initViews();//初始化控件
+        ButterKnife.bind(this);
 
         fragments.add(new Tab1Fragment());
         fragments.add(new Tab2Fragment());
@@ -218,14 +221,10 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = this.getSupportFragmentManager();
 
-        viewPager = (MainViewPager) findViewById(R.id.viewPager_main);
         viewPager.setSlipping(true);//设置ViewPager是否可以滑动
         viewPager.setOffscreenPageLimit(4);
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
-        viewPager.removeOnPageChangeListener(new MyOnPageChangeListener());
         viewPager.setAdapter(new MyPagerAdapter());
-
-
     }
 
     /*@Override
@@ -246,34 +245,8 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }*/
-
-
-    /**
-     * 初始化控件
-     */
-    public void initViews() {
-        final RelativeLayout tab1Layout = (RelativeLayout) findViewById(R.id.tab1Layout);
-        mTab1 = (ImageView) findViewById(R.id.img_tab1_main);
-        mTab2 = (ImageView) findViewById(R.id.img_tab2_main);
-        mTab3 = (ImageView) findViewById(R.id.img_tab3_main);
-        mTab4 = (ImageView) findViewById(R.id.img_tab4_main);
-        mTab1.setOnClickListener(new MyOnClickListener(0));
-        mTab2.setOnClickListener(new MyOnClickListener(1));
-        mTab3.setOnClickListener(new MyOnClickListener(2));
-        mTab4.setOnClickListener(new MyOnClickListener(3));
-
-        tTab1 = (TextView) findViewById(R.id.text_tab1_main);   //获取textView控件
-        tTab2 = (TextView) findViewById(R.id.text_tab2_main);
-        tTab3 = (TextView) findViewById(R.id.text_tab3_main);
-        tTab4 = (TextView) findViewById(R.id.text_tab4_main);
-        tTab1.setOnClickListener(new MyOnClickListener(0));
-        tTab2.setOnClickListener(new MyOnClickListener(1));
-        tTab3.setOnClickListener(new MyOnClickListener(2));
-        tTab4.setOnClickListener(new MyOnClickListener(3));
-    }
 
     @Override
     public void onBackPressed() {
@@ -286,10 +259,11 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-        Handler mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                isExit = false;
-            }
-        };
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            isExit = false;
+        }
+    };
 }

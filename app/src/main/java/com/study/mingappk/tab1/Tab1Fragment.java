@@ -1,6 +1,5 @@
 package com.study.mingappk.tab1;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,35 +8,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.study.mingappk.R;
-import com.study.mingappk.userlogin.LoginActivity;
 
 
 public class Tab1Fragment extends Fragment {
-
-    private AppCompatActivity mActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_tab1, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mActivity = (AppCompatActivity) getActivity();
+        AppCompatActivity mActivity = (AppCompatActivity) getActivity();
         super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_tab1);
         mActivity.setSupportActionBar(toolbar);
-
-
-        initViews();//初始化组件
-    }
-
-    private void initViews() {
-
 
     }
 }

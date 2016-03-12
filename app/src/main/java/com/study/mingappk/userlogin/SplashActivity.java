@@ -1,10 +1,8 @@
-package com.study.mingappk.main;
+package com.study.mingappk.userlogin;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -12,20 +10,11 @@ import android.view.animation.Animation;
 
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.userlogin.LoginActivity;
+import com.study.mingappk.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
-    public static final int MAX_WAITING_TIME = 2000; //动画持续时长
-    protected boolean mShouldGoTo = true;
-    private SharedPreferences sp;
-    private String loginname;
-    private String loginpwd;
-    private static final String SHAREDPREFERENCES_NAME = "first_pref";
-    private static final int GO_MAIN = 1000;
-    private static final int GO_LOGIN = 1001;
-    private static final int GO_LOGIN_AUTO = 1002;
-    private static final long SPLASH_DELAY_MILLIS = 2000;//延迟时间
+    public static final int MAX_WAITING_TIME = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +26,14 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(view);
 
         //设置动画
-        AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);
-        aa.setDuration(MAX_WAITING_TIME);
+        AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);//透明度从0.3到不透明变化
+        aa.setDuration(MAX_WAITING_TIME);//动画持续时长
         view.startAnimation(aa);
         aa.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
             public void onAnimationEnd(Animation arg0) {
-                if (mShouldGoTo) {
-                    init();
-                }
+                init();
             }
 
             @Override
@@ -57,49 +44,21 @@ public class SplashActivity extends AppCompatActivity {
             public void onAnimationStart(Animation animation) {
             }
         });
-
-
     }
 
     private void init() {
-        // 读取SharedPreferences中需要的数据
-        // 使用SharedPreferences来记录程序的使用次数
-        SharedPreferences preferences = getSharedPreferences(
-                SHAREDPREFERENCES_NAME, MODE_PRIVATE);
 
-        sp = getSharedPreferences("setting", 0);
-        loginname = sp.getString("loginname", "");
-        loginpwd = sp.getString("loginpwd", "");
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        String loginname = sp.getString("loginname", "");
+        String loginpwd = sp.getString("loginpwd", "");
 
         if (!loginname.equals("") && !loginpwd.equals("")) {
-            mHandler.sendEmptyMessageDelayed(GO_LOGIN_AUTO, 0);
+            goLoginAuto();
         } else {
-            // 使用Handler的postDelayed方法数秒后执行跳转.
-            mHandler.sendEmptyMessageDelayed(GO_LOGIN, SPLASH_DELAY_MILLIS);
+            goLogin();
         }
     }
 
-    /**
-     * Handler:跳转到不同界面
-     */
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case GO_MAIN:
-                    goHome();
-                    break;
-                case GO_LOGIN:
-                    goLogin();
-                    break;
-                case GO_LOGIN_AUTO:
-                    goLoginAuto();
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
 
     private void goHome() {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);

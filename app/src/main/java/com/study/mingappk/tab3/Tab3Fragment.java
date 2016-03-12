@@ -18,8 +18,6 @@ public class Tab3Fragment extends Fragment {
     public Tab3Fragment() {
     }
 
-    private AppCompatActivity mActivity;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,7 +27,7 @@ public class Tab3Fragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mActivity = (AppCompatActivity) getActivity();
+        AppCompatActivity mActivity = (AppCompatActivity) getActivity();
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_tab3);
         mActivity.setSupportActionBar(toolbar);
 

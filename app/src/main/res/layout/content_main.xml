@@ -42,14 +42,14 @@
             android:layout_height="0.5dp"
             android:background="@color/line_bottom" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/tab_background"
             android:baselineAligned="true"
-            android:paddingBottom="@dimen/tab_image_padding">
+            android:paddingBottom="@dimen/tab_image_padding"
+            android:paddingTop="@dimen/tab_image_padding">
 
             <RelativeLayout
                 android:id="@+id/tab1Layout"
@@ -60,10 +60,8 @@
                 <ImageView
                     android:id="@+id/img_tab1_main"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/tab_height"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:clickable="true"
-                    android:paddingTop="@dimen/tab_image_padding"
                     android:scaleType="centerInside"
                     android:src="@drawable/tab1_btn1" />
 
@@ -75,10 +73,11 @@
                     android:layout_centerHorizontal="true"
                     android:text="@string/tab1_main"
                     android:textColor="@color/tab_bnt1"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/tab_text_size" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/tab2Layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -87,10 +86,8 @@
                 <ImageView
                     android:id="@+id/img_tab2_main"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/tab_height"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:clickable="true"
-                    android:paddingTop="@dimen/tab_image_padding"
                     android:scaleType="centerInside"
                     android:src="@drawable/tab2_btn0" />
 
@@ -102,10 +99,11 @@
                     android:layout_centerHorizontal="true"
                     android:text="@string/tab2_main"
                     android:textColor="@color/tab_bnt0"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/tab_text_size" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/tab3Layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -114,10 +112,8 @@
                 <ImageView
                     android:id="@+id/img_tab3_main"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/tab_height"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:clickable="true"
-                    android:paddingTop="@dimen/tab_image_padding"
                     android:scaleType="centerInside"
                     android:src="@drawable/tab3_btn0" />
 
@@ -129,10 +125,11 @@
                     android:layout_centerHorizontal="true"
                     android:text="@string/tab3_main"
                     android:textColor="@color/tab_bnt0"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/tab_text_size" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/tab4Layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -141,10 +138,8 @@
                 <ImageView
                     android:id="@+id/img_tab4_main"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/tab_height"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:clickable="true"
-                    android:paddingTop="@dimen/tab_image_padding"
                     android:scaleType="centerInside"
                     android:src="@drawable/tab4_btn0" />
 
@@ -156,7 +151,7 @@
                     android:layout_centerHorizontal="true"
                     android:text="@string/tab4_main"
                     android:textColor="@color/tab_bnt0"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/tab_text_size" />
             </RelativeLayout>
         </LinearLayout>
 

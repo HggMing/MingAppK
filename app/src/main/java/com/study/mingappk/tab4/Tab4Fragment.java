@@ -34,10 +34,6 @@ public class Tab4Fragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick(R.id.click_about)
-    public void onClick() {
-
-    }
 
     @OnClick({R.id.icon_head, R.id.click_changepwd, R.id.click_identity_binding,
             R.id.click_advice, R.id.click_check_version, R.id.click_about, R.id.btn_exit})

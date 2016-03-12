@@ -30,8 +30,6 @@ public class Tab2Fragment extends Fragment {
     PtrClassicFrameLayout ptrFrame;
 
 
-    private AppCompatActivity mActivity;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,7 +40,7 @@ public class Tab2Fragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        mActivity = (AppCompatActivity) getActivity();
+        AppCompatActivity mActivity = (AppCompatActivity) getActivity();
         mActivity.setSupportActionBar(toolbar);
 
         super.onViewCreated(view, savedInstanceState);
@@ -61,7 +59,6 @@ public class Tab2Fragment extends Fragment {
         ptrFrame.setPtrHandler(new PtrHandler() {//实现接口：PtrHandler接口关注业务的变化。其包含2个方法
             /**
              * 多种模式刷新模式可以选，多种UI样式可选。不管万千变化，在开始刷新时，都会调用这个方法进行数据刷新。
-             * @param frame
              */
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -70,10 +67,6 @@ public class Tab2Fragment extends Fragment {
 
             /**
              * 开发者可以通过此方法，确定可以进行下拉刷新的时机。比如列表数据为空，比如列表数据过期，比如嵌套在ViewPager中的某个Fragment中的一个列表数据为空。
-             * @param frame
-             * @param content
-             * @param header
-             * @return
              */
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
@@ -98,11 +91,6 @@ public class Tab2Fragment extends Fragment {
                 // ptrFrame.autoRefresh();
             }
         }, 150);
-        setupViews(ptrFrame);
-    }
-
-    protected void setupViews(final PtrClassicFrameLayout ptrFrame) {
-
     }
 
     /**
@@ -131,7 +119,7 @@ public class Tab2Fragment extends Fragment {
         double i = width * 0.5;
         int a = (int) i;
         ViewGroup.LayoutParams lp = slideshow.getLayoutParams();
-        lp.width = lp.MATCH_PARENT;
+        lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
         lp.height = a;
         slideshow.setLayoutParams(lp);
     }

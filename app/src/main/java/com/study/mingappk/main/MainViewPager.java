@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * @ClassName: MainViewPager @Description: TODO自定义ViewPager
+ * 自定义ViewPager:可设置是否能滑动切换ViewPager
  */
 public class MainViewPager extends ViewPager {
     private boolean isSlipping = true;/*可滑动标志位，初始化为可滑动*/
@@ -21,18 +21,12 @@ public class MainViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent arg0) {
-        if (!isSlipping) {
-            return false;
-        }
-        return super.onInterceptTouchEvent(arg0);
+        return isSlipping && super.onInterceptTouchEvent(arg0);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent arg0) {
-        if (!isSlipping) {
-            return false;
-        }
-        return super.onTouchEvent(arg0);
+        return isSlipping && super.onTouchEvent(arg0);
     }
 
     /**
