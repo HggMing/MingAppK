@@ -27,15 +27,15 @@ public class MyApplication extends Application {
         return instance;
     }
 
-    public LoginResult getUserInfo() {
-        return userInfo;
+    public LoginResult getLoginResult() {
+        return loginResult;
     }
 
-    public void setUserInfo(LoginResult userInfo) {
-        this.userInfo = userInfo;
+    public void setLoginResult(LoginResult loginResult) {
+        this.loginResult = loginResult;
     }
 
-    private LoginResult userInfo;
+    private LoginResult loginResult;
 
     /**
      * 添加Activity到容器中

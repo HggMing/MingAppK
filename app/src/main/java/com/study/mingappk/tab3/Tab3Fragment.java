@@ -38,13 +38,6 @@ public class Tab3Fragment extends Fragment {
         AppCompatActivity mActivity = (AppCompatActivity) getActivity();
         mActivity.setSupportActionBar(toolbar3);
 
-        //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
-        CollapsingToolbarLayout mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout_tab3);
-        //mCollapsingToolbarLayout.setTitle("CollapsingToolbarLayout");
-        //通过CollapsingToolbarLayout修改字体颜色
-        mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
-        mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN);//设置收缩后Toolbar上字体的颜色
-
     }
 
     @Override

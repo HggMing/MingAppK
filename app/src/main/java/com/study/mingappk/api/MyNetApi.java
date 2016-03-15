@@ -1,8 +1,10 @@
 package com.study.mingappk.api;
 
-import com.study.mingappk.api.result.AdviceResult;
+import com.study.mingappk.api.result.Result;
 import com.study.mingappk.api.result.LoginResult;
 import com.study.mingappk.api.result.PhoneResult;
+import com.study.mingappk.api.result.UserInfoResult;
+import com.study.mingappk.common.app.MyApplication;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -27,18 +29,27 @@ public class MyNetApi {
         myNetApiService = retrofit.create(MyNetApiService.class);
     }
 
+    public Call<Result> getCallAdvice( String content, String contact) {
+        String auth= MyApplication.getInstance().getLoginResult().getAuth();
+        return myNetApiService.ADVICE_RESULT_CALL(auth, content, contact);
+    }
 
-    public Call<PhoneResult> getCall(String phone) {
+    public Call<PhoneResult> getCallPhone(String phone) {
         String API_KEY = "8e13586b86e4b7f3758ba3bd6c9c9135";
         return myNetApiService.PHONE_RESULT_CALL(API_KEY, phone);
     }
 
-    public Call<LoginResult> getCall(String logname, String pwd) {
+    public Call<LoginResult> getCallLogin(String logname, String pwd) {
         return myNetApiService.LOGIN_RESULT_CALL(logname, pwd);
     }
 
-    public Call<AdviceResult> getCall(String auth, String content, String contact) {
-        return myNetApiService.ADVICE_RESULT_CALL(auth, content, contact);
+    public Call<UserInfoResult> getCallUser(String auth) {
+        return myNetApiService.USER_INFO_RESULT_CALL(auth);
+    }
+
+    public Call<Result> getCallChangePwd( String oldPwd, String pwd){
+        String auth= MyApplication.getInstance().getLoginResult().getAuth();
+        return myNetApiService.CHANGE_PWD_RESULT_CALL(auth,oldPwd,pwd);
     }
 
 }

@@ -2,15 +2,12 @@ package com.study.mingappk.tab4;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.study.mingappk.R;
 import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.api.result.AdviceResult;
-import com.study.mingappk.api.result.LoginResult;
-import com.study.mingappk.api.result.PhoneResult;
+import com.study.mingappk.api.result.Result;
 import com.study.mingappk.common.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.main.BackActivity;
@@ -33,7 +30,6 @@ public class AdviceActivity extends BackActivity {
 
     String content;//意见反馈
     String contact;//联系方式
-    String auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +42,16 @@ public class AdviceActivity extends BackActivity {
     public void onClick() {
         content = etContent.getText().toString();
         contact = etContact.getText().toString();
-        auth = MyApplication.getInstance().getUserInfo().getAuth();
         mSubmit();//提交
     }
 
     private void mSubmit() {
-        Call<AdviceResult> call = new MyNetApi().getCall(auth, content, contact);
-        call.enqueue(new Callback<AdviceResult>() {
+        Call<Result> call = new MyNetApi().getCallAdvice(content, contact);
+        call.enqueue(new Callback<Result>() {
             @Override
-            public void onResponse(Call<AdviceResult> call, Response<AdviceResult> response) {
+            public void onResponse(Call<Result> call, Response<Result> response) {
                 if (response.isSuccess()) {
-                    AdviceResult adviceResult = response.body();
+                    Result adviceResult = response.body();
                     if (adviceResult != null ) {
                         Dialog_Model.Builder builder = new Dialog_Model.Builder(AdviceActivity.this);
                         builder.setTitle("提示");
@@ -78,7 +73,7 @@ public class AdviceActivity extends BackActivity {
             }
 
             @Override
-            public void onFailure(Call<AdviceResult> call, Throwable t) {
+            public void onFailure(Call<Result> call, Throwable t) {
 
             }
         });

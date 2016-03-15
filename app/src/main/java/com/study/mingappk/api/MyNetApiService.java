@@ -2,9 +2,11 @@ package com.study.mingappk.api;
 
 import com.study.mingappk.api.result.LoginResult;
 import com.study.mingappk.api.result.PhoneResult;
-import com.study.mingappk.api.result.AdviceResult;
+import com.study.mingappk.api.result.Result;
+import com.study.mingappk.api.result.UserInfoResult;
 
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Query;
@@ -42,5 +44,26 @@ public interface MyNetApiService {
      * @return 是否成功
      */
     @GET("feedback/add")
-    Call<AdviceResult> ADVICE_RESULT_CALL(@Query("auth") String auth, @Query("content") String content, @Query("contact") String contact);
+    Call<Result> ADVICE_RESULT_CALL(@Query("auth") String auth, @Query("content") String content, @Query("contact") String contact);
+
+    /**
+     * 获取用户信息接口
+     *
+     * @param auth 认证信息
+     * @return 用户信息
+     */
+    @GET("user/ginfo")
+    Call<UserInfoResult> USER_INFO_RESULT_CALL(@Query("auth") String auth);
+
+    /**
+     * 修改密码接口
+     *
+     * @param auth   认证信息
+     * @param oldPwd 原始密码
+     * @param pwd    新密码 新密码（6-16位）
+     * @return 结果msg
+     */
+    @GET("password/upwd")
+    Call<Result> CHANGE_PWD_RESULT_CALL(@Query("auth") String auth, @Query("Old_pwd") String oldPwd, @Query("pwd") String pwd);
+
 }

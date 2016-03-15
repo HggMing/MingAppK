@@ -1,13 +1,14 @@
 package com.study.mingappk.api.result;
 
 /**
+ *通用无附带信息的返回
  * Created by Ming on 2016/3/13.
  */
-public class AdviceResult {
+public class Result {
 
     /**
      * err : 0
-     * msg : 反馈成功
+     * msg : 反馈结果详细提示内容
      */
 
     private int err;

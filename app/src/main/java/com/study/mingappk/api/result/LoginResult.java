@@ -1,6 +1,7 @@
 package com.study.mingappk.api.result;
 
 /**
+ * 登录信息 返回
  * Created by Ming on 2016/3/11.
  */
 public class LoginResult {

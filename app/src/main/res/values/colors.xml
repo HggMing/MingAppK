@@ -31,4 +31,5 @@
     <color name="task_list_head">#ffe4e4e4</color>
     <!--动态页面-->
     <color name="font_black">#010101</color>
+    <color name="blue_setting">#7AB9DC</color>
 </resources>

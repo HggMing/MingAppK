@@ -13,8 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.study.mingappk.R;
+import com.study.mingappk.api.MyNetApi;
+import com.study.mingappk.api.result.Result;
+import com.study.mingappk.common.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.test.TestActivity;
 import com.study.mingappk.userlogin.LoginActivity;
@@ -22,6 +26,9 @@ import com.study.mingappk.userlogin.LoginActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Tab4Fragment extends Fragment {
     AppCompatActivity mActivity;
@@ -43,14 +50,13 @@ public class Tab4Fragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         AppCompatActivity mActivity = (AppCompatActivity) getActivity();
-        mActivity.setSupportActionBar(toolbar4);
-
+       // mActivity.setSupportActionBar(toolbar4);
+        //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
         CollapsingToolbarLayout mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout_tab4);
         //mCollapsingToolbarLayout.setTitle("CollapsingToolbarLayout");
         //通过CollapsingToolbarLayout修改字体颜色
-        mCollapsingToolbarLayout.setExpandedTitleColor(Color.BLUE);//设置还没收缩时状态下字体颜色
-         mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
-
+        mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.blue_setting));//设置还没收缩时状态下字体颜色
+        // mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
     }
 
     @Override
@@ -67,17 +73,19 @@ public class Tab4Fragment extends Fragment {
             case R.id.icon_head:
                 break;
             case R.id.click_changepwd:
-                Intent intent = new Intent(mActivity, TestActivity.class);
-                startActivity(intent);
+                changePwd();
                 break;
             case R.id.click_identity_binding:
+                Intent intent2 = new Intent(mActivity, ChangePwdActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.click_advice:
-                intent = new Intent();
-                intent.setClass(mActivity, AdviceActivity.class);
+                Intent intent = new Intent(mActivity, AdviceActivity.class);
                 startActivity(intent);
                 break;
             case R.id.click_check_version:
+                Intent intent4 = new Intent(mActivity, TestActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.click_about:
                 Intent intent5 = new Intent(mActivity, AboutActivity.class);
@@ -87,6 +95,92 @@ public class Tab4Fragment extends Fragment {
                 logout();
                 break;
         }
+    }
+
+    /**
+     * 修改密码
+     */
+    private void changePwd() {
+        final Dialog_ChangePwd.Builder pwddialog = new Dialog_ChangePwd.Builder(mActivity);
+        pwddialog.setTitle("修改登录密码");
+
+        pwddialog
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String oldpwd = pwddialog.et_oldpwd.getEditableText()
+                                .toString();
+                        String newpwd1 = pwddialog.et_newpwd1.getEditableText()
+                                .toString();
+                        String newpwd2 = pwddialog.et_newpwd2.getEditableText()
+                                .toString();
+
+                        if (oldpwd.equals("")) {
+                            Toast.makeText(mActivity, "旧密码不能为空",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (newpwd1.equals("")) {
+                            Toast.makeText(mActivity, "新密码不能为空",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (newpwd2.equals("")) {
+                            Toast.makeText(mActivity, "确认密码不能为空",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (!newpwd1.equals(newpwd2)) {
+                            Toast.makeText(mActivity, "两次输入密码不一致",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (newpwd1.length() < 6 || newpwd1.length() > 16) {
+                            Toast.makeText(mActivity, "密码必须在6-16位",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        new MyNetApi().getCallChangePwd(oldpwd, newpwd1).enqueue(new Callback<Result>() {
+                            @Override
+                            public void onResponse(Call<Result> call, Response<Result> response) {
+                                if (response.isSuccess()) {
+                                    Result changePwdResult = response.body();
+                                    if (changePwdResult != null) {
+                                        Dialog_Model.Builder builder2 = new Dialog_Model.Builder(mActivity);
+                                        builder2.setTitle("提示");
+                                        builder2.setCannel(false);
+                                        builder2.setMessage(changePwdResult.getMsg());
+                                        builder2.setPositiveButton("确定",
+                                                new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog,
+                                                                        int which) {
+                                                        dialog.dismiss();
+                                                    }
+
+                                                });
+                                        if (!mActivity.isFinishing()) {
+                                            builder2.create().show();
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Result> call, Throwable t) {
+                                Toast.makeText(mActivity, "修改密码失败", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        dialog.dismiss();
+                    }
+
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
     }
 
     /**

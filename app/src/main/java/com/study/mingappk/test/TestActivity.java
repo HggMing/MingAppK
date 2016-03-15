@@ -61,7 +61,7 @@ public class TestActivity extends AppCompatActivity {
             return;
         }
 
-        Call<PhoneResult> call = new MyNetApi().getCall(etPhone.getText().toString());
+        Call<PhoneResult> call = new MyNetApi().getCallPhone(etPhone.getText().toString());
 
         //发送请求
 
@@ -90,7 +90,7 @@ public class TestActivity extends AppCompatActivity {
         @Override
         public void call(Subscriber<? super Response<PhoneResult>> subscriber) {
 
-            Call<PhoneResult> call = new MyNetApi().getCall(etPhone.getText().toString());
+            Call<PhoneResult> call = new MyNetApi().getCallPhone(etPhone.getText().toString());
             try {
                 subscriber.onNext(call.execute());
             } catch (IOException e) {

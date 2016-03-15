@@ -97,7 +97,7 @@ public class LoginActivity extends Activity {
     rx.Observable<LoginResult> loginResultObservable = rx.Observable.create(new Observable.OnSubscribe<LoginResult>() {
         @Override
         public void call(Subscriber<? super LoginResult> subscriber) {
-            Call<LoginResult> call = new MyNetApi().getCall(loginname, loginpwd);
+            Call<LoginResult> call = new MyNetApi().getCallLogin(loginname, loginpwd);
             Response<LoginResult> loginResultResponse = null;
             try {
                 loginResultResponse = call.execute();
@@ -126,7 +126,6 @@ public class LoginActivity extends Activity {
                 .subscribe(new Subscriber<LoginResult>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("mm", "登录成功了！！！！");
                     }
 
                     @Override
@@ -137,7 +136,7 @@ public class LoginActivity extends Activity {
                     public void onNext(LoginResult loginResult) {
                         if (loginResult != null) {
                             if (loginResult.getErr() == 0) {
-                                MyApplication.getInstance().setUserInfo(loginResult);//保存用户信息
+                                MyApplication.getInstance().setLoginResult(loginResult);//保存用户登录认证信息
                                 loginSuccess();
                                 return;
                             }
