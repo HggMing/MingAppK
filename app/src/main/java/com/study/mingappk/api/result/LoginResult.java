@@ -1,4 +1,4 @@
-package com.study.mingappk.userlogin;
+package com.study.mingappk.api.result;
 
 /**
  * Created by Ming on 2016/3/11.

@@ -12,8 +12,14 @@ import android.view.ViewGroup;
 
 import com.study.mingappk.R;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 public class Tab3Fragment extends Fragment {
+
+    @Bind(R.id.toolbar_tab3)
+    Toolbar toolbar3;
 
     public Tab3Fragment() {
     }
@@ -21,15 +27,16 @@ public class Tab3Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_tab3, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab3, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         AppCompatActivity mActivity = (AppCompatActivity) getActivity();
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_tab3);
-        mActivity.setSupportActionBar(toolbar);
+        mActivity.setSupportActionBar(toolbar3);
 
         //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
         CollapsingToolbarLayout mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout_tab3);
@@ -38,5 +45,11 @@ public class Tab3Fragment extends Fragment {
         mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN);//设置收缩后Toolbar上字体的颜色
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

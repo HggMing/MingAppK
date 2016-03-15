@@ -79,28 +79,28 @@ public class MainActivity extends AppCompatActivity {
         public void onPageSelected(int arg0) {
             switch (arg0) {
                 case 0:
-                    mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab1_btn1));
+                    mTab1.setImageDrawable(getResources().getDrawable(R.mipmap.tab1_btn1));
                     tTab1.setTextColor(getResources().getColor(R.color.tab_bnt1));   //选中时的字体颜色
                     setTab2ToB();
                     setTab3ToB();
                     setTab4ToB();
                     break;
                 case 1:
-                    mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab2_btn1));
+                    mTab2.setImageDrawable(getResources().getDrawable(R.mipmap.tab2_btn1));
                     tTab2.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     setTab1ToB();
                     setTab3ToB();
                     setTab4ToB();
                     break;
                 case 2:
-                    mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab3_btn1));
+                    mTab3.setImageDrawable(getResources().getDrawable(R.mipmap.tab3_btn1));
                     tTab3.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     setTab1ToB();
                     setTab2ToB();
                     setTab4ToB();
                     break;
                 case 3:
-                    mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab4_btn1));
+                    mTab4.setImageDrawable(getResources().getDrawable(R.mipmap.tab4_btn1));
                     tTab4.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     setTab1ToB();
                     setTab2ToB();
@@ -111,22 +111,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         private void setTab1ToB() {
-            mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab1_btn0));
+            mTab1.setImageDrawable(getResources().getDrawable(R.mipmap.tab1_btn0));
             tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
         }
 
         private void setTab2ToB() {
-            mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab2_btn0));
+            mTab2.setImageDrawable(getResources().getDrawable(R.mipmap.tab2_btn0));
             tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
         }
 
         private void setTab3ToB() {
-            mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab3_btn0));
+            mTab3.setImageDrawable(getResources().getDrawable(R.mipmap.tab3_btn0));
             tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
         }
 
         private void setTab4ToB() {
-            mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab4_btn0));
+            mTab4.setImageDrawable(getResources().getDrawable(R.mipmap.tab4_btn0));
             tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
         }
 

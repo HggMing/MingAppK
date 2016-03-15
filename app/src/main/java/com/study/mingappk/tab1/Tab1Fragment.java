@@ -11,20 +11,33 @@ import android.view.ViewGroup;
 
 import com.study.mingappk.R;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 public class Tab1Fragment extends Fragment {
 
+    @Bind(R.id.toolbar_tab1)
+    Toolbar toolbar1;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_tab1, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab1, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         AppCompatActivity mActivity = (AppCompatActivity) getActivity();
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_tab1);
-        mActivity.setSupportActionBar(toolbar);
+        mActivity.setSupportActionBar(toolbar1);
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

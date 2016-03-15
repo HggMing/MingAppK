@@ -1,171 +1,177 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/divide">
+    android:fitsSystemWindows="true"
+    tools:context=".tab4.Tab4Fragment">
 
-    <LinearLayout
-        android:id="@+id/rootLayout"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout_tab4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/stand_bg"
-            android:paddingBottom="17dp"
-            android:layout_weight="1">
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/tab3_main">
 
-            <FrameLayout
-                android:id="@+id/userBackgroundLayout"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="188dp">
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/background_sea"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7" />
 
-                <ImageView
-                    android:id="@+id/userBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/user_home_bg" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_tab4"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#33000000" />
-            </FrameLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divide"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/rootLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include layout="@layout/divide_15_top_bottom" />
 
             <RelativeLayout
-                android:id="@+id/icon_sharow"
-                android:layout_width="87dp"
-                android:layout_height="87dp"
-                android:layout_alignBottom="@id/userBackgroundLayout"
-                android:layout_marginBottom="-27dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/user_detail_sharow"
-                android:visibility="gone">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/icon_head"
-                    android:layout_width="83dp"
-                    android:layout_height="83dp"
-                    android:layout_centerInParent="true" />
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_margin="12dp"
+                    android:background="@mipmap/user_detail_sharow"
+                    app:civ_border_color="@color/divide_line"
+                    app:civ_border_width="1dp"
+                    tools:src="@mipmap/icon" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@id/icon_head"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/font_black_content"
+                    android:textSize="18sp"
+                    tools:text="昵称：傅红尘" />
+
+                <ImageView
+                    android:id="@+id/sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/icon_head"
+                    android:layout_toEndOf="@id/icon_head"
+                    android:layout_toRightOf="@id/icon_head"
+                    android:src="@mipmap/ic_sex_boy"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/userBackgroundLayout"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="44dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                tools:text="昵称：傅红尘"
-                android:textColor="@color/font_black_content"
-                android:textSize="18sp" />
-
-
-            <ImageView
-                android:id="@+id/sex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/name"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="3dp"
-                android:layout_toRightOf="@id/name"
-                android:src="@drawable/ic_sex_boy" />
-
-        </RelativeLayout>
-
-
-        <include layout="@layout/divide_15_top_bottom" />
-
-
-        <LinearLayout xmlns:listItem1="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/stand_bg"
-            android:orientation="vertical"
-            android:layout_weight="1">
-
-            <com.study.mingappk.tab4.myviews.ListItem1
-                android:id="@+id/click_changepwd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                listItem1:itemIcon="@drawable/tab4_changepwd"
-                listItem1:itemTitle="修改密码" />
-
             <include layout="@layout/divide_15_top_bottom" />
 
-            <com.study.mingappk.tab4.myviews.ListItem1
-                android:id="@+id/click_identity_binding"
+
+            <LinearLayout xmlns:listItem1="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                listItem1:itemIcon="@drawable/tab4_identity_binding"
-                listItem1:itemTitle="身份绑定" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/stand_bg"
+                android:orientation="vertical">
 
-            <include layout="@layout/divide_15_top_bottom" />
+                <com.study.mingappk.tab4.myviews.ListItem1
+                    android:id="@+id/click_changepwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_changepwd"
+                    listItem1:itemTitle="修改密码" />
 
-            <com.study.mingappk.tab4.myviews.ListItem1
-                android:id="@+id/click_advice"
+                <include layout="@layout/divide_15_top_bottom" />
+
+                <com.study.mingappk.tab4.myviews.ListItem1
+                    android:id="@+id/click_identity_binding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_identity_binding"
+                    listItem1:itemTitle="身份绑定" />
+
+                <include layout="@layout/divide_15_top_bottom" />
+
+                <com.study.mingappk.tab4.myviews.ListItem1
+                    android:id="@+id/click_advice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_advice"
+                    listItem1:itemTitle="意见反馈" />
+
+                <include layout="@layout/divide_1_12" />
+
+                <com.study.mingappk.tab4.myviews.ListItem1
+                    android:id="@+id/click_check_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_check_version"
+                    listItem1:itemTitle="版本更新" />
+
+                <include layout="@layout/divide_15_top_bottom" />
+
+                <com.study.mingappk.tab4.myviews.ListItem1
+                    android:id="@+id/click_about"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:visibility="visible"
+                    listItem1:itemIcon="@mipmap/tab4_about"
+                    listItem1:itemTitle="关于我们" />
+
+            </LinearLayout>
+
+            <include layout="@layout/divide_15_top" />
+
+            <RelativeLayout
+                android:id="@+id/layout_logout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                listItem1:itemIcon="@drawable/tab4_advice"
-                listItem1:itemTitle="意见反馈" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/divide"
+                android:paddingBottom="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
-            <include layout="@layout/divide_1_12" />
-
-            <com.study.mingappk.tab4.myviews.ListItem1
-                android:id="@+id/click_check_version"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                listItem1:itemIcon="@drawable/tab4_check_version"
-                listItem1:itemTitle="版本更新" />
-
-            <include layout="@layout/divide_15_top_bottom" />
-
-            <com.study.mingappk.tab4.myviews.ListItem1
-                android:id="@+id/click_about"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:visibility="visible"
-                listItem1:itemIcon="@drawable/tab4_about"
-                listItem1:itemTitle="关于我们" />
-
+                <Button
+                    android:id="@+id/btn_exit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_green_common"
+                    android:gravity="center"
+                    android:text="退出登录"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </RelativeLayout>
         </LinearLayout>
-
-        <include layout="@layout/divide_15_top"
-            />
-
-        <RelativeLayout
-            android:id="@+id/layout_logout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/divide"
-            android:paddingBottom="15dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/btn_exit"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:background="@drawable/button_round_green"
-                android:gravity="center"
-                android:text="退出登录"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

@@ -13,7 +13,7 @@
         android:layout_width="@dimen/project_icon_width"
         android:layout_height="@dimen/project_icon_width"
         android:layout_marginRight="15dp"
-        android:background="@drawable/user_home_project" />
+        android:background="@mipmap/user_home_project" />
 
     <TextView
         android:id="@+id/title"
@@ -31,7 +31,7 @@
         android:layout_width="9dp"
         android:layout_height="9dp"
         android:layout_marginRight="12dp"
-        android:background="@drawable/ic_notify"
+        android:background="@mipmap/ic_notify"
         android:gravity="center"
         android:visibility="invisible" />
 

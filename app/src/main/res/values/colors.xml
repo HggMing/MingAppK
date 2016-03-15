@@ -23,6 +23,7 @@
     <color name="font_black_content">#ff222222</color>
     <color name="divide_line">#ffdddddd</color>
     <color name="font_green">#ff3bbd79</color>
+    <color name="font_green2">#309b63</color>
     <color name="white_pressed">#ffd5d5d5</color>
     <!--发布消息界面颜色-->
     <color name="input_background">#ffe8e8e8</color>

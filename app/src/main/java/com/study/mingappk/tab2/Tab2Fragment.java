@@ -1,6 +1,5 @@
 package com.study.mingappk.tab2;
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 
 import butterknife.Bind;
@@ -23,12 +23,12 @@ import in.srain.cube.views.ptr.PtrHandler;
 public class Tab2Fragment extends Fragment {
 
     @Bind(R.id.toolbar_tab2)
-    Toolbar toolbar;
-    @Bind(R.id.slideshow_tab2)
-    SlideShowView slideshow;
+    Toolbar toolbar2;
     @Bind(R.id.pull_to_refresh)
     PtrClassicFrameLayout ptrFrame;
-
+    String imageUrls = "http://imgsrc.baidu.com/forum/pic/item/3ac79f3df8dcd10036d1faba728b4710b8122fdf.jpg";
+    @Bind(R.id.img_test)
+    ImageView imgTest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,11 +41,12 @@ public class Tab2Fragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         AppCompatActivity mActivity = (AppCompatActivity) getActivity();
-        mActivity.setSupportActionBar(toolbar);
+        mActivity.setSupportActionBar(toolbar2);
 
         super.onViewCreated(view, savedInstanceState);
 
-        setPictureHeight();
+        Glide.with(this).load(imageUrls).into(imgTest);
+
         setPullToRefresh();
     }
 
@@ -76,7 +77,7 @@ public class Tab2Fragment extends Fragment {
         ptrFrame.setLastUpdateTimeRelateObject(this);
 
         // 下面这些是默认设置，也可通过xml设置
-        ptrFrame.setResistance(3f);//抗性，默认1.7f
+        ptrFrame.setResistance(1.7f);//抗性，默认1.7f
         ptrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
         ptrFrame.setDurationToClose(200);
         ptrFrame.setDurationToCloseHeader(1000);
@@ -100,29 +101,12 @@ public class Tab2Fragment extends Fragment {
         ptrFrame.postDelayed(new Runnable() {
             @Override
             public void run() {
-                slideshow.initData();
+                //具体刷新内容
                 ptrFrame.refreshComplete();
             }
         }, 300);
     }
 
-    /**
-     * 设置滚动图片的高度为屏幕宽度的一半
-     */
-    private void setPictureHeight() {
-        WindowManager wm = getActivity().getWindowManager();
-        Point size = new Point();
-        wm.getDefaultDisplay().getSize(size);
-        int width = size.x;
-        // int width = wm.getDefaultDisplay().getWidth();
-        //int height = wm.getDefaultDisplay().getHeight();
-        double i = width * 0.5;
-        int a = (int) i;
-        ViewGroup.LayoutParams lp = slideshow.getLayoutParams();
-        lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        lp.height = a;
-        slideshow.setLayoutParams(lp);
-    }
 
     @Override
     public void onDestroyView() {

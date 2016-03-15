@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/logback" />
+        android:src="@mipmap/logback" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
-                android:background="@drawable/icon"
+                android:background="@mipmap/icon"
                 android:visibility="invisible" />
 
             <TextView
@@ -58,14 +58,14 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="40dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/loginleftphone" />
+                    android:src="@mipmap/loginleftphone" />
 
                 <EditText
                     android:id="@+id/et_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/loginback"
+                    android:background="@mipmap/loginback"
                     android:hint="手机号"
                     android:inputType="phone"
                     android:padding="10dp"
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="40dp"
-                    android:src="@drawable/loginright" />
+                    android:src="@mipmap/loginright" />
             </LinearLayout>
 
             <LinearLayout
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="40dp"
-                    android:background="@drawable/loginleftpwd"
+                    android:background="@mipmap/loginleftpwd"
                     android:padding="10dp" />
 
                 <EditText
@@ -102,7 +102,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/loginback"
+                    android:background="@mipmap/loginback"
                     android:hint="密码"
                     android:inputType="textPassword"
                     android:padding="10dp"
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="40dp"
-                    android:background="@drawable/loginright"
+                    android:background="@mipmap/loginright"
                     android:padding="10dp" />
 
             </LinearLayout>
@@ -133,7 +133,7 @@
                     android:id="@+id/img_jzmm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/agree" />
+                    android:background="@mipmap/agree" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -154,53 +154,6 @@
                     android:text="立即注册"
                     android:textColor="#FFFFFF" />
             </RelativeLayout>
-
-            <FrameLayout
-                android:id="@+id/layout_framelogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout_jzmm"
-                android:visibility="gone">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imgview_btnleft"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="60dp"
-                        android:background="@drawable/halfleft"
-                        android:padding="10dp" />
-
-                    <ImageView
-                        android:id="@+id/imgview_btnright"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="40dp"
-                        android:layout_marginTop="60dp"
-                        android:background="@drawable/halfright"
-                        android:padding="10dp" />
-
-                    <Button
-                        android:id="@+id/btn_login_anim"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="60dp"
-                        android:layout_toLeftOf="@id/imgview_btnright"
-                        android:layout_toRightOf="@id/imgview_btnleft"
-                        android:background="@drawable/middle"
-                        android:text="登录"
-                        android:textColor="#ffffff"
-                        android:textSize="18sp" />
-                </RelativeLayout>
-
-
-            </FrameLayout>
 
             <Button
                 android:id="@+id/btn_login"

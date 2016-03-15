@@ -24,12 +24,11 @@ public class ListItem1 extends FrameLayout {
 
     public ListItem1(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        View.inflate(context, R.layout.list_item_1, this);
+        View.inflate(context, R.layout.list_item_tab4, this);
         mIcon = findViewById(R.id.icon);
         mText = (TextView) findViewById(R.id.title);
         badge = findViewById(R.id.badge);
@@ -37,8 +36,7 @@ public class ListItem1 extends FrameLayout {
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ListItem1);
         String title = array.getString(R.styleable.ListItem1_itemTitle);
-        int icon = array.getResourceId(R.styleable.ListItem1_itemIcon, R.drawable.user_home_project);
-
+        int icon = array.getResourceId(R.styleable.ListItem1_itemIcon, R.mipmap.user_home_project);
         boolean center = array.getBoolean(R.styleable.ListItem1_itemCenter, false);
         array.recycle();
 
@@ -48,7 +46,6 @@ public class ListItem1 extends FrameLayout {
 
         if (center) {
             findViewById(R.id.arrow).setVisibility(GONE);
-
             LinearLayout.LayoutParams layoutParams;
             layoutParams = (LinearLayout.LayoutParams) mText.getLayoutParams();
             layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;

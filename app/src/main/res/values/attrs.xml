@@ -5,7 +5,4 @@
         <attr name="itemTitle" format="string" />
         <attr name="itemCenter" format="boolean" />
     </declare-styleable>
-
-
-
 </resources>

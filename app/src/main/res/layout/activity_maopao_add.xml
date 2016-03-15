@@ -97,7 +97,7 @@
                     android:id="@+id/popEmoji"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/message_button_add" />
+                    android:background="@mipmap/message_button_add" />
 
             </LinearLayout>
 
@@ -110,7 +110,7 @@
                     android:id="@+id/popPhoto"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/pop_photo" />
+                    android:background="@mipmap/pop_photo" />
             </LinearLayout>
 
             <LinearLayout

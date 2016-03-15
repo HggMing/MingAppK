@@ -1,66 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/task_list_head">
-
-    <View
-        android:id="@+id/icon"
-        android:layout_width="83dp"
-        android:layout_height="83dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/icon" />
-
-    <TextView
-        android:id="@+id/t1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/icon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:text="我们村-乡情零距离"
-        android:textColor="#000000"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/t1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/font_black_comment"
-        android:textSize="13sp"
-        tools:text="版本号：1.0.11" />
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/version"
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/task_list_head">
+
+        <View
+            android:id="@+id/icon"
+            android:layout_width="83dp"
+            android:layout_height="83dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@mipmap/icon" />
 
         <TextView
-            android:id="@+id/t2"
+            android:id="@+id/t1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_below="@id/icon"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp"
-            android:text="客户服务电话：400-009-2006"
+            android:text="我们村-乡情零距离"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/about_update"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/t2"
-            android:layout_margin="20dp"
-            android:textSize="18sp"
-            tools:text="版本内容" />
-    </RelativeLayout>
-</RelativeLayout>
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/t1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/font_black_comment"
+            android:textSize="13sp"
+            tools:text="版本号：1.0.11" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/version"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/t2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="14dp"
+                android:text="客户服务电话：400-009-2006"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/about_update"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/t2"
+                android:layout_margin="20dp"
+                android:textSize="18sp"
+                tools:text="版本内容" />
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
 

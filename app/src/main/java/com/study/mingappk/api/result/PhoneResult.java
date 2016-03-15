@@ -1,4 +1,4 @@
-package com.study.mingappk.test;
+package com.study.mingappk.api.result;
 
 /**
  * 查询手机号归属地，请求返回结果json转java

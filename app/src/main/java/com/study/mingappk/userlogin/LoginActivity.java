@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
+import com.study.mingappk.api.result.LoginResult;
+import com.study.mingappk.api.MyNetApi;
+import com.study.mingappk.common.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.main.MainActivity;
@@ -26,6 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
+import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -82,10 +86,10 @@ public class LoginActivity extends Activity {
         et_name.setText(loginname);
 
         if (isRememberPwd) {
-            img_jzmm.setBackgroundResource(R.drawable.agree);
+            img_jzmm.setBackgroundResource(R.mipmap.agree);
             et_pwd.setText(loginpwd);
         } else {
-            img_jzmm.setBackgroundResource(R.drawable.agree_no);
+            img_jzmm.setBackgroundResource(R.mipmap.agree_no);
         }
 
     }
@@ -93,12 +97,19 @@ public class LoginActivity extends Activity {
     rx.Observable<LoginResult> loginResultObservable = rx.Observable.create(new Observable.OnSubscribe<LoginResult>() {
         @Override
         public void call(Subscriber<? super LoginResult> subscriber) {
-            Call<LoginResult> call = new LoginApi().getCall(loginname, loginpwd);
+            Call<LoginResult> call = new MyNetApi().getCall(loginname, loginpwd);
+            Response<LoginResult> loginResultResponse = null;
             try {
-                subscriber.onNext(call.execute().body());
+                loginResultResponse = call.execute();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if (loginResultResponse != null && loginResultResponse.isSuccess()) {
+                subscriber.onNext(loginResultResponse.body());
+            } else {
+                subscriber.onNext(null);
+            }
+            subscriber.onCompleted();
         }
     });
 
@@ -124,10 +135,9 @@ public class LoginActivity extends Activity {
 
                     @Override
                     public void onNext(LoginResult loginResult) {
-                        if (loginResult == null | loginResult.equals("")) {
-                            loginResult.setMsg("亲，网络不给力啊,请检查网络");
-                        } else {
+                        if (loginResult != null) {
                             if (loginResult.getErr() == 0) {
+                                MyApplication.getInstance().setUserInfo(loginResult);//保存用户信息
                                 loginSuccess();
                                 return;
                             }
@@ -136,6 +146,10 @@ public class LoginActivity extends Activity {
                                 loginFailureToReg(point);
                                 return;
                             }
+                        } else {
+                            point = "亲，网络不给力啊,请检查网络";
+                            loginFailure(point);
+                            return;
                         }
                         point = loginResult.getMsg();
                         loginFailure(point);
@@ -145,6 +159,7 @@ public class LoginActivity extends Activity {
 
     /**
      * 输入手机号未注册
+     *
      * @param s 提示内容
      */
     private void loginFailureToReg(String s) {
@@ -267,12 +282,12 @@ public class LoginActivity extends Activity {
             isRememberPwd = false;
             spEditor.putBoolean("isRememberPwd", false);
             spEditor.commit();
-            img_jzmm.setBackgroundResource(R.drawable.agree_no);
+            img_jzmm.setBackgroundResource(R.mipmap.agree_no);
         } else {
             isRememberPwd = true;
             spEditor.putBoolean("isRememberPwd", true);
             spEditor.commit();
-            img_jzmm.setBackgroundResource(R.drawable.agree);
+            img_jzmm.setBackgroundResource(R.mipmap.agree);
         }
     }
 

@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Application;
 import android.widget.Toast;
 
+import com.study.mingappk.api.result.LoginResult;
+
+import java.security.PrivateKey;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -23,6 +26,16 @@ public class MyApplication extends Application {
         }
         return instance;
     }
+
+    public LoginResult getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(LoginResult userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    private LoginResult userInfo;
 
     /**
      * 添加Activity到容器中

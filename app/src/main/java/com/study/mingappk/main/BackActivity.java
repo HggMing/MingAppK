@@ -15,7 +15,7 @@ public class BackActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         //设备返回图标样式
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_back);
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.app_back);
     }
 
     @Override

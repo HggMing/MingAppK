@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.study.mingappk.R;
+import com.study.mingappk.api.MyNetApi;
+import com.study.mingappk.api.result.PhoneResult;
 
 import java.io.IOException;
 
@@ -59,7 +61,7 @@ public class TestActivity extends AppCompatActivity {
             return;
         }
 
-        Call<PhoneResult> call = new PhoneAPI().getCall(etPhone.getText().toString());
+        Call<PhoneResult> call = new MyNetApi().getCall(etPhone.getText().toString());
 
         //发送请求
 
@@ -88,7 +90,7 @@ public class TestActivity extends AppCompatActivity {
         @Override
         public void call(Subscriber<? super Response<PhoneResult>> subscriber) {
 
-            Call<PhoneResult> call = new PhoneAPI().getCall(etPhone.getText().toString());
+            Call<PhoneResult> call = new MyNetApi().getCall(etPhone.getText().toString());
             try {
                 subscriber.onNext(call.execute());
             } catch (IOException e) {
