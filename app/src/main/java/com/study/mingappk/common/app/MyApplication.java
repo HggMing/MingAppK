@@ -5,17 +5,13 @@ import android.app.Application;
 import android.widget.Toast;
 
 import com.study.mingappk.api.result.LoginResult;
+import com.study.mingappk.api.result.UserInfoResult;
 
-import java.security.PrivateKey;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
-
-    private List<Activity> activityList = new LinkedList<Activity>();
-
     /**
      * 单例模式中获取唯一的Application实例
      */
@@ -27,40 +23,32 @@ public class MyApplication extends Application {
         return instance;
     }
 
-    public LoginResult getLoginResult() {
-        return loginResult;
+    public String getAuth() {
+        return auth;
     }
 
-    public void setLoginResult(LoginResult loginResult) {
-        this.loginResult = loginResult;
+    public void setAuth(String auth) {
+        this.auth = auth;
     }
 
-    private LoginResult loginResult;
+    private String auth;
 
-    /**
-     * 添加Activity到容器中
-     *
-     * @param activity 传入当前activity
-     */
-    public void addActivity(Activity activity) {
-        activityList.add(activity);
+    public static String getBaseUrl() {
+        return BASE_URL2;
     }
 
-    /**
-     * 遍历所有Activity并finish,退出软件
-     */
-    public void exit() {
+    private static final String BASE_URL2 = "http://121.40.105.149:9901";//API接口的主机地址
 
-        for (Activity activity : activityList) {
-            activity.finish();
-        }
-
-        try {
-            System.exit(0);
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-
+    public UserInfoResult.DataEntity getUserInfo() {
+        return userInfo;
     }
+
+    public void setUserInfo(UserInfoResult.DataEntity userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    private UserInfoResult.DataEntity userInfo;//用户信息
+
+
+
 }

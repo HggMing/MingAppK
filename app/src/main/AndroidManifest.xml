@@ -42,6 +42,18 @@
         <activity
             android:name=".tab4.ChangePwdActivity"
             android:label="@string/title_activity_change_pwd" />
+        <activity
+            android:name=".tab4.selfinfo.UserDetailActivity"
+            android:label="@string/title_activity_user_detail" />
+        <activity
+            android:name=".tab4.selfinfo.UpdateUnameActivity"
+            android:label="@string/title_activity_update_uname" />
+        <activity
+            android:name=".tab4.selfinfo.UpdateIdcardActivity"
+            android:label="@string/title_activity_update_idcard" />
+        <activity
+            android:name=".tab4.selfinfo.UpdateAdressActivity"
+            android:label="@string/title_activity_update_adress" />
     </application>
 
 </manifest>

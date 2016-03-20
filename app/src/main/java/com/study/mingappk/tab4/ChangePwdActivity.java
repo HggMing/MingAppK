@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.study.mingappk.R;
 import com.study.mingappk.api.MyNetApi;
 import com.study.mingappk.api.result.Result;
+import com.study.mingappk.common.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.main.BackActivity;
 
@@ -36,11 +37,12 @@ public class ChangePwdActivity extends BackActivity {
     }
 
     @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // 将菜单图标添加到toolbar
-            getMenuInflater().inflate(R.menu.menu_submit, menu);
-            return true;
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 将菜单图标添加到toolbar
+        getMenuInflater().inflate(R.menu.menu_submit, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -71,38 +73,42 @@ public class ChangePwdActivity extends BackActivity {
                 Toast.makeText(this, "密码必须在6-16位", Toast.LENGTH_LONG).show();
                 return true;
             }
-            new MyNetApi().getCallChangePwd(oldpwd, newpwd1).enqueue(new Callback<Result>() {
-                @Override
-                public void onResponse(Call<Result> call, Response<Result> response) {
-                    if (response.isSuccess()) {
-                        Result changePwdResult = response.body();
-                        if (changePwdResult != null) {
-                            Dialog_Model.Builder builder2 = new Dialog_Model.Builder(ChangePwdActivity.this);
-                            builder2.setTitle("提示");
-                            builder2.setCannel(false);
-                            builder2.setMessage(changePwdResult.getMsg());
-                            builder2.setPositiveButton("确定",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog,
-                                                            int which) {
-                                            dialog.dismiss();
-                                            ChangePwdActivity.this.finish();
-                                        }
+            String auth = MyApplication.getInstance().getAuth();
+            new MyNetApi().getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
+                    .enqueue(new Callback<Result>() {
+                        @Override
+                        public void onResponse(Call<Result> call, Response<Result> response) {
+                            if (response.isSuccess()) {
+                                final Result changePwdResult = response.body();
+                                if (changePwdResult != null) {
+                                    Dialog_Model.Builder builder2 = new Dialog_Model.Builder(ChangePwdActivity.this);
+                                    builder2.setTitle("提示");
+                                    builder2.setCannel(false);
+                                    builder2.setMessage(changePwdResult.getMsg());
+                                    builder2.setPositiveButton("确定",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog,
+                                                                    int which) {
+                                                    dialog.dismiss();
+                                                    if (changePwdResult.getErr() == 0) {
+                                                        ChangePwdActivity.this.finish();
+                                                    }
+                                                }
 
-                                    });
-                            if (!isFinishing()) {
-                                builder2.create().show();
+                                            });
+                                    if (!isFinishing()) {
+                                        builder2.create().show();
+                                    }
+                                }
                             }
                         }
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<Result> call, Throwable t) {
-                    Toast.makeText(ChangePwdActivity.this, "修改密码失败", Toast.LENGTH_LONG).show();
-                }
-            });
+                        @Override
+                        public void onFailure(Call<Result> call, Throwable t) {
+                            Toast.makeText(ChangePwdActivity.this, "修改密码失败", Toast.LENGTH_LONG).show();
+                        }
+                    });
             return true;
         }
         return super.onOptionsItemSelected(item);

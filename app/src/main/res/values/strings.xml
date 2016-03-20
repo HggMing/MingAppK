@@ -11,6 +11,11 @@
     <string name="title_activity_splash">启动界面</string>
     <string name="title_activity_login">登录页</string>
     <string name="title_activity_main">首页</string>
+    <string name="title_activity_change_pwd">修改密码</string>
+    <string name="title_activity_user_detail">个人信息</string>
+    <string name="title_activity_update_uname">修改用户名</string>
+    <string name="title_activity_update_idcard">填写身份证号</string>
+    <string name="title_activity_update_adress">我的地址</string>
 
     <string name="title_activity_test">测试页</string>
     <string name="title_activity_advice">意见反馈</string>
@@ -18,6 +23,6 @@
     <!--网络相关-->
     <string name="postUrl">http://121.40.105.149:9901/</string>
     <string name="action_submit">确定</string>
-    <string name="title_activity_change_pwd">修改密码</string>
+
 
 </resources>

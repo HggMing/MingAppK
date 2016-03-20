@@ -9,7 +9,6 @@ import com.study.mingappk.common.app.MyApplication;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Query;
 
 /**
  * 网络接口
@@ -17,7 +16,12 @@ import retrofit2.http.Query;
 public class MyNetApi {
     Retrofit retrofit;
     private static final String BASE_URL = "http://121.40.105.149:9901/";//API接口的主机地址
-    MyNetApiService myNetApiService;
+
+    public MyNetApiService getService() {
+        return myNetApiService;
+    }
+
+    private MyNetApiService myNetApiService;
 
     public MyNetApi() {
         //1.创建Retrofit对象
@@ -28,28 +32,4 @@ public class MyNetApi {
         //2.创建服务
         myNetApiService = retrofit.create(MyNetApiService.class);
     }
-
-    public Call<Result> getCallAdvice( String content, String contact) {
-        String auth= MyApplication.getInstance().getLoginResult().getAuth();
-        return myNetApiService.ADVICE_RESULT_CALL(auth, content, contact);
-    }
-
-    public Call<PhoneResult> getCallPhone(String phone) {
-        String API_KEY = "8e13586b86e4b7f3758ba3bd6c9c9135";
-        return myNetApiService.PHONE_RESULT_CALL(API_KEY, phone);
-    }
-
-    public Call<LoginResult> getCallLogin(String logname, String pwd) {
-        return myNetApiService.LOGIN_RESULT_CALL(logname, pwd);
-    }
-
-    public Call<UserInfoResult> getCallUser(String auth) {
-        return myNetApiService.USER_INFO_RESULT_CALL(auth);
-    }
-
-    public Call<Result> getCallChangePwd( String oldPwd, String pwd){
-        String auth= MyApplication.getInstance().getLoginResult().getAuth();
-        return myNetApiService.CHANGE_PWD_RESULT_CALL(auth,oldPwd,pwd);
-    }
-
 }

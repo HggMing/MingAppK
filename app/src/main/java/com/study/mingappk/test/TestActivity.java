@@ -60,8 +60,8 @@ public class TestActivity extends AppCompatActivity {
                     .setAction("Action", null).show();
             return;
         }
-
-        Call<PhoneResult> call = new MyNetApi().getCallPhone(etPhone.getText().toString());
+        String API_KEY = "8e13586b86e4b7f3758ba3bd6c9c9135";
+        Call<PhoneResult> call = new MyNetApi().getService().getCall_Phone2Adress(API_KEY,etPhone.getText().toString());
 
         //发送请求
 
@@ -89,8 +89,8 @@ public class TestActivity extends AppCompatActivity {
     rx.Observable<Response<PhoneResult>> responseObservable = rx.Observable.create(new Observable.OnSubscribe<Response<PhoneResult>>() {
         @Override
         public void call(Subscriber<? super Response<PhoneResult>> subscriber) {
-
-            Call<PhoneResult> call = new MyNetApi().getCallPhone(etPhone.getText().toString());
+            String API_KEY = "8e13586b86e4b7f3758ba3bd6c9c9135";
+            Call<PhoneResult> call = new MyNetApi().getService().getCall_Phone2Adress(API_KEY,etPhone.getText().toString());
             try {
                 subscriber.onNext(call.execute());
             } catch (IOException e) {

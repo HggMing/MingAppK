@@ -46,7 +46,8 @@ public class AdviceActivity extends BackActivity {
     }
 
     private void mSubmit() {
-        Call<Result> call = new MyNetApi().getCallAdvice(content, contact);
+        String auth= MyApplication.getInstance().getAuth();
+        Call<Result> call = new MyNetApi().getService().getCall_Advice(auth,content, contact);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

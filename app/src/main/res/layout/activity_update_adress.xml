@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.study.mingappk.tab4.selfinfo.UpdateAdressActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="15dp"
+            android:text="选择地址"
+            android:textColor="#666666"
+            android:textSize="22sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_color" />
+
+
+        <Spinner
+            android:id="@+id/spprovince"
+            style="?android:attr/spinnerItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:animationCache="true"
+            android:drawSelectorOnTop="true"
+            android:spinnerMode="dropdown" />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+
+
+        <Spinner
+            android:id="@+id/spcity"
+            style="?android:attr/spinnerItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:animationCache="true"
+            android:drawSelectorOnTop="true" />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+
+
+        <Spinner
+            android:id="@+id/spcounty"
+            style="?android:attr/spinnerItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:animationCache="true"
+            android:drawSelectorOnTop="true" />
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+
+
+        <Spinner
+            android:id="@+id/sptown"
+            style="?android:attr/spinnerItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:animationCache="true"
+            android:drawSelectorOnTop="true" />
+
+        <View
+            android:id="@+id/line4"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color" />
+
+
+        <Spinner
+            android:id="@+id/spvillage"
+            style="?android:attr/spinnerItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:animationCache="true"
+            android:drawSelectorOnTop="true" />
+
+
+        <Button
+            android:id="@+id/select_vallige_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="110dp"
+            android:layout_marginRight="110dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_green_common"
+            android:padding="10dp"
+            android:text="确认修改"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </LinearLayout>
+</RelativeLayout>
