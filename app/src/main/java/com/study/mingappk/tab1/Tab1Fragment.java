@@ -1,5 +1,6 @@
 package com.study.mingappk.tab1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,13 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.study.mingappk.R;
+import com.study.mingappk.test.Test2Activity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class Tab1Fragment extends Fragment {
-
+    AppCompatActivity mActivity;
     @Bind(R.id.toolbar_tab1)
     Toolbar toolbar1;
 
@@ -29,7 +32,7 @@ public class Tab1Fragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        AppCompatActivity mActivity = (AppCompatActivity) getActivity();
+        mActivity = (AppCompatActivity) getActivity();
         super.onViewCreated(view, savedInstanceState);
         mActivity.setSupportActionBar(toolbar1);
 
@@ -39,5 +42,11 @@ public class Tab1Fragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @OnClick(R.id.bt_test)
+    public void onClick() {
+        Intent intent=new Intent(mActivity, Test2Activity.class);
+        startActivity(intent);
     }
 }
