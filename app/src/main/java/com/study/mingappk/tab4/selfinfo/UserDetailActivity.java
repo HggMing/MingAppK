@@ -2,8 +2,11 @@ package com.study.mingappk.tab4.selfinfo;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Message;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,11 +17,19 @@ import com.study.mingappk.api.MyNetApi;
 import com.study.mingappk.api.result.Result;
 import com.study.mingappk.common.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_UpdateSex;
+import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.main.BackActivity;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.finalteam.galleryfinal.FunctionConfig;
+import cn.finalteam.galleryfinal.GalleryFinal;
+import cn.finalteam.galleryfinal.model.PhotoInfo;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +63,9 @@ public class UserDetailActivity extends BackActivity {
     private void initView() {
         //头像
         String headUrl = (MyApplication.getBaseUrl() + MyApplication.getInstance().getUserInfo().getHead());
-        Glide.with(this).load(headUrl).into(iconHead2);
+        Glide.with(this)
+                .load(headUrl)
+                .into(iconHead2);
         //姓名
         getName.setText(MyApplication.getInstance().getUserInfo().getUname());
         //性别
@@ -78,10 +91,13 @@ public class UserDetailActivity extends BackActivity {
         // 最后登录时间
     }
 
-    @OnClick({R.id.icon_head2, R.id.set_name, R.id.set_sex, R.id.set_id_card, R.id.set_address})
+    @OnClick({R.id.set_head,R.id.icon_head2, R.id.set_name, R.id.set_sex, R.id.set_id_card, R.id.set_address})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.icon_head2:
+                break;
+            case R.id.set_head:
+                updateHead();
                 break;
             case R.id.set_name:
                 Intent intent1 = new Intent(this, UpdateUnameActivity.class);
@@ -96,11 +112,105 @@ public class UserDetailActivity extends BackActivity {
                 break;
             case R.id.set_address:
                 Intent intent3 = new Intent(this, UpdateAdressActivity.class);
-                startActivityForResult(intent3,1);
+                startActivityForResult(intent3, 1);
                 break;
         }
     }
+    /**
+     * 修改头像
+     */
+    private void updateHead() {
+        MyGallerFinal aFinal = new MyGallerFinal();
+        GalleryFinal.init(aFinal.getCoreConfig(this));
+        FunctionConfig functionConfig = new FunctionConfig.Builder()
+                .setEnableEdit(true)//开启编辑功能
+                .setEnableCrop(true)//开启裁剪功能
+                .setCropSquare(true)//裁剪正方形
+                .setForceCrop(true)//启动强制裁剪功能,一进入编辑页面就开启图片裁剪，不需要用户手动点击裁剪，此功能只针对单选操作
+                .build();
+        GalleryFinal.openGallerySingle(1001,functionConfig, mOnHanlderResultCallback);
+    }
+    private GalleryFinal.OnHanlderResultCallback mOnHanlderResultCallback = new GalleryFinal.OnHanlderResultCallback() {
+        @Override
+        public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
+            if (resultList != null) {
+                PhotoInfo photoInfo = resultList.get(0);
+                Glide.with(UserDetailActivity.this).load("file://" + photoInfo.getPhotoPath()).into(iconHead2);
+                Bitmap bitmap= BitmapFactory.decodeFile(photoInfo.getPhotoPath());//图片文件转为Bitmap对象
+                final String newHead=(bitmapToBase64(bitmap)+ ".jpg");
+                                       Log.d("mm1",newHead);
+                String auth = MyApplication.getInstance().getAuth();
+                new MyNetApi().getService().getCall_UpdateHead(auth,newHead).enqueue(new Callback<Result>() {
+                    @Override
+                    public void onResponse(Call<Result> call, Response<Result> response) {
+                        if (response.isSuccess()) {
+                            Result result = response.body();
+                            if ( result != null) {
+                                Log.d("mm3","怎么了");
+                                Toast.makeText(UserDetailActivity.this,  result.getMsg(), Toast.LENGTH_SHORT).show();
+                                if( result.getErr()==0){
+                                   //上传头像成功
+                                    Log.d("mm","上传头像成功");
+                                }
+                            }
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Result> call, Throwable t) {
+                    }
+                });
+            }
+        }
 
+        @Override
+        public void onHanlderFailure(int requestCode, String errorMsg) {
+            Toast.makeText(UserDetailActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    /**
+     * bitmap转为base64
+     *
+     * @param bitmap
+     * @return
+     */
+    public static String bitmapToBase64(Bitmap bitmap) {
+
+        String result = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            if (bitmap != null) {
+                baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                //压缩大小
+                int options = 90;
+                while (baos.toByteArray().length / 1024 > 100) {
+                    baos.reset();// 重置baos即清空baos
+                    options -= 10;// 每次都减少10
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+                }
+                    Log.d("mm",options+"");
+
+                baos.flush();
+                baos.close();
+
+                byte[] bitmapBytes = baos.toByteArray();
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.flush();
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
     /**
      * 修改性别
      */
@@ -174,4 +284,6 @@ public class UserDetailActivity extends BackActivity {
                 break;
         }
     }
+
+
 }

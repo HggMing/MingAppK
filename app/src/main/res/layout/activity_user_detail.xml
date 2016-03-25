@@ -15,6 +15,8 @@
         <include layout="@layout/divide_15_top_bottom" />
 
         <RelativeLayout
+            android:id="@+id/set_head"
+            android:background="@drawable/list_item_selector"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:paddingLeft="15dp">

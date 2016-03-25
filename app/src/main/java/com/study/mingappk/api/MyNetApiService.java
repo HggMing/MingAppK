@@ -12,8 +12,11 @@ import com.study.mingappk.api.result.UserInfoResult;
 
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -72,6 +75,18 @@ public interface MyNetApiService {
     Call<Result> getCall_ChangePwd(@Query("auth") String auth, @Query("Old_pwd") String oldPwd, @Query("pwd") String pwd);
 
     /**
+     * 用户已经登录系统，修改头像
+     *
+     * @param auth 认证信息
+     * @param head 头像：内容采用base64后的字符串，再加上扩展名
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("user/uhead")
+    Call<Result> getCall_UpdateHead(@Field("auth") String auth, @Field("head") String head);
+
+
+    /**
      * 修改用户信息接口
      *
      * @param auth  认证信息
@@ -86,18 +101,24 @@ public interface MyNetApiService {
 
     /**
      * 五级详细地址列表接口
+     *
      * @param auth 认证信息
      * @return 各级地址信息
      */
     @GET("vill/gprovicelist")
     Call<Address1Result> getCall_Add1(@Query("auth") String auth);
+
     @GET("vill/gcitylist")
     Call<Address2Result> getCall_Add2(@Query("auth") String auth, @Query("province_id") String province_id);
+
     @GET("vill/gcountylist")
     Call<Address3Result> getCall_Add3(@Query("auth") String auth, @Query("city_id") String city_id);
+
     @GET("vill/gtownlist")
     Call<Address4Result> getCall_Add4(@Query("auth") String auth, @Query("county_id") String county_id);
+
     @GET("vill/gvilllist")
     Call<Address5Result> getCall_Add5(@Query("auth") String auth, @Query("town_id") String town_id);
+
 
 }
