@@ -28,7 +28,7 @@ public class ListItem1 extends FrameLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        View.inflate(context, R.layout.list_item_tab4, this);
+        View.inflate(context, R.layout.item_tab4_list, this);
         mIcon = findViewById(R.id.icon);
         mText = (TextView) findViewById(R.id.title);
         badge = findViewById(R.id.badge);

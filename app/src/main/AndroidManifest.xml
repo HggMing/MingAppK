@@ -44,7 +44,8 @@
             android:label="@string/title_activity_about" />
         <activity
             android:name=".tab4.AdviceActivity"
-            android:label="@string/title_activity_advice" />
+            android:label="@string/title_activity_advice"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".tab4.ChangePwdActivity"
             android:label="@string/title_activity_change_pwd" />
@@ -60,7 +61,8 @@
         <activity
             android:name=".tab4.selfinfo.UpdateAdressActivity"
             android:label="@string/title_activity_update_adress" />
-        <activity android:name=".test.Test3Activity"/>
+        <activity android:name=".test.Test2Activity" />
+        <activity android:name=".test.Test3Activity"></activity>
     </application>
 
 </manifest>

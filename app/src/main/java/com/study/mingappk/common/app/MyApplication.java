@@ -2,6 +2,7 @@ package com.study.mingappk.common.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.study.mingappk.api.result.LoginResult;
@@ -48,7 +49,5 @@ public class MyApplication extends Application {
     }
 
     private UserInfoResult.DataEntity userInfo;//用户信息
-
-
 
 }

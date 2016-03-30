@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.study.mingappk.R;
 import com.study.mingappk.api.MyNetApi;
 import com.study.mingappk.api.result.PhoneResult;
+import com.study.mingappk.main.BackActivity;
 
 import java.io.IOException;
 
@@ -32,10 +33,7 @@ import rx.schedulers.Schedulers;
 /**
  * 查询手机号归属地页面
  */
-public class TestActivity extends AppCompatActivity {
-
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+public class TestActivity extends BackActivity {
     @Bind(R.id.et_phone)
     AppCompatAutoCompleteTextView etPhone;
     @Bind(R.id.fab)
@@ -50,7 +48,6 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
     }
 
     private void queryPhoneWhereFrom() {

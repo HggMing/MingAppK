@@ -31,9 +31,9 @@ public class MyGallerFinal {
 
     //设置主题
     ThemeConfig theme = new ThemeConfig.Builder()
-            .setTitleBarBgColor(Color.rgb(0x6D, 0xAC, 0xEA))
+            .setTitleBarBgColor(Color.rgb(0x53, 0xAC, 0xE5))
             .setTitleBarTextColor(Color.WHITE)
-            .setFabNornalColor(Color.rgb(0x6D, 0xAC, 0xEA))
+            .setFabNornalColor(Color.rgb(0x53, 0xAC, 0xE5))
             .setFabPressedColor(Color.BLUE)
             .setCheckNornalColor(Color.WHITE)
             .setCheckSelectedColor(Color.BLACK)

@@ -15,6 +15,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MyNetApi {
     Retrofit retrofit;
+
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
+
     private static final String BASE_URL = "http://121.40.105.149:9901/";//API接口的主机地址
 
     public MyNetApiService getService() {

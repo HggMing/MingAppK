@@ -5,6 +5,7 @@ import com.study.mingappk.api.result.Address2Result;
 import com.study.mingappk.api.result.Address3Result;
 import com.study.mingappk.api.result.Address4Result;
 import com.study.mingappk.api.result.Address5Result;
+import com.study.mingappk.api.result.FollowVillageListResult;
 import com.study.mingappk.api.result.LoginResult;
 import com.study.mingappk.api.result.PhoneResult;
 import com.study.mingappk.api.result.Result;
@@ -96,8 +97,11 @@ public interface MyNetApiService {
      * @param vid   村圈id→我的地址
      * @return 结果msg
      */
-    @GET("user/uinfo")
-    Call<Result> getCall_UpdateInfo(@Query("auth") String auth, @Query("uname") String uName, @Query("sex") String sex, @Query("cid") String cid, @Query("vid") String vid);
+//    @GET("user/uinfo")
+//    Call<Result> getCall_UpdateInfo(@Query("auth") String auth, @Query("uname") String uName, @Query("sex") String sex, @Query("cid") String cid, @Query("vid") String vid);
+    @FormUrlEncoded
+    @POST("user/uinfo")
+    Call<Result> getCall_UpdateInfo(@Field("auth") String auth, @Field("uname") String uName, @Field("sex") String sex, @Field("cid") String cid, @Field("vid") String vid);
 
     /**
      * 五级详细地址列表接口
@@ -120,5 +124,14 @@ public interface MyNetApiService {
     @GET("vill/gvilllist")
     Call<Address5Result> getCall_Add5(@Query("auth") String auth, @Query("town_id") String town_id);
 
+    /**
+     *分页获取村圈列表信息，同时该接口会返回，关注总数cnt
+     * @param auth 认证信息
+     * @param page 当前页码，默认为：1页
+     * @param pagesize 每页条数，默认20条
+     * @return
+     */
+    @GET("vill/followlist")
+    Call<FollowVillageListResult> getCall_FollowList(@Query("auth") String auth, @Query("page") int page, @Query("pagesize") int pagesize);
 
 }

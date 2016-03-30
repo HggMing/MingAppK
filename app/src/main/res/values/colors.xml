@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--系统颜色-->
-    <color name="colorPrimary">#6DACEA</color>
-    <color name="colorPrimaryDark">#6DACEA</color>
-    <color name="colorAccent">#6DACEA</color>
+    <color name="colorPrimary">#53ACE5</color>
+    <color name="colorPrimaryDark">#53ACE5</color>
+    <color name="colorAccent">#53ACE5</color>
     <!--BaseActivity页面-->
     <color name="font_black_9">#999999</color>
     <!--首页tab按钮颜色-->

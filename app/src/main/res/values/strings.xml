@@ -31,6 +31,7 @@
     <string name="toast_cannot_retrieve_selected_image">无法检索所选图像</string>
     <string name="toast_cannot_retrieve_cropped_image">无法检索到裁剪的图像</string>
     <string name="toast_unexpected_error">意外的错误</string>
+    <string name="common_ok">确定</string>
 
 
 </resources>

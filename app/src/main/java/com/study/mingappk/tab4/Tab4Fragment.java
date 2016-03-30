@@ -26,6 +26,7 @@ import com.study.mingappk.common.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
+import com.study.mingappk.test.Test3Activity;
 import com.study.mingappk.test.TestActivity;
 import com.study.mingappk.userlogin.LoginActivity;
 
@@ -51,11 +52,10 @@ public class Tab4Fragment extends Fragment {
     TextView accountNumber;
     private SharedPreferences sp;
     private SharedPreferences.Editor spEditor;
+    private boolean isUpdataMyInfo;//是否更新完个人信息
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mActivity = (AppCompatActivity) getActivity();
-        sp = mActivity.getSharedPreferences("config", 0);
         View view = inflater.inflate(R.layout.fragment_tab4, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -64,16 +64,16 @@ public class Tab4Fragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppCompatActivity mActivity = (AppCompatActivity) getActivity();
-        // mActivity.setSupportActionBar(toolbar4);
-        //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
-        CollapsingToolbarLayout mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout_tab4);
-        //mCollapsingToolbarLayout.setTitle("CollapsingToolbarLayout");
-        //通过CollapsingToolbarLayout修改字体颜色
-        mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.blue_setting));//设置还没收缩时状态下字体颜色
-        // mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
-
-        getUserInfoDetail();//获取用户信息
+        mActivity = (AppCompatActivity) getActivity();
+        mActivity.setSupportActionBar(toolbar4);
+        sp = mActivity.getSharedPreferences("config", 0);
+        spEditor = sp.edit();
+        isUpdataMyInfo=sp.getBoolean("isUpdataMyInfo", false);
+//        if (isUpdataMyInfo) {
+//            showUserInfo();//显示离线用户信息
+//        } else {
+            getUserInfoDetail();//在线获取用户信息
+//        }
     }
 
     @Override
@@ -83,7 +83,7 @@ public class Tab4Fragment extends Fragment {
     }
 
 
-    @OnClick({R.id.click_user, R.id.click_changepwd, R.id.click_identity_binding,
+    @OnClick({R.id.click_user, R.id.click_changepwd,R.id.click_my_order, R.id.click_identity_binding,
             R.id.click_advice, R.id.click_check_version, R.id.click_about, R.id.btn_exit})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -92,11 +92,14 @@ public class Tab4Fragment extends Fragment {
                 startActivityForResult(intent1, 0);
                 break;
             case R.id.click_changepwd:
-                changePwd();
-                break;
-            case R.id.click_identity_binding:
                 Intent intent2 = new Intent(mActivity, ChangePwdActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.click_my_order:
+                Intent intent3 = new Intent(mActivity, Test3Activity.class);
+                startActivity(intent3);
+                break;
+            case R.id.click_identity_binding:
                 break;
             case R.id.click_advice:
                 Intent intent = new Intent(mActivity, AdviceActivity.class);
@@ -122,16 +125,19 @@ public class Tab4Fragment extends Fragment {
         switch (requestCode) {
             case 0:
                 if (resultCode == mActivity.RESULT_OK) {
-                    //修改后更新数据
-                    getUserInfoDetail();
+                    //修改数据后在线更新个人信息
+                    if(!isUpdataMyInfo){
+                        getUserInfoDetail();
+                    }
                 }
                 break;
         }
     }
 
     /**
-     * 修改密码
+     * 修改密码,使用对话框方式
      */
+
     private void changePwd() {
         final Dialog_ChangePwd.Builder pwddialog = new Dialog_ChangePwd.Builder(mActivity);
         pwddialog.setTitle("修改登录密码");
@@ -229,8 +235,8 @@ public class Tab4Fragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // MyApplication.getInstance().set_userInfo(null);
-                        spEditor = sp.edit();
                         spEditor.putString("loginpwd", "");
+                        spEditor.putBoolean("isUpdataMyInfo",false);
                         spEditor.commit();
 
                         Intent intent = new Intent(mActivity, LoginActivity.class);
@@ -261,17 +267,29 @@ public class Tab4Fragment extends Fragment {
                     if (userInfoResult != null && userInfoResult.getErr() == 0) {
                         UserInfoResult.DataEntity dataEntity = userInfoResult.getData();
                         MyApplication.getInstance().setUserInfo(dataEntity);
-                        String headUrl = (MyApplication.getBaseUrl() + dataEntity.getHead());
+                        String headUrl = MyNetApi.getBaseUrl() + dataEntity.getHead();
+                        String uName = dataEntity.getUname();
+                        String sexNumber = dataEntity.getSex();
+                        String accountNo = dataEntity.getLogname();
+
                         Glide.with(mActivity).load(headUrl).into(iconHead);
-                        name.setText(MyApplication.getInstance().getUserInfo().getUname());
-                        String sexNumber = MyApplication.getInstance().getUserInfo().getSex();
-                        if (sexNumber.equals("0")) {
+                        name.setText(uName);
+                        if ("0".equals(sexNumber)) {
                             sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_boy));
                         } else {
                             sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_girl));
                         }
-                        String accountNo = MyApplication.getInstance().getUserInfo().getLogname();
                         accountNumber.setText("账号：" + accountNo);
+
+                        spEditor.putBoolean("isUpdataMyInfo", true);
+                        spEditor.putString("MyInfo_Head", headUrl);
+                        spEditor.putString("MyInfo_Uname", uName);
+                        spEditor.putString("MyInfo_Sex", sexNumber);
+                        spEditor.putString("MyInfo_Logname", accountNo);
+                        spEditor.putString("MyInfo_Cid", dataEntity.getCid());
+                        spEditor.putString("MyInfo_Address", dataEntity.getProvince_name()+
+                        dataEntity.getCity_name()+dataEntity.getCounty_name()+dataEntity.getTown_name()+dataEntity.getVillage_name());
+                        spEditor.commit();
                     }
                 }
             }
@@ -282,5 +300,21 @@ public class Tab4Fragment extends Fragment {
             }
         });
 
+    }
+
+    private void showUserInfo() {
+        String headUrl = sp.getString("MyInfo_Head", null);
+        String uName = sp.getString("MyInfo_Uname", null);
+        String sexNumber = sp.getString("MyInfo_Sex", null);
+        String accountNo = sp.getString("MyInfo_Logname", null);
+
+        Glide.with(mActivity).load(headUrl).into(iconHead);
+        name.setText(uName);
+        if ("0".equals(sexNumber)) {
+            sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_boy));
+        } else {
+            sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_girl));
+        }
+        accountNumber.setText("账号：" + accountNo);
     }
 }

@@ -70,7 +70,7 @@ public class UpdateAdressActivity extends BackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_adress);
+        setContentView(R.layout.activity_update_address);
         ButterKnife.bind(this);
 
         line1.setVisibility(View.GONE);
@@ -571,7 +571,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.pos_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
             if (convertView != null) {
                 TextView tvProvincename = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvProvincename.setText(mList.get(position).getProvice_name());
@@ -608,7 +608,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.pos_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
             if (convertView != null) {
                 TextView tvCityname = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvCityname.setText(mList.get(position).getCity_name());
@@ -645,7 +645,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.pos_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
             if (convertView != null) {
                 TextView tvCountryname = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvCountryname.setText(mList.get(position).getCounty_name());
@@ -682,7 +682,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.pos_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
             if (convertView != null) {
                 TextView tvTownname = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvTownname.setText(mList.get(position).getTown_name());
@@ -719,7 +719,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.pos_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
             if (convertView != null) {
                 TextView tvVillagename = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvVillagename.setText(mList.get(position).getVillage_name());

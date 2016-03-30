@@ -3,50 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".tab4.Tab4Fragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-        <!-- layout_scrollFlags:
-         scroll - 想滚动就必须设置这个。
-         enterAlways - 实现quick return效果, 当向下移动时，立即显示View（比如Toolbar)。
-         exitUntilCollapsed - 向上滚动时收缩View，但可以固定Toolbar一直在上面。
-         enterAlwaysCollapsed - 当你的View已经设置minHeight属性又使用此标志时，
-         你的View只能以最小高度进入，只有当滚动视图到达顶部时才扩大到完整高度。-->
-        <!-- contentScrim - 设置当完全CollapsingToolbarLayout折叠(收缩)后的背景颜色。
-         expandedTitleMarginStart - 设置扩张时候(还没有收缩时)title向左填充的距离。-->
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_layout_tab4"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_tab4"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="@color/colorPrimary"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/tab4_main">
-            <!--layout_collapseMode (折叠模式) - 有两个值:
-                        pin -  设置为这个模式时，当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。
-                        parallax - 设置为这个模式时，在内容滚动时，CollapsingToolbarLayout中的View（比如ImageView)也可以同时滚动，
-                                        实现视差滚动效果，通常和layout_collapseParallaxMultiplier(设置视差因子)搭配使用。
-            layout_collapseParallaxMultiplier(视差因子) - 设置视差滚动因子，值为：0~1。-->
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/user_home_bg"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.7" />
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_tab4"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
-        </android.support.design.widget.CollapsingToolbarLayout>
+            app:title="@string/tab4_main" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -71,9 +41,8 @@
                 android:id="@+id/click_user"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/list_item_selector"
-                android:paddingRight="10dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/list_item_selector">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/icon_head"
@@ -84,33 +53,35 @@
                     app:civ_border_color="@color/divide_line"
                     app:civ_border_width="1dp"
                     tools:src="@mipmap/icon" />
-<LinearLayout
-    android:id="@+id/layout1"
-    android:layout_width="wrap_content"
-    android:layout_toRightOf="@id/icon_head"
-    android:layout_marginTop="18dp"
-    android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:textColor="@color/font_black_content"
-                    android:textSize="18sp"
-                    tools:text="昵称" />
 
-                <ImageView
-                    android:id="@+id/sex"
+                <LinearLayout
+                    android:id="@+id/layout1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:ignore="ContentDescription"
-                    android:layout_marginTop="2dp"
-                    tools:src="@mipmap/ic_sex_boy"
-                    />
+                    android:layout_marginTop="18dp"
+                    android:layout_toRightOf="@id/icon_head">
 
-</LinearLayout>
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="@color/font_black_content"
+                        android:textSize="18sp"
+                        tools:text="昵称" />
+
+                    <ImageView
+                        android:id="@+id/sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        tools:ignore="ContentDescription"
+                        tools:src="@mipmap/ic_sex_boy" />
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/account_number"
                     android:layout_width="wrap_content"
@@ -140,6 +111,16 @@
                     android:focusable="false"
                     listItem1:itemIcon="@mipmap/tab4_changepwd"
                     listItem1:itemTitle="修改密码" />
+
+                <include layout="@layout/divide_1_12" />
+
+                <com.study.mingappk.tab4.myviews.ListItem1
+                    android:id="@+id/click_my_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_my_order"
+                    listItem1:itemTitle="我的订单" />
 
                 <include layout="@layout/divide_15_top_bottom" />
 

@@ -21,7 +21,7 @@ import in.srain.cube.views.ptr.PtrHandler;
 
 
 public class Tab2Fragment extends Fragment {
-
+    AppCompatActivity mActivity;
     @Bind(R.id.toolbar_tab2)
     Toolbar toolbar2;
     @Bind(R.id.pull_to_refresh)
@@ -31,8 +31,7 @@ public class Tab2Fragment extends Fragment {
     ImageView imgTest;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab2, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -40,10 +39,9 @@ public class Tab2Fragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        AppCompatActivity mActivity = (AppCompatActivity) getActivity();
-        mActivity.setSupportActionBar(toolbar2);
-
         super.onViewCreated(view, savedInstanceState);
+        mActivity = (AppCompatActivity) getActivity();
+        mActivity.setSupportActionBar(toolbar2);
 
         Glide.with(this).load(imageUrls).into(imgTest);
 

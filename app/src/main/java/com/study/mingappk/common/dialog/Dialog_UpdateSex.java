@@ -124,7 +124,9 @@ public class Dialog_UpdateSex extends Dialog implements DialogInterface
 			sex=(RadioGroup) layout.findViewById(R.id.sex);
 			male=(RadioButton) layout.findViewById(R.id.male);
 			female=(RadioButton) layout.findViewById(R.id.female);
-			if("0".equals(MyApplication.getInstance().getUserInfo().getSex())){
+//			if("0".equals(MyApplication.getInstance().getUserInfo().getSex())){
+			String mysex=dialog.getContext().getSharedPreferences("config",Context.MODE_PRIVATE).getString("MyInfo_Sex",null);
+			if("0".equals(mysex)){
 				male.setChecked(true);
 				sexStr="男";
 			}else{

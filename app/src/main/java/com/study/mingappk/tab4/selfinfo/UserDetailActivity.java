@@ -1,7 +1,9 @@
 package com.study.mingappk.tab4.selfinfo;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import com.study.mingappk.common.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_UpdateSex;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.main.BackActivity;
+import com.study.mingappk.main.BaseActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -51,47 +54,61 @@ public class UserDetailActivity extends BackActivity {
     TextView getPhone;
     @Bind(R.id.get_login_time)
     TextView getLoginTime;
-
-    @Override
+    SharedPreferences sp;
+    SharedPreferences.Editor spEditor;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         ButterKnife.bind(this);
+        sp = this.getSharedPreferences("config", MODE_PRIVATE);
+        spEditor=sp.edit();
         initView();
+
+
+        performCodeWithPermission("App请求存储权限",new BaseActivity.PermissionCallback() {
+            @Override
+            public void hasPermission() {
+                //执行打开相机相关代码
+            }
+            @Override
+            public void noPermission() {
+            }
+        }, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     private void initView() {
         //头像
-        String headUrl = (MyApplication.getBaseUrl() + MyApplication.getInstance().getUserInfo().getHead());
+        String headUrl = sp.getString("MyInfo_Head", null);
         Glide.with(this)
                 .load(headUrl)
                 .into(iconHead2);
         //姓名
-        getName.setText(MyApplication.getInstance().getUserInfo().getUname());
+        getName.setText(sp.getString("MyInfo_Uname", null));
         //性别
-        String sex = MyApplication.getInstance().getUserInfo().getSex();
-        if (sex.equals("0")) {
+        String sex = sp.getString("MyInfo_Sex", null);
+        if ("0".equals(sex)) {
             getSex.setText("男");
-        } else if (sex.equals("1")) {
+        } else if ("1".equals(sex)) {
             getSex.setText("女");
         } else {
             getSex.setText("未知");
         }
         //身份证号
-        getIdCard.setText(MyApplication.getInstance().getUserInfo().getCid());
+        getIdCard.setText(sp.getString("MyInfo_Cid", null));
         //地址:"province_name":"四川省", "city_name":"遂宁市", "county_name":"蓬溪县", "town_name":"红江镇", "village_name":"永益村"
-        String address = (MyApplication.getInstance().getUserInfo().getProvince_name() +
+       /* String address = (MyApplication.getInstance().getUserInfo().getProvince_name() +
                 MyApplication.getInstance().getUserInfo().getCity_name() +
                 MyApplication.getInstance().getUserInfo().getCounty_name() +
                 MyApplication.getInstance().getUserInfo().getTown_name() +
-                MyApplication.getInstance().getUserInfo().getVillage_name());
+                MyApplication.getInstance().getUserInfo().getVillage_name());*/
+        String address = sp.getString("MyInfo_Address", null);
         getAddress.setText(address);
         //手机号
-        getPhone.setText(MyApplication.getInstance().getUserInfo().getPhone());
+        getPhone.setText(sp.getString("MyInfo_Logname", null));
         // 最后登录时间
     }
 
-    @OnClick({R.id.set_head,R.id.icon_head2, R.id.set_name, R.id.set_sex, R.id.set_id_card, R.id.set_address})
+    @OnClick({R.id.set_head, R.id.icon_head2, R.id.set_name, R.id.set_sex, R.id.set_id_card, R.id.set_address})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.icon_head2:
@@ -136,21 +153,20 @@ public class UserDetailActivity extends BackActivity {
             if (resultList != null) {
                 PhotoInfo photoInfo = resultList.get(0);
                 Glide.with(UserDetailActivity.this).load("file://" + photoInfo.getPhotoPath()).into(iconHead2);
-                Bitmap bitmap= BitmapFactory.decodeFile(photoInfo.getPhotoPath());//图片文件转为Bitmap对象
-                final String newHead=(bitmapToBase64(bitmap)+ ".jpg");
-                                       Log.d("mm1",newHead);
+                Bitmap bitmap = BitmapFactory.decodeFile(photoInfo.getPhotoPath());//图片文件转为Bitmap对象
+                final String newHead = (bitmapToBase64(bitmap) + ".jpg");
                 String auth = MyApplication.getInstance().getAuth();
-                new MyNetApi().getService().getCall_UpdateHead(auth,newHead).enqueue(new Callback<Result>() {
+                new MyNetApi().getService().getCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {
                         if (response.isSuccess()) {
                             Result result = response.body();
-                            if ( result != null) {
-                                Log.d("mm3","怎么了");
-                                Toast.makeText(UserDetailActivity.this,  result.getMsg(), Toast.LENGTH_SHORT).show();
-                                if( result.getErr()==0){
-                                   //上传头像成功
-                                    Log.d("mm","上传头像成功");
+                            if (result != null) {
+                                Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                if (result.getErr() == 0) {
+                                    //上传头像成功
+                                    spEditor.putBoolean("isUpdataMyInfo",false);
+                                    spEditor.commit();
                                 }
                             }
                         }
@@ -171,8 +187,8 @@ public class UserDetailActivity extends BackActivity {
     /**
      * bitmap转为base64
      *
-     * @param bitmap
-     * @return
+     * @param bitmap 裁剪后的头像
+     * @return Base64
      */
     public static String bitmapToBase64(Bitmap bitmap) {
 
@@ -189,7 +205,6 @@ public class UserDetailActivity extends BackActivity {
                     options -= 10;// 每次都减少10
                     bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
                 }
-                    Log.d("mm",options+"");
 
                 baos.flush();
                 baos.close();
@@ -211,6 +226,7 @@ public class UserDetailActivity extends BackActivity {
         }
         return result;
     }
+
     /**
      * 修改性别
      */
@@ -236,6 +252,8 @@ public class UserDetailActivity extends BackActivity {
                                 if (response.isSuccess()) {
                                     Result result = response.body();
                                     if (result != null) {
+                                        spEditor.putBoolean("isUpdataMyInfo",false);
+                                        spEditor.commit();
                                         Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -271,14 +289,20 @@ public class UserDetailActivity extends BackActivity {
             case 11:
                 String result = data.getExtras().getString("newName");
                 getName.setText(result);
+                spEditor.putBoolean("isUpdataMyInfo",false);
+                spEditor.commit();
                 break;
             case 22:
                 String result2 = data.getExtras().getString("newIdcard");
                 getIdCard.setText(result2);
+                spEditor.putBoolean("isUpdataMyInfo",false);
+                spEditor.commit();
                 break;
             case 33:
                 String result3 = data.getExtras().getString("newAddress");
                 getAddress.setText(result3);
+                spEditor.putBoolean("isUpdataMyInfo",false);
+                spEditor.commit();
                 break;
             default:
                 break;
