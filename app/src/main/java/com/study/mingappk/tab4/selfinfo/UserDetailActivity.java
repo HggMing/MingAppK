@@ -65,15 +65,16 @@ public class UserDetailActivity extends BackActivity {
         initView();
 
 
-        performCodeWithPermission("App请求存储权限",new BaseActivity.PermissionCallback() {
-            @Override
-            public void hasPermission() {
-                //执行打开相机相关代码
-            }
-            @Override
-            public void noPermission() {
-            }
-        }, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        //android6.0 获取运行时权限
+//        performCodeWithPermission("App请求存储权限",new BaseActivity.PermissionCallback() {
+//            @Override
+//            public void hasPermission() {
+//                //执行获得权限后相关代码
+//            }
+//            @Override
+//            public void noPermission() {
+//            }
+//        }, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     private void initView() {

@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 import com.study.mingappk.api.MyNetApi;
 import com.study.mingappk.api.result.FollowVillageListResult;
+import com.study.mingappk.common.utils.BaseTools;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,11 +33,11 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.Tab3Holder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private List<FollowVillageListResult.DataEntity.ListEntity> folllowList;
+    private List<FollowVillageListResult.DataEntity.ListEntity> followList;
 
-    public Tab3Adapter(Context mContext, List<FollowVillageListResult.DataEntity.ListEntity> folllowList) {
+    public Tab3Adapter(Context mContext, List<FollowVillageListResult.DataEntity.ListEntity> followList) {
         this.mContext = mContext;
-        this.folllowList = folllowList;
+        this.followList = followList;
         mLayoutInflater = LayoutInflater.from(mContext);
 
     }
@@ -86,20 +87,27 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.Tab3Holder> {
             });
         }
         //显示数据编辑
-        String imageUrl= MyNetApi.getBaseUrl()+folllowList.get(position).getPic();
+        String imageUrl= MyNetApi.getBaseUrl()+followList.get(position).getPic();
         Glide.with(mContext).load(imageUrl).into(holder.imageViewVillage);//关注村圈图
-        holder.tvVillageName.setText(folllowList.get(position).getVillage_name());//关注村圈名称
-        holder.tvNews.setText(folllowList.get(position).getBbsInfo().getDesc());//村圈最新消息
-        String date =folllowList.get(position).getBbsInfo().getCtime();
+        String villageName=followList.get(position).getVillage_name();
+        holder.tvVillageName.setText(villageName);//关注村圈名称
+        String newMessage=followList.get(position).getBbsInfo().getDesc();
+        holder.tvNews.setText(newMessage);//村圈最新消息
+        String date =followList.get(position).getBbsInfo().getCtime();
+        if(date!=null) {
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        String time = dateFormat.format(new Date(Long.valueOf(date+"000")));
-        holder.tvTime.setText(time);//最新动态时间
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+//            String time = dateFormat.format(new Date(Long.valueOf(date + "000")));
+            String time=BaseTools.getTimeFormatText(new Date(Long.valueOf(date + "000")));
+            holder.tvTime.setText(time);//最新动态时间
+        }else{
+            holder.tvTime.setText("");
+        }
     }
 
     @Override
     public int getItemCount() {
-        return folllowList.size();
+        return followList.size();
     }
 
     static class Tab3Holder extends RecyclerView.ViewHolder {

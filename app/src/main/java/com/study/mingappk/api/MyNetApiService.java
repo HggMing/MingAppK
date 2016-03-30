@@ -129,9 +129,20 @@ public interface MyNetApiService {
      * @param auth 认证信息
      * @param page 当前页码，默认为：1页
      * @param pagesize 每页条数，默认20条
-     * @return
+     * @return 村圈列表信息
      */
     @GET("vill/followlist")
     Call<FollowVillageListResult> getCall_FollowList(@Query("auth") String auth, @Query("page") int page, @Query("pagesize") int pagesize);
+
+    /**
+     * 取消关注村圈接口
+     * @param auth 认证信息
+     * @param vid 村id
+     * @return 结果msg
+     */
+    @GET("vill/del")
+    Call<Result> getCall_DelFollowList(@Query("auth") String auth, @Query("vid") String vid);
+
+
 
 }

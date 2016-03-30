@@ -17,10 +17,12 @@ public class MyNetApi {
     Retrofit retrofit;
 
     public static String getBaseUrl() {
-        return BASE_URL;
+        return BASE_URL2;
     }
 
     private static final String BASE_URL = "http://121.40.105.149:9901/";//API接口的主机地址
+    private static final String BASE_URL2 = "http://121.40.105.149:9901";//API接口的主机地址
+
 
     public MyNetApiService getService() {
         return myNetApiService;
