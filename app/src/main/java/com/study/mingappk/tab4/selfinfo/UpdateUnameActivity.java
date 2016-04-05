@@ -2,16 +2,15 @@ package com.study.mingappk.tab4.selfinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.api.result.Result;
-import com.study.mingappk.common.app.MyApplication;
+import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.main.BackActivity;
 
 import butterknife.Bind;
@@ -45,11 +44,11 @@ public class UpdateUnameActivity extends BackActivity {
         if (id == R.id.action_submit) {
             String auth = MyApplication.getInstance().getAuth();
             final String newName=etUname.getText().toString();
-            new MyNetApi().getService().getCall_UpdateInfo(auth,newName,null,null,null )
+            new MyServiceClient().getService().getCall_UpdateInfo(auth,newName,null,null,null )
                     .enqueue(new Callback<Result>() {
                         @Override
                         public void onResponse(Call<Result> call, Response<Result> response) {
-                            if (response.isSuccess()) {
+                            if (response.isSuccessful()) {
                                 Result result = response.body();
                                 if ( result != null) {
                                     Toast.makeText(UpdateUnameActivity.this,  result.getMsg(), Toast.LENGTH_SHORT).show();

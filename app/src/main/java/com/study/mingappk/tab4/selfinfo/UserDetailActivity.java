@@ -1,6 +1,5 @@
 package com.study.mingappk.tab4.selfinfo;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,20 +7,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
-import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.api.result.Result;
-import com.study.mingappk.common.app.MyApplication;
+import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_UpdateSex;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.main.BackActivity;
-import com.study.mingappk.main.BaseActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -157,10 +154,10 @@ public class UserDetailActivity extends BackActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(photoInfo.getPhotoPath());//图片文件转为Bitmap对象
                 final String newHead = (bitmapToBase64(bitmap) + ".jpg");
                 String auth = MyApplication.getInstance().getAuth();
-                new MyNetApi().getService().getCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
+                new MyServiceClient().getService().getCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {
-                        if (response.isSuccess()) {
+                        if (response.isSuccessful()) {
                             Result result = response.body();
                             if (result != null) {
                                 Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
@@ -246,11 +243,11 @@ public class UserDetailActivity extends BackActivity {
                     sexNo = "1";
                 }
                 String auth = MyApplication.getInstance().getAuth();
-                new MyNetApi().getService().getCall_UpdateInfo(auth, null, sexNo, null, null)
+                new MyServiceClient().getService().getCall_UpdateInfo(auth, null, sexNo, null, null)
                         .enqueue(new Callback<Result>() {
                             @Override
                             public void onResponse(Call<Result> call, Response<Result> response) {
-                                if (response.isSuccess()) {
+                                if (response.isSuccessful()) {
                                     Result result = response.body();
                                     if (result != null) {
                                         spEditor.putBoolean("isUpdataMyInfo",false);

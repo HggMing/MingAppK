@@ -3,19 +3,16 @@ package com.study.mingappk.test;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.study.mingappk.R;
-import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.api.result.PhoneResult;
+import com.study.mingappk.model.Phone2AdressModel;
+import com.study.mingappk.model.bean.Phone2Adress;
+import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.main.BackActivity;
-
-import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,8 +21,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -58,44 +55,30 @@ public class TestActivity extends BackActivity {
             return;
         }
         String API_KEY = "8e13586b86e4b7f3758ba3bd6c9c9135";
-        Call<PhoneResult> call = new MyNetApi().getService().getCall_Phone2Adress(API_KEY,etPhone.getText().toString());
+        Call<Phone2Adress> call = new MyServiceClient().getService().getCall_Phone2Adress(API_KEY, etPhone.getText().toString());
 
         //发送请求
 
-        call.enqueue(new Callback<PhoneResult>() {
+        call.enqueue(new Callback<Phone2Adress>() {
             @Override
-            public void onResponse(Call<PhoneResult> call, Response<PhoneResult> response) {
+            public void onResponse(Call<Phone2Adress> call, Response<Phone2Adress> response) {
                 //4.处理结果
 
-                if (response.isSuccess()) {
-                    PhoneResult phoneResult = response.body();
-                    if (phoneResult != null && phoneResult.getErrNum() == 0) {
-                        PhoneResult.RetDataEntity retDataEntity = phoneResult.getRetData();
-                        showAddView.append("地址:" + retDataEntity.getCity());
-                    }
+//                if (response.isSuccess()) {
+                Phone2Adress phone2Adress = response.body();
+                if (/*phone2Adress != null &&*/ phone2Adress.getErrNum() == 0) {
+                    Phone2Adress.RetDataEntity retDataEntity = phone2Adress.getRetData();
+                    showAddView.append("地址:" + retDataEntity.getCity());
                 }
+//                }
             }
 
             @Override
-            public void onFailure(Call<PhoneResult> call, Throwable t) {
+            public void onFailure(Call<Phone2Adress> call, Throwable t) {
 
             }
         });
     }
-
-    rx.Observable<Response<PhoneResult>> responseObservable = rx.Observable.create(new Observable.OnSubscribe<Response<PhoneResult>>() {
-        @Override
-        public void call(Subscriber<? super Response<PhoneResult>> subscriber) {
-            String API_KEY = "8e13586b86e4b7f3758ba3bd6c9c9135";
-            Call<PhoneResult> call = new MyNetApi().getService().getCall_Phone2Adress(API_KEY,etPhone.getText().toString());
-            try {
-                subscriber.onNext(call.execute());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            subscriber.onCompleted();
-        }
-    });
 
 
     private void queryByRxAndroid() {
@@ -105,32 +88,11 @@ public class TestActivity extends BackActivity {
                     .setAction("Action", null).show();
             return;
         }
-        responseObservable
-                .map(new Func1<Response<PhoneResult>, PhoneResult>() {
-
+        Phone2AdressModel.getCity(etPhone.getText().toString())
+                .subscribe(new Action1<String>() {
                     @Override
-                    public PhoneResult call(Response<PhoneResult> phoneResultResponse) {return phoneResultResponse.body();
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PhoneResult>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-
-                    }
-
-                    @Override
-                    public void onNext(PhoneResult phoneResult) {
-                        if (phoneResult != null && phoneResult.getErrNum() == 0) {
-                            PhoneResult.RetDataEntity retDataEntity = phoneResult.getRetData();
-                            showAddView.append("地址:" + retDataEntity.getCity());
-                        }
+                    public void call(String s) {
+                        showAddView.append("地址222:" +s);
                     }
                 });
     }

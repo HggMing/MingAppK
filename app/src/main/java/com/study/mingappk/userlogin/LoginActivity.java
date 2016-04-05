@@ -15,28 +15,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.api.result.LoginResult;
-import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.common.app.MyApplication;
+import com.study.mingappk.model.bean.LoginResult;
+import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.main.MainActivity;
 import com.study.mingappk.test.TestActivity;
 
-import java.io.IOException;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Response;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
 public class LoginActivity extends Activity {
+    final private static String TAG="mm:LoginActivity";
     @Bind(R.id.et_name)
     EditText et_name;
     @Bind(R.id.et_pwd)
@@ -94,25 +90,6 @@ public class LoginActivity extends Activity {
 
     }
 
-    rx.Observable<LoginResult> loginResultObservable = rx.Observable.create(new Observable.OnSubscribe<LoginResult>() {
-        @Override
-        public void call(Subscriber<? super LoginResult> subscriber) {
-            Call<LoginResult> call = new MyNetApi().getService().getCall_Login(loginname,loginpwd);
-            Response<LoginResult> loginResultResponse = null;
-            try {
-                loginResultResponse = call.execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (loginResultResponse != null && loginResultResponse.isSuccess()) {
-                subscriber.onNext(loginResultResponse.body());
-            } else {
-                subscriber.onNext(null);
-            }
-            subscriber.onCompleted();
-        }
-    });
-
     private void loginByRx() {
 
         if (!BaseTools.checkNetWorkStatus(this)) {
@@ -120,7 +97,7 @@ public class LoginActivity extends Activity {
             loginFailure(point);
             return;
         }
-        loginResultObservable
+        new MyServiceClient().getService().getCall_Login(loginname,loginpwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<LoginResult>() {
@@ -130,11 +107,13 @@ public class LoginActivity extends Activity {
 
                     @Override
                     public void onError(Throwable throwable) {
+                        Log.i(TAG,"失败了"+throwable.getMessage());
+                        point = "亲，网络不给力啊,请检查网络";
+                        loginFailure(point);
                     }
 
                     @Override
                     public void onNext(LoginResult loginResult) {
-                        if (loginResult != null) {
                             if (loginResult.getErr() == 0) {
                                 MyApplication.getInstance().setAuth(loginResult.getAuth());//保存认证信息
                                 loginSuccess();
@@ -145,13 +124,8 @@ public class LoginActivity extends Activity {
                                 loginFailureToReg(point);
                                 return;
                             }
-                        } else {
-                            point = "亲，网络不给力啊,请检查网络";
+                            point = loginResult.getMsg();
                             loginFailure(point);
-                            return;
-                        }
-                        point = loginResult.getMsg();
-                        loginFailure(point);
                     }
                 });
     }

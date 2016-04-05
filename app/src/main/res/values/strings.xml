@@ -21,16 +21,6 @@
     <string name="title_activity_advice">意见反馈</string>
     <string name="title_activity_about">关于我们</string>
     <!--网络相关-->
-    <string name="postUrl">http://121.40.105.149:9901/</string>
-    <string name="action_submit">确定</string>
-    <string name="label_select_picture">选择所需图片</string>
-    <string name="permission_title_rationale">需要权限</string>
-    <string name="label_ok">确定</string>
-    <string name="label_cancel">取消</string>
-    <string name="permission_read_storage_rationale">需要读取权限来打开文件</string>
-    <string name="toast_cannot_retrieve_selected_image">无法检索所选图像</string>
-    <string name="toast_cannot_retrieve_cropped_image">无法检索到裁剪的图像</string>
-    <string name="toast_unexpected_error">意外的错误</string>
     <string name="common_ok">确定</string>
 
 

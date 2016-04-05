@@ -34,4 +34,6 @@
     <!--动态页面-->
     <color name="font_black">#010101</color>
     <color name="blue_setting">#7AB9DC</color>
+
+    <color name="orange">#fa800a</color>
 </resources>

@@ -1,27 +1,31 @@
 package com.study.mingappk.tab3;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.study.mingappk.R;
-import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.api.result.FollowVillageListResult;
-import com.study.mingappk.api.result.Result;
-import com.study.mingappk.common.app.MyApplication;
+import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.model.bean.FollowVillageListResult;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.MyItemDecoration;
+import com.study.mingappk.tab3.addfollow.FollowVillageActivity;
+import com.study.mingappk.tab3.village.Tab3BBSListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,18 +39,66 @@ import retrofit2.Response;
 
 public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickListener {
     AppCompatActivity mActivity;
-    @Bind(R.id.toolbar_tab3)
-    Toolbar toolbar3;
     @Bind(R.id.tab3_list)
     XRecyclerView mXRecyclerView;
 
     private XRecyclerView.LayoutManager mLayoutManager;
-    private Tab3Adapter mTab3Adapter;
-    List<FollowVillageListResult.DataEntity.ListEntity> followList;
+    private Tab3Adapter mAdapter;
+    List<FollowVillageListResult.DataEntity.ListEntity> mList;
     private int cnt;//关注村圈数
     final private static int PAGE_SIZE = 20;
     private int nowPage = 2;
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_follow) {
+            Intent intent = new Intent(mActivity, FollowVillageActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 0:
+                if (resultCode == mActivity.RESULT_OK) {
+                    //关注村圈后更新列表
+                    String auth = MyApplication.getInstance().getAuth();
+                    new MyServiceClient().getService().getCall_FollowList(auth, 1, PAGE_SIZE)
+                            .enqueue(new Callback<FollowVillageListResult>() {
+                                @Override
+                                public void onResponse(Call<FollowVillageListResult> call, Response<FollowVillageListResult> response) {
+                                    if (response.isSuccessful()) {
+                                        FollowVillageListResult followVillageListResult = response.body();
+                                        if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
+                                            mList.clear();
+                                            mList.addAll(followVillageListResult.getData().getList());
+                                            mAdapter.notifyDataSetChanged();
+                                            mXRecyclerView.refreshComplete();
+                                            nowPage = 2;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<FollowVillageListResult> call, Throwable t) {
+                                }
+                            });
+                }
+                break;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,39 +111,38 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
-        mActivity.setSupportActionBar(toolbar3);
 
-        configXRecyclerView();//XRecyclerView配置
+        setHasOptionsMenu(true);
+        getFollowVillage();//获取followList数据和cnt值
     }
 
+    //配置RecyclerView
     private void configXRecyclerView() {
         mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
         mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
-//        mXRecyclerView.addItemDecoration(new MyItemDecoration(mActivity, MyItemDecoration.VERTICAL_LIST));//添加分割线
+        mXRecyclerView.addItemDecoration(new MyItemDecoration(mActivity, MyItemDecoration.VERTICAL_LIST));//添加分割线
         mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
-//        mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
+        mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
         //  mXRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);//自定义下拉刷新箭头图标
 
-        followList = new ArrayList<>();
-        getFollowVillage();//获取followList数据和cnt值
         mXRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
 
                 String auth = MyApplication.getInstance().getAuth();
-                new MyNetApi().getService().getCall_FollowList(auth, 1, PAGE_SIZE)
+                new MyServiceClient().getService().getCall_FollowList(auth, 1, PAGE_SIZE)
                         .enqueue(new Callback<FollowVillageListResult>() {
                             @Override
                             public void onResponse(Call<FollowVillageListResult> call, Response<FollowVillageListResult> response) {
-                                if (response.isSuccess()) {
+                                if (response.isSuccessful()) {
                                     FollowVillageListResult followVillageListResult = response.body();
                                     if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
-                                        followList.clear();
-                                        followList.addAll(followVillageListResult.getData().getList());
-                                        mTab3Adapter.notifyDataSetChanged();
+                                        mList.clear();
+                                        mList.addAll(followVillageListResult.getData().getList());
+                                        mAdapter.notifyDataSetChanged();
                                         mXRecyclerView.refreshComplete();
                                         nowPage = 2;
                                     }
@@ -110,15 +161,15 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                 int pages = (int) (cnt / PAGE_SIZE + 1);
                 if (nowPage <= pages) {
                     String auth = MyApplication.getInstance().getAuth();
-                    new MyNetApi().getService().getCall_FollowList(auth, nowPage, PAGE_SIZE)
+                    new MyServiceClient().getService().getCall_FollowList(auth, nowPage, PAGE_SIZE)
                             .enqueue(new Callback<FollowVillageListResult>() {
                                 @Override
                                 public void onResponse(Call<FollowVillageListResult> call, Response<FollowVillageListResult> response) {
-                                    if (response.isSuccess()) {
+                                    if (response.isSuccessful()) {
                                         FollowVillageListResult followVillageListResult = response.body();
                                         if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
-                                            followList.addAll(followVillageListResult.getData().getList());
-                                            mTab3Adapter.notifyDataSetChanged();
+                                            mList.addAll(followVillageListResult.getData().getList());
+                                            mAdapter.notifyDataSetChanged();
                                             mXRecyclerView.loadMoreComplete();
                                             nowPage++;
                                         }
@@ -140,10 +191,6 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                 }
             }
         });
-
-        mTab3Adapter = new Tab3Adapter(mActivity, followList);
-        mTab3Adapter.setOnItemClickListener(Tab3Fragment.this);
-        mXRecyclerView.setAdapter(mTab3Adapter);//设置adapter
     }
 
     @Override
@@ -153,17 +200,22 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
     }
 
     private void getFollowVillage() {
-
         String auth = MyApplication.getInstance().getAuth();
-        new MyNetApi().getService().getCall_FollowList(auth, 1, PAGE_SIZE)
+        new MyServiceClient().getService().getCall_FollowList(auth, 1, PAGE_SIZE)
                 .enqueue(new Callback<FollowVillageListResult>() {
                     @Override
                     public void onResponse(Call<FollowVillageListResult> call, Response<FollowVillageListResult> response) {
-                        if (response.isSuccess()) {
+                        if (response.isSuccessful()) {
                             FollowVillageListResult followVillageListResult = response.body();
                             if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
-                                followList.addAll(followVillageListResult.getData().getList());
+                                mList = new ArrayList<>();
+                                mList.addAll(followVillageListResult.getData().getList());
                                 cnt = Integer.parseInt(followVillageListResult.getData().getCnt());
+
+                                mAdapter = new Tab3Adapter(mActivity, mList);
+                                mAdapter.setOnItemClickListener(Tab3Fragment.this);
+                                mXRecyclerView.setAdapter(mAdapter);//设置adapter
+                                configXRecyclerView();//XRecyclerView配置
                             }
                         }
                     }
@@ -178,7 +230,11 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
     @Override
     public void onItemClick(View view, int position) {
         //点击选项操作
-        Toast.makeText(mActivity, "点击选项操作", Toast.LENGTH_SHORT).show();
+        String vid = mList.get(position).getVillage_id();
+        Intent intent=new Intent();
+        intent.putExtra("click_vid", vid);
+        intent.setClass(mActivity, Tab3BBSListActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -191,7 +247,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
      * 长按村，取消关注
      */
     private void LongClick(final int position) {
-        String villageName = followList.get(position).getVillage_name();
+        String villageName = mList.get(position).getVillage_name();
         Dialog_Model.Builder builder = new Dialog_Model.Builder(mActivity);
         builder.setTitle("提示");
         builder.setMessage("取消关注" + villageName + "?");
@@ -220,18 +276,18 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
      * @param position 点击项
      */
     private void removeFromServer(final int position) {
-        String vid = followList.get(position).getVillage_id();
+        String vid = mList.get(position).getVillage_id();
         String auth = MyApplication.getInstance().getAuth();
-        new MyNetApi().getService().getCall_DelFollowList(auth, vid).enqueue(new Callback<Result>() {
+        new MyServiceClient().getService().getCall_DelFollowList(auth, vid).enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                if (response.isSuccess()) {
+                if (response.isSuccessful()) {
                     Result result = response.body();
                     if (result != null && result.getErr() == 0) {
                         // Toast.makeText(mActivity, result.getMsg(), Toast.LENGTH_SHORT).show();
-                        mTab3Adapter.notifyItemRemoved(position+1);
-                        followList.remove(position);
-                        mTab3Adapter.notifyItemRangeChanged(position, mTab3Adapter.getItemCount());
+                        mAdapter.notifyItemRemoved(position + 1);
+                        mList.remove(position);
+                        mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
                     }
                 }
             }
@@ -241,6 +297,5 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
 
             }
         });
-
     }
 }

@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.api.result.Result;
-import com.study.mingappk.common.app.MyApplication;
+import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.main.BackActivity;
 
@@ -74,11 +74,11 @@ public class ChangePwdActivity extends BackActivity {
                 return true;
             }
             String auth = MyApplication.getInstance().getAuth();
-            new MyNetApi().getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
+            new MyServiceClient().getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
                     .enqueue(new Callback<Result>() {
                         @Override
                         public void onResponse(Call<Result> call, Response<Result> response) {
-                            if (response.isSuccess()) {
+                            if (response.isSuccessful()) {
                                 final Result changePwdResult = response.body();
                                 if (changePwdResult != null) {
                                     Dialog_Model.Builder builder2 = new Dialog_Model.Builder(ChangePwdActivity.this);

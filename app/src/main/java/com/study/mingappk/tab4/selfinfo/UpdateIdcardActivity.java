@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.api.result.Result;
-import com.study.mingappk.common.app.MyApplication;
+import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.main.BackActivity;
 
 import butterknife.Bind;
@@ -47,11 +47,11 @@ public class UpdateIdcardActivity extends BackActivity {
             if (newIdcard.length() != 18) {
                 Toast.makeText(UpdateIdcardActivity.this, "身份证号必须为18位！！", Toast.LENGTH_SHORT).show();
             } else {
-                new MyNetApi().getService().getCall_UpdateInfo(auth, null, null, newIdcard, null)
+                new MyServiceClient().getService().getCall_UpdateInfo(auth, null, null, newIdcard, null)
                         .enqueue(new Callback<Result>() {
                             @Override
                             public void onResponse(Call<Result> call, Response<Result> response) {
-                                if (response.isSuccess()) {
+                                if (response.isSuccessful()) {
                                     Result result = response.body();
                                     if (result != null) {
                                         Toast.makeText(UpdateIdcardActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();

@@ -1,9 +1,7 @@
 package com.study.mingappk.tab3;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +11,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
-import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.api.result.FollowVillageListResult;
+import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.model.bean.FollowVillageListResult;
 import com.study.mingappk.common.utils.BaseTools;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +24,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Ming on 2016/3/30.
  */
-public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.Tab3Holder> {
+public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.ViewHolder> {
 
 
     private Context mContext;
@@ -61,16 +57,16 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.Tab3Holder> {
      * 创建ViewHolder
      */
     @Override
-    public Tab3Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = mLayoutInflater.inflate(R.layout.item_tab3, parent, false);
-        return new Tab3Holder(mView);
+        return new ViewHolder(mView);
     }
 
     /**
      * 绑定ViewHoler，给item中的控件设置数据
      */
     @Override
-    public void onBindViewHolder(final Tab3Holder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (mOnItemClickListener != null) {
             holder.tab3Item.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,8 +83,10 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.Tab3Holder> {
             });
         }
         //显示数据编辑
-        String imageUrl= MyNetApi.getBaseUrl()+followList.get(position).getPic();
-        Glide.with(mContext).load(imageUrl).into(holder.imageViewVillage);//关注村圈图
+        String imageUrl= MyServiceClient.getBaseUrl()+followList.get(position).getPic();
+        Glide.with(mContext).load(imageUrl)
+                .placeholder(R.mipmap.default_village)
+                .into(holder.imageViewVillage);//关注村圈图
         String villageName=followList.get(position).getVillage_name();
         holder.tvVillageName.setText(villageName);//关注村圈名称
         String newMessage=followList.get(position).getBbsInfo().getDesc();
@@ -110,7 +108,7 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.Tab3Holder> {
         return followList.size();
     }
 
-    static class Tab3Holder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tab3_item)
         RelativeLayout tab3Item;
         @Bind(R.id.imageView_village)
@@ -122,7 +120,7 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.Tab3Holder> {
         @Bind(R.id.tv_time)
         TextView tvTime;
 
-        Tab3Holder(View view) {
+        ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

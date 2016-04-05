@@ -41,7 +41,7 @@ public class Tab2Fragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
-        mActivity.setSupportActionBar(toolbar2);
+//        mActivity.setSupportActionBar(toolbar2);
 
         Glide.with(this).load(imageUrls).into(imgTest);
 

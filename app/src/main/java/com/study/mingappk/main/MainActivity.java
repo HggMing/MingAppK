@@ -1,5 +1,7 @@
 package com.study.mingappk.main;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,10 +11,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +25,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.tab1.Tab1Fragment;
 import com.study.mingappk.tab2.Tab2Fragment;
 import com.study.mingappk.tab3.Tab3Fragment;
+import com.study.mingappk.tab3.addfollow.FollowVillageActivity;
 import com.study.mingappk.tab4.Tab4Fragment;
 
 import java.util.ArrayList;
@@ -50,12 +56,23 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.text_tab4_main)
     TextView tTab4;
     public List<Fragment> fragments = new ArrayList<>();
+    @Bind(R.id.toolbar_main)
+    Toolbar mToolBar;
+    @Bind(R.id.tab3_guide)
+    ImageView tab3Guide;
+
+    SharedPreferences sp;
+    private SharedPreferences.Editor spEditor;
     private FragmentManager fragmentManager;
     private boolean isExit;//是否退出
+    int idToolbar = 1;//toolbar 功能按钮页
 
-    @OnClick({R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout})
+    @OnClick({R.id.tab3_guide,R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tab3_guide:
+                tab3Guide.setVisibility(View.GONE);
+                break;
             case R.id.tab1Layout:
                 viewPager.setCurrentItem(0);//选中index页
                 break;
@@ -79,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
         public void onPageSelected(int arg0) {
             switch (arg0) {
                 case 0:
+                    mToolBar.setTitle("动态");
+                    idToolbar=1;
                     mTab1.setImageDrawable(getResources().getDrawable(R.mipmap.tab1_btn1));
                     tTab1.setTextColor(getResources().getColor(R.color.tab_bnt1));   //选中时的字体颜色
                     setTab2ToB();
@@ -86,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     break;
                 case 1:
+                    mToolBar.setTitle("老乡");
+                    idToolbar=2;
                     mTab2.setImageDrawable(getResources().getDrawable(R.mipmap.tab2_btn1));
                     tTab2.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     setTab1ToB();
@@ -93,6 +114,14 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     break;
                 case 2:
+                    mToolBar.setTitle("我的村");
+                    idToolbar=3;
+                    boolean isFirstRun = sp.getBoolean("isFirstRun", true);
+                    if (isFirstRun) {
+                        tab3Guide.setVisibility(View.VISIBLE);
+                        spEditor.putBoolean("isFirstRun", false);
+                        spEditor.commit();
+                    }
                     mTab3.setImageDrawable(getResources().getDrawable(R.mipmap.tab3_btn1));
                     tTab3.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     setTab1ToB();
@@ -100,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     break;
                 case 3:
+                    mToolBar.setTitle("设置");
+                    idToolbar=4;
                     mTab4.setImageDrawable(getResources().getDrawable(R.mipmap.tab4_btn1));
                     tTab4.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     setTab1ToB();
@@ -107,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     setTab3ToB();
                     break;
             }
+            invalidateOptionsMenu();
         }
 
 
@@ -213,6 +245,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setSupportActionBar(mToolBar);
+        mToolBar.setTitle("动态");
+
+        sp = getSharedPreferences("config", MODE_PRIVATE);
+        spEditor = sp.edit();
 
         fragments.add(new Tab1Fragment());
         fragments.add(new Tab2Fragment());
@@ -229,24 +266,39 @@ public class MainActivity extends AppCompatActivity {
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }*/
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    /* @Override
+   public boolean onOptionsItemSelected(MenuItem item) {
+       int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+       if (id == R.id.action_follow) {
+           Intent intent = new Intent(this, FollowVillageActivity.class);
+           startActivityForResult(intent,0);
+           return true;
+       }
+       return super.onOptionsItemSelected(item);
+   }*/
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        switch (idToolbar) {
+            case 1:
+                menu.findItem(R.id.action_follow).setVisible(false);
+                break;
+            case 2:
+                menu.findItem(R.id.action_follow).setVisible(false);
+                break;
+            case 3:
+                menu.findItem(R.id.action_follow).setVisible(true);
+                break;
+            case 4:
+                menu.findItem(R.id.action_follow).setVisible(false);
+                break;
         }
-        return super.onOptionsItemSelected(item);
-    }*/
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public void onBackPressed() {

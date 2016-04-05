@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +17,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
-import com.study.mingappk.api.MyNetApi;
-import com.study.mingappk.api.result.Result;
-import com.study.mingappk.api.result.UserInfoResult;
-import com.study.mingappk.common.app.MyApplication;
+import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.bean.UserInfoResult;
+import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
@@ -65,7 +63,7 @@ public class Tab4Fragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
-        mActivity.setSupportActionBar(toolbar4);
+//        mActivity.setSupportActionBar(toolbar4);
         sp = mActivity.getSharedPreferences("config", 0);
         spEditor = sp.edit();
         isUpdataMyInfo=sp.getBoolean("isUpdataMyInfo", false);
@@ -179,11 +177,11 @@ public class Tab4Fragment extends Fragment {
                             return;
                         }
                         String auth = MyApplication.getInstance().getAuth();
-                        new MyNetApi().getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
+                        new MyServiceClient().getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
                                 .enqueue(new Callback<Result>() {
                                     @Override
                                     public void onResponse(Call<Result> call, Response<Result> response) {
-                                        if (response.isSuccess()) {
+                                        if (response.isSuccessful()) {
                                             Result changePwdResult = response.body();
                                             if (changePwdResult != null) {
                                                 Dialog_Model.Builder builder2 = new Dialog_Model.Builder(mActivity);
@@ -258,16 +256,16 @@ public class Tab4Fragment extends Fragment {
 
     public void getUserInfoDetail() {
         String auth = MyApplication.getInstance().getAuth();
-        Call<UserInfoResult> call = new MyNetApi().getService().getCall_UserInfo(auth);
+        Call<UserInfoResult> call = new MyServiceClient().getService().getCall_UserInfo(auth);
         call.enqueue(new Callback<UserInfoResult>() {
             @Override
             public void onResponse(Call<UserInfoResult> call, Response<UserInfoResult> response) {
-                if (response.isSuccess()) {
+                if (response.isSuccessful()) {
                     UserInfoResult userInfoResult = response.body();
                     if (userInfoResult != null && userInfoResult.getErr() == 0) {
                         UserInfoResult.DataEntity dataEntity = userInfoResult.getData();
-                        MyApplication.getInstance().setUserInfo(dataEntity);
-                        String headUrl = MyNetApi.getBaseUrl() + dataEntity.getHead();
+//                        MyApplication.getInstance().setUserInfo(dataEntity);
+                        String headUrl = MyServiceClient.getBaseUrl() + dataEntity.getHead();
                         String uName = dataEntity.getUname();
                         String sexNumber = dataEntity.getSex();
                         String accountNo = dataEntity.getLogname();

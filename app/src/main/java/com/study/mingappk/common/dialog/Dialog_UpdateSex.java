@@ -17,7 +17,6 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.study.mingappk.R;
-import com.study.mingappk.common.app.MyApplication;
 
 public class Dialog_UpdateSex extends Dialog implements DialogInterface
 {
