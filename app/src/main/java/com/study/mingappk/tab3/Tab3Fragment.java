@@ -18,8 +18,8 @@ import android.view.ViewGroup;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.study.mingappk.R;
+import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.model.bean.FollowVillageListResult;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
@@ -44,7 +44,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
 
     private XRecyclerView.LayoutManager mLayoutManager;
     private Tab3Adapter mAdapter;
-    List<FollowVillageListResult.DataEntity.ListEntity> mList;
+    List<FollowVillageList.DataEntity.ListEntity> mList;
     private int cnt;//关注村圈数
     final private static int PAGE_SIZE = 20;
     private int nowPage = 2;
@@ -75,12 +75,12 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                 if (resultCode == mActivity.RESULT_OK) {
                     //关注村圈后更新列表
                     String auth = MyApplication.getInstance().getAuth();
-                    new MyServiceClient().getService().getCall_FollowList(auth, 1, PAGE_SIZE)
-                            .enqueue(new Callback<FollowVillageListResult>() {
+                    MyServiceClient.getService().getCall_FollowList(auth, 1, PAGE_SIZE)
+                            .enqueue(new Callback<FollowVillageList>() {
                                 @Override
-                                public void onResponse(Call<FollowVillageListResult> call, Response<FollowVillageListResult> response) {
+                                public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
                                     if (response.isSuccessful()) {
-                                        FollowVillageListResult followVillageListResult = response.body();
+                                        FollowVillageList followVillageListResult = response.body();
                                         if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
                                             mList.clear();
                                             mList.addAll(followVillageListResult.getData().getList());
@@ -92,7 +92,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                                 }
 
                                 @Override
-                                public void onFailure(Call<FollowVillageListResult> call, Throwable t) {
+                                public void onFailure(Call<FollowVillageList> call, Throwable t) {
                                 }
                             });
                 }
@@ -133,12 +133,12 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
             public void onRefresh() {
 
                 String auth = MyApplication.getInstance().getAuth();
-                new MyServiceClient().getService().getCall_FollowList(auth, 1, PAGE_SIZE)
-                        .enqueue(new Callback<FollowVillageListResult>() {
+                MyServiceClient.getService().getCall_FollowList(auth, 1, PAGE_SIZE)
+                        .enqueue(new Callback<FollowVillageList>() {
                             @Override
-                            public void onResponse(Call<FollowVillageListResult> call, Response<FollowVillageListResult> response) {
+                            public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
                                 if (response.isSuccessful()) {
-                                    FollowVillageListResult followVillageListResult = response.body();
+                                    FollowVillageList followVillageListResult = response.body();
                                     if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
                                         mList.clear();
                                         mList.addAll(followVillageListResult.getData().getList());
@@ -150,7 +150,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                             }
 
                             @Override
-                            public void onFailure(Call<FollowVillageListResult> call, Throwable t) {
+                            public void onFailure(Call<FollowVillageList> call, Throwable t) {
                             }
                         });
             }
@@ -161,12 +161,12 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                 int pages = (int) (cnt / PAGE_SIZE + 1);
                 if (nowPage <= pages) {
                     String auth = MyApplication.getInstance().getAuth();
-                    new MyServiceClient().getService().getCall_FollowList(auth, nowPage, PAGE_SIZE)
-                            .enqueue(new Callback<FollowVillageListResult>() {
+                    MyServiceClient.getService().getCall_FollowList(auth, nowPage, PAGE_SIZE)
+                            .enqueue(new Callback<FollowVillageList>() {
                                 @Override
-                                public void onResponse(Call<FollowVillageListResult> call, Response<FollowVillageListResult> response) {
+                                public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
                                     if (response.isSuccessful()) {
-                                        FollowVillageListResult followVillageListResult = response.body();
+                                        FollowVillageList followVillageListResult = response.body();
                                         if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
                                             mList.addAll(followVillageListResult.getData().getList());
                                             mAdapter.notifyDataSetChanged();
@@ -177,7 +177,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                                 }
 
                                 @Override
-                                public void onFailure(Call<FollowVillageListResult> call, Throwable t) {
+                                public void onFailure(Call<FollowVillageList> call, Throwable t) {
 
                                 }
                             });
@@ -201,12 +201,12 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
 
     private void getFollowVillage() {
         String auth = MyApplication.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_FollowList(auth, 1, PAGE_SIZE)
-                .enqueue(new Callback<FollowVillageListResult>() {
+        MyServiceClient.getService().getCall_FollowList(auth, 1, PAGE_SIZE)
+                .enqueue(new Callback<FollowVillageList>() {
                     @Override
-                    public void onResponse(Call<FollowVillageListResult> call, Response<FollowVillageListResult> response) {
+                    public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
                         if (response.isSuccessful()) {
-                            FollowVillageListResult followVillageListResult = response.body();
+                            FollowVillageList followVillageListResult = response.body();
                             if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
                                 mList = new ArrayList<>();
                                 mList.addAll(followVillageListResult.getData().getList());
@@ -221,7 +221,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                     }
 
                     @Override
-                    public void onFailure(Call<FollowVillageListResult> call, Throwable t) {
+                    public void onFailure(Call<FollowVillageList> call, Throwable t) {
 
                     }
                 });
@@ -278,7 +278,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
     private void removeFromServer(final int position) {
         String vid = mList.get(position).getVillage_id();
         String auth = MyApplication.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_DelFollowList(auth, vid).enqueue(new Callback<Result>() {
+        MyServiceClient.getService().getCall_DelFollowList(auth, vid).enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if (response.isSuccessful()) {

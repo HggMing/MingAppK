@@ -32,6 +32,7 @@ public class Tab1Fragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
 //        mActivity.setSupportActionBar(toolbar1);

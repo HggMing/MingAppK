@@ -24,8 +24,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     // Android 图标上面添加提醒
     compile files('libs/android-viewbadger.jar')
-    compile 'com.jude:beam:2.7.5'
+    compile 'com.jude:easyrecyclerview:3.4.5'
     compile 'com.jude:utils:1.1.1'
+    compile 'com.github.clans:fab:1.6.0'
     // http client  采用retrofit+okhttp+RxAndroid替换
     compile files('libs/org.apache.http.legacy.jar')
     compile 'com.squareup.retrofit2:retrofit:2.0.1'

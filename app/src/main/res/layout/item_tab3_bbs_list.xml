@@ -41,7 +41,7 @@
             android:layout_toEndOf="@+id/bbs_head"
             android:layout_toRightOf="@+id/bbs_head"
             android:textColor="@color/font_black_content"
-            android:textSize="14sp"
+            android:textSize="20sp"
             tools:text="用户名" />
 
         <TextView
@@ -66,7 +66,8 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:text="这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,"
-            android:textColor="@color/font_black_content" />
+            android:textColor="@color/font_black_content"
+            android:textSize="18sp" />
 
         <com.jaeger.ninegridimageview.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/nine_grid_image"

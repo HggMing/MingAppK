@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.model.bean.FollowVillageListResult;
+import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.common.utils.BaseTools;
 
 import java.util.Date;
@@ -29,9 +29,9 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private List<FollowVillageListResult.DataEntity.ListEntity> followList;
+    private List<FollowVillageList.DataEntity.ListEntity> followList;
 
-    public Tab3Adapter(Context mContext, List<FollowVillageListResult.DataEntity.ListEntity> followList) {
+    public Tab3Adapter(Context mContext, List<FollowVillageList.DataEntity.ListEntity> followList) {
         this.mContext = mContext;
         this.followList = followList;
         mLayoutInflater = LayoutInflater.from(mContext);

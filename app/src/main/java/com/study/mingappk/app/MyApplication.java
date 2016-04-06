@@ -2,7 +2,6 @@ package com.study.mingappk.app;
 
 import android.app.Application;
 
-import com.jude.beam.Beam;
 import com.jude.utils.BuildConfig;
 import com.jude.utils.JUtils;
 
@@ -22,7 +21,6 @@ public class MyApplication extends Application {
         instance = this;
         JUtils.initialize(this);
         JUtils.setDebug(BuildConfig.DEBUG, "mm");
-        Beam.init(this);
     }
 
     public String getAuth() {

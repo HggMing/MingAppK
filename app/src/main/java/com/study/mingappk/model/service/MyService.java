@@ -6,7 +6,7 @@ import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.BBSListResult;
-import com.study.mingappk.model.bean.FollowVillageListResult;
+import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.bean.LoginResult;
 import com.study.mingappk.model.bean.Phone2Adress;
 import com.study.mingappk.model.bean.Result;
@@ -164,7 +164,7 @@ public interface MyService {
      * @return 村圈列表信息
      */
     @GET("vill/followlist")
-    Call<FollowVillageListResult> getCall_FollowList(
+    Call<FollowVillageList> getCall_FollowList(
             @Query("auth") String auth,
             @Query("page") int page,
             @Query("pagesize") int pagesize);

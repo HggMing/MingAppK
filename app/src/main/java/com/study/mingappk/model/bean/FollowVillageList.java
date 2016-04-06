@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Ming on 2016/3/30.
  */
-public class FollowVillageListResult {
+public class FollowVillageList {
 
 
     /**

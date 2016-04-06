@@ -1,4 +1,4 @@
-package com.study.mingappk.model;
+package com.study.mingappk.model.provider;
 
 import com.study.mingappk.model.bean.Phone2Adress;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -11,7 +11,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Ming on 2016/4/5.
  */
-public class Phone2AdressModel {
+public class Phone2AdressProvider {
 
     /**
      * 获取手机号归属地城市

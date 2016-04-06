@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.study.mingappk.R;
-import com.study.mingappk.model.Phone2AdressModel;
+import com.study.mingappk.model.provider.Phone2AdressProvider;
 import com.study.mingappk.model.bean.Phone2Adress;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.main.BackActivity;
@@ -20,11 +20,7 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 
 /**
@@ -88,7 +84,7 @@ public class TestActivity extends BackActivity {
                     .setAction("Action", null).show();
             return;
         }
-        Phone2AdressModel.getCity(etPhone.getText().toString())
+        Phone2AdressProvider.getCity(etPhone.getText().toString())
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {

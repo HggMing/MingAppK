@@ -49,7 +49,6 @@ public class FollowVillageActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // 初始化mTitles、mFragments等ViewPager需要的数据
-        //这里的数据都是模拟出来了，自己手动生成的，在项目中需要从网络获取数据
         initData();
 
         // 对各种控件进行设置、适配、填充数据
