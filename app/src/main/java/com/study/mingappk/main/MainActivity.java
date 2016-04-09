@@ -284,17 +284,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         switch (idToolbar) {
-            case 1:
-                menu.findItem(R.id.action_follow).setVisible(false);
-                break;
             case 2:
+                menu.findItem(R.id.action_search).setVisible(true);
                 menu.findItem(R.id.action_follow).setVisible(false);
                 break;
             case 3:
                 menu.findItem(R.id.action_follow).setVisible(true);
+                menu.findItem(R.id.action_search).setVisible(false);
                 break;
-            case 4:
+            default:
                 menu.findItem(R.id.action_follow).setVisible(false);
+                menu.findItem(R.id.action_search).setVisible(false);
                 break;
         }
         return super.onPrepareOptionsMenu(menu);

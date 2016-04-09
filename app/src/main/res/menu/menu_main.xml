@@ -19,6 +19,7 @@
         android:id="@+id/action_follow"
         android:orderInCategory="1"
         android:title="关注村圈"
+        android:visible="false"
         android:icon="@mipmap/main_action_add"
         app:showAsAction="always" />
 
