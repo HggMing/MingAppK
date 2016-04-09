@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.app.MyApplication;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.common.dialog.Dialog_UpdateSex;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.main.BackActivity;
@@ -94,11 +94,11 @@ public class UserDetailActivity extends BackActivity {
         //身份证号
         getIdCard.setText(sp.getString("MyInfo_Cid", null));
         //地址:"province_name":"四川省", "city_name":"遂宁市", "county_name":"蓬溪县", "town_name":"红江镇", "village_name":"永益村"
-       /* String address = (MyApplication.getInstance().getUserInfo().getProvince_name() +
-                MyApplication.getInstance().getUserInfo().getCity_name() +
-                MyApplication.getInstance().getUserInfo().getCounty_name() +
-                MyApplication.getInstance().getUserInfo().getTown_name() +
-                MyApplication.getInstance().getUserInfo().getVillage_name());*/
+       /* String address = (APP.getInstance().getUserInfo().getProvince_name() +
+                APP.getInstance().getUserInfo().getCity_name() +
+                APP.getInstance().getUserInfo().getCounty_name() +
+                APP.getInstance().getUserInfo().getTown_name() +
+                APP.getInstance().getUserInfo().getVillage_name());*/
         String address = sp.getString("MyInfo_Address", null);
         getAddress.setText(address);
         //手机号
@@ -153,7 +153,7 @@ public class UserDetailActivity extends BackActivity {
                 Glide.with(UserDetailActivity.this).load("file://" + photoInfo.getPhotoPath()).into(iconHead2);
                 Bitmap bitmap = BitmapFactory.decodeFile(photoInfo.getPhotoPath());//图片文件转为Bitmap对象
                 final String newHead = (bitmapToBase64(bitmap) + ".jpg");
-                String auth = MyApplication.getInstance().getAuth();
+                String auth = APP.getInstance().getAuth();
                 new MyServiceClient().getService().getCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {
@@ -242,7 +242,7 @@ public class UserDetailActivity extends BackActivity {
                 } else {
                     sexNo = "1";
                 }
-                String auth = MyApplication.getInstance().getAuth();
+                String auth = APP.getInstance().getAuth();
                 new MyServiceClient().getService().getCall_UpdateInfo(auth, null, sexNo, null, null)
                         .enqueue(new Callback<Result>() {
                             @Override

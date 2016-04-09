@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.A1Provice;
 import com.study.mingappk.model.bean.A2City;
@@ -22,7 +23,6 @@ import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.main.BackActivity;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class UpdateAdressActivity extends BackActivity {
      * 获取省列表
      */
     private void GetProvinceList() {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add1(auth)
                 .enqueue(new Callback<A1Provice>() {
                     @Override
@@ -180,7 +180,7 @@ public class UpdateAdressActivity extends BackActivity {
      * @param provinceid 省份id
      */
     private void GetCityList(String provinceid) {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add2(auth, provinceid)
                 .enqueue(new Callback<A2City>() {
                     @Override
@@ -267,7 +267,7 @@ public class UpdateAdressActivity extends BackActivity {
      * @param cityid 市id
      */
     private void GetCountryList(String cityid) {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add3(auth, cityid)
                 .enqueue(new Callback<A3County>() {
                     @Override
@@ -352,7 +352,7 @@ public class UpdateAdressActivity extends BackActivity {
      * @param countryid 县级id
      */
     private void GetTownList(String countryid) {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add4(auth, countryid)
                 .enqueue(new Callback<A4Town>() {
                     @Override
@@ -438,7 +438,7 @@ public class UpdateAdressActivity extends BackActivity {
      * @param townid 省份id
      */
     private void GetVillageList(String townid) {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add5(auth, townid)
                 .enqueue(new Callback<A5Village>() {
                     @Override
@@ -512,7 +512,7 @@ public class UpdateAdressActivity extends BackActivity {
                 selected_village_name != null) {
             final String newAddress = selected_province_name + selected_city_name + selected_country_name + selected_town_name + selected_village_name;
             Log.d("mm",newAddress);
-            String auth = MyApplication.getInstance().getAuth();
+            String auth = APP.getInstance().getAuth();
             new MyServiceClient().getService().getCall_UpdateInfo(auth, null, null, null, vid)
                     .enqueue(new Callback<Result>() {
                         @Override

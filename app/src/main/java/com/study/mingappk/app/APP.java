@@ -2,17 +2,21 @@ package com.study.mingappk.app;
 
 import android.app.Application;
 
-import com.jude.utils.BuildConfig;
 import com.jude.utils.JUtils;
+import com.squareup.otto.Bus;
 
-public class MyApplication extends Application {
+public class APP extends Application {
     /**
      * 单例模式中获取唯一的Application实例
      */
-    private static MyApplication instance;
+    private static APP instance;
 
-    public static MyApplication getInstance() {
+    public static APP getInstance() {
         return instance;
+    }
+    public static final Bus bus = new Bus();
+    public static Bus getBus(){
+        return bus;
     }
 
     @Override
@@ -20,7 +24,7 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         JUtils.initialize(this);
-        JUtils.setDebug(BuildConfig.DEBUG, "mm");
+        JUtils.setDebug(true, "mm");
     }
 
     public String getAuth() {

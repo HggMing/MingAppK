@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.main.BackActivity;
 
@@ -73,7 +73,7 @@ public class ChangePwdActivity extends BackActivity {
                 Toast.makeText(this, "密码必须在6-16位", Toast.LENGTH_LONG).show();
                 return true;
             }
-            String auth = MyApplication.getInstance().getAuth();
+            String auth = APP.getInstance().getAuth();
             new MyServiceClient().getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
                     .enqueue(new Callback<Result>() {
                         @Override

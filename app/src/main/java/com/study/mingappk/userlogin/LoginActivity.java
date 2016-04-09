@@ -15,9 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.model.bean.LoginResult;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.main.MainActivity;
@@ -115,7 +115,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onNext(LoginResult loginResult) {
                             if (loginResult.getErr() == 0) {
-                                MyApplication.getInstance().setAuth(loginResult.getAuth());//保存认证信息
+                                APP.getInstance().setAuth(loginResult.getAuth());//保存认证信息
                                 loginSuccess();
                                 return;
                             }

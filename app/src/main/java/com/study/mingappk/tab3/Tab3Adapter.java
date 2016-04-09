@@ -29,13 +29,12 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private List<FollowVillageList.DataEntity.ListEntity> followList;
+    private List<FollowVillageList.DataEntity.ListEntity> mList;
 
-    public Tab3Adapter(Context mContext, List<FollowVillageList.DataEntity.ListEntity> followList) {
+    public Tab3Adapter(Context mContext, List<FollowVillageList.DataEntity.ListEntity> mList) {
         this.mContext = mContext;
-        this.followList = followList;
+        this.mList = mList;
         mLayoutInflater = LayoutInflater.from(mContext);
-
     }
 
     /**
@@ -83,29 +82,29 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.ViewHolder> {
             });
         }
         //显示数据编辑
-        String imageUrl= MyServiceClient.getBaseUrl()+followList.get(position).getPic();
+        String imageUrl = MyServiceClient.getBaseUrl() + mList.get(position).getPic();
         Glide.with(mContext).load(imageUrl)
                 .placeholder(R.mipmap.default_village)
                 .into(holder.imageViewVillage);//关注村圈图
-        String villageName=followList.get(position).getVillage_name();
+        String villageName = mList.get(position).getVillage_name();
         holder.tvVillageName.setText(villageName);//关注村圈名称
-        String newMessage=followList.get(position).getBbsInfo().getDesc();
+        String newMessage = mList.get(position).getBbsInfo().getDesc();
         holder.tvNews.setText(newMessage);//村圈最新消息
-        String date =followList.get(position).getBbsInfo().getCtime();
-        if(date!=null) {
+        String date = mList.get(position).getBbsInfo().getCtime();
+        if (date != null) {
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 //            String time = dateFormat.format(new Date(Long.valueOf(date + "000")));
-            String time=BaseTools.getTimeFormatText(new Date(Long.valueOf(date + "000")));
+            String time = BaseTools.getTimeFormatText(new Date(Long.valueOf(date + "000")));
             holder.tvTime.setText(time);//最新动态时间
-        }else{
+        } else {
             holder.tvTime.setText("");
         }
     }
 
     @Override
     public int getItemCount() {
-        return followList.size();
+        return mList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

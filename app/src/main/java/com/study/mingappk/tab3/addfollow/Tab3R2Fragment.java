@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.A1Provice;
 import com.study.mingappk.model.bean.A2City;
@@ -26,7 +27,6 @@ import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.app.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +109,7 @@ public class Tab3R2Fragment extends Fragment {
      * 获取省列表
      */
     private void GetProvinceList() {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add1(auth)
                 .enqueue(new Callback<A1Provice>() {
                     @Override
@@ -200,7 +200,7 @@ public class Tab3R2Fragment extends Fragment {
      * @param provinceid 省份id
      */
     private void GetCityList(String provinceid) {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add2(auth, provinceid)
                 .enqueue(new Callback<A2City>() {
                     @Override
@@ -287,7 +287,7 @@ public class Tab3R2Fragment extends Fragment {
      * @param cityid 市id
      */
     private void GetCountryList(String cityid) {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add3(auth, cityid)
                 .enqueue(new Callback<A3County>() {
                     @Override
@@ -372,7 +372,7 @@ public class Tab3R2Fragment extends Fragment {
      * @param countryid 县级id
      */
     private void GetTownList(String countryid) {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add4(auth, countryid)
                 .enqueue(new Callback<A4Town>() {
                     @Override
@@ -458,7 +458,7 @@ public class Tab3R2Fragment extends Fragment {
      * @param townid 省份id
      */
     private void GetVillageList(String townid) {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         new MyServiceClient().getService().getCall_Add5(auth, townid)
                 .enqueue(new Callback<A5Village>() {
                     @Override
@@ -533,7 +533,7 @@ public class Tab3R2Fragment extends Fragment {
                 selected_town_name != null &&
                 selected_village_name != null) {
             final String villageName = selected_province_name + selected_city_name + selected_country_name + selected_town_name + selected_village_name;
-            String auth = MyApplication.getInstance().getAuth();
+            String auth = APP.getInstance().getAuth();
             new MyServiceClient().getService().getCall_FollowVillage(auth, vid)
                     .enqueue(new Callback<Result>() {
                         @Override

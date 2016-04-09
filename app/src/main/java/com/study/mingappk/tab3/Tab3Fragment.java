@@ -1,9 +1,9 @@
 package com.study.mingappk.tab3;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,11 +17,12 @@ import android.view.ViewGroup;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.jude.utils.JUtils;
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.tab3.addfollow.FollowVillageActivity;
@@ -39,6 +40,7 @@ import retrofit2.Response;
 
 public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickListener {
     AppCompatActivity mActivity;
+
     @Bind(R.id.tab3_list)
     XRecyclerView mXRecyclerView;
 
@@ -46,8 +48,31 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
     private Tab3Adapter mAdapter;
     List<FollowVillageList.DataEntity.ListEntity> mList;
     private int cnt;//关注村圈数
-    final private static int PAGE_SIZE = 20;
-    private int nowPage = 2;
+    final private static int PAGE_SIZE = 20;//
+    private int page = 1;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_tab3, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mActivity = (AppCompatActivity) getActivity();
+
+        setHasOptionsMenu(true);
+        configXRecyclerView();//XRecyclerView配置
+        getDataList();//获取followList数据和cnt值
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -72,96 +97,42 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 0:
-                if (resultCode == mActivity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     //关注村圈后更新列表
-                    String auth = MyApplication.getInstance().getAuth();
-                    MyServiceClient.getService().getCall_FollowList(auth, 1, PAGE_SIZE)
-                            .enqueue(new Callback<FollowVillageList>() {
-                                @Override
-                                public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
-                                    if (response.isSuccessful()) {
-                                        FollowVillageList followVillageListResult = response.body();
-                                        if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
-                                            mList.clear();
-                                            mList.addAll(followVillageListResult.getData().getList());
-                                            mAdapter.notifyDataSetChanged();
-                                            mXRecyclerView.refreshComplete();
-                                            nowPage = 2;
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<FollowVillageList> call, Throwable t) {
-                                }
-                            });
+                    refreshList();
                 }
                 break;
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab3, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mActivity = (AppCompatActivity) getActivity();
-
-        setHasOptionsMenu(true);
-        getFollowVillage();//获取followList数据和cnt值
     }
 
     //配置RecyclerView
     private void configXRecyclerView() {
         mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
         mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
+
         mXRecyclerView.addItemDecoration(new MyItemDecoration(mActivity, MyItemDecoration.VERTICAL_LIST));//添加分割线
         mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
-        //  mXRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);//自定义下拉刷新箭头图标
+//        mXRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);//自定义下拉刷新箭头图标
+//        View header =   LayoutInflater.from(this).inflate(R.layout.recyclerview_header, (ViewGroup)findViewById(android.R.id.content),false);
+//        mRecyclerView.addHeaderView(header);
 
         mXRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-
-                String auth = MyApplication.getInstance().getAuth();
-                MyServiceClient.getService().getCall_FollowList(auth, 1, PAGE_SIZE)
-                        .enqueue(new Callback<FollowVillageList>() {
-                            @Override
-                            public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
-                                if (response.isSuccessful()) {
-                                    FollowVillageList followVillageListResult = response.body();
-                                    if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
-                                        mList.clear();
-                                        mList.addAll(followVillageListResult.getData().getList());
-                                        mAdapter.notifyDataSetChanged();
-                                        mXRecyclerView.refreshComplete();
-                                        nowPage = 2;
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<FollowVillageList> call, Throwable t) {
-                            }
-                        });
+                refreshList();
             }
 
 
             @Override
             public void onLoadMore() {
                 int pages = (int) (cnt / PAGE_SIZE + 1);
-                if (nowPage <= pages) {
-                    String auth = MyApplication.getInstance().getAuth();
-                    MyServiceClient.getService().getCall_FollowList(auth, nowPage, PAGE_SIZE)
+                if (page <= pages) {
+                    String auth = APP.getInstance().getAuth();
+                    MyServiceClient.getService().getCall_FollowList(auth, page, PAGE_SIZE)
                             .enqueue(new Callback<FollowVillageList>() {
                                 @Override
                                 public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
@@ -171,37 +142,54 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                                             mList.addAll(followVillageListResult.getData().getList());
                                             mAdapter.notifyDataSetChanged();
                                             mXRecyclerView.loadMoreComplete();
-                                            nowPage++;
+                                            page++;
                                         }
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<FollowVillageList> call, Throwable t) {
-
+                                    JUtils.Log("加载更多村圈出错：" + t.getMessage());
                                 }
                             });
 
                 } else {
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            mXRecyclerView.loadMoreComplete();
-                        }
-                    }, 1000);
+                    mXRecyclerView.loadMoreComplete();
                 }
             }
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    private void refreshList() {
+        page = 1;
+        String auth = APP.getInstance().getAuth();
+        MyServiceClient.getService().getCall_FollowList(auth, page, PAGE_SIZE)
+                .enqueue(new Callback<FollowVillageList>() {
+                    @Override
+                    public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
+                        if (response.isSuccessful()) {
+                            FollowVillageList followVillageListResult = response.body();
+                            if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
+                                mList.clear();
+                                mList.addAll(followVillageListResult.getData().getList());
+                                mAdapter.notifyDataSetChanged();
+                                mXRecyclerView.refreshComplete();
+                                page = 2;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FollowVillageList> call, Throwable t) {
+                        JUtils.Log("刷新关注村圈出错：" + t.getMessage());
+                    }
+                });
     }
 
-    private void getFollowVillage() {
-        String auth = MyApplication.getInstance().getAuth();
-        MyServiceClient.getService().getCall_FollowList(auth, 1, PAGE_SIZE)
+    private void getDataList() {
+        page = 1;
+        String auth = APP.getInstance().getAuth();
+        MyServiceClient.getService().getCall_FollowList(auth, page, PAGE_SIZE)
                 .enqueue(new Callback<FollowVillageList>() {
                     @Override
                     public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
@@ -215,14 +203,14 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                                 mAdapter = new Tab3Adapter(mActivity, mList);
                                 mAdapter.setOnItemClickListener(Tab3Fragment.this);
                                 mXRecyclerView.setAdapter(mAdapter);//设置adapter
-                                configXRecyclerView();//XRecyclerView配置
+                                page = 2;
                             }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<FollowVillageList> call, Throwable t) {
-
+                        JUtils.Log("初始化村圈数据出错：" + t.getMessage());
                     }
                 });
     }
@@ -231,22 +219,15 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
     public void onItemClick(View view, int position) {
         //点击选项操作
         String vid = mList.get(position).getVillage_id();
-        Intent intent=new Intent();
+        Intent intent = new Intent();
         intent.putExtra("click_vid", vid);
         intent.setClass(mActivity, Tab3BBSListActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void onItemLongClick(View view, int position) {
+    public void onItemLongClick(View view, final int position) {
         //长按选项操作
-        LongClick(position);
-    }
-
-    /**
-     * 长按村，取消关注
-     */
-    private void LongClick(final int position) {
         String villageName = mList.get(position).getVillage_name();
         Dialog_Model.Builder builder = new Dialog_Model.Builder(mActivity);
         builder.setTitle("提示");
@@ -257,6 +238,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                     public void onClick(DialogInterface dialog, int which) {
                         removeFromServer(position);
                         dialog.dismiss();
+
                     }
                 });
         builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
@@ -277,7 +259,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
      */
     private void removeFromServer(final int position) {
         String vid = mList.get(position).getVillage_id();
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_DelFollowList(auth, vid).enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -294,7 +276,7 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-
+                JUtils.Log("取消关注村圈出错：" + t.getMessage());
             }
         });
     }

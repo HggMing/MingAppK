@@ -1,4 +1,5 @@
 package com.study.mingappk.common.utils;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -6,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -25,9 +27,13 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
 
     private int mOrientation;
 
+    private int height;
+    private boolean hasHeight;
+
     /**
      * 为RecyclerView添加分割线
-     * @param context 上下文
+     *
+     * @param context     上下文
      * @param orientation 分割线方向（HORIZONTAL_LIST或VERTICAL_LIST）
      */
     public MyItemDecoration(Context context, int orientation) {
@@ -35,6 +41,12 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
         mDivider = a.getDrawable(0);
         a.recycle();
         setOrientation(orientation);
+    }
+
+    public MyItemDecoration(Context context, int orientation, int height) {
+        this(context, orientation);
+        hasHeight = true;
+        this.height = height;
     }
 
     public void setOrientation(int orientation) {
@@ -45,14 +57,13 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDraw(Canvas c, RecyclerView parent) {
+    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (mOrientation == VERTICAL_LIST) {
             drawVertical(c, parent);
         } else {
             drawHorizontal(c, parent);
         }
     }
-
 
     public void drawVertical(Canvas c, RecyclerView parent) {
         final int left = parent.getPaddingLeft();
@@ -65,7 +76,7 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                     .getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin;
-            final int bottom = top + mDivider.getIntrinsicHeight();
+            final int bottom = parent.getAdapter().getItemCount()==2?top:top + mDivider.getIntrinsicHeight();//采用XRecycleView多了header和footer,所以去除无选项时，它们之间的分界线
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
         }
@@ -88,11 +99,19 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        super.getItemOffsets(outRect, view, parent, state);
         if (mOrientation == VERTICAL_LIST) {
-            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+            int setHeight = hasHeight ? height : (mDivider.getIntrinsicHeight());
+
+           if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount()-1) {//去除末尾的分界线
+                outRect.bottom = setHeight;
+            }
         } else {
-            outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+            int setWidth = hasHeight ? height : (mDivider.getIntrinsicWidth());
+            if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1) {
+                outRect.right = setWidth;
+            }
         }
     }
 }

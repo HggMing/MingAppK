@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.main.BackActivity;
 
 import butterknife.Bind;
@@ -42,7 +42,7 @@ public class UpdateUnameActivity extends BackActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_submit) {
-            String auth = MyApplication.getInstance().getAuth();
+            String auth = APP.getInstance().getAuth();
             final String newName=etUname.getText().toString();
             new MyServiceClient().getService().getCall_UpdateInfo(auth,newName,null,null,null )
                     .enqueue(new Callback<Result>() {

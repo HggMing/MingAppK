@@ -1,7 +1,6 @@
 package com.study.mingappk.tab3.village;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,9 +12,10 @@ import android.widget.Toast;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.study.mingappk.R;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.model.bean.BBSListResult;
-import com.study.mingappk.app.MyApplication;
+import com.study.mingappk.model.service.MyServiceClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,9 @@ import retrofit2.Response;
 
 public class Tab3BBSListActivity extends AppCompatActivity implements Tab3BBSListAdapter.OnItemClickListener {
     @Bind(R.id.toolbar_bbs)
-    Toolbar toolbarBbs;
+    Toolbar toolbar;
     @Bind(R.id.toolbar_layout_bbs)
-    CollapsingToolbarLayout toolbarLayoutBbs;
+    CollapsingToolbarLayout toolbarLayout;
     @Bind(R.id.tab3_bbs_list)
     XRecyclerView mXRecyclerView;
 
@@ -40,7 +40,7 @@ public class Tab3BBSListActivity extends AppCompatActivity implements Tab3BBSLis
     private XRecyclerView.LayoutManager mLayoutManager;
     private int cnt;//帖子数
     final private static int PAGE_SIZE = 20;
-    private int nowPage = 2;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +48,15 @@ public class Tab3BBSListActivity extends AppCompatActivity implements Tab3BBSLis
         setContentView(R.layout.activity_tab3_bbs_list);
         ButterKnife.bind(this);
 
+        configXRecyclerView();//XRecyclerView配置
         getBBSList();//获取bbsList数据
     }
 
     private void getBBSList() {
-        String auth = MyApplication.getInstance().getAuth();
+        page = 1;
+        String auth = APP.getInstance().getAuth();
         String mVid = getIntent().getStringExtra("click_vid");
-        new MyServiceClient().getService().getCall_BBSList(auth, mVid, 1, PAGE_SIZE)
+        MyServiceClient.getService().getCall_BBSList(auth, mVid, page, PAGE_SIZE)
                 .enqueue(new Callback<BBSListResult>() {
                     @Override
                     public void onResponse(Call<BBSListResult> call, Response<BBSListResult> response) {
@@ -68,7 +70,7 @@ public class Tab3BBSListActivity extends AppCompatActivity implements Tab3BBSLis
                                 mAdapter = new Tab3BBSListAdapter(Tab3BBSListActivity.this, mList);
                                 mAdapter.setOnItemClickListener(Tab3BBSListActivity.this);
                                 mXRecyclerView.setAdapter(mAdapter);//设置adapter
-                                configXRecyclerView();//XRecyclerView配置
+                                page = 2;
                             }
                         }
                     }
@@ -85,50 +87,27 @@ public class Tab3BBSListActivity extends AppCompatActivity implements Tab3BBSLis
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
 
-//        mXRecyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST));//添加分割线
+        mXRecyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST,30));//添加分割线
 //        mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
 //        mXRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);//自定义下拉刷新箭头图标
+        mXRecyclerView.setPullRefreshEnabled(false);//关闭刷新功能
 
         mXRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                String auth = MyApplication.getInstance().getAuth();
-                String mVid = getIntent().getStringExtra("click_vid");
-                new MyServiceClient().getService().getCall_BBSList(auth, mVid, 1, PAGE_SIZE)
-                        .enqueue(new Callback<BBSListResult>() {
-                            @Override
-                            public void onResponse(Call<BBSListResult> call, Response<BBSListResult> response) {
-                                if (response.isSuccessful()) {
-                                    BBSListResult bbsListResult = response.body();
-                                    if (bbsListResult != null && bbsListResult.getErr() == 0) {
-                                        mList.clear();
-                                        mList.addAll(bbsListResult.getData().getList());
-                                        mAdapter.notifyDataSetChanged();
-                                        mXRecyclerView.refreshComplete();
-                                        nowPage = 2;
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<BBSListResult> call, Throwable t) {
-
-                            }
-                        });
             }
-
 
             @Override
             public void onLoadMore() {
                 int pages = (int) (cnt / PAGE_SIZE + 1);
-                if (nowPage <= pages) {
-                    String auth = MyApplication.getInstance().getAuth();
+                if (page <= pages) {
+                    String auth = APP.getInstance().getAuth();
                     String mVid = getIntent().getStringExtra("click_vid");
-                    new MyServiceClient().getService().getCall_BBSList(auth, mVid, 1, PAGE_SIZE)
+                    MyServiceClient.getService().getCall_BBSList(auth, mVid, page, PAGE_SIZE)
                             .enqueue(new Callback<BBSListResult>() {
                                 @Override
                                 public void onResponse(Call<BBSListResult> call, Response<BBSListResult> response) {
@@ -138,7 +117,7 @@ public class Tab3BBSListActivity extends AppCompatActivity implements Tab3BBSLis
                                             mList.addAll(bbsListResult.getData().getList());
                                             mAdapter.notifyDataSetChanged();
                                             mXRecyclerView.loadMoreComplete();
-                                            nowPage++;
+                                            page++;
                                         }
                                     }
                                 }
@@ -149,11 +128,7 @@ public class Tab3BBSListActivity extends AppCompatActivity implements Tab3BBSLis
                                 }
                             });
                 } else {
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
                             mXRecyclerView.loadMoreComplete();
-                        }
-                    }, 1000);
                 }
             }
         });

@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".app.MyApplication"
+        android:name=".app.APP"
         android:allowBackup="true"
         android:icon="@mipmap/ic_loading_logo"
         android:label="@string/app_name"
@@ -23,10 +23,12 @@
         tools:ignore="GoogleAppIndexingWarning">
         <receiver android:name=".common.receiver.NetworkStateReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".userlogin.SplashActivity"
             android:label="@string/title_activity_splash">
@@ -70,7 +72,10 @@
         <activity android:name=".test.Test2Activity" />
         <activity android:name=".test.Test3Activity" />
         <activity android:name=".tab3.addfollow.FollowVillageActivity" />
-        <activity android:name=".tab3.village.Tab3BBSListActivity"></activity>
+        <activity android:name=".tab3.village.Tab3BBSListActivity" />
+        <activity
+            android:name=".tab3.village.PhotoViewPagerActivity"
+            android:theme="@style/BlackTheme"/>
     </application>
 
 </manifest>

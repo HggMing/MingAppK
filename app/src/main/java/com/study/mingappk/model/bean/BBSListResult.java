@@ -1,5 +1,9 @@
 package com.study.mingappk.model.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -276,7 +280,7 @@ public class BBSListResult {
                 }
             }
 
-            public static class FilesEntity {
+            public static class FilesEntity implements Parcelable {
                 private String id;
                 private String pid;
                 private String uid;
@@ -331,6 +335,45 @@ public class BBSListResult {
                 public void setSurl_2(String surl_2) {
                     this.surl_2 = surl_2;
                 }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeString(this.id);
+                    dest.writeString(this.pid);
+                    dest.writeString(this.uid);
+                    dest.writeString(this.url);
+                    dest.writeString(this.surl_1);
+                    dest.writeString(this.surl_2);
+                }
+
+                public FilesEntity() {
+                }
+
+                protected FilesEntity(Parcel in) {
+                    this.id = in.readString();
+                    this.pid = in.readString();
+                    this.uid = in.readString();
+                    this.url = in.readString();
+                    this.surl_1 = in.readString();
+                    this.surl_2 = in.readString();
+                }
+
+                public static final Parcelable.Creator<FilesEntity> CREATOR = new Parcelable.Creator<FilesEntity>() {
+                    @Override
+                    public FilesEntity createFromParcel(Parcel source) {
+                        return new FilesEntity(source);
+                    }
+
+                    @Override
+                    public FilesEntity[] newArray(int size) {
+                        return new FilesEntity[size];
+                    }
+                };
             }
         }
     }

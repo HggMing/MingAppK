@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/id_cardview"
@@ -8,125 +8,128 @@
     android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="5dp"
-    app:cardMaxElevation="5dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp"
+    app:cardMaxElevation="4dp"
     app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
-    <!--app:cardUseCompatPadding="true"-->
+    app:cardUseCompatPadding="true">--><!--app:cardUseCompatPadding="true"-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="12dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/bbs_head"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:civ_border_color="@color/divide_line"
+        app:civ_border_width="1dp"
+        tools:src="@mipmap/defuser" />
+
+    <TextView
+        android:id="@+id/bbs_uname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/bbs_head"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/bbs_head"
+        android:layout_toRightOf="@+id/bbs_head"
+        android:textColor="@color/font_black_content"
+        android:textSize="18sp"
+        tools:text="用户名" />
+
+    <TextView
+        android:id="@+id/bbs_ctime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bbs_uname"
+        android:layout_alignStart="@+id/bbs_uname"
+        android:layout_below="@+id/bbs_uname"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="12sp"
+        tools:text="15分钟前" />
+
+    <TextView
+        android:id="@+id/bbs_contents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bbs_uname"
+        android:layout_alignStart="@+id/bbs_uname"
+        android:layout_below="@+id/bbs_head"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,"
+        android:textColor="@color/font_black_content"
+        android:textSize="16sp" />
+
+    <com.jaeger.ninegridimageview.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/nine_grid_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bbs_uname"
+        android:layout_alignStart="@+id/bbs_uname"
+        android:layout_below="@id/bbs_contents"
+        android:layout_marginTop="12dp"
+        app:imgGap="4dp"
+        app:maxSize="9"
+        app:showStyle="fill"
+        app:singleImgSize="180dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="12dp">
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bbs_uname"
+        android:layout_alignStart="@+id/bbs_uname"
+        android:layout_below="@id/nine_grid_image"
+        android:layout_marginTop="12dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/bbs_head"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+        <TextView
+            android:id="@+id/bbs_msg_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            tools:text="99" />
+
+        <ImageView
+            android:id="@+id/click_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            app:civ_border_color="@color/divide_line"
-            app:civ_border_width="1dp"
-            tools:src="@mipmap/defuser" />
+            android:layout_toLeftOf="@+id/bbs_msg_number"
+            android:layout_toStartOf="@+id/bbs_msg_number"
+            android:src="@drawable/bbs_click_msg" />
 
         <TextView
-            android:id="@+id/bbs_uname"
+            android:id="@+id/bbs_like_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/bbs_head"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/bbs_head"
-            android:layout_toRightOf="@+id/bbs_head"
-            android:textColor="@color/font_black_content"
-            android:textSize="20sp"
-            tools:text="用户名" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="18dp"
+            android:layout_toLeftOf="@+id/click_msg"
+            android:layout_toStartOf="@+id/click_msg"
+            tools:text="999" />
 
-        <TextView
-            android:id="@+id/bbs_ctime"
+        <ImageView
+            android:id="@+id/click_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/bbs_uname"
-            android:layout_alignStart="@+id/bbs_uname"
-            android:layout_below="@+id/bbs_uname"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12sp"
-            tools:text="15分钟前" />
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/bbs_like_number"
+            android:layout_toStartOf="@+id/bbs_like_number"
+            android:src="@drawable/bbs_click_like" />
 
-        <TextView
-            android:id="@+id/bbs_contents"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/bbs_uname"
-            android:layout_alignStart="@+id/bbs_uname"
-            android:layout_below="@+id/bbs_head"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:text="这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,"
-            android:textColor="@color/font_black_content"
-            android:textSize="18sp" />
-
-        <com.jaeger.ninegridimageview.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/nine_grid_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/bbs_uname"
-            android:layout_alignStart="@+id/bbs_uname"
-            android:layout_below="@id/bbs_contents"
-            android:layout_marginTop="12dp"
-            app:imgGap="4dp"
-            app:maxSize="9"
-            app:showStyle="fill"
-            app:singleImgSize="180dp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/bbs_uname"
-            android:layout_alignStart="@+id/bbs_uname"
-            android:layout_below="@id/nine_grid_image"
-            android:layout_marginTop="12dp">
-
-            <TextView
-                android:id="@+id/bbs_msg_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                tools:text="99" />
-
-            <ImageView
-                android:id="@+id/click_msg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/bbs_msg_number"
-                android:layout_toStartOf="@+id/bbs_msg_number"
-                android:src="@drawable/bbs_click_msg" />
-
-            <TextView
-                android:id="@+id/bbs_like_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="18dp"
-                android:layout_toLeftOf="@+id/click_msg"
-                android:layout_toStartOf="@+id/click_msg"
-                tools:text="999" />
-
-            <ImageView
-                android:id="@+id/click_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/bbs_like_number"
-                android:layout_toStartOf="@+id/bbs_like_number"
-                android:src="@drawable/bbs_click_like" />
-
-        </RelativeLayout>
     </RelativeLayout>
-</android.support.v7.widget.CardView>
+</RelativeLayout><!--
+</android.support.v7.widget.CardView>-->

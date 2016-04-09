@@ -17,10 +17,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfoResult;
-import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
@@ -176,7 +176,7 @@ public class Tab4Fragment extends Fragment {
                                     Toast.LENGTH_LONG).show();
                             return;
                         }
-                        String auth = MyApplication.getInstance().getAuth();
+                        String auth = APP.getInstance().getAuth();
                         new MyServiceClient().getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
                                 .enqueue(new Callback<Result>() {
                                     @Override
@@ -232,7 +232,7 @@ public class Tab4Fragment extends Fragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // MyApplication.getInstance().set_userInfo(null);
+                        // APP.getInstance().set_userInfo(null);
                         spEditor.putString("loginpwd", "");
                         spEditor.putBoolean("isUpdataMyInfo",false);
                         spEditor.commit();
@@ -255,7 +255,7 @@ public class Tab4Fragment extends Fragment {
     }
 
     public void getUserInfoDetail() {
-        String auth = MyApplication.getInstance().getAuth();
+        String auth = APP.getInstance().getAuth();
         Call<UserInfoResult> call = new MyServiceClient().getService().getCall_UserInfo(auth);
         call.enqueue(new Callback<UserInfoResult>() {
             @Override
@@ -264,7 +264,7 @@ public class Tab4Fragment extends Fragment {
                     UserInfoResult userInfoResult = response.body();
                     if (userInfoResult != null && userInfoResult.getErr() == 0) {
                         UserInfoResult.DataEntity dataEntity = userInfoResult.getData();
-//                        MyApplication.getInstance().setUserInfo(dataEntity);
+//                        APP.getInstance().setUserInfo(dataEntity);
                         String headUrl = MyServiceClient.getBaseUrl() + dataEntity.getHead();
                         String uName = dataEntity.getUname();
                         String sexNumber = dataEntity.getSex();

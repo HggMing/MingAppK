@@ -6,9 +6,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.app.MyApplication;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.main.BackActivity;
 
@@ -46,7 +46,7 @@ public class AdviceActivity extends BackActivity {
     }
 
     private void mSubmit() {
-        String auth= MyApplication.getInstance().getAuth();
+        String auth= APP.getInstance().getAuth();
         Call<Result> call = new MyServiceClient().getService().getCall_Advice(auth,content, contact);
         call.enqueue(new Callback<Result>() {
             @Override
