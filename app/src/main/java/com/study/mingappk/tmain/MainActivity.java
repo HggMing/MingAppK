@@ -1,6 +1,5 @@
-package com.study.mingappk.main;
+package com.study.mingappk.tmain;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,9 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,9 +21,8 @@ import android.widget.Toast;
 import com.study.mingappk.R;
 import com.study.mingappk.tab1.Tab1Fragment;
 import com.study.mingappk.tab2.Tab2Fragment;
-import com.study.mingappk.tab3.Tab3Fragment;
-import com.study.mingappk.tab3.addfollow.FollowVillageActivity;
-import com.study.mingappk.tab4.Tab4Fragment;
+import com.study.mingappk.tab3.villagelist.VillageListFragment;
+import com.study.mingappk.tab4.SettingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -253,8 +249,8 @@ public class MainActivity extends AppCompatActivity {
 
         fragments.add(new Tab1Fragment());
         fragments.add(new Tab2Fragment());
-        fragments.add(new Tab3Fragment());
-        fragments.add(new Tab4Fragment());
+        fragments.add(new VillageListFragment());
+        fragments.add(new SettingFragment());
 
         fragmentManager = this.getSupportFragmentManager();
 

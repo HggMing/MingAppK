@@ -32,7 +32,8 @@
             android:id="@+id/systemLayout"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/list_item_selector"
+            android:background="@color/white"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 

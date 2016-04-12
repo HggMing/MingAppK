@@ -7,8 +7,10 @@
     tools:context="com.study.mingappk.test.Test3Activity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="256dp"
+        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
         <!-- layout_scrollFlags:
          scroll - 想滚动就必须设置这个。
@@ -35,10 +37,11 @@
             layout_collapseParallaxMultiplier(视差因子) - 设置视差滚动因子，值为：0~1。-->
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/user_home_bg"
                 app:layout_collapseMode="parallax"
+                android:fitsSystemWindows="true"
                 app:layout_collapseParallaxMultiplier="0.7" />
 
             <android.support.v7.widget.Toolbar
@@ -49,10 +52,20 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@mipmap/star"
+        app:borderWidth="0dp"
+        app:layout_anchor="@id/appBar"
+        app:layout_anchorGravity="bottom|right|end" />
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/divide"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v4.widget.NestedScrollView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </android.support.design.widget.CoordinatorLayout>
 

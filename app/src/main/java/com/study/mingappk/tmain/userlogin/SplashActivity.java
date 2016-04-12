@@ -1,4 +1,4 @@
-package com.study.mingappk.userlogin;
+package com.study.mingappk.tmain.userlogin;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +10,7 @@ import android.view.animation.Animation;
 
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.main.MainActivity;
+import com.study.mingappk.tmain.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

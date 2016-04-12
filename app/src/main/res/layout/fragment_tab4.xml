@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tab4.Tab4Fragment">
+    tools:context=".tab4.SettingFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:visibility="gone">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_tab4"
@@ -24,8 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        android:background="@color/divide"
-        >
+        android:background="@color/divide">
 
         <LinearLayout
             android:id="@+id/rootLayout"
@@ -41,18 +40,17 @@
             <RelativeLayout
                 android:id="@+id/click_user"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/list_item_selector">
+                android:layout_height="78dp"
+                android:background="@drawable/list_item_selector"
+                android:foreground="?attr/selectableItemBackground">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+
+                <ImageView
                     android:id="@+id/icon_head"
                     android:layout_width="54dp"
                     android:layout_height="54dp"
                     android:layout_margin="12dp"
                     android:background="@mipmap/user_detail_sharow"
-                    app:civ_border_color="@color/divide_line"
-                    app:civ_border_width="1dp"
                     tools:src="@mipmap/icon" />
 
                 <LinearLayout
@@ -100,8 +98,7 @@
 
             <LinearLayout xmlns:listItem1="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="@color/stand_bg"
                 android:orientation="vertical">
 
@@ -171,8 +168,7 @@
             <RelativeLayout
                 android:id="@+id/layout_logout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="@color/divide"
                 android:paddingBottom="15dp"
                 android:paddingLeft="15dp"

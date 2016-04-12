@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import com.study.mingappk.R;
 
 
-public class Tab3R1Fragment extends Fragment {
-    public Tab3R1Fragment() {
+public class FollowR1Fragment extends Fragment {
+    public FollowR1Fragment() {
     }
 
     @Override

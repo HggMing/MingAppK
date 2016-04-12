@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_item_selector"
+    android:foreground="?attr/selectableItemBackground"
     android:paddingBottom="10dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/icon"
         android:layout_width="47dp"
         android:layout_height="47dp"

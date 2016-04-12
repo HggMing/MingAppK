@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,8 +18,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
-import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
 public class FollowVillageActivity extends AppCompatActivity {
 
@@ -62,8 +59,8 @@ public class FollowVillageActivity extends AppCompatActivity {
 
         //初始化填充到ViewPager中的Fragment集合
         mFragments = new ArrayList<>();
-        mFragments.add(0, new Tab3R1Fragment());
-        mFragments.add(1, new Tab3R2Fragment());
+        mFragments.add(0, new FollowR1Fragment());
+        mFragments.add(1, new FollowR2Fragment());
     }
     private void configViews() {
 

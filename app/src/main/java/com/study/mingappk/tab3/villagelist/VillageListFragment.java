@@ -1,4 +1,4 @@
-package com.study.mingappk.tab3;
+package com.study.mingappk.tab3.villagelist;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -26,7 +26,7 @@ import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.tab3.addfollow.FollowVillageActivity;
-import com.study.mingappk.tab3.village.Tab3BBSListActivity;
+import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +38,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickListener {
+public class VillageListFragment extends Fragment implements VillageListAdapter.OnItemClickListener {
     AppCompatActivity mActivity;
 
     @Bind(R.id.tab3_list)
     XRecyclerView mXRecyclerView;
 
     private XRecyclerView.LayoutManager mLayoutManager;
-    private Tab3Adapter mAdapter;
+    private VillageListAdapter mAdapter;
     List<FollowVillageList.DataEntity.ListEntity> mList;
     private int cnt;//关注村圈数
     final private static int PAGE_SIZE = 20;//
@@ -200,8 +200,8 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
                                 mList.addAll(followVillageListResult.getData().getList());
                                 cnt = Integer.parseInt(followVillageListResult.getData().getCnt());
 
-                                mAdapter = new Tab3Adapter(mActivity, mList);
-                                mAdapter.setOnItemClickListener(Tab3Fragment.this);
+                                mAdapter = new VillageListAdapter(mActivity, mList);
+                                mAdapter.setOnItemClickListener(VillageListFragment.this);
                                 mXRecyclerView.setAdapter(mAdapter);//设置adapter
                                 page = 2;
                             }
@@ -219,9 +219,13 @@ public class Tab3Fragment extends Fragment implements Tab3Adapter.OnItemClickLis
     public void onItemClick(View view, int position) {
         //点击选项操作
         String vid = mList.get(position).getVillage_id();
+        String vname = mList.get(position).getVillage_name();
+        String vpic = MyServiceClient.getBaseUrl()+mList.get(position).getPic();
         Intent intent = new Intent();
-        intent.putExtra("click_vid", vid);
-        intent.setClass(mActivity, Tab3BBSListActivity.class);
+        intent.putExtra(VillageBbsActivity.VILLAGE_ID, vid);
+        intent.putExtra(VillageBbsActivity.VILLAGE_NAME, vname);
+        intent.putExtra(VillageBbsActivity.VILLAGE_PIC, vpic);
+        intent.setClass(mActivity, VillageBbsActivity.class);
         startActivity(intent);
     }
 

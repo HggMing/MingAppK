@@ -30,7 +30,7 @@
         </receiver>
 
         <activity
-            android:name=".userlogin.SplashActivity"
+            android:name=".tmain.userlogin.SplashActivity"
             android:label="@string/title_activity_splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,13 +39,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.MainActivity"
+            android:name=".tmain.MainActivity"
             android:label="@string/title_activity_main" />
         <activity
             android:name=".test.TestActivity"
             android:label="@string/title_activity_test" />
         <activity
-            android:name=".userlogin.LoginActivity"
+            android:name=".tmain.userlogin.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
             android:name=".tab4.AboutActivity"
@@ -72,10 +72,9 @@
         <activity android:name=".test.Test2Activity" />
         <activity android:name=".test.Test3Activity" />
         <activity android:name=".tab3.addfollow.FollowVillageActivity" />
-        <activity android:name=".tab3.village.Tab3BBSListActivity" />
-        <activity
-            android:name=".tab3.village.PhotoViewPagerActivity"
-            android:theme="@style/BlackTheme"/>
+        <activity android:name=".tab3.villagebbs.VillageBbsActivity" />
+        <activity android:name=".tab3.villagebbs.BigImageViewActivity" />
+        <activity android:name=".tab3.villagesituation.VillageSituationActivity"></activity>
     </application>
 
 </manifest>

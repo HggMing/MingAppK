@@ -1,0 +1,28 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/click_situation"
+    android:layout_width="match_parent"
+
+    android:layout_height="200dp"
+    android:background="@drawable/list_item_selector"
+    android:foreground="?attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/text_village_situation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="45dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        tools:text="我们村" />
+
+    <ImageView
+        android:id="@+id/icon_village_situation"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        tools:background="@mipmap/icon" />
+</FrameLayout>
+

@@ -1,4 +1,4 @@
-package com.study.mingappk.main;
+package com.study.mingappk.tmain;
 
 import android.app.Fragment;
 import android.support.annotation.NonNull;

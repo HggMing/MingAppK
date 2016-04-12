@@ -18,30 +18,31 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.bean.UserInfoResult;
 import com.study.mingappk.common.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.dialog.Dialog_Model;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.bean.UserInfoResult;
+import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
 import com.study.mingappk.test.Test3Activity;
 import com.study.mingappk.test.TestActivity;
-import com.study.mingappk.userlogin.LoginActivity;
+import com.study.mingappk.tmain.userlogin.LoginActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Tab4Fragment extends Fragment {
+public class SettingFragment extends Fragment {
     AppCompatActivity mActivity;
     @Bind(R.id.toolbar_tab4)
     Toolbar toolbar4;
     @Bind(R.id.icon_head)
-    CircleImageView iconHead;
+    ImageView iconHead;
+//    CircleImageView iconHead;
     @Bind(R.id.name)
     TextView name;
     @Bind(R.id.sex)
@@ -256,7 +257,7 @@ public class Tab4Fragment extends Fragment {
 
     public void getUserInfoDetail() {
         String auth = APP.getInstance().getAuth();
-        Call<UserInfoResult> call = new MyServiceClient().getService().getCall_UserInfo(auth);
+        Call<UserInfoResult> call = MyServiceClient.getService().getCall_UserInfo(auth);
         call.enqueue(new Callback<UserInfoResult>() {
             @Override
             public void onResponse(Call<UserInfoResult> call, Response<UserInfoResult> response) {
@@ -270,7 +271,10 @@ public class Tab4Fragment extends Fragment {
                         String sexNumber = dataEntity.getSex();
                         String accountNo = dataEntity.getLogname();
 
-                        Glide.with(mActivity).load(headUrl).into(iconHead);
+                        Glide.with(mActivity)
+                                .load(headUrl)
+                                .bitmapTransform(new CropCircleTransformation(mActivity))
+                                .into(iconHead);
                         name.setText(uName);
                         if ("0".equals(sexNumber)) {
                             sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_boy));

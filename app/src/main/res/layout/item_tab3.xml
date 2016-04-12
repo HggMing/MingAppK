@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/tab3_item"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
     android:background="@drawable/list_item_selector"
+    android:foreground="?attr/selectableItemBackground"
     android:paddingRight="12dp">
 
 
@@ -16,12 +17,15 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_margin="12dp"
+        android:layout_marginBottom="12dp"
         android:scaleType="centerCrop"
         tools:src="@mipmap/user_home_bg" />
 
     <TextView
         android:id="@+id/tv_villageName"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/imageView_village"
         android:layout_toEndOf="@id/imageView_village"

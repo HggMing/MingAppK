@@ -35,8 +35,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
     // 图片处理
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile 'com.jaeger.ninegridimageview:library:1.0.1'
+    compile 'jp.wasabeef:glide-transformations:2.0.0'
+//    compile 'com.jaeger.ninegridimageview:library:1.0.1'
     compile 'com.commit451:PhotoView:1.2.5'
     compile 'me.relex:circleindicator:1.1.8@aar'
     // android官方兼容库

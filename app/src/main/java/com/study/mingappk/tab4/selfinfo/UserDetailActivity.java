@@ -8,17 +8,18 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.dialog.Dialog_UpdateSex;
 import com.study.mingappk.common.utils.MyGallerFinal;
-import com.study.mingappk.main.BackActivity;
+import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.service.MyServiceClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -30,7 +31,7 @@ import butterknife.OnClick;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
-import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,7 +39,7 @@ import retrofit2.Response;
 public class UserDetailActivity extends BackActivity {
 
     @Bind(R.id.icon_head2)
-    CircleImageView iconHead2;
+    ImageView iconHead2;
     @Bind(R.id.get_name)
     TextView getName;
     @Bind(R.id.get_sex)
@@ -79,6 +80,7 @@ public class UserDetailActivity extends BackActivity {
         String headUrl = sp.getString("MyInfo_Head", null);
         Glide.with(this)
                 .load(headUrl)
+                .bitmapTransform(new CropCircleTransformation(this))
                 .into(iconHead2);
         //姓名
         getName.setText(sp.getString("MyInfo_Uname", null));
@@ -150,11 +152,14 @@ public class UserDetailActivity extends BackActivity {
         public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
             if (resultList != null) {
                 PhotoInfo photoInfo = resultList.get(0);
-                Glide.with(UserDetailActivity.this).load("file://" + photoInfo.getPhotoPath()).into(iconHead2);
+                Glide.with(UserDetailActivity.this)
+                        .load("file://" + photoInfo.getPhotoPath())
+                        .bitmapTransform(new CropCircleTransformation(UserDetailActivity.this))
+                        .into(iconHead2);
                 Bitmap bitmap = BitmapFactory.decodeFile(photoInfo.getPhotoPath());//图片文件转为Bitmap对象
                 final String newHead = (bitmapToBase64(bitmap) + ".jpg");
                 String auth = APP.getInstance().getAuth();
-                new MyServiceClient().getService().getCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
+                MyServiceClient.getService().getCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {
                         if (response.isSuccessful()) {

@@ -1,4 +1,4 @@
-package com.study.mingappk.tab3.village;
+package com.study.mingappk.tab3.villagebbs;
 
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -6,9 +6,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.study.mingappk.R;
+import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.BBSListResult;
 import com.study.mingappk.model.service.MyServiceClient;
 
@@ -20,7 +26,7 @@ import me.relex.circleindicator.CircleIndicator;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class PhotoViewPagerActivity extends AppCompatActivity {
+public class BigImageViewActivity extends AppCompatActivity {
 
     public static String IMAGE_LIST = "image_list";
     public static String IMAGE_INDEX = "index";
@@ -28,6 +34,8 @@ public class PhotoViewPagerActivity extends AppCompatActivity {
     ViewPager mViewPager;
     @Bind(R.id.indicator)
     CircleIndicator mIndicator;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
 
     private List<BBSListResult.DataEntity.ListEntity.FilesEntity> mList;
     private int index;
@@ -38,7 +46,7 @@ public class PhotoViewPagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_view_pager);
         ButterKnife.bind(this);
-
+        BaseTools.transparentStatusBar(this);//透明状态栏
 
         mList = getIntent().getParcelableArrayListExtra(IMAGE_LIST);
         index = getIntent().getIntExtra(IMAGE_INDEX, 0);
@@ -67,8 +75,23 @@ public class PhotoViewPagerActivity extends AppCompatActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             PhotoView photoView = new PhotoView(container.getContext());
             String imageUrl = MyServiceClient.getBaseUrl() + mList.get(position).getUrl();
-            Glide.with(container.getContext()).load(imageUrl)
-                    .into(photoView);
+            String smallImageUrl = MyServiceClient.getBaseUrl() + mList.get(position).getSurl_1();
+            //加载缩略图
+            DrawableRequestBuilder<String> drawableRequestBuilder = Glide
+                    .with(container.getContext())
+                    .load(smallImageUrl);
+            progressBar.setVisibility(View.VISIBLE);
+            //加载目标大图
+            Glide.with(container.getContext())
+                    .load(imageUrl)
+                    .thumbnail(drawableRequestBuilder)
+                    .into(new GlideDrawableImageViewTarget(photoView){
+                        @Override
+                        public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                            super.onResourceReady(resource, animation);
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
             photoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                 @Override
                 public void onPhotoTap(View view, float x, float y) {

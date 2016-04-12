@@ -12,8 +12,8 @@
     <color name="tab_background">#ffffffff</color>
     <!--tab分割线颜色-->
     <color name="line_bottom">#c7c7c7</color>
-    <!--文字透明黑色背景-->
-    <color name="transparent">#64000000</color>
+    <!--全透明背景-->
+    <color name="transparent">#00000000</color>
     <!--tab4背景-->
     <color name="divide">#ffeeeeee</color>
     <color name="white">#ffffffff</color>
@@ -37,4 +37,5 @@
     <color name="blue_setting">#7AB9DC</color>
 
     <color name="orange">#fa800a</color>
+    <color name="alpha_village">#46000000</color>
 </resources>

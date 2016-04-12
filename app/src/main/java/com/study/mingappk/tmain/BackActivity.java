@@ -1,4 +1,4 @@
-package com.study.mingappk.main;
+package com.study.mingappk.tmain;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,12 +10,12 @@ public class BackActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置toolbar后,开启返回图标
         if (getSupportActionBar() != null) {
+            //设置toolbar后,开启返回图标
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //设备返回图标样式
+            getSupportActionBar().setHomeAsUpIndicator(R.mipmap.app_back);
         }
-        //设备返回图标样式
-        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.app_back);
     }
 
     @Override

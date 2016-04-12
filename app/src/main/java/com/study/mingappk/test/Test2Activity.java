@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.main.BackActivity;
+import com.study.mingappk.tmain.BackActivity;
 import com.study.mingappk.test.adapter.MyRecyclerViewAdapter;
 import com.study.mingappk.test.adapter.MyStaggeredViewAdapter;
 

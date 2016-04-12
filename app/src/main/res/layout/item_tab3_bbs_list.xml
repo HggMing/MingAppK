@@ -19,19 +19,17 @@
     android:id="@+id/id_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/list_item_selector"
     android:foreground="?attr/selectableItemBackground"
     android:padding="12dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/bbs_head"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:civ_border_color="@color/divide_line"
-        app:civ_border_width="1dp"
         tools:src="@mipmap/defuser" />
 
     <TextView
@@ -40,11 +38,11 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/bbs_head"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/bbs_head"
         android:layout_toRightOf="@+id/bbs_head"
         android:textColor="@color/font_black_content"
-        android:textSize="18sp"
+        android:textSize="17sp"
         tools:text="用户名" />
 
     <TextView
@@ -69,21 +67,23 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,"
-        android:textColor="@color/font_black_content"
         android:textSize="16sp" />
 
-    <com.jaeger.ninegridimageview.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.study.mingappk.common.views.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/nine_grid_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/bbs_uname"
         android:layout_alignStart="@+id/bbs_uname"
         android:layout_below="@id/bbs_contents"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="12dp"
         app:imgGap="4dp"
+        app:length_X="16"
         app:maxSize="9"
         app:showStyle="fill"
-        app:singleImgSize="180dp" />
+        app:singleImgSize="180dp"
+        app:width_Y="11" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -100,6 +100,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="9dp"
             tools:text="99" />
 
         <ImageView

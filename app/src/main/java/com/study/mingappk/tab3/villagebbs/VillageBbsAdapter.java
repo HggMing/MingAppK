@@ -1,4 +1,4 @@
-package com.study.mingappk.tab3.village;
+package com.study.mingappk.tab3.villagebbs;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,36 +13,36 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jaeger.ninegridimageview.NineGridImageView;
-import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
+import com.bumptech.glide.Priority;
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.views.NineGridImageView;
+import com.study.mingappk.common.views.NineGridImageViewAdapter;
 import com.study.mingappk.model.bean.BBSListResult;
 import com.study.mingappk.model.service.MyServiceClient;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by Ming on 2016/3/30.
  */
-public class Tab3BBSListAdapter extends RecyclerView.Adapter<Tab3BBSListAdapter.ViewHolder> {
+public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.ViewHolder> {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private List<BBSListResult.DataEntity.ListEntity> mList;
 
-    public Tab3BBSListAdapter(Context mContext, List<BBSListResult.DataEntity.ListEntity> mList) {
+    public VillageBbsAdapter(Context mContext, List<BBSListResult.DataEntity.ListEntity> mList) {
         this.mContext = mContext;
         this.mList = mList;
         mLayoutInflater = LayoutInflater.from(mContext);
-
     }
 
 
@@ -100,7 +100,10 @@ public class Tab3BBSListAdapter extends RecyclerView.Adapter<Tab3BBSListAdapter.
         //发帖人头像
         String headUrl = MyServiceClient.getBaseUrl() + mList.get(position).getUserinfo().getHead();
         Glide.with(mContext).load(headUrl)
-//                .placeholder(R.mipmap.defuser)
+                .bitmapTransform(new CropCircleTransformation(mContext))
+                .priority(Priority.HIGH)
+                .error(R.mipmap.defalt_user_circle)
+               // .placeholder(R.mipmap.defalt_user_circle)
                 .into(holder.bbsHead);
         //发帖人昵称
         String userName = mList.get(position).getUserinfo().getUname();
@@ -143,10 +146,10 @@ public class Tab3BBSListAdapter extends RecyclerView.Adapter<Tab3BBSListAdapter.
             protected void onItemImageClick(Context context, int index, List<BBSListResult.DataEntity.ListEntity.FilesEntity> list) {
                 super.onItemImageClick(context, index, list);
                 // Toast.makeText(context, "点击第" + index+"个图片", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(mContext, PhotoViewPagerActivity.class);
+                Intent intent = new Intent(mContext, BigImageViewActivity.class);
                 Bundle bundle=new Bundle();
-                bundle.putParcelableArrayList(PhotoViewPagerActivity.IMAGE_LIST, (ArrayList<? extends Parcelable>) list);
-                bundle.putInt(PhotoViewPagerActivity.IMAGE_INDEX,index);
+                bundle.putParcelableArrayList(BigImageViewActivity.IMAGE_LIST, (ArrayList<? extends Parcelable>) list);
+                bundle.putInt(BigImageViewActivity.IMAGE_INDEX,index);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -164,7 +167,7 @@ public class Tab3BBSListAdapter extends RecyclerView.Adapter<Tab3BBSListAdapter.
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.bbs_head)
-        CircleImageView bbsHead;
+        ImageView bbsHead;
         @Bind(R.id.bbs_uname)
         TextView bbsUname;
         @Bind(R.id.bbs_ctime)
@@ -179,8 +182,6 @@ public class Tab3BBSListAdapter extends RecyclerView.Adapter<Tab3BBSListAdapter.
         TextView bbsLikeNumber;
         @Bind(R.id.click_like)
         ImageView clickLike;
-        //        @Bind(R.id.id_cardview)
-//        CardView idCardview;
         @Bind(R.id.nine_grid_image)
         NineGridImageView nineGridImageView;
         @Bind(R.id.id_layout)

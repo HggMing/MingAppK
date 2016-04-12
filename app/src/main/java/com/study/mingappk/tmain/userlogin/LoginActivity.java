@@ -1,4 +1,4 @@
-package com.study.mingappk.userlogin;
+package com.study.mingappk.tmain.userlogin;
 
 
 import android.app.Activity;
@@ -20,7 +20,7 @@ import com.study.mingappk.model.bean.LoginResult;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.common.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.main.MainActivity;
+import com.study.mingappk.tmain.MainActivity;
 import com.study.mingappk.test.TestActivity;
 
 import butterknife.Bind;

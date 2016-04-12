@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".main.MainActivity"
+    tools:context=".tmain.MainActivity"
     tools:ignore="ContentDescription">
 
     <android.support.v7.widget.LinearLayoutCompat
@@ -28,7 +28,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <com.study.mingappk.main.MainViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        <com.study.mingappk.tmain.MainViewPager xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/viewPager_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -2,9 +2,13 @@ package com.study.mingappk.common.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +35,25 @@ public class BaseTools {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
+    /**
+     * 4.4以上 全透明状态栏
+     * @param activity
+     */
+    public static void transparentStatusBar(Activity activity) {
+        //4.4以上 全透明状态栏，布局放在状态栏下方
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//透明导航栏
+        }
+        //5.0 全透明实现
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);//calculateStatusColor(Color.WHITE, (int) alphaValue)
+        }
+    }
     /**
      * 判断网络是否连接
      *

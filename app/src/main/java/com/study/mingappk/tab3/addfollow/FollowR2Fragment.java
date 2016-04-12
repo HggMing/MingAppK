@@ -38,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Tab3R2Fragment extends Fragment {
+public class FollowR2Fragment extends Fragment {
 
     AppCompatActivity mActivity;
     A1Provice a1Provice;
@@ -74,7 +74,7 @@ public class Tab3R2Fragment extends Fragment {
     private String selected_village_name = null;
     private String vid = null;
 
-    public Tab3R2Fragment() {
+    public FollowR2Fragment() {
     }
 
     @Override

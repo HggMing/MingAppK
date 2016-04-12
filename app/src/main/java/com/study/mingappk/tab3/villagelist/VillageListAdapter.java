@@ -1,4 +1,4 @@
-package com.study.mingappk.tab3;
+package com.study.mingappk.tab3.villagelist;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.study.mingappk.R;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.FollowVillageList;
@@ -24,14 +25,14 @@ import butterknife.ButterKnife;
 /**
  * Created by Ming on 2016/3/30.
  */
-public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.ViewHolder> {
+public class VillageListAdapter extends RecyclerView.Adapter<VillageListAdapter.ViewHolder> {
 
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private List<FollowVillageList.DataEntity.ListEntity> mList;
 
-    public Tab3Adapter(Context mContext, List<FollowVillageList.DataEntity.ListEntity> mList) {
+    public VillageListAdapter(Context mContext, List<FollowVillageList.DataEntity.ListEntity> mList) {
         this.mContext = mContext;
         this.mList = mList;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -85,6 +86,7 @@ public class Tab3Adapter extends RecyclerView.Adapter<Tab3Adapter.ViewHolder> {
         String imageUrl = MyServiceClient.getBaseUrl() + mList.get(position).getPic();
         Glide.with(mContext).load(imageUrl)
                 .placeholder(R.mipmap.default_village)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imageViewVillage);//关注村圈图
         String villageName = mList.get(position).getVillage_name();
         holder.tvVillageName.setText(villageName);//关注村圈名称

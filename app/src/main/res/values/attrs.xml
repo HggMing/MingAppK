@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--自定义控件：设置页面菜单List条-->
     <declare-styleable name="ListItem1">
         <attr name="itemIcon" format="reference" />
         <attr name="itemTitle" format="string" />
         <attr name="itemCenter" format="boolean" />
+    </declare-styleable>
+    <!--自定义控件：图片九宫格配置-->
+    <declare-styleable name="NineGridImageView">
+        <attr name="singleImgSize" format="dimension" />
+        <attr name="imgGap" format="dimension" />
+        <attr name="maxSize" format="integer" />
+        <attr name="length_X" format="integer" />
+        <attr name="width_Y" format="integer" />
+        <attr name="showStyle" format="enum">
+            <enum name="grid" value="0" />
+            <enum name="fill" value="1" />
+        </attr>
     </declare-styleable>
 </resources>

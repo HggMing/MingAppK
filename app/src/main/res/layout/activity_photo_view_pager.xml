@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.study.mingappk.tab3.village.PhotoViewPagerActivity">
+    tools:context=".tab3.villagebbs.BigImageViewActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/indicator"
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_gravity="bottom"
         android:layout_marginBottom="24dp"
-        app:ci_width="10dp"
-        app:ci_height="4dp"
-        app:ci_margin="6dp"
         app:ci_animator="@anim/indicator_animator"
         app:ci_animator_reverse="@anim/indicator_animator_reverse"
-        app:ci_drawable="@drawable/indicator_square"/>
+        app:ci_drawable="@drawable/indicator_square"
+        app:ci_height="4dp"
+        app:ci_margin="6dp"
+        app:ci_width="10dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center" />
 </FrameLayout>

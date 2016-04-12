@@ -48,7 +48,7 @@ public class MyGallerFinal {
             .setEnableEdit(true)//开启编辑功能
             .setEnableCrop(true)//开启裁剪功能
             .setEnableRotate(false)//开启旋转功能
-            .setEnableCamera(false)//开启相机功能
+            .setEnableCamera(true)//开启相机功能
             // .setCropWidth(800)//裁剪宽度
             // .setCropHeight(800)//裁剪高度
             //.setCropSquare(true)//裁剪正方形
@@ -74,7 +74,7 @@ public class MyGallerFinal {
                     .placeholder(defaultDrawable)
                     .error(defaultDrawable)
                     .override(width, height)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE) //不缓存到SD卡
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT) //不缓存到SD卡
                     .skipMemoryCache(true)
                     //.centerCrop()
                     .into(new ImageViewTarget<GlideDrawable>(imageView) {

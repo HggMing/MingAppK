@@ -23,7 +23,7 @@ import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.main.BackActivity;
+import com.study.mingappk.tmain.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;
