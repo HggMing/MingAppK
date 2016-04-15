@@ -18,7 +18,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.bean.LoginResult;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.common.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.tmain.MainActivity;
 import com.study.mingappk.test.TestActivity;
@@ -32,7 +32,7 @@ import rx.schedulers.Schedulers;
 
 
 public class LoginActivity extends Activity {
-    final private static String TAG="mm:LoginActivity";
+    final private static String TAG = "mm:LoginActivity";
     @Bind(R.id.et_name)
     EditText et_name;
     @Bind(R.id.et_pwd)
@@ -97,7 +97,7 @@ public class LoginActivity extends Activity {
             loginFailure(point);
             return;
         }
-        new MyServiceClient().getService().getCall_Login(loginname,loginpwd)
+        new MyServiceClient().getService().getObservable_Login(loginname, loginpwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<LoginResult>() {
@@ -107,25 +107,25 @@ public class LoginActivity extends Activity {
 
                     @Override
                     public void onError(Throwable throwable) {
-                        Log.i(TAG,"失败了"+throwable.getMessage());
+                        Log.i(TAG, "失败了" + throwable.getMessage());
                         point = "亲，网络不给力啊,请检查网络";
                         loginFailure(point);
                     }
 
                     @Override
                     public void onNext(LoginResult loginResult) {
-                            if (loginResult.getErr() == 0) {
-                                APP.getInstance().setAuth(loginResult.getAuth());//保存认证信息
-                                loginSuccess();
-                                return;
-                            }
-                            if (loginResult.getErr() == 2003) {
-                                point = loginResult.getMsg();
-                                loginFailureToReg(point);
-                                return;
-                            }
+                        if (loginResult.getErr() == 0) {
+                            APP.getInstance().setAuth(loginResult.getAuth());//保存认证信息
+                            loginSuccess();
+                            return;
+                        }
+                        if (loginResult.getErr() == 2003) {
                             point = loginResult.getMsg();
-                            loginFailure(point);
+                            loginFailureToReg(point);
+                            return;
+                        }
+                        point = loginResult.getMsg();
+                        loginFailure(point);
                     }
                 });
     }

@@ -16,7 +16,7 @@
     <application
         android:name=".app.APP"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_loading_logo"
+        android:icon="@mipmap/ic_message_notification"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
@@ -74,7 +74,7 @@
         <activity android:name=".tab3.addfollow.FollowVillageActivity" />
         <activity android:name=".tab3.villagebbs.VillageBbsActivity" />
         <activity android:name=".tab3.villagebbs.BigImageViewActivity" />
-        <activity android:name=".tab3.villagesituation.VillageSituationActivity"></activity>
+        <activity android:name=".tab3.villagesituation.VillageSituationActivity" />
     </application>
 
 </manifest>

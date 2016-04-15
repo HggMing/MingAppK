@@ -74,7 +74,7 @@ public class MyGallerFinal {
                     .placeholder(defaultDrawable)
                     .error(defaultDrawable)
                     .override(width, height)
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT) //不缓存到SD卡
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) //不缓存到SD卡
                     .skipMemoryCache(true)
                     //.centerCrop()
                     .into(new ImageViewTarget<GlideDrawable>(imageView) {

@@ -7,7 +7,9 @@ import java.util.List;
 /**
  * Created by Ming on 2016/4/8.
  */
+@Deprecated
 public class BigImageEvent {
+
     public List<BBSListResult.DataEntity.ListEntity.FilesEntity> getList() {
         return list;
     }

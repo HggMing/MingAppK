@@ -1,6 +1,7 @@
 package com.study.mingappk.app;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import com.jude.utils.JUtils;
 import com.squareup.otto.Bus;
@@ -36,5 +37,15 @@ public class APP extends Application {
     }
 
     private String auth;
+
+    public SharedPreferences getSp() {
+        sp = getSharedPreferences("config", MODE_PRIVATE);
+        return sp;
+    }public SharedPreferences getSp(String spKey) {
+        sp = getSharedPreferences(spKey, MODE_PRIVATE);
+        return sp;
+    }
+    private SharedPreferences sp;
+
 
 }

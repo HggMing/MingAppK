@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 /**
- * 为RecyclerView添加分割线
+ * 为XRecyclerView添加分割线
  */
 public class MyItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -64,7 +64,6 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
             drawHorizontal(c, parent);
         }
     }
-
     public void drawVertical(Canvas c, RecyclerView parent) {
         final int left = parent.getPaddingLeft();
         final int right = parent.getWidth() - parent.getPaddingRight();

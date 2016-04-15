@@ -1,4 +1,4 @@
-package com.study.mingappk.common.dialog;
+package com.study.mingappk.common.views.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;

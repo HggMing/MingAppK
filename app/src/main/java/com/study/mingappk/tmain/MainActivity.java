@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.study.mingappk.R;
 import com.study.mingappk.tab1.Tab1Fragment;
-import com.study.mingappk.tab2.Tab2Fragment;
+import com.study.mingappk.tab2.friendlist.FriendListFragment;
 import com.study.mingappk.tab3.villagelist.VillageListFragment;
 import com.study.mingappk.tab4.SettingFragment;
 
@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
         spEditor = sp.edit();
 
         fragments.add(new Tab1Fragment());
-        fragments.add(new Tab2Fragment());
+        fragments.add(new FriendListFragment());
         fragments.add(new VillageListFragment());
         fragments.add(new SettingFragment());
 

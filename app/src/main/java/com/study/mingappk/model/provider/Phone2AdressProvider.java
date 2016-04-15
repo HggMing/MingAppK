@@ -20,7 +20,7 @@ public class Phone2AdressProvider {
      */
     public static Observable<String> getCity(String phone) {
         String API_KEY = "8e13586b86e4b7f3758ba3bd6c9c9135";
-        return MyServiceClient.getService().getPhone2Adress2(API_KEY, phone)
+        return MyServiceClient.getService().getObservable_Phone2Adress(API_KEY, phone)
                 .subscribeOn(Schedulers.io())
                 .filter(new Func1<Phone2Adress, Boolean>() {
                     @Override

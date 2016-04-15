@@ -8,17 +8,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.views.NineGridImageView;
-import com.study.mingappk.common.views.NineGridImageViewAdapter;
+import com.study.mingappk.common.views.nineimage.NineGridImageView;
+import com.study.mingappk.common.views.nineimage.NineGridImageViewAdapter;
 import com.study.mingappk.model.bean.BBSListResult;
+import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
 
 import java.util.ArrayList;
@@ -28,7 +33,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Ming on 2016/3/30.
@@ -86,7 +93,32 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
             holder.clickLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(holder.clickLike, position);
+                   // Toast.makeText(mContext, "点击点赞操作", Toast.LENGTH_SHORT).show();
+                    String auth = APP.getInstance().getAuth();
+                    String pid = mList.get(position).getId();
+                    MyServiceClient.getService().getCall_ClickLike(auth,pid).enqueue(new Callback<Result>() {
+                        @Override
+                        public void onResponse(Call<Result> call, Response<Result> response) {
+                            if(response.isSuccessful()){
+                                Result result=response.body();
+                                if(result!=null){
+                                    Toast.makeText(mContext, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                    if(result.getErr()==0){
+                                        Animation animPraise= AnimationUtils.loadAnimation(mContext, R.anim.scale);
+                                        holder.clickLike .startAnimation(animPraise);
+                                        //点赞数+1
+                                        String likeNumber = String.valueOf(Integer.parseInt(mList.get(position).getZans())+1);
+                                        holder.bbsLikeNumber.setText(likeNumber);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Result> call, Throwable t) {
+                            Toast.makeText(mContext,"点赞出错："+t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
             holder.clickMsg.setOnClickListener(new View.OnClickListener() {

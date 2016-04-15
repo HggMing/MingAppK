@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.study.mingappk.R;
-import com.study.mingappk.test.Test2Activity;
+import com.study.mingappk.test.Test3Activity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,7 +47,7 @@ public class Tab1Fragment extends Fragment {
 
     @OnClick(R.id.bt_test)
     public void onClick() {
-        Intent intent=new Intent(mActivity, Test2Activity.class);
+        Intent intent=new Intent(mActivity, Test3Activity.class);
         startActivity(intent);
     }
 }

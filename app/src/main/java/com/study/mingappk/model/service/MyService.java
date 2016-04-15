@@ -7,10 +7,12 @@ import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.BBSListResult;
 import com.study.mingappk.model.bean.FollowVillageList;
+import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.bean.LoginResult;
 import com.study.mingappk.model.bean.Phone2Adress;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfoResult;
+import com.study.mingappk.model.bean.ZanList;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -33,7 +35,7 @@ public interface MyService {
      * @return 用户信息
      */
     @GET("user/login")
-    Observable<LoginResult> getCall_Login(
+    Observable<LoginResult> getObservable_Login(
             @Query("logname") String logname,
             @Query("pwd") String pwd);
 
@@ -50,7 +52,7 @@ public interface MyService {
             @Query("phone") String phone);
 
     @GET("http://apis.baidu.com/apistore/mobilenumber/mobilenumber")
-    Observable<Phone2Adress> getPhone2Adress2(
+    Observable<Phone2Adress> getObservable_Phone2Adress(
             @Header("apikey") String apikey,
             @Query("phone") String phone);
 
@@ -210,5 +212,50 @@ public interface MyService {
             @Query("page") int page,
             @Query("pagesize") int pagesize);
 
+    /**
+     * 对文档点赞
+     *
+     * @param auth 认证信息
+     * @param pid  文档id
+     * @return 结果msg
+     */
+    @GET("bbs/zans")
+    Call<Result> getCall_ClickLike(
+            @Query("auth") String auth,
+            @Query("pid") String pid);
 
+    /**
+     * 获取村圈中帖子点赞的列表
+     *
+     * @param auth     认证信息
+     * @param pid      帖子id
+     * @param page     当前页码，默认为：1页
+     * @param pagesize 每页条数，默认20条
+     * @return 点赞时间，用户头像和名字
+     */
+    @GET("bbs/zanlist")
+    Call<ZanList> getCall_ZanList(
+            @Query("auth") String auth,
+            @Query("pid") String pid,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 分页获取好友列表信息，同时该接口会返回，好友总数cnt，其中uid:10000:小包谷【语音助手】;uid:10001:我们村【客服】
+     *
+     * @param auth     认证信息
+     * @param page     当前页码，默认为：1页
+     * @param pagesize 每页条数，默认20条
+     * @return "aname":"备注名",
+     * "uid":"13123",
+     * "name":"昵称",
+     * "phone":"手机号",
+     * "sex":"0",
+     * "head":"头像"
+     */
+    @GET("friend/list")
+    Call<FriendList> getCall_FriendList(
+            @Query("auth") String auth,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
 }

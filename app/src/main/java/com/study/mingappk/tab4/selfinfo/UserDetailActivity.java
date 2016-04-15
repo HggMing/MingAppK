@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.dialog.Dialog_UpdateSex;
+import com.study.mingappk.common.views.dialog.Dialog_UpdateSex;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.tmain.BackActivity;
 import com.study.mingappk.model.bean.Result;

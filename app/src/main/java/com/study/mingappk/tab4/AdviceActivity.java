@@ -9,7 +9,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.common.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.Dialog_Model;
 import com.study.mingappk.tmain.BackActivity;
 
 import butterknife.Bind;

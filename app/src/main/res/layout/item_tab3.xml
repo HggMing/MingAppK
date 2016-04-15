@@ -43,8 +43,6 @@
         android:layout_toRightOf="@id/imageView_village"
         android:ellipsize="end"
         android:maxLines="2"
-        android:text="New Text"
-        android:textColor="@color/font_black_content"
         tools:text="我多想回到家乡,再回到她的身旁,看她的温柔善良,来抚慰我的心伤,就让我回到家乡,再回到她的身旁,让她的温柔善良,来抚慰我的心伤" />
 
     <TextView

@@ -29,24 +29,16 @@ public class VillageSituationAdapter extends RecyclerView.Adapter<VillageSituati
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    public List<String> mTexts;
-    public List<Integer> mIcons;
+    public String[] mTexts={"村况","荣誉室","村官","活动"};
+    public int[] mIcons={
+            R.mipmap.village_situation1,
+            R.mipmap.village_situation2,
+            R.mipmap.village_situation3,
+            R.mipmap.village_situation4};
 
     public VillageSituationAdapter(Context mContext) {
         this.mContext = mContext;
         mLayoutInflater = LayoutInflater.from(mContext);
-        mTexts =new ArrayList<>();
-        mTexts.add("村况");
-        mTexts.add("荣誉室");
-        mTexts.add("村官");
-        mTexts.add("活动");
-        mIcons=new ArrayList<>();
-        mIcons.add(R.mipmap.village_situation1);
-        mIcons.add(R.mipmap.village_situation2);
-        mIcons.add(R.mipmap.village_situation3);
-        mIcons.add(R.mipmap.village_situation4);
-
-
     }
 
     /**
@@ -68,14 +60,14 @@ public class VillageSituationAdapter extends RecyclerView.Adapter<VillageSituati
                 }
             });
         }
-        holder.mTextView.setText(mTexts.get(position));
-        Glide.with(mContext).load(mIcons.get(position))
+        holder.mTextView.setText(mTexts[position]);
+        Glide.with(mContext).load(mIcons[position])
                 .into(holder.icon);
     }
 
     @Override
     public int getItemCount() {
-        return mTexts.size();
+        return mTexts.length;
     }
 
     public interface OnItemClickListener {

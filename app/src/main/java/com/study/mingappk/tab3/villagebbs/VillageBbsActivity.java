@@ -187,9 +187,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                 break;
             case R.id.click_msg:
                 Toast.makeText(this, "点击留言操作", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.click_like:
-                Toast.makeText(this, "点击点赞操作", Toast.LENGTH_SHORT).show();
+
                 break;
             default:
                 break;

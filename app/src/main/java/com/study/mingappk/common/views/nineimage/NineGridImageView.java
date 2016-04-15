@@ -1,4 +1,4 @@
-package com.study.mingappk.common.views;
+package com.study.mingappk.common.views.nineimage;
 
 import android.content.Context;
 import android.content.res.TypedArray;
