@@ -41,7 +41,7 @@ import retrofit2.Response;
 public class VillageListFragment extends Fragment implements VillageListAdapter.OnItemClickListener {
     AppCompatActivity mActivity;
 
-    @Bind(R.id.tab3_list)
+    @Bind(R.id.listview_header_text)
     XRecyclerView mXRecyclerView;
 
     private XRecyclerView.LayoutManager mLayoutManager;

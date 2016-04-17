@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.tmain.BackActivity;
@@ -44,10 +45,10 @@ public class UpdateIdcardActivity extends BackActivity {
         if (id == R.id.action_submit) {
             String auth = APP.getInstance().getAuth();
             final String newIdcard = etIdcard.getText().toString();
-            if (newIdcard.length() != 18) {
-                Toast.makeText(UpdateIdcardActivity.this, "身份证号必须为18位！！", Toast.LENGTH_SHORT).show();
+            if (!BaseTools.checkIdcard(newIdcard)) {
+                Toast.makeText(UpdateIdcardActivity.this, "请输入正确的身份证号！！", Toast.LENGTH_SHORT).show();
             } else {
-                new MyServiceClient().getService().getCall_UpdateInfo(auth, null, null, newIdcard, null)
+                MyServiceClient.getService().getCall_UpdateInfo(auth, null, null, newIdcard, null)
                         .enqueue(new Callback<Result>() {
                             @Override
                             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -57,8 +58,8 @@ public class UpdateIdcardActivity extends BackActivity {
                                         Toast.makeText(UpdateIdcardActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                         if (result.getErr() == 0) {
                                             Intent intent = new Intent();
-                                            intent.putExtra("newIdcard", newIdcard);
-                                            setResult(22, intent);
+                                            intent.putExtra(UserDetailActivity.NEW_IDCARD, newIdcard);
+                                            setResult(RESULT_OK, intent);
                                             finish();
                                         }
                                     }

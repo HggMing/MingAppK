@@ -8,10 +8,10 @@ import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.BBSListResult;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.bean.FriendList;
-import com.study.mingappk.model.bean.LoginResult;
+import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.Phone2Adress;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.bean.UserInfoResult;
+import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.bean.ZanList;
 
 import retrofit2.Call;
@@ -35,7 +35,7 @@ public interface MyService {
      * @return 用户信息
      */
     @GET("user/login")
-    Observable<LoginResult> getObservable_Login(
+    Observable<Login> getObservable_Login(
             @Query("logname") String logname,
             @Query("pwd") String pwd);
 
@@ -77,7 +77,7 @@ public interface MyService {
      * @return 用户信息
      */
     @GET("user/ginfo")
-    Call<UserInfoResult> getCall_UserInfo(
+    Call<UserInfo> getCall_UserInfo(
             @Query("auth") String auth);
 
     /**

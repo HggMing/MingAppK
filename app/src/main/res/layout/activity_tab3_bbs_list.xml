@@ -8,9 +8,9 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="256dp"
-        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
         <!-- layout_scrollFlags:
          scroll - 想滚动就必须设置这个。
@@ -26,8 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@color/colorPrimary"
-            app:expandedTitleMarginBottom="13dp"
-            app:expandedTitleMarginStart="28dp"
+            app:expandedTitleMarginBottom="15dp"
+            app:expandedTitleMarginEnd="104dp"
+            app:expandedTitleMarginStart="20dp"
             app:expandedTitleTextAppearance="@style/MyExpandedTitleTextAppearance"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:popupTheme="@style/AppTheme.PopupOverlay">
@@ -111,15 +112,16 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floating_action_button"
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@mipmap/star"
-        android:visibility="gone"
-        app:borderWidth="0dp"
-        app:layout_anchor="@id/appBar"
-        app:layout_anchorGravity="bottom|right|end" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@mipmap/fab_edit"
+        app:fab_colorNormal="@color/colorAccent"
+        app:fab_colorPressed="@color/colorAccent2"
+        app:fab_colorRipple="@color/colorAccent2"
+        app:fab_type="mini" />
 </android.support.design.widget.CoordinatorLayout>
 

@@ -2,6 +2,8 @@ package com.study.mingappk.tab4.selfinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Selection;
+import android.text.Spannable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ import retrofit2.Response;
 
 public class UpdateUnameActivity extends BackActivity {
 
+    public static String OLD_NAME="oldName";
     @Bind(R.id.et_uname)
     EditText etUname;
 
@@ -29,6 +32,9 @@ public class UpdateUnameActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_uname);
         ButterKnife.bind(this);
+        String text=getIntent().getStringExtra(OLD_NAME);
+        etUname.setText(text);
+        etUname.setSelection(text.length());//光标移到文字最后
     }
 
     @Override
@@ -44,7 +50,7 @@ public class UpdateUnameActivity extends BackActivity {
         if (id == R.id.action_submit) {
             String auth = APP.getInstance().getAuth();
             final String newName=etUname.getText().toString();
-            new MyServiceClient().getService().getCall_UpdateInfo(auth,newName,null,null,null )
+            MyServiceClient.getService().getCall_UpdateInfo(auth,newName,null,null,null )
                     .enqueue(new Callback<Result>() {
                         @Override
                         public void onResponse(Call<Result> call, Response<Result> response) {
@@ -54,8 +60,8 @@ public class UpdateUnameActivity extends BackActivity {
                                     Toast.makeText(UpdateUnameActivity.this,  result.getMsg(), Toast.LENGTH_SHORT).show();
                                     if( result.getErr()==0){
                                         Intent intent=new Intent();
-                                        intent.putExtra("newName",newName);
-                                        setResult(11,intent);
+                                        intent.putExtra(UserDetailActivity.NEW_NAME,newName);
+                                        setResult(RESULT_OK,intent);
                                         finish();
                                     }
                                 }

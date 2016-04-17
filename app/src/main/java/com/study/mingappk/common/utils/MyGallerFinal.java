@@ -9,15 +9,14 @@ import android.os.Environment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.study.mingappk.R;
 
 import java.io.File;
 
-import cn.finalteam.galleryfinal.BuildConfig;
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
-import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.ImageLoader;
 import cn.finalteam.galleryfinal.PauseOnScrollListener;
 import cn.finalteam.galleryfinal.ThemeConfig;
@@ -28,23 +27,31 @@ import cn.finalteam.galleryfinal.widget.GFImageView;
  * Created by Ming on 2016/3/22.
  */
 public class MyGallerFinal {
-
     //设置主题
     ThemeConfig theme = new ThemeConfig.Builder()
-            .setTitleBarBgColor(Color.rgb(0x53, 0xAC, 0xE5))
-            .setTitleBarTextColor(Color.WHITE)
-            .setFabNornalColor(Color.rgb(0x53, 0xAC, 0xE5))
-            .setFabPressedColor(Color.BLUE)
-            .setCheckNornalColor(Color.WHITE)
-            .setCheckSelectedColor(Color.BLACK)
-            .setIconBack(R.mipmap.app_back)
-            .setIconRotate(R.mipmap.ic_action_repeat)
-            .setIconCrop(R.mipmap.ic_action_crop)
-            .setIconCamera(R.mipmap.ic_action_camera)
+//    Color.rgb(0x53, 0xAC, 0xE5)
+            .setTitleBarBgColor(R.color.colorPrimary)//标题栏背景颜色
+            .setTitleBarTextColor(Color.WHITE)//标题栏文本字体颜色
+            .setFabNornalColor(R.color.colorPrimary)//设置Floating按钮Nornal状态颜色
+            .setFabPressedColor(Color.BLUE)//设置Floating按钮Pressed状态颜色
+            .setCheckNornalColor(Color.WHITE)//选择框未选颜色
+            .setCheckSelectedColor(Color.BLACK)//选择框选中颜色
+            .setCropControlColor(R.color.colorPrimary)//设置裁剪控制点和裁剪框颜色
+            .setIconBack(R.mipmap.app_back)//设置返回按钮icon
+            .setIconRotate(R.mipmap.ic_action_repeat)//设置旋转icon
+            .setIconCrop(R.mipmap.ic_action_crop)//设置裁剪icon
+            .setIconCamera(R.mipmap.ic_action_camera)//设置相机icon
+//            .setIconFolderArrow()//设置标题栏文件夹下拉arrow图标
+//            .setIconDelete()//设置多选编辑页删除按钮icon
+//            .setIconCheck()//设置checkbox和文件夹已选icon
+//            .setIconFab()//设置Floating按钮icon
+//            .setEditPhotoBgTexture()//设置图片编辑页面图片margin外背景
+//            .setIconPreview()//设置预览按钮icon
+//            .setPreviewBg()//设置预览页背景
             .build();
     //配置功能
     FunctionConfig functionConfig = new FunctionConfig.Builder()
-            //.setMutiSelectMaxSize(2)//配置多选数量
+            //.setMutiSelectMaxSize(9)//配置多选数量
             .setEnableEdit(true)//开启编辑功能
             .setEnableCrop(true)//开启裁剪功能
             .setEnableRotate(false)//开启旋转功能
@@ -83,15 +90,15 @@ public class MyGallerFinal {
                             imageView.setImageDrawable(resource);
                         }
 
-                      /*  @Override
+                        @Override
                         public void setRequest(Request request) {
-                             imageView.setTag(R.id.adapter_item_tag_key,request);
+                            imageView.setTag(R.id.adapter_item_tag_key, request);
                         }
 
                         @Override
                         public Request getRequest() {
                             return (Request) imageView.getTag(R.id.adapter_item_tag_key);
-                        }*/
+                        }
                     });
         }
 
@@ -100,7 +107,7 @@ public class MyGallerFinal {
         }
     }
 
-    PauseOnScrollListener pauseOnScrollListener = new GlidePauseOnScrollListener(false, true);
+    PauseOnScrollListener pauseOnScrollListener = new GlidePauseOnScrollListener(false, false);
 
     class GlidePauseOnScrollListener extends PauseOnScrollListener {
 
@@ -123,7 +130,7 @@ public class MyGallerFinal {
         return new CoreConfig.Builder(context, imageloader, theme)
                 .setFunctionConfig(functionConfig)//配置全局GalleryFinal功能
                 .setPauseOnScrollListener(pauseOnScrollListener)//设置imageloader滑动加载图片优化OnScrollListener,根据选择的ImageLoader来选择PauseOnScrollListener
-                .setNoAnimcation(false)//关闭动画
+                .setNoAnimcation(true)//关闭动画
                 .setEditPhotoCacheFolder(new File(Environment.getExternalStorageDirectory() + "/MingAppk/edittemp/"))//配置编辑（裁剪和旋转）功能产生的cache文件保存目录，不做配置的话默认保存在/sdcard/GalleryFinal/edittemp/
                 .setTakePhotoFolder(new File(Environment.getExternalStorageDirectory(), "/MingAppk/" + "Photo/"))//设置拍照保存目录，默认是/sdcard/DICM/GalleryFinal/
                 .build();

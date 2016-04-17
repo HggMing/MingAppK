@@ -4,7 +4,7 @@ package com.study.mingappk.model.bean;
  * 登录信息 返回
  * Created by Ming on 2016/3/11.
  */
-public class LoginResult {
+public class Login {
 
     /**
      * err : 0

@@ -90,7 +90,7 @@ public class UpdateAdressActivity extends BackActivity {
      */
     private void GetProvinceList() {
         String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add1(auth)
+        MyServiceClient.getService().getCall_Add1(auth)
                 .enqueue(new Callback<A1Provice>() {
                     @Override
                     public void onResponse(Call<A1Provice> call, Response<A1Provice> response) {
@@ -181,7 +181,7 @@ public class UpdateAdressActivity extends BackActivity {
      */
     private void GetCityList(String provinceid) {
         String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add2(auth, provinceid)
+        MyServiceClient.getService().getCall_Add2(auth, provinceid)
                 .enqueue(new Callback<A2City>() {
                     @Override
                     public void onResponse(Call<A2City> call, Response<A2City> response) {
@@ -268,7 +268,7 @@ public class UpdateAdressActivity extends BackActivity {
      */
     private void GetCountryList(String cityid) {
         String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add3(auth, cityid)
+        MyServiceClient.getService().getCall_Add3(auth, cityid)
                 .enqueue(new Callback<A3County>() {
                     @Override
                     public void onResponse(Call<A3County> call, Response<A3County> response) {
@@ -353,7 +353,7 @@ public class UpdateAdressActivity extends BackActivity {
      */
     private void GetTownList(String countryid) {
         String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add4(auth, countryid)
+        MyServiceClient.getService().getCall_Add4(auth, countryid)
                 .enqueue(new Callback<A4Town>() {
                     @Override
                     public void onResponse(Call<A4Town> call, Response<A4Town> response) {
@@ -439,7 +439,7 @@ public class UpdateAdressActivity extends BackActivity {
      */
     private void GetVillageList(String townid) {
         String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add5(auth, townid)
+        MyServiceClient.getService().getCall_Add5(auth, townid)
                 .enqueue(new Callback<A5Village>() {
                     @Override
                     public void onResponse(Call<A5Village> call, Response<A5Village> response) {
@@ -513,7 +513,7 @@ public class UpdateAdressActivity extends BackActivity {
             final String newAddress = selected_province_name + selected_city_name + selected_country_name + selected_town_name + selected_village_name;
             Log.d("mm",newAddress);
             String auth = APP.getInstance().getAuth();
-            new MyServiceClient().getService().getCall_UpdateInfo(auth, null, null, null, vid)
+            MyServiceClient.getService().getCall_UpdateInfo(auth, null, null, null, vid)
                     .enqueue(new Callback<Result>() {
                         @Override
                         public void onResponse(Call<Result> call, Response<Result> response) {
@@ -523,10 +523,10 @@ public class UpdateAdressActivity extends BackActivity {
                                     Toast.makeText(UpdateAdressActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                     if (result.getErr() == 0) {
                                         Bundle bundle = new Bundle();
-                                        bundle.putString("newAddress", newAddress);//给 bundle 写入数
+                                        bundle.putString(UserDetailActivity.NEW_ADDRESS, newAddress);//给 bundle 写入数
                                         Intent mIntent = new Intent();
                                         mIntent.putExtras(bundle);
-                                        setResult(33, mIntent);
+                                        setResult(RESULT_OK, mIntent);
                                         finish();
                                     }
                                 }

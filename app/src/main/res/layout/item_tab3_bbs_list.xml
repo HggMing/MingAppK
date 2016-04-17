@@ -47,7 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/bbs_head"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/bbs_head"
         android:layout_toRightOf="@+id/bbs_head"
         android:textColor="@color/font_black_content"
@@ -72,7 +71,7 @@
         android:layout_alignLeft="@+id/bbs_uname"
         android:layout_alignStart="@+id/bbs_uname"
         android:layout_below="@+id/bbs_head"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:maxLines="3"
         android:text="这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,"
@@ -91,7 +90,7 @@
         app:length_X="16"
         app:maxSize="9"
         app:showStyle="fill"
-        app:singleImgSize="200dp"
+        app:singleImgSize="500dp"
         app:width_Y="11" />
 
     <RelativeLayout

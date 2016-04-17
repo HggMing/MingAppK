@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".tab3.addfollow.FollowR2Fragment">
 
     <android.support.v4.widget.NestedScrollView
@@ -36,11 +37,12 @@
                 android:id="@+id/spprovince"
                 style="?android:attr/spinnerItemStyle"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
                 android:drawSelectorOnTop="true"
+                android:paddingRight="10dp"
                 android:spinnerMode="dropdown" />
 
             <View
@@ -54,11 +56,12 @@
                 android:id="@+id/spcity"
                 style="?android:attr/spinnerItemStyle"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
-                android:drawSelectorOnTop="true" />
+                android:drawSelectorOnTop="true"
+                android:paddingRight="10dp" />
 
             <View
                 android:id="@+id/line2"
@@ -71,11 +74,12 @@
                 android:id="@+id/spcounty"
                 style="?android:attr/spinnerItemStyle"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
-                android:drawSelectorOnTop="true" />
+                android:drawSelectorOnTop="true"
+                android:paddingRight="10dp" />
 
             <View
                 android:id="@+id/line3"
@@ -88,11 +92,13 @@
                 android:id="@+id/sptown"
                 style="?android:attr/spinnerItemStyle"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
-                android:drawSelectorOnTop="true" />
+                android:drawSelectorOnTop="true"
+
+                android:paddingRight="10dp" />
 
             <View
                 android:id="@+id/line4"
@@ -105,11 +111,12 @@
                 android:id="@+id/spvillage"
                 style="?android:attr/spinnerItemStyle"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
-                android:drawSelectorOnTop="true" />
+                android:drawSelectorOnTop="true"
+                android:paddingRight="10dp" />
 
 
             <Button

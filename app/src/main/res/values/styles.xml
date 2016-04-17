@@ -18,11 +18,9 @@
     <!--CollapsingToolbarLayout文字大小设置-->
     <!--parent="TextAppearance.AppCompat.Title"-->
     <style name="MyExpandedTitleTextAppearance" >
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">28sp</item>
     </style>
-    <style name="MyExpandedTitleTextAppearance2" >
-        <item name="android:textSize">26sp</item>
-    </style>
+
 
     <!--TabLayout的文字大小设置-->
     <style name="MyTabTextAppearance" parent="TextAppearance.Design.Tab">

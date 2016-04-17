@@ -1,5 +1,7 @@
 package com.study.mingappk.tab4.selfinfo;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,12 +19,15 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.views.dialog.Dialog_UpdateSex;
 import com.study.mingappk.common.utils.MyGallerFinal;
+import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.tmain.BackActivity;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -38,6 +43,10 @@ import retrofit2.Response;
 
 public class UserDetailActivity extends BackActivity {
 
+    public static final String USER_INFO = "userInfo";
+    public static final String NEW_ADDRESS = "newAddress";
+    public static final String NEW_NAME="newName";
+    public static final String NEW_IDCARD="newIdcard";
     @Bind(R.id.icon_head2)
     ImageView iconHead2;
     @Bind(R.id.get_name)
@@ -54,12 +63,14 @@ public class UserDetailActivity extends BackActivity {
     TextView getLoginTime;
     SharedPreferences sp;
     SharedPreferences.Editor spEditor;
+    UserInfo.DataEntity userInfo;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         ButterKnife.bind(this);
         sp = this.getSharedPreferences("config", MODE_PRIVATE);
-        spEditor=sp.edit();
+        spEditor = sp.edit();
         initView();
 
 
@@ -76,16 +87,17 @@ public class UserDetailActivity extends BackActivity {
     }
 
     private void initView() {
+        userInfo = getIntent().getParcelableExtra(USER_INFO);
         //头像
-        String headUrl = sp.getString("MyInfo_Head", null);
+        String headUrl = MyServiceClient.getBaseUrl() + userInfo.getHead();
         Glide.with(this)
                 .load(headUrl)
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(iconHead2);
         //姓名
-        getName.setText(sp.getString("MyInfo_Uname", null));
+        getName.setText(userInfo.getUname());
         //性别
-        String sex = sp.getString("MyInfo_Sex", null);
+        String sex = userInfo.getSex();
         if ("0".equals(sex)) {
             getSex.setText("男");
         } else if ("1".equals(sex)) {
@@ -94,45 +106,48 @@ public class UserDetailActivity extends BackActivity {
             getSex.setText("未知");
         }
         //身份证号
-        getIdCard.setText(sp.getString("MyInfo_Cid", null));
+        getIdCard.setText(userInfo.getCid());
         //地址:"province_name":"四川省", "city_name":"遂宁市", "county_name":"蓬溪县", "town_name":"红江镇", "village_name":"永益村"
-       /* String address = (APP.getInstance().getUserInfo().getProvince_name() +
-                APP.getInstance().getUserInfo().getCity_name() +
-                APP.getInstance().getUserInfo().getCounty_name() +
-                APP.getInstance().getUserInfo().getTown_name() +
-                APP.getInstance().getUserInfo().getVillage_name());*/
-        String address = sp.getString("MyInfo_Address", null);
+        String address = (userInfo.getProvince_name() +
+                userInfo.getCity_name() +
+                userInfo.getCounty_name() +
+                userInfo.getTown_name() +
+                userInfo.getVillage_name());
         getAddress.setText(address);
         //手机号
-        getPhone.setText(sp.getString("MyInfo_Logname", null));
+        getPhone.setText(userInfo.getPhone());
         // 最后登录时间
+        String date = userInfo.getLastlog();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = dateFormat.format(new Date(Long.valueOf(date + "000")));
+        getLoginTime.setText(time);
     }
 
-    @OnClick({R.id.set_head, R.id.icon_head2, R.id.set_name, R.id.set_sex, R.id.set_id_card, R.id.set_address})
+    @OnClick({R.id.set_head, R.id.set_name, R.id.set_sex, R.id.set_id_card, R.id.set_address})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.icon_head2:
-                break;
             case R.id.set_head:
                 updateHead();
                 break;
             case R.id.set_name:
                 Intent intent1 = new Intent(this, UpdateUnameActivity.class);
-                startActivityForResult(intent1, 1);
+                intent1.putExtra(UpdateUnameActivity.OLD_NAME,userInfo.getUname());
+                startActivityForResult(intent1, 11);
                 break;
             case R.id.set_sex:
                 updateSex();
                 break;
             case R.id.set_id_card:
                 Intent intent2 = new Intent(this, UpdateIdcardActivity.class);
-                startActivityForResult(intent2, 1);
+                startActivityForResult(intent2, 22);
                 break;
             case R.id.set_address:
                 Intent intent3 = new Intent(this, UpdateAdressActivity.class);
-                startActivityForResult(intent3, 1);
+                startActivityForResult(intent3, 33);
                 break;
         }
     }
+
     /**
      * 修改头像
      */
@@ -145,8 +160,9 @@ public class UserDetailActivity extends BackActivity {
                 .setCropSquare(true)//裁剪正方形
                 .setForceCrop(true)//启动强制裁剪功能,一进入编辑页面就开启图片裁剪，不需要用户手动点击裁剪，此功能只针对单选操作
                 .build();
-        GalleryFinal.openGallerySingle(1001,functionConfig, mOnHanlderResultCallback);
+        GalleryFinal.openGallerySingle(1001, functionConfig, mOnHanlderResultCallback);
     }
+
     private GalleryFinal.OnHanlderResultCallback mOnHanlderResultCallback = new GalleryFinal.OnHanlderResultCallback() {
         @Override
         public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
@@ -168,12 +184,14 @@ public class UserDetailActivity extends BackActivity {
                                 Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                 if (result.getErr() == 0) {
                                     //上传头像成功
-                                    spEditor.putBoolean("isUpdataMyInfo",false);
+                                    spEditor.putBoolean("isUpdataMyInfo", false);
                                     spEditor.commit();
+                                    GalleryFinal.cleanCacheFile();//清除裁剪冗余图片
                                 }
                             }
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Result> call, Throwable t) {
                     }
@@ -248,14 +266,14 @@ public class UserDetailActivity extends BackActivity {
                     sexNo = "1";
                 }
                 String auth = APP.getInstance().getAuth();
-                new MyServiceClient().getService().getCall_UpdateInfo(auth, null, sexNo, null, null)
+                MyServiceClient.getService().getCall_UpdateInfo(auth, null, sexNo, null, null)
                         .enqueue(new Callback<Result>() {
                             @Override
                             public void onResponse(Call<Result> call, Response<Result> response) {
                                 if (response.isSuccessful()) {
                                     Result result = response.body();
                                     if (result != null) {
-                                        spEditor.putBoolean("isUpdataMyInfo",false);
+                                        spEditor.putBoolean("isUpdataMyInfo", false);
                                         spEditor.commit();
                                         Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                     }
@@ -267,7 +285,6 @@ public class UserDetailActivity extends BackActivity {
                             }
                         });
                 dialog.dismiss();
-                ;
             }
         })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -288,24 +305,30 @@ public class UserDetailActivity extends BackActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) { //resultCode为回传的标记，我在B中回传的是RESULT_OK
+        switch (requestCode) {
             case 11:
-                String result = data.getExtras().getString("newName");
-                getName.setText(result);
-                spEditor.putBoolean("isUpdataMyInfo",false);
-                spEditor.commit();
+                if (resultCode == Activity.RESULT_OK) {//resultCode为回传的标记，我在B中回传的是RESULT_OK
+                    String result = data.getStringExtra(NEW_NAME);
+                    getName.setText(result);
+                    spEditor.putBoolean("isUpdataMyInfo", false);
+                    spEditor.commit();
+                }
                 break;
             case 22:
-                String result2 = data.getExtras().getString("newIdcard");
-                getIdCard.setText(result2);
-                spEditor.putBoolean("isUpdataMyInfo",false);
-                spEditor.commit();
+                if (resultCode == Activity.RESULT_OK) {
+                    String result2 = data.getStringExtra(NEW_IDCARD);
+                    getIdCard.setText(result2);
+                    spEditor.putBoolean("isUpdataMyInfo", false);
+                    spEditor.commit();
+                }
                 break;
             case 33:
-                String result3 = data.getExtras().getString("newAddress");
-                getAddress.setText(result3);
-                spEditor.putBoolean("isUpdataMyInfo",false);
-                spEditor.commit();
+                if (resultCode == Activity.RESULT_OK) {
+                    String result3 = data.getStringExtra(NEW_ADDRESS);
+                    getAddress.setText(result3);
+                    spEditor.putBoolean("isUpdataMyInfo", false);
+                    spEditor.commit();
+                }
                 break;
             default:
                 break;

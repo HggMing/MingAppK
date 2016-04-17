@@ -1,4 +1,4 @@
-package com.study.mingappk.tab3.maopao;
+package com.study.mingappk.tab3.newpost;
 
 import android.annotation.TargetApi;
 import android.content.Context;

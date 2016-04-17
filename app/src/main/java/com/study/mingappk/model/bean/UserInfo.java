@@ -1,10 +1,13 @@
 package com.study.mingappk.model.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 获取用户信息 返回
  * Created by Ming on 2016/3/15.
  */
-public class UserInfoResult {
+public class UserInfo {
 
     /**
      * err : 0
@@ -69,7 +72,7 @@ public class UserInfoResult {
         return data;
     }
 
-    public static class DataEntity {
+    public static class DataEntity implements Parcelable {
         private String uid;
         private String phone;
         private String logname;
@@ -304,5 +307,84 @@ public class UserInfoResult {
         public String getVillage_name() {
             return village_name;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.uid);
+            dest.writeString(this.phone);
+            dest.writeString(this.logname);
+            dest.writeString(this.sex);
+            dest.writeString(this.uname);
+            dest.writeString(this.birth);
+            dest.writeString(this.ctime);
+            dest.writeString(this.cid);
+            dest.writeString(this.ctype);
+            dest.writeString(this.dev);
+            dest.writeString(this.loc);
+            dest.writeString(this.lastlog);
+            dest.writeString(this.lastip);
+            dest.writeString(this.lastdev);
+            dest.writeString(this.logcnt);
+            dest.writeString(this.head);
+            dest.writeString(this.province_id);
+            dest.writeString(this.province_name);
+            dest.writeString(this.city_id);
+            dest.writeString(this.city_name);
+            dest.writeString(this.county_id);
+            dest.writeString(this.county_name);
+            dest.writeString(this.town_id);
+            dest.writeString(this.town_name);
+            dest.writeString(this.village_id);
+            dest.writeString(this.village_name);
+        }
+
+        public DataEntity() {
+        }
+
+        protected DataEntity(Parcel in) {
+            this.uid = in.readString();
+            this.phone = in.readString();
+            this.logname = in.readString();
+            this.sex = in.readString();
+            this.uname = in.readString();
+            this.birth = in.readString();
+            this.ctime = in.readString();
+            this.cid = in.readString();
+            this.ctype = in.readString();
+            this.dev = in.readString();
+            this.loc = in.readString();
+            this.lastlog = in.readString();
+            this.lastip = in.readString();
+            this.lastdev = in.readString();
+            this.logcnt = in.readString();
+            this.head = in.readString();
+            this.province_id = in.readString();
+            this.province_name = in.readString();
+            this.city_id = in.readString();
+            this.city_name = in.readString();
+            this.county_id = in.readString();
+            this.county_name = in.readString();
+            this.town_id = in.readString();
+            this.town_name = in.readString();
+            this.village_id = in.readString();
+            this.village_name = in.readString();
+        }
+
+        public static final Parcelable.Creator<DataEntity> CREATOR = new Parcelable.Creator<DataEntity>() {
+            @Override
+            public DataEntity createFromParcel(Parcel source) {
+                return new DataEntity(source);
+            }
+
+            @Override
+            public DataEntity[] newArray(int size) {
+                return new DataEntity[size];
+            }
+        };
     }
 }

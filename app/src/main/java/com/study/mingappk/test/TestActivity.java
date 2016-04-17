@@ -1,16 +1,16 @@
 package com.study.mingappk.test;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.melnykov.fab.FloatingActionButton;
 import com.study.mingappk.R;
-import com.study.mingappk.model.provider.Phone2AdressProvider;
 import com.study.mingappk.model.bean.Phone2Adress;
+import com.study.mingappk.model.provider.Phone2AdressProvider;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
 
@@ -29,12 +29,13 @@ import rx.functions.Action1;
 public class TestActivity extends BackActivity {
     @Bind(R.id.et_phone)
     AppCompatAutoCompleteTextView etPhone;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
+
     @Bind(R.id.textView)
     TextView showAddView;
     @Bind(R.id.button)
     Button button;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class TestActivity extends BackActivity {
             return;
         }
         String API_KEY = "8e13586b86e4b7f3758ba3bd6c9c9135";
-        Call<Phone2Adress> call = new MyServiceClient().getService().getCall_Phone2Adress(API_KEY, etPhone.getText().toString());
+        Call<Phone2Adress> call = MyServiceClient.getService().getCall_Phone2Adress(API_KEY, etPhone.getText().toString());
 
         //发送请求
 
@@ -88,7 +89,7 @@ public class TestActivity extends BackActivity {
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        showAddView.append("地址222:" +s);
+                        showAddView.append("地址222:" + s);
                     }
                 });
     }

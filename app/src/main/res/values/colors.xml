@@ -4,6 +4,7 @@
     <color name="colorPrimary">#53ACE5</color>
     <color name="colorPrimaryDark">#53ACE5</color>
     <color name="colorAccent">#53ACE5</color>
+    <color name="colorAccent2">#449fd9</color>
     <!--BaseActivity页面-->
     <color name="font_black_9">#999999</color>
     <!--首页tab按钮颜色-->

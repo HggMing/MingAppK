@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.model.bean.LoginResult;
+import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.common.views.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.BaseTools;
@@ -32,7 +32,7 @@ import rx.schedulers.Schedulers;
 
 
 public class LoginActivity extends Activity {
-    final private static String TAG = "mm:LoginActivity";
+    final private String TAG = "mm:LoginActivity";
     @Bind(R.id.et_name)
     EditText et_name;
     @Bind(R.id.et_pwd)
@@ -50,9 +50,10 @@ public class LoginActivity extends Activity {
 
     private String loginname;
     private String loginpwd;
-
+    private boolean isAutoLogin;
     private boolean isRememberPwd;// 是否记住密码
 
+    private SharedPreferences sp;
     private SharedPreferences.Editor spEditor;
     private String point;//弹出提示框内容
 
@@ -62,14 +63,16 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_userlogin);
         ButterKnife.bind(this);
 
-        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        sp = getSharedPreferences("config", MODE_PRIVATE);
         spEditor = sp.edit();
+
         isRememberPwd = sp.getBoolean("isRememberPwd", true);//初始默认记住密码
         loginname = sp.getString("loginname", "");
         loginpwd = sp.getString("loginpwd", "");
+
         setIcon();
 
-        boolean isAutoLogin = getIntent().getBooleanExtra("isAutoLogin", false);
+        isAutoLogin = getIntent().getBooleanExtra("isAutoLogin", false);
         if (isAutoLogin) {
             onClick(btn_login);
         }
@@ -97,10 +100,10 @@ public class LoginActivity extends Activity {
             loginFailure(point);
             return;
         }
-        new MyServiceClient().getService().getObservable_Login(loginname, loginpwd)
+        MyServiceClient.getService().getObservable_Login(loginname, loginpwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<LoginResult>() {
+                .subscribe(new Subscriber<Login>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -113,18 +116,18 @@ public class LoginActivity extends Activity {
                     }
 
                     @Override
-                    public void onNext(LoginResult loginResult) {
-                        if (loginResult.getErr() == 0) {
-                            APP.getInstance().setAuth(loginResult.getAuth());//保存认证信息
+                    public void onNext(Login login) {
+                        if (login.getErr() == 0) {
+                            APP.getInstance().setAuth(login.getAuth());//保存认证信息
                             loginSuccess();
                             return;
                         }
-                        if (loginResult.getErr() == 2003) {
-                            point = loginResult.getMsg();
+                        if (login.getErr() == 2003) {
+                            point = login.getMsg();
                             loginFailureToReg(point);
                             return;
                         }
-                        point = loginResult.getMsg();
+                        point = login.getMsg();
                         loginFailure(point);
                     }
                 });

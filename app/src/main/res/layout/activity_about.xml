@@ -10,7 +10,7 @@
         android:background="@color/task_list_head">
 
         <View
-            android:id="@+id/icon"
+            android:id="@+id/bbs_head"
             android:layout_width="83dp"
             android:layout_height="83dp"
             android:layout_centerHorizontal="true"
@@ -21,7 +21,7 @@
             android:id="@+id/t1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/icon"
+            android:layout_below="@id/bbs_head"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp"
             android:text="我们村-乡情零距离"

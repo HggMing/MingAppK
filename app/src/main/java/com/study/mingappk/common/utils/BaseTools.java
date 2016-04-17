@@ -86,7 +86,20 @@ public class BaseTools {
         return false;
     }
 
+    /**
+     * 判断是否为身份证号
+     * @param idcard
+     * @return
+     */
+    public static boolean checkIdcard(String idcard) {
+        Pattern pattern = Pattern.compile("(^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$)|(^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$)");
+        Matcher matcher = pattern.matcher(idcard);
 
+        if (matcher.matches()) {
+            return true;
+        }
+        return false;
+    }
     /**
      * 返回文字描述的日期
      *

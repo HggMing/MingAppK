@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="10dp">
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="6dp"
+        android:text="我就是爱音乐，莫叫我停下来！良辰美景奈何天，千里长征人未还。。"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/font_black_content"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/bbs_uname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment"
+        android:text="爱我你怕了吗？"
+        android:textColor="@color/colorAccent"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/bbs_ctime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comment"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/bbs_uname"
+        android:drawableLeft="@mipmap/ic_clock"
+        android:drawablePadding="5dp"
+        android:text="1分钟前"
+        android:textColor="@color/font_black_9"
+        android:textSize="12sp" />
+
+    <View xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/bbs_uname"
+        android:layout_marginTop="5dp"
+        android:background="@mipmap/divide_shade_up" />
+</RelativeLayout>

@@ -16,12 +16,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.melnykov.fab.FloatingActionButton;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.model.bean.BBSListResult;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab3.newpost.NewPostActivity;
 import com.study.mingappk.tab3.villagesituation.VillageSituationActivity;
 
 import java.util.ArrayList;
@@ -46,6 +48,8 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     @Bind(R.id.village_image)
     ImageView villageImage;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
 
     private VillageBbsAdapter mAdapter;
     private List<BBSListResult.DataEntity.ListEntity> mList;
@@ -62,6 +66,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
         ButterKnife.bind(this);
         BaseTools.transparentStatusBar(this);//透明状态栏
 
+        fab.attachToRecyclerView(mXRecyclerView);//fab随recyclerView的滚动，隐藏和出现
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             //设置toolbar后,开启返回图标
@@ -71,10 +76,10 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
         }
 
         //顶部村名和村图片的加载
-        String villageName=getIntent().getStringExtra(VILLAGE_NAME);
-        if(villageName.length()>6){
+        String villageName = getIntent().getStringExtra(VILLAGE_NAME);
+       /* if (villageName.length() > 6) {
             mCollapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.MyMenuAppearance);
-        }
+        }*/
         mCollapsingToolbarLayout.setTitle(villageName);
         Glide.with(this)
                 .load(getIntent().getStringExtra(VILLAGE_PIC))
@@ -200,7 +205,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
 
     }
 
-    @OnClick({R.id.icon_specialty, R.id.icon_village})
+    @OnClick({R.id.icon_specialty, R.id.icon_village, R.id.fab})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.icon_specialty:
@@ -208,6 +213,10 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
             case R.id.icon_village:
                 Intent intent = new Intent(this, VillageSituationActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.fab:
+                Intent intent1=new Intent(this, NewPostActivity.class);
+                startActivity(intent1);
                 break;
         }
     }

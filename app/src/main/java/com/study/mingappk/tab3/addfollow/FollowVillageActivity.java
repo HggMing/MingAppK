@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.study.mingappk.R;
 
@@ -44,7 +45,13 @@ public class FollowVillageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_village);
         ButterKnife.bind(this);
-
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            //设置toolbar后,开启返回图标
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //设备返回图标样式
+            getSupportActionBar().setHomeAsUpIndicator(R.mipmap.app_back);
+        }
         // 初始化mTitles、mFragments等ViewPager需要的数据
         initData();
 
@@ -62,6 +69,7 @@ public class FollowVillageActivity extends AppCompatActivity {
         mFragments.add(0, new FollowR1Fragment());
         mFragments.add(1, new FollowR2Fragment());
     }
+
     private void configViews() {
 
         // 设置显示Toolbar
@@ -76,6 +84,7 @@ public class FollowVillageActivity extends AppCompatActivity {
         // 将TabLayout和ViewPager进行关联，让两者联动起来
         mTabLayout.setupWithViewPager(mViewPager);
     }
+
     public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 
         private String[] mTitles;
@@ -100,6 +109,15 @@ public class FollowVillageActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return mFragments.size();
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
