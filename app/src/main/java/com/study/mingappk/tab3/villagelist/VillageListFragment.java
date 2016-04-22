@@ -44,10 +44,10 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     @Bind(R.id.listview_header_text)
     XRecyclerView mXRecyclerView;
 
-    private XRecyclerView.LayoutManager mLayoutManager;
-    private VillageListAdapter mAdapter;
-    List<FollowVillageList.DataEntity.ListEntity> mList;
-    private int cnt;//关注村圈数
+    private VillageListAdapter mAdapter = new VillageListAdapter();
+    private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
+    List<FollowVillageList.DataEntity.ListEntity> mList = new ArrayList<>();
+
     final private static int PAGE_SIZE = 20;//
     private int page = 1;
 
@@ -65,7 +65,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
 
         setHasOptionsMenu(true);
         configXRecyclerView();//XRecyclerView配置
-        getDataList();//获取followList数据和cnt值
+        getDataList(page);//获取followList数据和cnt值
     }
 
     @Override
@@ -99,7 +99,10 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
             case 0:
                 if (resultCode == Activity.RESULT_OK) {
                     //关注村圈后更新列表
-                    refreshList();
+                    mAdapter.setItem(null);
+                    mList.clear();
+                    page=1;
+                    getDataList(page);
                 }
                 break;
         }
@@ -107,7 +110,8 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
 
     //配置RecyclerView
     private void configXRecyclerView() {
-        mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
+        mAdapter.setOnItemClickListener(VillageListFragment.this);
+        mXRecyclerView.setAdapter(mAdapter);//设置adapter
         mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
 
         mXRecyclerView.addItemDecoration(new MyItemDecoration(mActivity, MyItemDecoration.VERTICAL_LIST));//添加分割线
@@ -123,45 +127,22 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
         mXRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                refreshList();
+                mAdapter.setItem(null);
+                mList.clear();
+                page=1;
+                getDataList(page);
+                mXRecyclerView.refreshComplete();
             }
-
 
             @Override
             public void onLoadMore() {
-                int pages = (int) (cnt / PAGE_SIZE + 1);
-                if (page <= pages) {
-                    String auth = APP.getInstance().getAuth();
-                    MyServiceClient.getService().getCall_FollowList(auth, page, PAGE_SIZE)
-                            .enqueue(new Callback<FollowVillageList>() {
-                                @Override
-                                public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
-                                    if (response.isSuccessful()) {
-                                        FollowVillageList followVillageListResult = response.body();
-                                        if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
-                                            mList.addAll(followVillageListResult.getData().getList());
-                                            mAdapter.notifyDataSetChanged();
-                                            mXRecyclerView.loadMoreComplete();
-                                            page++;
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<FollowVillageList> call, Throwable t) {
-                                    JUtils.Log("加载更多村圈出错：" + t.getMessage());
-                                }
-                            });
-
-                } else {
-                    mXRecyclerView.loadMoreComplete();
-                }
+                getDataList(++page);
+                mXRecyclerView.loadMoreComplete();
             }
         });
     }
 
-    private void refreshList() {
-        page = 1;
+    private void getDataList(int page) {
         String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_FollowList(auth, page, PAGE_SIZE)
                 .enqueue(new Callback<FollowVillageList>() {
@@ -170,40 +151,8 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
                         if (response.isSuccessful()) {
                             FollowVillageList followVillageListResult = response.body();
                             if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
-                                mList.clear();
                                 mList.addAll(followVillageListResult.getData().getList());
-                                mAdapter.notifyDataSetChanged();
-                                mXRecyclerView.refreshComplete();
-                                page = 2;
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<FollowVillageList> call, Throwable t) {
-                        JUtils.Log("刷新关注村圈出错：" + t.getMessage());
-                    }
-                });
-    }
-
-    private void getDataList() {
-        page = 1;
-        String auth = APP.getInstance().getAuth();
-        MyServiceClient.getService().getCall_FollowList(auth, page, PAGE_SIZE)
-                .enqueue(new Callback<FollowVillageList>() {
-                    @Override
-                    public void onResponse(Call<FollowVillageList> call, Response<FollowVillageList> response) {
-                        if (response.isSuccessful()) {
-                            FollowVillageList followVillageListResult = response.body();
-                            if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
-                                mList = new ArrayList<>();
-                                mList.addAll(followVillageListResult.getData().getList());
-                                cnt = Integer.parseInt(followVillageListResult.getData().getCnt());
-
-                                mAdapter = new VillageListAdapter(mActivity, mList);
-                                mAdapter.setOnItemClickListener(VillageListFragment.this);
-                                mXRecyclerView.setAdapter(mAdapter);//设置adapter
-                                page = 2;
+                                mAdapter.setItem(mList);
                             }
                         }
                     }
@@ -220,7 +169,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
         //点击选项操作
         String vid = mList.get(position).getVillage_id();
         String vname = mList.get(position).getVillage_name();
-        String vpic = MyServiceClient.getBaseUrl()+mList.get(position).getPic();
+        String vpic = MyServiceClient.getBaseUrl() + mList.get(position).getPic();
         Intent intent = new Intent();
         intent.putExtra(VillageBbsActivity.VILLAGE_ID, vid);
         intent.putExtra(VillageBbsActivity.VILLAGE_NAME, vname);
@@ -242,7 +191,6 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
                     public void onClick(DialogInterface dialog, int which) {
                         removeFromServer(position);
                         dialog.dismiss();
-
                     }
                 });
         builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {

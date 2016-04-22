@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".tmain.MainActivity">
+
+    <item
+        android:id="@+id/action_post"
+        android:orderInCategory="1"
+        android:title="发布"
+        app:showAsAction="always" />
+</menu>

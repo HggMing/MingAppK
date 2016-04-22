@@ -3,23 +3,22 @@ package com.study.mingappk.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Ming on 2016/4/1.
  */
-public class BBSListResult {
+public class BBSList {
 
     /**
      * err : 0
-     * data : {"cnt":"44","list":[{"id":"270","title":"","conts":"美丽的乡村风景","ctime":"1457493158","uid":"11022","uname":"Macheal Jackson","vid":"361130103203","source":"1","stats":"1","nums":"1","pic":"/Public/bbs/11022/2016-03-09/2016030920160309545749565550.png","zans":"5","is_manage":"2","pic_1":"","files":[{"id":"259","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309485597100101.png","surl_1":"","surl_2":""},{"id":"260","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309524810152509.png","surl_1":"","surl_2":""},{"id":"261","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309551015110199.png","surl_1":"","surl_2":""},{"id":"262","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309101514955575.png","surl_1":"","surl_2":""},{"id":"263","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309505710252485.png","surl_1":"","surl_2":""},{"id":"264","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309569910151554.png","surl_1":"","surl_2":""},{"id":"265","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309995510251100.png","surl_1":"","surl_2":""},{"id":"266","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309485251975299.png","surl_1":"","surl_2":""},{"id":"267","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309529948989857.png","surl_1":"","surl_2":""}],"userinfo":{"uid":"11022","phone":"13800138009","uname":"小张Zhang","head":"/Public/head/11022/5TR0QHT05SJQ1459417673.jpg"}}]}
+     * data : {"cnt":"12","list":[{"id":"1937","title":"","conts":"发动图","ctime":"1461224000","uid":"12018","uname":"忘记你我做不到","vid":"510922103201","source":"0","stats":"1","nums":"0","pic":"","zans":"0","is_manage":"2","pic_1":"","files":[{"id":"2287","pid":"1937","uid":"12018","url":"/Public/bbs/file/12018/2016-04-21/2016042120160421100505555102.gif","surl_1":"/Public/bbs/file/12018/2016-04-21/2016042120160421100505555102_1.gif","surl_2":"/Public/bbs/file/12018/2016-04-21/2016042120160421100505555102_2.gif","stats":"0"}],"my_is_zan":0,"userinfo":{"uid":"12018","phone":"18140006179","uname":"忘记你我做不到","head":"/Public/head/12018/2JKGLST1ZQUR1460997660.jpg"}}]}
      */
 
     private int err;
     /**
-     * cnt : 44
-     * list : [{"id":"270","title":"","conts":"美丽的乡村风景","ctime":"1457493158","uid":"11022","uname":"Macheal Jackson","vid":"361130103203","source":"1","stats":"1","nums":"1","pic":"/Public/bbs/11022/2016-03-09/2016030920160309545749565550.png","zans":"5","is_manage":"2","pic_1":"","files":[{"id":"259","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309485597100101.png","surl_1":"","surl_2":""},{"id":"260","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309524810152509.png","surl_1":"","surl_2":""},{"id":"261","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309551015110199.png","surl_1":"","surl_2":""},{"id":"262","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309101514955575.png","surl_1":"","surl_2":""},{"id":"263","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309505710252485.png","surl_1":"","surl_2":""},{"id":"264","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309569910151554.png","surl_1":"","surl_2":""},{"id":"265","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309995510251100.png","surl_1":"","surl_2":""},{"id":"266","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309485251975299.png","surl_1":"","surl_2":""},{"id":"267","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309529948989857.png","surl_1":"","surl_2":""}],"userinfo":{"uid":"11022","phone":"13800138009","uname":"小张Zhang","head":"/Public/head/11022/5TR0QHT05SJQ1459417673.jpg"}}]
+     * cnt : 12
+     * list : [{"id":"1937","title":"","conts":"发动图","ctime":"1461224000","uid":"12018","uname":"忘记你我做不到","vid":"510922103201","source":"0","stats":"1","nums":"0","pic":"","zans":"0","is_manage":"2","pic_1":"","files":[{"id":"2287","pid":"1937","uid":"12018","url":"/Public/bbs/file/12018/2016-04-21/2016042120160421100505555102.gif","surl_1":"/Public/bbs/file/12018/2016-04-21/2016042120160421100505555102_1.gif","surl_2":"/Public/bbs/file/12018/2016-04-21/2016042120160421100505555102_2.gif","stats":"0"}],"my_is_zan":0,"userinfo":{"uid":"12018","phone":"18140006179","uname":"忘记你我做不到","head":"/Public/head/12018/2JKGLST1ZQUR1460997660.jpg"}}]
      */
 
     private DataEntity data;
@@ -43,22 +42,23 @@ public class BBSListResult {
     public static class DataEntity {
         private String cnt;
         /**
-         * id : 270
+         * id : 1937
          * title :
-         * conts : 美丽的乡村风景
-         * ctime : 1457493158
-         * uid : 11022
-         * uname : Macheal Jackson
-         * vid : 361130103203
-         * source : 1
+         * conts : 发动图
+         * ctime : 1461224000
+         * uid : 12018
+         * uname : 忘记你我做不到
+         * vid : 510922103201
+         * source : 0
          * stats : 1
-         * nums : 1
-         * pic : /Public/bbs/11022/2016-03-09/2016030920160309545749565550.png
-         * zans : 5
+         * nums : 0
+         * pic :
+         * zans : 0
          * is_manage : 2
          * pic_1 :
-         * files : [{"id":"259","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309485597100101.png","surl_1":"","surl_2":""},{"id":"260","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309524810152509.png","surl_1":"","surl_2":""},{"id":"261","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309551015110199.png","surl_1":"","surl_2":""},{"id":"262","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309101514955575.png","surl_1":"","surl_2":""},{"id":"263","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309505710252485.png","surl_1":"","surl_2":""},{"id":"264","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309569910151554.png","surl_1":"","surl_2":""},{"id":"265","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309995510251100.png","surl_1":"","surl_2":""},{"id":"266","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309485251975299.png","surl_1":"","surl_2":""},{"id":"267","pid":"270","uid":"11022","url":"/Public/bbs/file/11022/2016-03-09/2016030920160309529948989857.png","surl_1":"","surl_2":""}]
-         * userinfo : {"uid":"11022","phone":"13800138009","uname":"小张Zhang","head":"/Public/head/11022/5TR0QHT05SJQ1459417673.jpg"}
+         * files : [{"id":"2287","pid":"1937","uid":"12018","url":"/Public/bbs/file/12018/2016-04-21/2016042120160421100505555102.gif","surl_1":"/Public/bbs/file/12018/2016-04-21/2016042120160421100505555102_1.gif","surl_2":"/Public/bbs/file/12018/2016-04-21/2016042120160421100505555102_2.gif","stats":"0"}]
+         * my_is_zan : 0
+         * userinfo : {"uid":"12018","phone":"18140006179","uname":"忘记你我做不到","head":"/Public/head/12018/2JKGLST1ZQUR1460997660.jpg"}
          */
 
         private List<ListEntity> list;
@@ -94,21 +94,23 @@ public class BBSListResult {
             private String zans;
             private String is_manage;
             private String pic_1;
+            private int my_is_zan;
             /**
-             * uid : 11022
-             * phone : 13800138009
-             * uname : 小张Zhang
-             * head : /Public/head/11022/5TR0QHT05SJQ1459417673.jpg
+             * uid : 12018
+             * phone : 18140006179
+             * uname : 忘记你我做不到
+             * head : /Public/head/12018/2JKGLST1ZQUR1460997660.jpg
              */
 
             private UserinfoEntity userinfo;
             /**
-             * id : 259
-             * pid : 270
-             * uid : 11022
-             * url : /Public/bbs/file/11022/2016-03-09/2016030920160309485597100101.png
-             * surl_1 :
-             * surl_2 :
+             * id : 2287
+             * pid : 1937
+             * uid : 12018
+             * url : /Public/bbs/file/12018/2016-04-21/2016042120160421100505555102.gif
+             * surl_1 : /Public/bbs/file/12018/2016-04-21/2016042120160421100505555102_1.gif
+             * surl_2 : /Public/bbs/file/12018/2016-04-21/2016042120160421100505555102_2.gif
+             * stats : 0
              */
 
             private List<FilesEntity> files;
@@ -225,6 +227,14 @@ public class BBSListResult {
                 this.pic_1 = pic_1;
             }
 
+            public int getMy_is_zan() {
+                return my_is_zan;
+            }
+
+            public void setMy_is_zan(int my_is_zan) {
+                this.my_is_zan = my_is_zan;
+            }
+
             public UserinfoEntity getUserinfo() {
                 return userinfo;
             }
@@ -287,6 +297,7 @@ public class BBSListResult {
                 private String url;
                 private String surl_1;
                 private String surl_2;
+                private String stats;
 
                 public String getId() {
                     return id;
@@ -336,6 +347,14 @@ public class BBSListResult {
                     this.surl_2 = surl_2;
                 }
 
+                public String getStats() {
+                    return stats;
+                }
+
+                public void setStats(String stats) {
+                    this.stats = stats;
+                }
+
                 @Override
                 public int describeContents() {
                     return 0;
@@ -349,6 +368,7 @@ public class BBSListResult {
                     dest.writeString(this.url);
                     dest.writeString(this.surl_1);
                     dest.writeString(this.surl_2);
+                    dest.writeString(this.stats);
                 }
 
                 public FilesEntity() {
@@ -361,6 +381,7 @@ public class BBSListResult {
                     this.url = in.readString();
                     this.surl_1 = in.readString();
                     this.surl_2 = in.readString();
+                    this.stats = in.readString();
                 }
 
                 public static final Parcelable.Creator<FilesEntity> CREATOR = new Parcelable.Creator<FilesEntity>() {

@@ -8,9 +8,9 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="256dp"
+        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
         <!-- layout_scrollFlags:
          scroll - 想滚动就必须设置这个。
@@ -123,5 +123,6 @@
         app:fab_colorPressed="@color/colorAccent2"
         app:fab_colorRipple="@color/colorAccent2"
         app:fab_type="mini" />
+
 </android.support.design.widget.CoordinatorLayout>
 

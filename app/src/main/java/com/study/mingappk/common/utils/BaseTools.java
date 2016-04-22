@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,6 +36,7 @@ public class BaseTools {
 
     /**
      * 4.4以上 全透明状态栏
+     *
      * @param activity
      */
     public static void transparentStatusBar(Activity activity) {
@@ -54,6 +54,7 @@ public class BaseTools {
             window.setStatusBarColor(Color.TRANSPARENT);//calculateStatusColor(Color.WHITE, (int) alphaValue)
         }
     }
+
     /**
      * 判断网络是否连接
      *
@@ -88,6 +89,7 @@ public class BaseTools {
 
     /**
      * 判断是否为身份证号
+     *
      * @param idcard
      * @return
      */
@@ -100,6 +102,7 @@ public class BaseTools {
         }
         return false;
     }
+
     /**
      * 返回文字描述的日期
      *
@@ -121,15 +124,15 @@ public class BaseTools {
         long r = 0;
         if (diff > year) {
             r = (diff / year);
-            return r + "年前 "+mTime;
+            return r + "年前 " + mTime;
         }
         if (diff > month) {
             r = (diff / month);
-            return r + "个月前 "+mTime;
+            return r + "个月前 " + mTime;
         }
         if (diff > day) {
             r = (diff / day);
-            return r + "天前 "+mTime;
+            return r + "天前 " + mTime;
         }
         if (diff > hour) {
             r = (diff / hour);

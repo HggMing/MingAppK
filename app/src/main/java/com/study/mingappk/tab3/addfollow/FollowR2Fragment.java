@@ -534,7 +534,7 @@ public class FollowR2Fragment extends Fragment {
                 selected_village_name != null) {
             final String villageName = selected_province_name + selected_city_name + selected_country_name + selected_town_name + selected_village_name;
             String auth = APP.getInstance().getAuth();
-            new MyServiceClient().getService().getCall_FollowVillage(auth, vid)
+            new MyServiceClient().getService().postCall_FollowVillage(auth, vid)
                     .enqueue(new Callback<Result>() {
                         @Override
                         public void onResponse(Call<Result> call, Response<Result> response) {

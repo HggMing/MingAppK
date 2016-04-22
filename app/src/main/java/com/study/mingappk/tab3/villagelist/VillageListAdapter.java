@@ -27,15 +27,11 @@ import butterknife.ButterKnife;
  */
 public class VillageListAdapter extends RecyclerView.Adapter<VillageListAdapter.ViewHolder> {
 
-
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
     private List<FollowVillageList.DataEntity.ListEntity> mList;
 
-    public VillageListAdapter(Context mContext, List<FollowVillageList.DataEntity.ListEntity> mList) {
-        this.mContext = mContext;
+    public void setItem(List<FollowVillageList.DataEntity.ListEntity> mList) {
         this.mList = mList;
-        mLayoutInflater = LayoutInflater.from(mContext);
+        notifyDataSetChanged();
     }
 
     /**
@@ -58,7 +54,7 @@ public class VillageListAdapter extends RecyclerView.Adapter<VillageListAdapter.
      */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = mLayoutInflater.inflate(R.layout.item_tab3, parent, false);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tab3, parent, false);
         return new ViewHolder(mView);
     }
 
@@ -84,7 +80,7 @@ public class VillageListAdapter extends RecyclerView.Adapter<VillageListAdapter.
         }
         //显示数据编辑
         String imageUrl = MyServiceClient.getBaseUrl() + mList.get(position).getPic();
-        Glide.with(mContext).load(imageUrl)
+        Glide.with(holder.itemView.getContext()).load(imageUrl)
                 .placeholder(R.mipmap.default_village)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imageViewVillage);//关注村圈图
@@ -106,7 +102,7 @@ public class VillageListAdapter extends RecyclerView.Adapter<VillageListAdapter.
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList == null ? 0 : mList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

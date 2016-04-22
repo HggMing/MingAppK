@@ -75,7 +75,9 @@
         <activity android:name=".tab3.villagebbs.VillageBbsActivity" />
         <activity android:name=".tab3.villagebbs.BigImageViewActivity" />
         <activity android:name=".tab3.villagesituation.VillageSituationActivity" />
-        <activity android:name=".tab3.newpost.NewPostActivity"></activity>
+        <activity android:name=".tab3.newpost.NewPostActivity"/>
+        <activity android:name=".tab3.newpost.BigImageViewActivity" />
+
     </application>
 
 </manifest>

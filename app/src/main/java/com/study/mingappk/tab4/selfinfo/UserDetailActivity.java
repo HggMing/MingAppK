@@ -157,6 +157,7 @@ public class UserDetailActivity extends BackActivity {
         FunctionConfig functionConfig = new FunctionConfig.Builder()
                 .setEnableEdit(true)//开启编辑功能
                 .setEnableCrop(true)//开启裁剪功能
+                .setEnableCamera(true)
                 .setCropSquare(true)//裁剪正方形
                 .setForceCrop(true)//启动强制裁剪功能,一进入编辑页面就开启图片裁剪，不需要用户手动点击裁剪，此功能只针对单选操作
                 .build();
@@ -175,7 +176,7 @@ public class UserDetailActivity extends BackActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(photoInfo.getPhotoPath());//图片文件转为Bitmap对象
                 final String newHead = (bitmapToBase64(bitmap) + ".jpg");
                 String auth = APP.getInstance().getAuth();
-                MyServiceClient.getService().getCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
+                MyServiceClient.getService().postCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {
                         if (response.isSuccessful()) {
@@ -223,8 +224,8 @@ public class UserDetailActivity extends BackActivity {
                 int options = 90;
                 while (baos.toByteArray().length / 1024 > 100) {
                     baos.reset();// 重置baos即清空baos
-                    options -= 10;// 每次都减少10
                     bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+                    options -= 10;// 每次都减少10
                 }
 
                 baos.flush();
@@ -266,7 +267,7 @@ public class UserDetailActivity extends BackActivity {
                     sexNo = "1";
                 }
                 String auth = APP.getInstance().getAuth();
-                MyServiceClient.getService().getCall_UpdateInfo(auth, null, sexNo, null, null)
+                MyServiceClient.getService().postCall_UpdateInfo(auth, null, sexNo, null, null)
                         .enqueue(new Callback<Result>() {
                             @Override
                             public void onResponse(Call<Result> call, Response<Result> response) {

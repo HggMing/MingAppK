@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,8 +21,7 @@ import com.melnykov.fab.FloatingActionButton;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.utils.MyItemDecoration;
-import com.study.mingappk.model.bean.BBSListResult;
+import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab3.newpost.NewPostActivity;
 import com.study.mingappk.tab3.villagesituation.VillageSituationActivity;
@@ -32,9 +32,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class VillageBbsActivity extends AppCompatActivity implements VillageBbsAdapter.OnItemClickListener {
     public static final String VILLAGE_ID = "village_id";
@@ -51,12 +51,11 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     @Bind(R.id.fab)
     FloatingActionButton fab;
 
-    private VillageBbsAdapter mAdapter;
-    private List<BBSListResult.DataEntity.ListEntity> mList;
+    private VillageBbsAdapter mAdapter = new VillageBbsAdapter();
+    private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+    private List<BBSList.DataEntity.ListEntity> mList = new ArrayList<>();
 
-    private XRecyclerView.LayoutManager mLayoutManager;
-    private int cnt;//帖子数
-    final private static int PAGE_SIZE = 20;
+    final private static int PAGE_SIZE = 5;
     private int page = 1;
 
     @Override
@@ -64,9 +63,11 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab3_bbs_list);
         ButterKnife.bind(this);
+
         BaseTools.transparentStatusBar(this);//透明状态栏
 
         fab.attachToRecyclerView(mXRecyclerView);//fab随recyclerView的滚动，隐藏和出现
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             //设置toolbar后,开启返回图标
@@ -77,9 +78,6 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
 
         //顶部村名和村图片的加载
         String villageName = getIntent().getStringExtra(VILLAGE_NAME);
-       /* if (villageName.length() > 6) {
-            mCollapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.MyMenuAppearance);
-        }*/
         mCollapsingToolbarLayout.setTitle(villageName);
         Glide.with(this)
                 .load(getIntent().getStringExtra(VILLAGE_PIC))
@@ -88,7 +86,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                 .into(villageImage);
 
         configXRecyclerView();//XRecyclerView配置
-        getBBSList();//获取bbsList数据
+        getBBSList(page);//获取bbsList数据
     }
 
     @Override
@@ -101,45 +99,45 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
         }
     }
 
-    private void getBBSList() {
-        page = 1;
+    private void getBBSList(int page) {
         String auth = APP.getInstance().getAuth();
         String mVid = getIntent().getStringExtra(VILLAGE_ID);
-        MyServiceClient.getService().getCall_BBSList(auth, mVid, page, PAGE_SIZE)
-                .enqueue(new Callback<BBSListResult>() {
+        MyServiceClient.getService()
+                .getObservable_BBSList(auth, mVid, page, PAGE_SIZE)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BBSList>() {
                     @Override
-                    public void onResponse(Call<BBSListResult> call, Response<BBSListResult> response) {
-                        if (response.isSuccessful()) {
-                            BBSListResult bbsListResult = response.body();
-                            if (bbsListResult != null && bbsListResult.getErr() == 0) {
-                                mList = new ArrayList<>();
-                                mList.addAll(bbsListResult.getData().getList());
-                                cnt = Integer.parseInt(bbsListResult.getData().getCnt());
-
-                                mAdapter = new VillageBbsAdapter(VillageBbsActivity.this, mList);
-                                mAdapter.setOnItemClickListener(VillageBbsActivity.this);
-                                mXRecyclerView.setAdapter(mAdapter);//设置adapter
-                                page = 2;
-                            }
-                        }
+                    public void onCompleted() {
                     }
 
                     @Override
-                    public void onFailure(Call<BBSListResult> call, Throwable t) {
+                    public void onError(Throwable e) {
+                        Log.i("mm", e.getMessage());
+                    }
 
+                    @Override
+                    public void onNext(BBSList bbsList) {
+                        if (bbsList != null && bbsList.getErr() == 0) {
+                            mList.addAll(bbsList.getData().getList());
+                            mAdapter.setItem(mList);
+                        }
                     }
                 });
     }
 
     //配置RecyclerView
     private void configXRecyclerView() {
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
-
-        mXRecyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST, 30));//添加分割线
-//        mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
+        //设置adapter
+        mAdapter.setOnItemClickListener(VillageBbsActivity.this);
+        mXRecyclerView.setAdapter(mAdapter);
+        //设置布局管理器
+        mXRecyclerView.setLayoutManager(mLayoutManager);
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
+//        mXRecyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST, 30));//添加分割线
+//        mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
 
+        //设置XRecyclerView相关
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
 //        mXRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);//自定义下拉刷新箭头图标
@@ -152,33 +150,8 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
 
             @Override
             public void onLoadMore() {
-                int pages = (int) (cnt / PAGE_SIZE + 1);
-                if (page <= pages) {
-                    String auth = APP.getInstance().getAuth();
-                    String mVid = getIntent().getStringExtra(VILLAGE_ID);
-                    MyServiceClient.getService().getCall_BBSList(auth, mVid, page, PAGE_SIZE)
-                            .enqueue(new Callback<BBSListResult>() {
-                                @Override
-                                public void onResponse(Call<BBSListResult> call, Response<BBSListResult> response) {
-                                    if (response.isSuccessful()) {
-                                        BBSListResult bbsListResult = response.body();
-                                        if (bbsListResult != null && bbsListResult.getErr() == 0) {
-                                            mList.addAll(bbsListResult.getData().getList());
-                                            mAdapter.notifyDataSetChanged();
-                                            mXRecyclerView.loadMoreComplete();
-                                            page++;
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<BBSListResult> call, Throwable t) {
-
-                                }
-                            });
-                } else {
+                    getBBSList(++page);
                     mXRecyclerView.loadMoreComplete();
-                }
             }
         });
     }
@@ -215,8 +188,25 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                 startActivity(intent);
                 break;
             case R.id.fab:
-                Intent intent1=new Intent(this, NewPostActivity.class);
-                startActivity(intent1);
+                Intent intent1 = new Intent(this, NewPostActivity.class);
+                String mVid = getIntent().getStringExtra(VILLAGE_ID);
+                intent1.putExtra(NewPostActivity.VILLAGE_ID,mVid);
+                startActivityForResult(intent1,11);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 11:
+                if(resultCode==RESULT_OK){
+                    mAdapter.setItem(null);
+                    mList.clear();
+                    page=1;
+                    getBBSList(page);
+                }
                 break;
         }
     }

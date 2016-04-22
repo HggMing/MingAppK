@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-*自定义控件，九宫格
+ * 自定义控件，九宫格
  */
 public class NineGridImageView<T> extends ViewGroup {
 
@@ -62,12 +62,12 @@ public class NineGridImageView<T> extends ViewGroup {
         int totalWidth = width - getPaddingLeft() - getPaddingRight();
         if (mImgDataList != null && mImgDataList.size() > 0) {
             if (mImgDataList.size() == 1 && mSingleImgSize != -1) {
-                mGridSize = mSingleImgSize > totalWidth ? (10*totalWidth)/15 : mSingleImgSize;
+                mGridSize = mSingleImgSize > totalWidth ? (10 * totalWidth) / 15 : mSingleImgSize;
             } else {
                 mImageViewList.get(0).setScaleType(ImageView.ScaleType.CENTER_CROP);
                 mGridSize = (totalWidth - mGap * (mColumnCount - 1)) / mColumnCount;
             }
-            height = (mWidth_Y *mGridSize * mRowCount)/mLength_X + mGap * (mRowCount - 1) + getPaddingTop() + getPaddingBottom();
+            height = (mWidth_Y * mGridSize * mRowCount) / mLength_X + mGap * (mRowCount - 1) + getPaddingTop() + getPaddingBottom();
             setMeasuredDimension(width, height);
         } else {
             height = width;
@@ -96,9 +96,9 @@ public class NineGridImageView<T> extends ViewGroup {
             int rowNum = i / mColumnCount;
             int columnNum = i % mColumnCount;
             int left = (mGridSize + mGap) * columnNum + getPaddingLeft();
-            int top = ((mWidth_Y *mGridSize)/mLength_X + mGap) * rowNum + getPaddingTop();
+            int top = ((mWidth_Y * mGridSize) / mLength_X + mGap) * rowNum + getPaddingTop();
             int right = left + mGridSize;
-            int bottom = top + (mWidth_Y *mGridSize)/mLength_X;
+            int bottom = top + (mWidth_Y * mGridSize) / mLength_X;
 
             childrenView.layout(left, top, right, bottom);
         }
@@ -116,7 +116,6 @@ public class NineGridImageView<T> extends ViewGroup {
         } else {
             this.setVisibility(VISIBLE);
         }
-
         if (mMaxSize > 0 && lists.size() > mMaxSize) {
             lists = lists.subList(0, mMaxSize);
         }
@@ -124,6 +123,7 @@ public class NineGridImageView<T> extends ViewGroup {
         int[] gridParam = calculateGridParam(lists.size(), mShowStyle);
         mRowCount = gridParam[0];
         mColumnCount = gridParam[1];
+
         if (mImgDataList == null) {
             int i = 0;
             while (i < lists.size()) {
@@ -174,7 +174,7 @@ public class NineGridImageView<T> extends ViewGroup {
                 });
                 return imageView;
             } else {
-                Log.e("NineGirdImageView", "Your must set a NineGridImageViewAdapter for NineGirdImageView");
+                Log.e("mm:NineGirdImageView", "Your must set a NineGridImageViewAdapter for NineGirdImageView");
                 return null;
             }
         }

@@ -513,7 +513,7 @@ public class UpdateAdressActivity extends BackActivity {
             final String newAddress = selected_province_name + selected_city_name + selected_country_name + selected_town_name + selected_village_name;
             Log.d("mm",newAddress);
             String auth = APP.getInstance().getAuth();
-            MyServiceClient.getService().getCall_UpdateInfo(auth, null, null, null, vid)
+            MyServiceClient.getService().postCall_UpdateInfo(auth, null, null, null, vid)
                     .enqueue(new Callback<Result>() {
                         @Override
                         public void onResponse(Call<Result> call, Response<Result> response) {

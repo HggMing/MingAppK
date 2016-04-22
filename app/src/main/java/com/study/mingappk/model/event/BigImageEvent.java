@@ -1,6 +1,6 @@
 package com.study.mingappk.model.event;
 
-import com.study.mingappk.model.bean.BBSListResult;
+import com.study.mingappk.model.bean.BBSList;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ import java.util.List;
 @Deprecated
 public class BigImageEvent {
 
-    public List<BBSListResult.DataEntity.ListEntity.FilesEntity> getList() {
+    public List<BBSList.DataEntity.ListEntity.FilesEntity> getList() {
         return list;
     }
 
-    private List<BBSListResult.DataEntity.ListEntity.FilesEntity> list;
+    private List<BBSList.DataEntity.ListEntity.FilesEntity> list;
 
     public int getIndex() {
         return index;
@@ -22,7 +22,7 @@ public class BigImageEvent {
 
     private int index;
 
-    public BigImageEvent(int index, List<BBSListResult.DataEntity.ListEntity.FilesEntity> list) {
+    public BigImageEvent(int index, List<BBSList.DataEntity.ListEntity.FilesEntity> list) {
         this.index = index;
         this.list = list;
     }

@@ -5,21 +5,30 @@ import com.study.mingappk.model.bean.A2City;
 import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
-import com.study.mingappk.model.bean.BBSListResult;
+import com.study.mingappk.model.bean.BBSList;
+import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.Phone2Adress;
 import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.bean.ZanList;
 
+import java.io.File;
+import java.util.Map;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -103,7 +112,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("user/uhead")
-    Call<Result> getCall_UpdateHead(
+    Call<Result> postCall_UpdateHead(
             @Field("auth") String auth,
             @Field("head") String head);
 
@@ -120,7 +129,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("user/uinfo")
-    Call<Result> getCall_UpdateInfo(
+    Call<Result> postCall_UpdateInfo(
             @Field("auth") String auth,
             @Field("uname") String uName,
             @Field("sex") String sex,
@@ -192,9 +201,57 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("vill/follow")
-    Call<Result> getCall_FollowVillage(
+    Call<Result> postCall_FollowVillage(
             @Field("auth") String auth,
             @Field("vid") String vid);
+
+    /**
+     * 该接口用户帖子的附件上传，包括图片其他压缩包等
+     *
+     * @param auth 验证参数
+     * @param file 附件上传
+     * @return insert_id和url
+     */
+    @Multipart
+    @POST("bbs/ufiles")
+    Observable<UploadFiles> postObservable_UploadImage(
+            @Part("auth") String auth,
+            @Part("files\"; filename=\"jpg") RequestBody file
+            // @PartMap Map<String, RequestBody> params,
+            );
+
+    /**
+     * @param auth    认证信息
+     * @param vid     村id
+     * @param title   标题，最长64个字
+     * @param conts   内容，最长500个字
+     * @param pimg    图片
+     * @param file_id 附件的id，没有附件就不传(多个附件请用“逗号”隔开)
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("bbs/add")
+    Observable<Result> postObservable_BBSPost(
+            @Field("auth") String auth,
+            @Field("vid") String vid,
+            @Field("title") String title,
+            @Field("conts") String conts,
+            @Field("pimg") String pimg,
+            @Field("file_id") String file_id);
+
+    /**
+     *
+     * @param auth 认证信息
+     * @param pid 帖子id
+     * @param conts 评论内容，最长255个字
+     * @return  结果msg+insert_id
+     */
+    @FormUrlEncoded
+    @POST("bbs/addcom")
+    Observable<Result> postObservable_AddComment(
+            @Field("auth") String auth,
+            @Field("pid") String pid,
+            @Field("conts") String conts);
 
     /**
      * 获取帖子列表接口
@@ -206,9 +263,41 @@ public interface MyService {
      * @return 帖子列表信息
      */
     @GET("bbs/list")
-    Call<BBSListResult> getCall_BBSList(
+    Observable<BBSList> getObservable_BBSList(
             @Query("auth") String auth,
             @Query("vid") String vid,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 获取评论列表接口
+     *
+     * @param auth     认证信息
+     * @param pid      帖子id
+     * @param page     当前页码，默认为：1页
+     * @param pagesize 每页条数，默认20条
+     * @return 评论列表
+     */
+    @GET("bbs/comlist")
+    Observable<BbsCommentList> getObservable_BbsCommentList(
+            @Query("auth") String auth,
+            @Query("pid") String pid,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 获取村圈中帖子点赞的列表
+     *
+     * @param auth     认证信息
+     * @param pid      帖子id
+     * @param page     当前页码，默认为：1页
+     * @param pagesize 每页条数，默认20条
+     * @return 点赞时间，用户头像和名字
+     */
+    @GET("bbs/zanlist")
+    Observable<ZanList> getObservable_ZanList(
+            @Query("auth") String auth,
+            @Query("pid") String pid,
             @Query("page") int page,
             @Query("pagesize") int pagesize);
 
@@ -224,21 +313,6 @@ public interface MyService {
             @Query("auth") String auth,
             @Query("pid") String pid);
 
-    /**
-     * 获取村圈中帖子点赞的列表
-     *
-     * @param auth     认证信息
-     * @param pid      帖子id
-     * @param page     当前页码，默认为：1页
-     * @param pagesize 每页条数，默认20条
-     * @return 点赞时间，用户头像和名字
-     */
-    @GET("bbs/zanlist")
-    Call<ZanList> getCall_ZanList(
-            @Query("auth") String auth,
-            @Query("pid") String pid,
-            @Query("page") int page,
-            @Query("pagesize") int pagesize);
 
     /**
      * 分页获取好友列表信息，同时该接口会返回，好友总数cnt，其中uid:10000:小包谷【语音助手】;uid:10001:我们村【客服】

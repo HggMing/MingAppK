@@ -12,6 +12,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 
 import java.io.File;
 
@@ -28,15 +29,16 @@ import cn.finalteam.galleryfinal.widget.GFImageView;
  */
 public class MyGallerFinal {
     //设置主题
+//    int themeColor=Color.rgb(0x53, 0xAC, 0xE5);
+    int themeColor= APP.getInstance().getResources().getColor(R.color.colorPrimary);
     ThemeConfig theme = new ThemeConfig.Builder()
-//    Color.rgb(0x53, 0xAC, 0xE5)
-            .setTitleBarBgColor(R.color.colorPrimary)//标题栏背景颜色
-            .setTitleBarTextColor(Color.WHITE)//标题栏文本字体颜色
-            .setFabNornalColor(R.color.colorPrimary)//设置Floating按钮Nornal状态颜色
+            .setTitleBarBgColor(themeColor)//标题栏背景颜色
+            .setFabNornalColor(themeColor)//设置Floating按钮Nornal状态颜色
+            .setCropControlColor(themeColor)//设置裁剪控制点和裁剪框颜色
+            .setCheckSelectedColor(themeColor)//选择框选中颜色
             .setFabPressedColor(Color.BLUE)//设置Floating按钮Pressed状态颜色
-            .setCheckNornalColor(Color.WHITE)//选择框未选颜色
-            .setCheckSelectedColor(Color.BLACK)//选择框选中颜色
-            .setCropControlColor(R.color.colorPrimary)//设置裁剪控制点和裁剪框颜色
+//            .setCheckNornalColor(Color.WHITE)//选择框未选颜色
+            .setTitleBarTextColor(Color.WHITE)//标题栏文本字体颜色
             .setIconBack(R.mipmap.app_back)//设置返回按钮icon
             .setIconRotate(R.mipmap.ic_action_repeat)//设置旋转icon
             .setIconCrop(R.mipmap.ic_action_crop)//设置裁剪icon

@@ -48,7 +48,7 @@ public class UpdateIdcardActivity extends BackActivity {
             if (!BaseTools.checkIdcard(newIdcard)) {
                 Toast.makeText(UpdateIdcardActivity.this, "请输入正确的身份证号！！", Toast.LENGTH_SHORT).show();
             } else {
-                MyServiceClient.getService().getCall_UpdateInfo(auth, null, null, newIdcard, null)
+                MyServiceClient.getService().postCall_UpdateInfo(auth, null, null, newIdcard, null)
                         .enqueue(new Callback<Result>() {
                             @Override
                             public void onResponse(Call<Result> call, Response<Result> response) {

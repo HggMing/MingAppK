@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class ZanList {
 
+
     /**
      * err : 0
      * data : {"cnt":"1","list":[{"id":"3","uid":"2","tid":"1","ctime":"1452245225","user_head":"/Public/head/2/UTRC3STNOLKQ1452221198.txt","name":"niuniu"}]}

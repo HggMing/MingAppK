@@ -74,7 +74,7 @@ public class ChangePwdActivity extends BackActivity {
                 return true;
             }
             String auth = APP.getInstance().getAuth();
-            new MyServiceClient().getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
+            MyServiceClient.getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
                     .enqueue(new Callback<Result>() {
                         @Override
                         public void onResponse(Call<Result> call, Response<Result> response) {

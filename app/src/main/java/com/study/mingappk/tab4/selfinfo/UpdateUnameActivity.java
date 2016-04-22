@@ -2,8 +2,6 @@ package com.study.mingappk.tab4.selfinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Selection;
-import android.text.Spannable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -50,7 +48,7 @@ public class UpdateUnameActivity extends BackActivity {
         if (id == R.id.action_submit) {
             String auth = APP.getInstance().getAuth();
             final String newName=etUname.getText().toString();
-            MyServiceClient.getService().getCall_UpdateInfo(auth,newName,null,null,null )
+            MyServiceClient.getService().postCall_UpdateInfo(auth,newName,null,null,null )
                     .enqueue(new Callback<Result>() {
                         @Override
                         public void onResponse(Call<Result> call, Response<Result> response) {
