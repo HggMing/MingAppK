@@ -19,8 +19,18 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="村圈设置" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                tools:text="爱简单" />
+        </android.support.v7.widget.Toolbar>
 
         <!--
                 app:tabGravity="fill"  表示TabLayout中的Tabs要占满屏幕的width；

@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4;
+package com.study.mingappk.tab4.scommon;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -36,6 +36,7 @@ public class AdviceActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advice);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_advice);
     }
 
     @OnClick(R.id.btn_advice)
@@ -47,7 +48,7 @@ public class AdviceActivity extends BackActivity {
 
     private void mSubmit() {
         String auth= APP.getInstance().getAuth();
-        Call<Result> call = new MyServiceClient().getService().getCall_Advice(auth,content, contact);
+        Call<Result> call = MyServiceClient.getService().getCall_Advice(auth,content, contact);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.study.mingappk.tab4.ChangePwdActivity">
+    tools:context=".tab4.scommon.ChangePwdActivity">
     <LinearLayout
         android:id="@+id/content"
         android:layout_width="match_parent"

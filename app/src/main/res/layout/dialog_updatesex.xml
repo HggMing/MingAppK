@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"  
-    android:orientation="vertical"
-   >
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,12 +10,10 @@
         android:background="@drawable/tsk1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp"       
-        
-        >
+        android:padding="10dp">
 
         <ImageView
-            android:id="@+id/head"
+            android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
@@ -26,102 +23,117 @@
             style="@style/DialogTextTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:textColor="#666666"
             android:layout_marginLeft="10dp"
             android:gravity="left"
-            android:text="修改用户性别"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="性别"
+            android:textColor="#666666"
             android:textSize="24sp" />
-    </LinearLayout> 
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@drawable/tsk"
-        android:padding="20dp" 
-       >
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="选择性别"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp" 
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            />
+            android:text="选择性别"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
-        <RadioGroup 
-	        android:id="@+id/sex"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content">
-	        
-	        <RadioButton 
-	            android:id="@+id/male"
-	            android:layout_width="match_parent"
-            	android:layout_height="wrap_content"
-	            android:text="男"
-	            android:textColor="#FF404040"
- 				android:textSize="20sp" />
-	        <RadioButton 
-	            android:id="@+id/female"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:text="女"
-	            android:textColor="#FF404040"
-	            android:textSize="20sp" />
-	        
-	    </RadioGroup>
-        
+        <RadioGroup
+            android:id="@+id/sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:button="@null"
+                android:drawableRight="@android:drawable/btn_radio"
+                android:text="男"
+                android:textColor="#FF404040"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/divide_line" />
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:button="@null"
+                android:drawableRight="@android:drawable/btn_radio"
+                android:text="女"
+                android:textColor="#FF404040"
+                android:textSize="20sp" />
+
+        </RadioGroup>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_OK"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/button_green_common"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_Cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/button_green_common"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btn_OK"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@drawable/button_green_common"
-            android:singleLine="true"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btn_Cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@drawable/button_green_common"
-            android:singleLine="true"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="25dp" />
-  </LinearLayout>
 </LinearLayout>

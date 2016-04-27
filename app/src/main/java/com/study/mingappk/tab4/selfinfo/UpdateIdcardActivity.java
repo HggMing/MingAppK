@@ -30,6 +30,7 @@ public class UpdateIdcardActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_idcard);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_update_idcard);
     }
 
     @Override

@@ -71,8 +71,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layout1"
-                    android:layout_toEndOf="@+id/icon_head"
                     android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@+id/icon_head"
                     android:layout_toRightOf="@+id/icon_head"
                     android:textSize="14sp"
                     tools:text="账号：138xxxxxxxx" />
@@ -87,87 +87,53 @@
                 android:orientation="vertical">
 
                 <com.study.mingappk.tab4.myviews.ListItem1
-                    android:id="@+id/click_changepwd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    listItem1:itemIcon="@mipmap/tab4_changepwd"
-                    listItem1:itemTitle="修改密码" />
-
-                <include layout="@layout/divide_1_12" />
-
-                <com.study.mingappk.tab4.myviews.ListItem1
-                    android:id="@+id/click_my_order"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    listItem1:itemIcon="@mipmap/tab4_my_order"
-                    listItem1:itemTitle="我的订单" />
-
-                <include layout="@layout/divide_15_top_bottom" />
-
-                <com.study.mingappk.tab4.myviews.ListItem1
                     android:id="@+id/click_identity_binding"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     listItem1:itemIcon="@mipmap/tab4_identity_binding"
-                    listItem1:itemTitle="身份绑定" />
-
-                <include layout="@layout/divide_15_top_bottom" />
-
-                <com.study.mingappk.tab4.myviews.ListItem1
-                    android:id="@+id/click_advice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    listItem1:itemIcon="@mipmap/tab4_advice"
-                    listItem1:itemTitle="意见反馈" />
+                    listItem1:itemTitle="实名认证" />
 
                 <include layout="@layout/divide_1_12" />
 
                 <com.study.mingappk.tab4.myviews.ListItem1
-                    android:id="@+id/click_check_version"
+                    android:id="@+id/click_my_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
-                    listItem1:itemIcon="@mipmap/tab4_check_version"
-                    listItem1:itemTitle="版本更新" />
+                    listItem1:itemIcon="@mipmap/tab4_changepwd"
+                    listItem1:itemTitle="我的" />
 
-                <include layout="@layout/divide_15_top_bottom" />
+                <include layout="@layout/divide_1_12" />
 
                 <com.study.mingappk.tab4.myviews.ListItem1
-                    android:id="@+id/click_about"
+                    android:id="@+id/click_setting_common"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
-                    android:visibility="visible"
-                    listItem1:itemIcon="@mipmap/tab4_about"
-                    listItem1:itemTitle="关于我们" />
+                    listItem1:itemIcon="@mipmap/tab4_advice"
+                    listItem1:itemTitle="通用" />
 
-            </LinearLayout>
+                <include layout="@layout/divide_1_12" />
 
-            <include layout="@layout/divide_15_top" />
-
-            <RelativeLayout
-                android:id="@+id/layout_logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/divide"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
-
-                <Button
-                    android:id="@+id/btn_exit"
+                <com.study.mingappk.tab4.myviews.ListItem1
+                    android:id="@+id/click_store_manager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_green_common"
-                    android:gravity="center"
-                    android:text="退出登录"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-            </RelativeLayout>
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_store_manager"
+                    listItem1:itemTitle="申请店长" />
+
+                <include layout="@layout/divide_15_top" />
+
+                <com.study.mingappk.tab4.myviews.ListItem1
+                    android:id="@+id/click_loyout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_logout"
+                    listItem1:itemTitle="退出当前账号" />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

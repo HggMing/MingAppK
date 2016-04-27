@@ -24,7 +24,6 @@ public class Test3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test3);
         ButterKnife.bind(this);
-
         BaseTools.transparentStatusBar(this);//透明状态栏
 
         //setSupportActionBar(toolbarTest3);

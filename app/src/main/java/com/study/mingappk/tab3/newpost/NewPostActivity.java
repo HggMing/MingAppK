@@ -24,6 +24,7 @@ import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.BaseActivity;
 
 import java.io.File;
 import java.io.Serializable;
@@ -68,10 +69,10 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
         ButterKnife.bind(this);
-
+        setToolbarTitle(R.string.title_activity_new_post);
         configXRecyclerView();
     }
-
+    
     //配置RecyclerView
     private void configXRecyclerView() {
         mAdapter.setOnItemClickListener(this);

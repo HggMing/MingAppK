@@ -24,9 +24,9 @@ import com.study.mingappk.common.views.dialog.Dialog_Model;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab4.mysetting.MySettingActivity;
+import com.study.mingappk.tab4.scommon.SettingCommonActivity;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
-import com.study.mingappk.test.Test3Activity;
-import com.study.mingappk.test.TestActivity;
 import com.study.mingappk.tmain.userlogin.LoginActivity;
 
 import butterknife.Bind;
@@ -76,46 +76,6 @@ public class SettingFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-
-    @OnClick({R.id.click_user, R.id.click_changepwd, R.id.click_my_order, R.id.click_identity_binding,
-            R.id.click_advice, R.id.click_check_version, R.id.click_about, R.id.btn_exit})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.click_user:
-                Intent intent1 = new Intent(mActivity, UserDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(UserDetailActivity.USER_INFO, dataEntity);
-                intent1.putExtras(bundle);
-                startActivityForResult(intent1, 0);
-                break;
-            case R.id.click_changepwd:
-                Intent intent2 = new Intent(mActivity, ChangePwdActivity.class);
-                startActivity(intent2);
-                break;
-            case R.id.click_my_order:
-                Intent intent3 = new Intent(mActivity, Test3Activity.class);
-                startActivity(intent3);
-                break;
-            case R.id.click_identity_binding:
-                break;
-            case R.id.click_advice:
-                Intent intent = new Intent(mActivity, AdviceActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.click_check_version:
-                Intent intent4 = new Intent(mActivity, TestActivity.class);
-                startActivity(intent4);
-                break;
-            case R.id.click_about:
-                Intent intent5 = new Intent(mActivity, AboutActivity.class);
-                startActivity(intent5);
-                break;
-            case R.id.btn_exit:
-                logout();
-                break;
-        }
     }
 
     @Override
@@ -297,5 +257,38 @@ public class SettingFragment extends Fragment {
             }
         });
 
+    }
+
+    @OnClick({R.id.click_user,R.id.click_identity_binding, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.click_user:
+                Intent intent1 = new Intent(mActivity, UserDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(UserDetailActivity.USER_INFO, dataEntity);
+                intent1.putExtras(bundle);
+                startActivityForResult(intent1, 0);
+                break;
+            case R.id.click_identity_binding:
+                Toast.makeText(mActivity, "实名认证", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.click_my_setting:
+//                Toast.makeText(mActivity, "我的", Toast.LENGTH_SHORT).show();
+                Intent intent2=new Intent(mActivity, MySettingActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.click_setting_common:
+//                Toast.makeText(mActivity, "通用", Toast.LENGTH_SHORT).show();
+                Intent intent3=new Intent(mActivity, SettingCommonActivity.class);
+                startActivity(intent3);
+                break;
+            case R.id.click_store_manager:
+                Toast.makeText(mActivity, "申请店长", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.click_loyout:
+//                Toast.makeText(mActivity, "退出当前账号", Toast.LENGTH_SHORT).show();
+                logout();
+                break;
+        }
     }
 }

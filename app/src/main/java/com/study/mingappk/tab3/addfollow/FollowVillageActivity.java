@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.study.mingappk.R;
 
@@ -32,6 +33,8 @@ public class FollowVillageActivity extends AppCompatActivity {
     ViewPager mViewPager;
     @Bind(R.id.id_coordinatorlayout)
     CoordinatorLayout mCoordinatorLayout;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
 
     // TabLayout中的tab标题
     private String[] mTitles;
@@ -45,7 +48,10 @@ public class FollowVillageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_village);
         ButterKnife.bind(this);
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        toolbarTitle.setText(R.string.title_activity_follow_village);
+
         if (getSupportActionBar() != null) {
             //设置toolbar后,开启返回图标
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -111,6 +117,7 @@ public class FollowVillageActivity extends AppCompatActivity {
             return mFragments.size();
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

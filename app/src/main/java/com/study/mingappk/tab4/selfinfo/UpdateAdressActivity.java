@@ -72,6 +72,7 @@ public class UpdateAdressActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_address);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_update_adress);
 
         line1.setVisibility(View.GONE);
         spcity.setVisibility(View.GONE);

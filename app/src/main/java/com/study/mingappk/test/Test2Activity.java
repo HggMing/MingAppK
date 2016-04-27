@@ -18,10 +18,10 @@ import com.study.mingappk.test.adapter.MyStaggeredViewAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class Test2Activity extends BackActivity implements MyRecyclerViewAdapter.OnItemClickListener,MyStaggeredViewAdapter.OnItemClickListener {
+public class Test2Activity extends BackActivity implements MyRecyclerViewAdapter.OnItemClickListener, MyStaggeredViewAdapter.OnItemClickListener {
 
     @Bind(R.id.id_recyclerview)
-    RecyclerView  mRecyclerView;
+    RecyclerView mRecyclerView;
     @Bind(R.id.id_swiperefreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -44,6 +44,7 @@ public class Test2Activity extends BackActivity implements MyRecyclerViewAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test2);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_test2);
 
         flag = VERTICAL_LIST;
         configRecyclerView(flag);
@@ -64,8 +65,8 @@ public class Test2Activity extends BackActivity implements MyRecyclerViewAdapter
                         mSwipeRefreshLayout.setRefreshing(false);
                         int temp = (int) (Math.random() * 10);
                         if (flag != STAGGERED_GRID) {
-                        mRecyclerViewAdapter.mDatas.add(0, "new" + temp);
-                        mRecyclerViewAdapter.notifyDataSetChanged();
+                            mRecyclerViewAdapter.mDatas.add(0, "new" + temp);
+                            mRecyclerViewAdapter.notifyDataSetChanged();
                         } else {
                             mStaggeredAdapter.mDatas.add(0, "new" + temp);
                             mStaggeredAdapter.mHeights.add(0, (int) (Math.random() * 300) + 200);
@@ -111,11 +112,11 @@ public class Test2Activity extends BackActivity implements MyRecyclerViewAdapter
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this,"点击选项",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "点击选项", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemLongClick(View view, int position) {
-        Toast.makeText(this,"长按选项",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "长按选项", Toast.LENGTH_SHORT).show();
     }
 }

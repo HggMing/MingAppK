@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4;
+package com.study.mingappk.tab4.scommon;
 
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
@@ -25,6 +25,7 @@ public class AboutActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_about);
        // getSupportActionBar().setTitle("关于我们");
         initAboutActivity();
     }

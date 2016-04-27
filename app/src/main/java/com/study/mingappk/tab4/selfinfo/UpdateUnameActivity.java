@@ -30,6 +30,7 @@ public class UpdateUnameActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_uname);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_update_uname);
         String text=getIntent().getStringExtra(OLD_NAME);
         etUname.setText(text);
         etUname.setSelection(text.length());//光标移到文字最后

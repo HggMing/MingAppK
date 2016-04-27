@@ -42,6 +42,7 @@ public class TestActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_test);
     }
 
     private void queryPhoneWhereFrom() {

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -96,6 +97,11 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
                 @Override
                 public void onClick(View v) {
                     // Toast.makeText(mContext, "点击点赞操作", Toast.LENGTH_SHORT).show();
+                    holder.triangle.setVisibility(View.VISIBLE);
+                    //点赞数+1
+                    String likeNumber = String.valueOf(Integer.parseInt(mList.get(position).getZans()) + 1);
+                    holder.bbsLike.setText(likeNumber);
+
                     String auth = APP.getInstance().getAuth();
                     String pid = mList.get(position).getId();
                     MyServiceClient.getService().getCall_ClickLike(auth, pid).enqueue(new Callback<Result>() {
@@ -110,9 +116,6 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
                                         holder.bbsLikeIcon.setVisibility(View.INVISIBLE);
                                         holder.bbsLiked.setVisibility(View.VISIBLE);
                                         holder.bbsLiked.startAnimation(animPraise);
-                                        //点赞数+1
-                                        String likeNumber = String.valueOf(Integer.parseInt(mList.get(position).getZans()) + 1);
-                                        holder.bbsLike.setText(likeNumber);
                                         //点赞人头像刷新
                                         String pid=mList.get(position).getId();
                                         getLikeList(pid,holder);
@@ -209,7 +212,9 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         //评论、点赞区域***************************************************************************************************************************
 
         if((Integer.parseInt(likeNumber) == 0) && (Integer.parseInt(msgNumber)  == 0)){//点赞数和评论均为0
-            holder.commentLikeArea.setVisibility(View.GONE);
+            holder.triangle.setVisibility(View.GONE);
+        }else {
+            holder.triangle.setVisibility(View.VISIBLE);
         }
 
         //点赞人员显示区
@@ -233,6 +238,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         getCommentList(pid,holder);
 
     }
+
 
     private void getLikeList(String pid,final ViewHolder holder) {
         String auth = APP.getInstance().getAuth();
@@ -259,7 +265,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
 
     private void getCommentList(String pid,final ViewHolder holder) {
         String auth = APP.getInstance().getAuth();
-        MyServiceClient.getService().getObservable_BbsCommentList(auth,pid,1,99)
+        MyServiceClient.getService().getObservable_BbsCommentList(auth,pid,1,6)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BbsCommentList>() {
@@ -320,6 +326,8 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
 //        LinearLayout commentArea;
         @Bind(R.id.commentLikeArea)
         RelativeLayout commentLikeArea;
+        @Bind(R.id.triangle)
+        ImageView triangle;
         @Bind(R.id.bbs_item)
         LinearLayout bbsItem;
 

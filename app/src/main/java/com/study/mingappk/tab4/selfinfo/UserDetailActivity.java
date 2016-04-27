@@ -9,8 +9,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +47,8 @@ public class UserDetailActivity extends BackActivity {
 
     public static final String USER_INFO = "userInfo";
     public static final String NEW_ADDRESS = "newAddress";
-    public static final String NEW_NAME="newName";
-    public static final String NEW_IDCARD="newIdcard";
+    public static final String NEW_NAME = "newName";
+    public static final String NEW_IDCARD = "newIdcard";
     @Bind(R.id.icon_head2)
     ImageView iconHead2;
     @Bind(R.id.get_name)
@@ -69,6 +71,7 @@ public class UserDetailActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_user_detail);
         sp = this.getSharedPreferences("config", MODE_PRIVATE);
         spEditor = sp.edit();
         initView();
@@ -131,7 +134,7 @@ public class UserDetailActivity extends BackActivity {
                 break;
             case R.id.set_name:
                 Intent intent1 = new Intent(this, UpdateUnameActivity.class);
-                intent1.putExtra(UpdateUnameActivity.OLD_NAME,userInfo.getUname());
+                intent1.putExtra(UpdateUnameActivity.OLD_NAME, userInfo.getUname());
                 startActivityForResult(intent1, 11);
                 break;
             case R.id.set_sex:
@@ -255,13 +258,23 @@ public class UserDetailActivity extends BackActivity {
     private void updateSex() {
         final Dialog_UpdateSex.Builder sexDialog = new Dialog_UpdateSex.Builder(UserDetailActivity.this);
         sexDialog.setTitle("修改性别");
-        sexDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        userInfo = getIntent().getParcelableExtra(USER_INFO);
+        sexDialog.setMysex(userInfo.getSex());//显示当前性别
+        final Dialog_UpdateSex dialog = sexDialog.create();
+        dialog.show();
+        sexDialog.sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                getSex.setText(sexDialog.sexStr); //修改本页性别显示
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                String checkSex = "";
+                if (checkedId == R.id.male) {
+                    checkSex = "男";
+                } else if (checkedId == R.id.female) {
+                    checkSex = "女";
+                }
+                getSex.setText(checkSex); //修改本页性别显示
                 //将修改post到服务器
                 String sexNo;
-                if (sexDialog.sexStr.equals("男")) {
+                if (checkSex.equals("男")) {
                     sexNo = "0";
                 } else {
                     sexNo = "1";
@@ -277,23 +290,18 @@ public class UserDetailActivity extends BackActivity {
                                         spEditor.putBoolean("isUpdataMyInfo", false);
                                         spEditor.commit();
                                         Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
                                     }
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<Result> call, Throwable t) {
+                                Log.i("mm:UserDetailActivity", t.getMessage());
                             }
                         });
-                dialog.dismiss();
             }
-        })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).create().show();
+        });
     }
 
     @Override

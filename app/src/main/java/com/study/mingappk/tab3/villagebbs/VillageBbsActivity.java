@@ -1,22 +1,32 @@
 package com.study.mingappk.tab3.villagebbs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.jude.utils.JUtils;
 import com.melnykov.fab.FloatingActionButton;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -50,6 +60,12 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     ImageView villageImage;
     @Bind(R.id.fab)
     FloatingActionButton fab;
+//    @Bind(R.id.comment_edit)
+//    EditText commentEdit;
+//    @Bind(R.id.comment_post)
+//    Button commentPost;
+//    @Bind(R.id.comment_input)
+//    LinearLayout commentInput;
 
     private VillageBbsAdapter mAdapter = new VillageBbsAdapter();
     private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -61,6 +77,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_tab3_bbs_list);
         ButterKnife.bind(this);
 
@@ -136,7 +153,15 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 //        mXRecyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST, 30));//添加分割线
 //        mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
-
+       /* mXRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                commentInput.setVisibility(View.GONE);
+                JUtils.closeInputMethod(VillageBbsActivity.this);
+                fab.setVisibility(View.VISIBLE);
+            }
+        });*/
         //设置XRecyclerView相关
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
@@ -150,8 +175,8 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
 
             @Override
             public void onLoadMore() {
-                    getBBSList(++page);
-                    mXRecyclerView.loadMoreComplete();
+                getBBSList(++page);
+                mXRecyclerView.loadMoreComplete();
             }
         });
     }
@@ -160,11 +185,42 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     @Override
     public void onItemClick(View view, int position) {
         switch (view.getId()) {
-            case R.id.id_cardview:
+            case R.id.bbs_item:
                 Toast.makeText(this, "点击整个选项操作", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.click_msg:
+            case R.id.bbs_comment:
                 Toast.makeText(this, "点击留言操作", Toast.LENGTH_SHORT).show();
+//                commentInput.setVisibility(View.VISIBLE);
+//                commentEdit.requestFocus();
+//                fab.setVisibility(View.GONE);
+//                InputMethodManager inputManager =
+//                        (InputMethodManager)commentEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                inputManager.showSoftInput(commentEdit, 0);
+//                commentEdit.addTextChangedListener(new TextWatcher() {
+//                    @Override
+//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                        if(count==0){
+//                            commentPost.setClickable(false);
+//                            commentPost.setTextColor(getResources().getColor(R.color.font_black_comment));
+//                            commentPost.setBackgroundColor(getResources().getColor(R.color.input_background));
+//                        }
+//                        else{
+//                            commentPost.setTextColor(getResources().getColor(R.color.white));
+//                            commentPost.setBackgroundResource(R.drawable.button_green_common);
+//                            commentPost.setClickable(true);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void afterTextChanged(Editable s) {
+//
+//                    }
+//                });
 
                 break;
             default:
@@ -190,24 +246,26 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
             case R.id.fab:
                 Intent intent1 = new Intent(this, NewPostActivity.class);
                 String mVid = getIntent().getStringExtra(VILLAGE_ID);
-                intent1.putExtra(NewPostActivity.VILLAGE_ID,mVid);
-                startActivityForResult(intent1,11);
+                intent1.putExtra(NewPostActivity.VILLAGE_ID, mVid);
+                startActivityForResult(intent1, 11);
                 break;
+
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case 11:
-                if(resultCode==RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     mAdapter.setItem(null);
                     mList.clear();
-                    page=1;
+                    page = 1;
                     getBBSList(page);
                 }
                 break;
         }
     }
+
 }

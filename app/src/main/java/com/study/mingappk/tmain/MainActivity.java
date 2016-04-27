@@ -58,12 +58,14 @@ public class MainActivity extends AppCompatActivity {
     ImageView tab3Guide;
 
     SharedPreferences sp;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
     private SharedPreferences.Editor spEditor;
     private FragmentManager fragmentManager;
     private boolean isExit;//是否退出
     int idToolbar = 1;//toolbar 功能按钮页
 
-    @OnClick({R.id.tab3_guide,R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout})
+    @OnClick({R.id.tab3_guide, R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tab3_guide:
@@ -92,8 +94,9 @@ public class MainActivity extends AppCompatActivity {
         public void onPageSelected(int arg0) {
             switch (arg0) {
                 case 0:
-                    mToolBar.setTitle("动态");
-                    idToolbar=1;
+//                    mToolBar.setTitle("动态");
+                    toolbarTitle.setText(R.string.tab1_main);
+                    idToolbar = 1;
                     mTab1.setImageDrawable(getResources().getDrawable(R.mipmap.tab1_btn1));
                     tTab1.setTextColor(getResources().getColor(R.color.tab_bnt1));   //选中时的字体颜色
                     setTab2ToB();
@@ -101,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     break;
                 case 1:
-                    mToolBar.setTitle("老乡");
-                    idToolbar=2;
+//                    mToolBar.setTitle("老乡");
+                    toolbarTitle.setText(R.string.tab2_main);
+                    idToolbar = 2;
                     mTab2.setImageDrawable(getResources().getDrawable(R.mipmap.tab2_btn1));
                     tTab2.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     setTab1ToB();
@@ -110,8 +114,9 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     break;
                 case 2:
-                    mToolBar.setTitle("我的村");
-                    idToolbar=3;
+//                    mToolBar.setTitle("我的村");
+                    toolbarTitle.setText(R.string.tab3_main);
+                    idToolbar = 3;
                     boolean isFirstRun = sp.getBoolean("isFirstRun", true);
                     if (isFirstRun) {
                         tab3Guide.setVisibility(View.VISIBLE);
@@ -125,8 +130,9 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     break;
                 case 3:
-                    mToolBar.setTitle("设置");
-                    idToolbar=4;
+//                    mToolBar.setTitle("设置");
+                    toolbarTitle.setText(R.string.tab4_main);
+                    idToolbar = 4;
                     mTab4.setImageDrawable(getResources().getDrawable(R.mipmap.tab4_btn1));
                     tTab4.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     setTab1ToB();
@@ -241,8 +247,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
-        mToolBar.setTitle("动态");
+        toolbarTitle.setText(getResources().getText(R.string.tab1_main));
 
         sp = getSharedPreferences("config", MODE_PRIVATE);
         spEditor = sp.edit();

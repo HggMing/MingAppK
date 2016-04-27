@@ -7,21 +7,32 @@
     <string name="tab4_main">设置</string>
     <!--BaseActivity-->
     <string name="hint_loading">正在加载中…</string>
+    <!--网络相关-->
+    <string name="common_ok">确定</string>
     <!--Activity页面lable-->
+    <string name="title_activity_test">测试页1</string>
+    <string name="title_activity_test2">测试页2</string>
+    <string name="title_activity_test3">测试页3</string>
+
     <string name="title_activity_splash">爱简单</string>
     <string name="title_activity_login">登录页</string>
     <string name="title_activity_main">首页</string>
-    <string name="title_activity_change_pwd">修改密码</string>
-    <string name="title_activity_user_detail">个人信息</string>
-    <string name="title_activity_update_uname">修改用户名</string>
-    <string name="title_activity_update_idcard">填写身份证号</string>
-    <string name="title_activity_update_adress">我的地址</string>
 
-    <string name="title_activity_test">测试页</string>
+    <string name="title_activity_follow_village">村圈设置</string>
+    <string name="title_activity_village_situation">村况</string>
+    <string name="title_activity_new_post">发布帖子</string>
+    <string name="title_activity_village_bbs">村圈帖子</string>
+    <string name="title_activity_big_imageview">查看大图</string>
+    <string name="title_activity_bbs_detail">帖子详情</string>
+
+    <string name="title_activity_user_detail">个人信息</string>
+    <string name="title_activity_update_uname">设置用户名</string>
+    <string name="title_activity_update_idcard">填写身份证号</string>
+    <string name="title_activity_update_adress">设置详细地址</string>
+
+    <string name="title_activity_mysetting">我的</string>
+    <string name="title_activity_setting_common">通用</string>
+    <string name="title_activity_change_pwd">修改密码</string>
     <string name="title_activity_advice">意见反馈</string>
     <string name="title_activity_about">关于我们</string>
-    <!--网络相关-->
-    <string name="common_ok">确定</string>
-
-
 </resources>

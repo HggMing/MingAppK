@@ -13,14 +13,15 @@
         android:orderInCategory="1"
         android:title="搜索联系人"
         android:visible="false"
+        android:actionViewClass="android.widget.SearchView"
         android:icon="@mipmap/main_action_search"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_follow"
         android:orderInCategory="1"
         android:title="关注村圈"
         android:visible="false"
         android:icon="@mipmap/main_action_add"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>

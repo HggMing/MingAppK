@@ -48,14 +48,14 @@
             android:name=".tmain.userlogin.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".tab4.AboutActivity"
+            android:name=".tab4.scommon.AboutActivity"
             android:label="@string/title_activity_about" />
         <activity
-            android:name=".tab4.AdviceActivity"
+            android:name=".tab4.scommon.AdviceActivity"
             android:label="@string/title_activity_advice"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tab4.ChangePwdActivity"
+            android:name=".tab4.scommon.ChangePwdActivity"
             android:label="@string/title_activity_change_pwd" />
         <activity
             android:name=".tab4.selfinfo.UserDetailActivity"
@@ -69,15 +69,39 @@
         <activity
             android:name=".tab4.selfinfo.UpdateAdressActivity"
             android:label="@string/title_activity_update_adress" />
-        <activity android:name=".test.Test2Activity" />
-        <activity android:name=".test.Test3Activity" />
-        <activity android:name=".tab3.addfollow.FollowVillageActivity" />
-        <activity android:name=".tab3.villagebbs.VillageBbsActivity" />
-        <activity android:name=".tab3.villagebbs.BigImageViewActivity" />
-        <activity android:name=".tab3.villagesituation.VillageSituationActivity" />
-        <activity android:name=".tab3.newpost.NewPostActivity"/>
-        <activity android:name=".tab3.newpost.BigImageViewActivity" />
-
+        <activity
+            android:name=".test.Test2Activity"
+            android:label="@string/title_activity_test2" />
+        <activity
+            android:name=".test.Test3Activity"
+            android:label="@string/title_activity_test3" />
+        <activity
+            android:name=".tab3.addfollow.FollowVillageActivity"
+            android:label="@string/title_activity_follow_village" />
+        <activity
+            android:name=".tab3.villagebbs.VillageBbsActivity"
+            android:label="@string/title_activity_village_bbs" />
+        <activity
+            android:name=".tab3.villagebbs.BigImageViewActivity"
+            android:label="@string/title_activity_big_imageview" />
+        <activity
+            android:name=".tab3.villagesituation.VillageSituationActivity"
+            android:label="@string/title_activity_village_situation" />
+        <activity
+            android:name=".tab3.newpost.NewPostActivity"
+            android:label="@string/title_activity_new_post" />
+        <activity
+            android:name=".tab3.newpost.BigImageViewActivity"
+            android:label="@string/title_activity_big_imageview" />
+        <activity
+            android:name=".tab3.villagebbs.BbsDetailActivity"
+            android:label="@string/title_activity_bbs_detail" />
+        <activity
+            android:name=".tab4.scommon.SettingCommonActivity"
+            android:label="@string/title_activity_setting_common" />
+        <activity
+            android:name=".tab4.mysetting.MySettingActivity"
+            android:label="@string/title_activity_mysetting" />
     </application>
 
 </manifest>

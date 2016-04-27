@@ -40,6 +40,7 @@ public class VillageSituationActivity extends BackActivity implements VillageSit
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_village_situation);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_village_situation);
 
         flag = VERTICAL_GRID;
         configRecyclerView(flag);

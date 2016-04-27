@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4;
+package com.study.mingappk.tab4.scommon;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -34,6 +34,7 @@ public class ChangePwdActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pwd);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_change_pwd);
     }
 
     @Override

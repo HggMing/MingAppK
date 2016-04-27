@@ -45,9 +45,5 @@ public class Tab1Fragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick(R.id.bt_test)
-    public void onClick() {
-        Intent intent=new Intent(mActivity, Test3Activity.class);
-        startActivity(intent);
-    }
+
 }

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
@@ -21,7 +23,18 @@ import com.study.mingappk.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+
 public class BaseActivity extends AppCompatActivity {
+
+
+    public void setToolbarTitle(@StringRes int resid) {
+        toolbarTitle.setText(resid);
+    }
+
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
+
     /**
      * 一键退出:
      */
@@ -58,6 +71,8 @@ public class BaseActivity extends AppCompatActivity {
         initContentView(R.layout.activity_base);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_base);
+        assert toolbar != null;
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
     }
 
@@ -96,9 +111,6 @@ public class BaseActivity extends AppCompatActivity {
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         parentLayout.addView(view, params);
     }
-
-
-
 
 
     //**************** Android M Permission (Android 6.0权限控制代码封装)*****************************************************
