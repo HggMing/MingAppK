@@ -31,12 +31,13 @@ public class MyGallerFinal {
     //设置主题
 //    int themeColor=Color.rgb(0x53, 0xAC, 0xE5);
     int themeColor= APP.getInstance().getResources().getColor(R.color.colorPrimary);
+    int themeColor2= APP.getInstance().getResources().getColor(R.color.colorAccent2);
     ThemeConfig theme = new ThemeConfig.Builder()
             .setTitleBarBgColor(themeColor)//标题栏背景颜色
             .setFabNornalColor(themeColor)//设置Floating按钮Nornal状态颜色
             .setCropControlColor(themeColor)//设置裁剪控制点和裁剪框颜色
             .setCheckSelectedColor(themeColor)//选择框选中颜色
-            .setFabPressedColor(Color.BLUE)//设置Floating按钮Pressed状态颜色
+            .setFabPressedColor(themeColor2)//设置Floating按钮Pressed状态颜色
 //            .setCheckNornalColor(Color.WHITE)//选择框未选颜色
             .setTitleBarTextColor(Color.WHITE)//标题栏文本字体颜色
             .setIconBack(R.mipmap.app_back)//设置返回按钮icon
@@ -133,8 +134,8 @@ public class MyGallerFinal {
                 .setFunctionConfig(functionConfig)//配置全局GalleryFinal功能
                 .setPauseOnScrollListener(pauseOnScrollListener)//设置imageloader滑动加载图片优化OnScrollListener,根据选择的ImageLoader来选择PauseOnScrollListener
                 .setNoAnimcation(true)//关闭动画
-                .setEditPhotoCacheFolder(new File(Environment.getExternalStorageDirectory() + "/MingAppk/edittemp/"))//配置编辑（裁剪和旋转）功能产生的cache文件保存目录，不做配置的话默认保存在/sdcard/GalleryFinal/edittemp/
-                .setTakePhotoFolder(new File(Environment.getExternalStorageDirectory(), "/MingAppk/" + "Photo/"))//设置拍照保存目录，默认是/sdcard/DICM/GalleryFinal/
+                .setEditPhotoCacheFolder(new File(APP.FILE_PATH + "EditTemp/"))//配置编辑（裁剪和旋转）功能产生的cache文件保存目录，不做配置的话默认保存在/sdcard/GalleryFinal/edittemp/
+                .setTakePhotoFolder(new File(APP.FILE_PATH, "CameraCache/"))//设置拍照保存目录，默认是/sdcard/DICM/GalleryFinal/
                 .build();
     }
 }

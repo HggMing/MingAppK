@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,9 +18,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.views.bigimageview.BigImageViewActivity;
 import com.study.mingappk.common.views.nineimage.NineGridImageView;
 import com.study.mingappk.common.views.nineimage.NineGridImageViewAdapter;
 import com.study.mingappk.model.bean.BBSList;
@@ -50,9 +52,11 @@ import rx.schedulers.Schedulers;
 public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.ViewHolder> {
 
     private List<BBSList.DataEntity.ListEntity> mList;
+    private String auth;
 
     public void setItem(List<BBSList.DataEntity.ListEntity> mList) {
         this.mList = mList;
+        auth = Hawk.get(APP.USER_AUTH);
         notifyDataSetChanged();
     }
 
@@ -77,7 +81,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
      */
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tab3_bbs_list2, parent, false);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tab3_bbs_list, parent, false);
         return new ViewHolder(mView);
     }
 
@@ -98,11 +102,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
                 public void onClick(View v) {
                     // Toast.makeText(mContext, "点击点赞操作", Toast.LENGTH_SHORT).show();
                     holder.triangle.setVisibility(View.VISIBLE);
-                    //点赞数+1
-                    String likeNumber = String.valueOf(Integer.parseInt(mList.get(position).getZans()) + 1);
-                    holder.bbsLike.setText(likeNumber);
 
-                    String auth = APP.getInstance().getAuth();
                     String pid = mList.get(position).getId();
                     MyServiceClient.getService().getCall_ClickLike(auth, pid).enqueue(new Callback<Result>() {
                         @Override
@@ -112,13 +112,20 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
                                 if (result != null) {
                                     Toast.makeText(holder.itemView.getContext(), result.getMsg(), Toast.LENGTH_SHORT).show();
                                     if (result.getErr() == 0) {
+                                        //点赞数+1
+                                        String likeNumber = String.valueOf(Integer.parseInt(mList.get(position).getZans()) + 1);
+                                        holder.bbsLike.setText(likeNumber);
+                                        //点赞图标动画
                                         Animation animPraise = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.scale);
                                         holder.bbsLikeIcon.setVisibility(View.INVISIBLE);
                                         holder.bbsLiked.setVisibility(View.VISIBLE);
                                         holder.bbsLiked.startAnimation(animPraise);
+                                        //list点赞数据变化，方便在detail中正确显示
+                                        mList.get(position).setZans(likeNumber);//点赞数据+1
+                                        mList.get(position).setMy_is_zan(1);//标志为已赞
                                         //点赞人头像刷新
-                                        String pid=mList.get(position).getId();
-                                        getLikeList(pid,holder);
+                                        String pid = mList.get(position).getId();
+                                        getLikeList(pid, holder);
                                     }
                                 }
                             }
@@ -149,7 +156,12 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
                 // .placeholder(R.mipmap.defalt_user_circle)
                 .into(holder.bbsHead);
         //发帖人昵称
-        String userName = mList.get(position).getUserinfo().getUname();
+        String userName = mList.get(position).getUname();
+        if (userName.isEmpty()) {
+            //若用户名为空，显示手机号，中间四位为*
+            String iphone = mList.get(position).getUserinfo().getPhone();
+            userName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
+        }
         holder.bbsUname.setText(userName);
         //发帖时间
         String date = mList.get(position).getCtime();
@@ -163,11 +175,11 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         String msgContent = mList.get(position).getConts();
         holder.bbsContents.setText(msgContent);
         //已点赞图标显示
-        int isLiked=mList.get(position).getMy_is_zan();
-        if(isLiked==1){
+        int isLiked = mList.get(position).getMy_is_zan();
+        if (isLiked == 1) {
             holder.bbsLikeIcon.setVisibility(View.INVISIBLE);
             holder.bbsLiked.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             holder.bbsLikeIcon.setVisibility(View.VISIBLE);
             holder.bbsLiked.setVisibility(View.INVISIBLE);
         }
@@ -183,8 +195,13 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
             @Override
             protected void onDisplayImage(Context context, ImageView imageView, BBSList.DataEntity.ListEntity.FilesEntity filesEntity) {
                 String imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_2();
+                if (filesEntity.getSurl_2().isEmpty()) {
+                    imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_1();
+                }
                 Glide.with(context).load(imageUrl)
                         .asBitmap()
+                        .placeholder(R.mipmap.default_nine_picture)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(imageView);
             }
 
@@ -211,38 +228,37 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         holder.nineGridImageView.setImagesData(photoList);
         //评论、点赞区域***************************************************************************************************************************
 
-        if((Integer.parseInt(likeNumber) == 0) && (Integer.parseInt(msgNumber)  == 0)){//点赞数和评论均为0
+        if ((likeNumber.equals("0")) && (msgNumber).equals("0")) {//点赞数和评论均为0
             holder.triangle.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.triangle.setVisibility(View.VISIBLE);
         }
 
         //点赞人员显示区
-        String pid=mList.get(position).getId();
+        String pid = mList.get(position).getId();
         View.OnClickListener mOnClickUser = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(holder.itemView.getContext(),"点击点赞人头像",Toast.LENGTH_SHORT).show();
+                Toast.makeText(holder.itemView.getContext(), "点击点赞人头像", Toast.LENGTH_SHORT).show();
             }
         };
         holder.likeUsersArea = new LikeUsersArea(holder.itemView, holder.itemView.getContext(), mOnClickUser);
-        getLikeList(pid,holder);
+        getLikeList(pid, holder);
         //评论区显示前5条
         View.OnClickListener onClickComment = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(holder.itemView.getContext(),"点击评论",Toast.LENGTH_SHORT).show();
+                Toast.makeText(holder.itemView.getContext(), "点击评论", Toast.LENGTH_SHORT).show();
             }
         };
-        holder.commentArea=new CommentArea(holder.itemView,onClickComment);
-        getCommentList(pid,holder);
+        holder.commentArea = new CommentArea(holder.itemView, onClickComment);
+        getCommentList(pid, holder);
 
     }
 
 
-    private void getLikeList(String pid,final ViewHolder holder) {
-        String auth = APP.getInstance().getAuth();
-        MyServiceClient.getService().getObservable_ZanList(auth,pid,1,99)
+    private void getLikeList(String pid, final ViewHolder holder) {
+        MyServiceClient.getService().getObservable_ZanList(auth, pid, 1, 99)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ZanList>() {
@@ -263,9 +279,8 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
                 });
     }
 
-    private void getCommentList(String pid,final ViewHolder holder) {
-        String auth = APP.getInstance().getAuth();
-        MyServiceClient.getService().getObservable_BbsCommentList(auth,pid,1,6)
+    private void getCommentList(String pid, final ViewHolder holder) {
+        MyServiceClient.getService().getObservable_BbsCommentList(auth, pid, 1, 6)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BbsCommentList>() {
@@ -322,7 +337,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         TextView commentMoreCount;
         @Bind(R.id.commentMore)
         RelativeLayout commentMore;
-//        @Bind(R.id.commentArea)
+        //        @Bind(R.id.commentArea)
 //        LinearLayout commentArea;
         @Bind(R.id.commentLikeArea)
         RelativeLayout commentLikeArea;
@@ -333,6 +348,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
 
         LikeUsersArea likeUsersArea;
         CommentArea commentArea;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

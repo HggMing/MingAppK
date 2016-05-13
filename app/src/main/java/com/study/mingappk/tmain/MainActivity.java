@@ -18,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.tab1.Tab1Fragment;
 import com.study.mingappk.tab2.friendlist.FriendListFragment;
 import com.study.mingappk.tab3.villagelist.VillageListFragment;
@@ -57,10 +59,8 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.tab3_guide)
     ImageView tab3Guide;
 
-    SharedPreferences sp;
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
-    private SharedPreferences.Editor spEditor;
     private FragmentManager fragmentManager;
     private boolean isExit;//是否退出
     int idToolbar = 1;//toolbar 功能按钮页
@@ -117,11 +117,10 @@ public class MainActivity extends AppCompatActivity {
 //                    mToolBar.setTitle("我的村");
                     toolbarTitle.setText(R.string.tab3_main);
                     idToolbar = 3;
-                    boolean isFirstRun = sp.getBoolean("isFirstRun", true);
+                    boolean isFirstRun = Hawk.get(APP.IS_FIRST_RUN, true);
                     if (isFirstRun) {
                         tab3Guide.setVisibility(View.VISIBLE);
-                        spEditor.putBoolean("isFirstRun", false);
-                        spEditor.commit();
+                        Hawk.put(APP.IS_FIRST_RUN, false);
                     }
                     mTab3.setImageDrawable(getResources().getDrawable(R.mipmap.tab3_btn1));
                     tTab3.setTextColor(getResources().getColor(R.color.tab_bnt1));
@@ -250,9 +249,6 @@ public class MainActivity extends AppCompatActivity {
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
         toolbarTitle.setText(getResources().getText(R.string.tab1_main));
-
-        sp = getSharedPreferences("config", MODE_PRIVATE);
-        spEditor = sp.edit();
 
         fragments.add(new Tab1Fragment());
         fragments.add(new FriendListFragment());

@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -47,7 +48,7 @@ public class UpdateUnameActivity extends BackActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_submit) {
-            String auth = APP.getInstance().getAuth();
+            String auth = Hawk.get(APP.USER_AUTH);
             final String newName=etUname.getText().toString();
             MyServiceClient.getService().postCall_UpdateInfo(auth,newName,null,null,null )
                     .enqueue(new Callback<Result>() {

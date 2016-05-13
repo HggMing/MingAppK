@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bbs_item"
+    android:id="@+id/bbs_detail_head"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/stand_bg"
@@ -10,7 +11,8 @@
     android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical"
     android:paddingLeft="@dimen/padding_12"
-    android:paddingRight="@dimen/padding_12">
+    android:paddingRight="@dimen/padding_12"
+    tools:context=".tab3.villagebbs.bbsdetail.BbsDetailActivity">
 
     <View
         android:layout_width="match_parent"
@@ -64,23 +66,25 @@
                 tools:text="1小时前" />
         </RelativeLayout>
 
+        <View xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/divide_line" />
+
         <TextView
             android:id="@+id/bbs_contents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:ellipsize="end"
+            android:layout_marginTop="12dp"
             android:lineSpacingExtra="1dp"
             android:lineSpacingMultiplier="1.1"
-            android:maxLines="3"
             android:textSize="15sp"
             tools:text="这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容," />
 
-        <com.study.mingappk.common.views.nineimage.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.study.mingappk.common.views.nineimage.NineGridImageView
             android:id="@+id/nine_grid_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="60dp"
             android:layout_marginTop="13dp"
             android:visibility="gone"
             app:imgGap="5dp"
@@ -94,6 +98,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginBottom="12dp"
             android:layout_marginTop="14dp"
             android:clipChildren="false"
             android:minHeight="30dp"
@@ -114,18 +119,20 @@
             <LinearLayout
                 android:id="@+id/bbs_like_layout"
                 android:layout_width="wrap_content"
-                android:orientation="horizontal"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_height="match_parent">
+                android:background="@drawable/list_item_selector"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/bbs_like_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingRight="9dp"
                     android:paddingLeft="0dp"
-                    android:src="@drawable/bbs_click_like"
-                    />
+                    android:paddingRight="9dp"
+                    android:src="@drawable/bbs_click_like" />
+
                 <TextView
                     android:id="@+id/bbs_like"
                     android:layout_width="wrap_content"
@@ -137,6 +144,7 @@
                     android:textSize="14sp"
                     tools:text="66" />
             </LinearLayout>
+
             <ImageView
                 android:id="@+id/bbs_liked"
                 android:layout_width="wrap_content"
@@ -145,6 +153,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/bbs_click_like_a"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/bbs_comment"
                 android:layout_width="wrap_content"
@@ -152,7 +161,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="18dp"
                 android:layout_toLeftOf="@id/bbs_like_layout"
-                android:background="@null"
+                android:background="@drawable/list_item_selector"
                 android:drawableLeft="@drawable/bbs_click_msg"
                 android:drawablePadding="9dp"
                 android:gravity="center"
@@ -164,117 +173,21 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/commentLikeArea"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible">
-
-        <ImageView
-            android:id="@+id/triangle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="28dp"
-            android:layout_marginTop="4dp"
-            android:background="@mipmap/item_bbs_list_1"
-            tools:ignore="ContentDescription" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/triangle"
-            android:layout_marginBottom="5dp"
-            android:background="#ffeeeeee"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/likesAllLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:id="@+id/likeUsersLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp" />
-
-                <View
-                    android:id="@+id/likeAreaDivide"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@mipmap/tab3_bbs_divide" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/commentArea"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <include
-                    android:id="@+id/comment0"
-                    layout="@layout/item_bbs_list_comment" />
-
-                <include
-                    android:id="@+id/comment1"
-                    layout="@layout/item_bbs_list_comment" />
-
-                <include
-                    android:id="@+id/comment2"
-                    layout="@layout/item_bbs_list_comment" />
-
-                <include
-                    android:id="@+id/comment3"
-                    layout="@layout/item_bbs_list_comment" />
-
-                <include
-                    android:id="@+id/comment4"
-                    layout="@layout/item_bbs_list_comment" />
-
-                <RelativeLayout
-                    android:id="@+id/commentMore"
-                    android:layout_width="match_parent"
-                    android:layout_height="33dp"
-                    android:visibility="visible">
-
-                    <ImageView
-                        android:id="@+id/temp1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="12dp"
-                        android:src="@mipmap/ic_more_bbs"
-                        tools:ignore="ContentDescription" />
-
-                    <TextView
-                        android:id="@+id/commentMoreCount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/temp1"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        tools:text="查看全部24条评论" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
-
-    <View
+    <LinearLayout
+        android:id="@+id/likesAllLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="-12dp"
-        android:layout_marginRight="-12dp"
-        android:layout_marginTop="@dimen/padding_12"
-        android:background="@mipmap/divide_shade_up" />
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/likeUsersLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" />
+    </LinearLayout>
 
 </LinearLayout>

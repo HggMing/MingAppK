@@ -79,7 +79,7 @@ public class BBSList {
             this.list = list;
         }
 
-        public static class ListEntity {
+        public static class ListEntity implements Parcelable {
             private String id;
             private String title;
             private String conts;
@@ -251,7 +251,7 @@ public class BBSList {
                 this.files = files;
             }
 
-            public static class UserinfoEntity {
+            public static class UserinfoEntity implements Parcelable {
                 private String uid;
                 private String phone;
                 private String uname;
@@ -288,6 +288,41 @@ public class BBSList {
                 public void setHead(String head) {
                     this.head = head;
                 }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeString(this.uid);
+                    dest.writeString(this.phone);
+                    dest.writeString(this.uname);
+                    dest.writeString(this.head);
+                }
+
+                public UserinfoEntity() {
+                }
+
+                protected UserinfoEntity(Parcel in) {
+                    this.uid = in.readString();
+                    this.phone = in.readString();
+                    this.uname = in.readString();
+                    this.head = in.readString();
+                }
+
+                public static final Parcelable.Creator<UserinfoEntity> CREATOR = new Parcelable.Creator<UserinfoEntity>() {
+                    @Override
+                    public UserinfoEntity createFromParcel(Parcel source) {
+                        return new UserinfoEntity(source);
+                    }
+
+                    @Override
+                    public UserinfoEntity[] newArray(int size) {
+                        return new UserinfoEntity[size];
+                    }
+                };
             }
 
             public static class FilesEntity implements Parcelable {
@@ -355,6 +390,9 @@ public class BBSList {
                     this.stats = stats;
                 }
 
+                public FilesEntity() {
+                }
+
                 @Override
                 public int describeContents() {
                     return 0;
@@ -371,9 +409,6 @@ public class BBSList {
                     dest.writeString(this.stats);
                 }
 
-                public FilesEntity() {
-                }
-
                 protected FilesEntity(Parcel in) {
                     this.id = in.readString();
                     this.pid = in.readString();
@@ -384,7 +419,7 @@ public class BBSList {
                     this.stats = in.readString();
                 }
 
-                public static final Parcelable.Creator<FilesEntity> CREATOR = new Parcelable.Creator<FilesEntity>() {
+                public static final Creator<FilesEntity> CREATOR = new Creator<FilesEntity>() {
                     @Override
                     public FilesEntity createFromParcel(Parcel source) {
                         return new FilesEntity(source);
@@ -396,6 +431,67 @@ public class BBSList {
                     }
                 };
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.id);
+                dest.writeString(this.title);
+                dest.writeString(this.conts);
+                dest.writeString(this.ctime);
+                dest.writeString(this.uid);
+                dest.writeString(this.uname);
+                dest.writeString(this.vid);
+                dest.writeString(this.source);
+                dest.writeString(this.stats);
+                dest.writeString(this.nums);
+                dest.writeString(this.pic);
+                dest.writeString(this.zans);
+                dest.writeString(this.is_manage);
+                dest.writeString(this.pic_1);
+                dest.writeInt(this.my_is_zan);
+                dest.writeParcelable(this.userinfo, flags);
+                dest.writeTypedList(files);
+            }
+
+            public ListEntity() {
+            }
+
+            protected ListEntity(Parcel in) {
+                this.id = in.readString();
+                this.title = in.readString();
+                this.conts = in.readString();
+                this.ctime = in.readString();
+                this.uid = in.readString();
+                this.uname = in.readString();
+                this.vid = in.readString();
+                this.source = in.readString();
+                this.stats = in.readString();
+                this.nums = in.readString();
+                this.pic = in.readString();
+                this.zans = in.readString();
+                this.is_manage = in.readString();
+                this.pic_1 = in.readString();
+                this.my_is_zan = in.readInt();
+                this.userinfo = in.readParcelable(UserinfoEntity.class.getClassLoader());
+                this.files = in.createTypedArrayList(FilesEntity.CREATOR);
+            }
+
+            public static final Parcelable.Creator<ListEntity> CREATOR = new Parcelable.Creator<ListEntity>() {
+                @Override
+                public ListEntity createFromParcel(Parcel source) {
+                    return new ListEntity(source);
+                }
+
+                @Override
+                public ListEntity[] newArray(int size) {
+                    return new ListEntity[size];
+                }
+            };
         }
     }
 }

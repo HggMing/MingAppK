@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -47,7 +48,7 @@ public class AdviceActivity extends BackActivity {
     }
 
     private void mSubmit() {
-        String auth= APP.getInstance().getAuth();
+        String auth= Hawk.get(APP.USER_AUTH);
         Call<Result> call = MyServiceClient.getService().getCall_Advice(auth,content, contact);
         call.enqueue(new Callback<Result>() {
             @Override

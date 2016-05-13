@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName "1.2.21"
+        versionName "1.3.01"
     }
     buildTypes {
         release {
@@ -22,11 +22,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    // Android 图标上面添加提醒
-    compile files('libs/android-viewbadger.jar')
+    // 工具库
     compile 'com.jude:utils:1.1.1'
-    // http client  采用retrofit+okhttp+RxAndroid替换
-    compile files('libs/org.apache.http.legacy.jar')
+    // 网络请求，采用retrofit+okhttp+RxAndroid
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
@@ -38,7 +36,7 @@ dependencies {
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'jp.wasabeef:glide-transformations:2.0.0'
     compile 'com.commit451:PhotoView:1.2.5'
-    compile 'me.relex:circleindicator:1.1.8@aar'
+    compile 'me.relex:circleindicator:1.1.8@aar'//Android viewpager指示器
     // android官方兼容库
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.android.support:appcompat-v7:23.3.0'
@@ -54,4 +52,9 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     //表情键盘
     compile 'com.github.w446108264:XhsEmoticonsKeyboard:2.0.2'
- }
+    //滑动返回
+    compile 'com.r0adkll:slidableactivity:2.0.5'
+    //数据储存
+    compile files('libs/lite-orm-1.9.0.jar')
+    compile 'com.github.orhanobut:hawk:1.23'
+}

@@ -118,11 +118,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/fab_edit"
+        android:src="@mipmap/fab_edit_big"
         app:fab_colorNormal="@color/colorAccent"
         app:fab_colorPressed="@color/colorAccent2"
         app:fab_colorRipple="@color/colorAccent2"
-        app:fab_type="mini" />
+        app:fab_type="normal" />
 
 <!--    <LinearLayout
         android:id="@+id/comment_input"

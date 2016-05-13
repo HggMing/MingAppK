@@ -1,5 +1,6 @@
 package com.study.mingappk.tab3.newpost;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyGallerFinal;
@@ -61,7 +63,8 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
     private RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
     List<PhotoInfo> imageList = new ArrayList<>();
 
-    String vid;//村id
+   private String vid;//村id
+   private String auth;
     private ProgressDialog dialog;
 
     @Override
@@ -70,9 +73,10 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
         setContentView(R.layout.activity_new_post);
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_new_post);
+        auth= Hawk.get(APP.USER_AUTH);
         configXRecyclerView();
     }
-    
+
     //配置RecyclerView
     private void configXRecyclerView() {
         mAdapter.setOnItemClickListener(this);
@@ -152,14 +156,14 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_post) {
-            final String auth = APP.getInstance().getAuth();
+            item.setEnabled(false);
             vid = getIntent().getStringExtra(VILLAGE_ID);
             final String conts = edit.getText().toString();
 
             if (conts.isEmpty()) {
                 Toast.makeText(NewPostActivity.this, "请输入帖子内容。", Toast.LENGTH_SHORT).show();
+                item.setEnabled(true);
                 return true;
             }
 
@@ -210,7 +214,6 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
                                     e.printStackTrace();
                                 }
                                 RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-                                String auth = APP.getInstance().getAuth();
                                 return MyServiceClient.getService().postObservable_UploadImage(auth, requestBody);
                             }
                         })
@@ -255,7 +258,19 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
                 loadPicture();
                 break;
             case R.id.popPhoto://点击拍照
-                loadPhoto();
+                //android6.0 获取运行时权限
+                performCodeWithPermission("App请求存储权限，以便添加图片，请允许！", new BaseActivity.PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        //执行获得权限后相关代码
+                        loadPhoto();
+                    }
+
+                    @Override
+                    public void noPermission() {
+                    }
+                }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
                 break;
         }
     }

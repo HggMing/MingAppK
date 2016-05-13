@@ -2,9 +2,7 @@ package com.study.mingappk.tab4.selfinfo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -17,14 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.dialog.Dialog_UpdateSex;
 import com.study.mingappk.common.utils.MyGallerFinal;
-import com.study.mingappk.model.bean.UserInfo;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.common.views.dialog.Dialog_UpdateSex;
 import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tmain.BackActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -63,30 +62,18 @@ public class UserDetailActivity extends BackActivity {
     TextView getPhone;
     @Bind(R.id.get_login_time)
     TextView getLoginTime;
-    SharedPreferences sp;
-    SharedPreferences.Editor spEditor;
     UserInfo.DataEntity userInfo;
+
+    private String auth;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_user_detail);
-        sp = this.getSharedPreferences("config", MODE_PRIVATE);
-        spEditor = sp.edit();
+        auth = Hawk.get(APP.USER_AUTH);
+
         initView();
-
-
-//        //android6.0 获取运行时权限
-//        performCodeWithPermission("App请求存储权限",new BaseActivity.PermissionCallback() {
-//            @Override
-//            public void hasPermission() {
-//                //执行获得权限后相关代码
-//            }
-//            @Override
-//            public void noPermission() {
-//            }
-//        }, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     private void initView() {
@@ -178,7 +165,6 @@ public class UserDetailActivity extends BackActivity {
                         .into(iconHead2);
                 Bitmap bitmap = BitmapFactory.decodeFile(photoInfo.getPhotoPath());//图片文件转为Bitmap对象
                 final String newHead = (bitmapToBase64(bitmap) + ".jpg");
-                String auth = APP.getInstance().getAuth();
                 MyServiceClient.getService().postCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {
@@ -188,8 +174,7 @@ public class UserDetailActivity extends BackActivity {
                                 Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                 if (result.getErr() == 0) {
                                     //上传头像成功
-                                    spEditor.putBoolean("isUpdataMyInfo", false);
-                                    spEditor.commit();
+                                    Hawk.put(APP.IS_UPDATA_MY_INFO, false);
                                     GalleryFinal.cleanCacheFile();//清除裁剪冗余图片
                                 }
                             }
@@ -279,7 +264,6 @@ public class UserDetailActivity extends BackActivity {
                 } else {
                     sexNo = "1";
                 }
-                String auth = APP.getInstance().getAuth();
                 MyServiceClient.getService().postCall_UpdateInfo(auth, null, sexNo, null, null)
                         .enqueue(new Callback<Result>() {
                             @Override
@@ -287,8 +271,7 @@ public class UserDetailActivity extends BackActivity {
                                 if (response.isSuccessful()) {
                                     Result result = response.body();
                                     if (result != null) {
-                                        spEditor.putBoolean("isUpdataMyInfo", false);
-                                        spEditor.commit();
+                                        Hawk.put(APP.IS_UPDATA_MY_INFO, false);
                                         Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
                                     }
@@ -319,24 +302,21 @@ public class UserDetailActivity extends BackActivity {
                 if (resultCode == Activity.RESULT_OK) {//resultCode为回传的标记，我在B中回传的是RESULT_OK
                     String result = data.getStringExtra(NEW_NAME);
                     getName.setText(result);
-                    spEditor.putBoolean("isUpdataMyInfo", false);
-                    spEditor.commit();
+                    Hawk.put(APP.IS_UPDATA_MY_INFO, false);
                 }
                 break;
             case 22:
                 if (resultCode == Activity.RESULT_OK) {
                     String result2 = data.getStringExtra(NEW_IDCARD);
                     getIdCard.setText(result2);
-                    spEditor.putBoolean("isUpdataMyInfo", false);
-                    spEditor.commit();
+                    Hawk.put(APP.IS_UPDATA_MY_INFO, false);
                 }
                 break;
             case 33:
                 if (resultCode == Activity.RESULT_OK) {
                     String result3 = data.getStringExtra(NEW_ADDRESS);
                     getAddress.setText(result3);
-                    spEditor.putBoolean("isUpdataMyInfo", false);
-                    spEditor.commit();
+                    Hawk.put(APP.IS_UPDATA_MY_INFO, false);
                 }
                 break;
             default:

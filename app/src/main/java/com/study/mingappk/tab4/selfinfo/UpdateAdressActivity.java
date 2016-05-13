@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -66,6 +67,7 @@ public class UpdateAdressActivity extends BackActivity {
     private String selected_town_name = null;
     private String selected_village_name = null;
     private String vid=null;
+    private String auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class UpdateAdressActivity extends BackActivity {
         setContentView(R.layout.activity_update_address);
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_update_adress);
+        auth= Hawk.get(APP.USER_AUTH);
 
         line1.setVisibility(View.GONE);
         spcity.setVisibility(View.GONE);
@@ -90,7 +93,6 @@ public class UpdateAdressActivity extends BackActivity {
      * 获取省列表
      */
     private void GetProvinceList() {
-        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_Add1(auth)
                 .enqueue(new Callback<A1Provice>() {
                     @Override
@@ -181,7 +183,6 @@ public class UpdateAdressActivity extends BackActivity {
      * @param provinceid 省份id
      */
     private void GetCityList(String provinceid) {
-        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_Add2(auth, provinceid)
                 .enqueue(new Callback<A2City>() {
                     @Override
@@ -268,7 +269,6 @@ public class UpdateAdressActivity extends BackActivity {
      * @param cityid 市id
      */
     private void GetCountryList(String cityid) {
-        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_Add3(auth, cityid)
                 .enqueue(new Callback<A3County>() {
                     @Override
@@ -353,7 +353,6 @@ public class UpdateAdressActivity extends BackActivity {
      * @param countryid 县级id
      */
     private void GetTownList(String countryid) {
-        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_Add4(auth, countryid)
                 .enqueue(new Callback<A4Town>() {
                     @Override
@@ -439,7 +438,6 @@ public class UpdateAdressActivity extends BackActivity {
      * @param townid 省份id
      */
     private void GetVillageList(String townid) {
-        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_Add5(auth, townid)
                 .enqueue(new Callback<A5Village>() {
                     @Override
@@ -513,7 +511,6 @@ public class UpdateAdressActivity extends BackActivity {
                 selected_village_name != null) {
             final String newAddress = selected_province_name + selected_city_name + selected_country_name + selected_town_name + selected_village_name;
             Log.d("mm",newAddress);
-            String auth = APP.getInstance().getAuth();
             MyServiceClient.getService().postCall_UpdateInfo(auth, null, null, null, vid)
                     .enqueue(new Callback<Result>() {
                         @Override

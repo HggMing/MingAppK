@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -74,7 +75,7 @@ public class ChangePwdActivity extends BackActivity {
                 Toast.makeText(this, "密码必须在6-16位", Toast.LENGTH_LONG).show();
                 return true;
             }
-            String auth = APP.getInstance().getAuth();
+            String auth = Hawk.get(APP.USER_AUTH);
             MyServiceClient.getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
                     .enqueue(new Callback<Result>() {
                         @Override

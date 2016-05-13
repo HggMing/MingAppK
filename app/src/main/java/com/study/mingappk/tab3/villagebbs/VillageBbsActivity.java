@@ -1,39 +1,32 @@
 package com.study.mingappk.tab3.villagebbs;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.jude.utils.JUtils;
 import com.melnykov.fab.FloatingActionButton;
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab3.newpost.NewPostActivity;
+import com.study.mingappk.tab3.villagebbs.bbsdetail.BbsDetailActivity;
 import com.study.mingappk.tab3.villagesituation.VillageSituationActivity;
 
 import java.util.ArrayList;
@@ -50,6 +43,11 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     public static final String VILLAGE_ID = "village_id";
     public static final String VILLAGE_NAME = "village_name";
     public static final String VILLAGE_PIC = "village_pic";
+    public static final String COMMENT_NO_NEW = "comment_number_change";
+    public static final String LIKEED_TAG = "标志已经点赞";
+    public static final String LIKE_NO_NEW = "点赞数据+1";
+
+
     @Bind(R.id.toolbar_bbs)
     Toolbar toolbar;
     @Bind(R.id.tab3_bbs_list)
@@ -70,15 +68,18 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     private VillageBbsAdapter mAdapter = new VillageBbsAdapter();
     private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
     private List<BBSList.DataEntity.ListEntity> mList = new ArrayList<>();
+    private BBSList.DataEntity.ListEntity bbsDetail;
 
     final private static int PAGE_SIZE = 5;
     private int page = 1;
+    private int ppid;//点击查看详情的帖子号
+    private final int REQUEST_LIKE_COMMENT_NUMBER = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        setContentView(R.layout.activity_tab3_bbs_list);
+        setContentView(R.layout.activity_bbs_list);
         ButterKnife.bind(this);
 
         BaseTools.transparentStatusBar(this);//透明状态栏
@@ -117,7 +118,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     }
 
     private void getBBSList(int page) {
-        String auth = APP.getInstance().getAuth();
+        String auth = Hawk.get(APP.USER_AUTH);
         String mVid = getIntent().getStringExtra(VILLAGE_ID);
         MyServiceClient.getService()
                 .getObservable_BBSList(auth, mVid, page, PAGE_SIZE)
@@ -186,42 +187,15 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     public void onItemClick(View view, int position) {
         switch (view.getId()) {
             case R.id.bbs_item:
-                Toast.makeText(this, "点击整个选项操作", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "点击整个选项操作", Toast.LENGTH_SHORT).show();
+                bbsDetail = mList.get(position);
+                ppid = position;
+                Intent intent = new Intent(this, BbsDetailActivity.class);
+                intent.putExtra(BbsDetailActivity.BBS_DETAIL, bbsDetail);
+                startActivityForResult(intent, REQUEST_LIKE_COMMENT_NUMBER);
                 break;
             case R.id.bbs_comment:
                 Toast.makeText(this, "点击留言操作", Toast.LENGTH_SHORT).show();
-//                commentInput.setVisibility(View.VISIBLE);
-//                commentEdit.requestFocus();
-//                fab.setVisibility(View.GONE);
-//                InputMethodManager inputManager =
-//                        (InputMethodManager)commentEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                inputManager.showSoftInput(commentEdit, 0);
-//                commentEdit.addTextChangedListener(new TextWatcher() {
-//                    @Override
-//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                        if(count==0){
-//                            commentPost.setClickable(false);
-//                            commentPost.setTextColor(getResources().getColor(R.color.font_black_comment));
-//                            commentPost.setBackgroundColor(getResources().getColor(R.color.input_background));
-//                        }
-//                        else{
-//                            commentPost.setTextColor(getResources().getColor(R.color.white));
-//                            commentPost.setBackgroundResource(R.drawable.button_green_common);
-//                            commentPost.setClickable(true);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void afterTextChanged(Editable s) {
-//
-//                    }
-//                });
-
                 break;
             default:
                 break;
@@ -257,12 +231,27 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case 11:
+            case 11://发布新帖子后刷新列表
                 if (resultCode == RESULT_OK) {
                     mAdapter.setItem(null);
                     mList.clear();
                     page = 1;
                     getBBSList(page);
+                }
+                break;
+            case REQUEST_LIKE_COMMENT_NUMBER://帖子详情页，点赞或评论后，就数据返回显示
+                if (resultCode == RESULT_OK) {
+                    String newCommentNumber = data.getExtras().getString(COMMENT_NO_NEW);
+                    if (newCommentNumber != null && !newCommentNumber.isEmpty()) {
+                        mList.get(ppid).setNums(newCommentNumber);
+                    }
+                    int isCliked = data.getExtras().getInt(LIKEED_TAG);
+                    if (isCliked == 1) {
+                        mList.get(ppid).setMy_is_zan(1);
+                        String newLikeNumber = data.getExtras().getString(LIKE_NO_NEW);
+                        mList.get(ppid).setZans(newLikeNumber);
+                    }
+                    mAdapter.setItem(mList);
                 }
                 break;
         }

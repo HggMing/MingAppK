@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".tab3.villagebbs.BigImageViewActivity">
+    tools:context=".common.views.bigimageview.BigImageViewActivity">
 
-    <android.support.v4.view.ViewPager
+    <com.study.mingappk.common.views.bigimageview.MViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/indicator"
@@ -31,5 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:max="100"
         android:layout_gravity="center" />
 </FrameLayout>

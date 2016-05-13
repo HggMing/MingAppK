@@ -36,11 +36,18 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
      * @param context     上下文
      * @param orientation 分割线方向（HORIZONTAL_LIST或VERTICAL_LIST）
      */
+
     public MyItemDecoration(Context context, int orientation) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
         a.recycle();
         setOrientation(orientation);
+    }
+    public MyItemDecoration(Context context) {
+        final TypedArray a = context.obtainStyledAttributes(ATTRS);
+        mDivider = a.getDrawable(0);
+        a.recycle();
+        setOrientation(VERTICAL_LIST);
     }
 
     public MyItemDecoration(Context context, int orientation, int height) {
@@ -75,7 +82,7 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                     .getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin;
-            final int bottom = parent.getAdapter().getItemCount()==2?top:top + mDivider.getIntrinsicHeight();//采用XRecycleView多了header和footer,所以去除无选项时，它们之间的分界线
+            final int bottom = (i < parent.getAdapter().getItemCount()-1)?top + mDivider.getIntrinsicHeight():top;//采用XRecycleView多了header和footer,所以去除无选项时，它们之间的分界线
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
         }
@@ -103,12 +110,12 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
         if (mOrientation == VERTICAL_LIST) {
             int setHeight = hasHeight ? height : (mDivider.getIntrinsicHeight());
 
-           if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount()-1) {//去除末尾的分界线
+           if (parent.getChildAdapterPosition(view) < parent.getAdapter().getItemCount()-2) {//去除末尾的分界线,以及footer的分界线
                 outRect.bottom = setHeight;
             }
         } else {
             int setWidth = hasHeight ? height : (mDivider.getIntrinsicWidth());
-            if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1) {
+            if (parent.getChildAdapterPosition(view) < parent.getAdapter().getItemCount() - 2) {
                 outRect.right = setWidth;
             }
         }

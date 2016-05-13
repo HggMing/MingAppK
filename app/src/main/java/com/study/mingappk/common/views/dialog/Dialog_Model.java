@@ -22,7 +22,6 @@ public class Dialog_Model extends Dialog {
 
 	public Dialog_Model(Context context, int theme) {
 		super(context, theme);
-		// TODO Auto-generated constructor stub
 	}
 
 	public static class Builder {

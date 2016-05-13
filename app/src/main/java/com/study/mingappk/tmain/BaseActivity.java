@@ -31,43 +31,16 @@ public class BaseActivity extends AppCompatActivity {
     public void setToolbarTitle(@StringRes int resid) {
         toolbarTitle.setText(resid);
     }
+    public void setToolbarTitle(String s) {
+        toolbarTitle.setText(s);
+    }
 
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
 
-    /**
-     * 一键退出:
-     */
-    //新建一个 ActivityCollector 类 作为 Activity 管理器
-    public static class ActivityCollector {
-
-        public static List<Activity> activities = new ArrayList<>();
-
-        public static void addActivity(Activity activity) {
-            activities.add(activity);
-        }
-
-        public static void removeActivity(Activity activity) {
-            activities.remove(activity);
-        }
-
-        /**
-         * 在需要一键退出的地方调用 ActivityCollector.finishAll()
-         */
-        public static void finishAll() {
-            for (Activity activity : activities) {
-                if (!activity.isFinishing()) {
-                    activity.finish();
-                }
-            }
-        }
-    }
-
-    //重写 onCreate()、onDestroy() 方法，代码如下
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityCollector.addActivity(this);//添加activity，便于一键退出
         initContentView(R.layout.activity_base);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_base);
@@ -77,12 +50,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ActivityCollector.removeActivity(this);
-    }
-
     private LinearLayout parentLayout;//把父类activity和子类activity的view都add到这里
 
     /**
@@ -90,10 +57,14 @@ public class BaseActivity extends AppCompatActivity {
      */
     private void initContentView(int layoutResID) {
         ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content);
-        viewGroup.removeAllViews();
+        if (viewGroup != null) {
+            viewGroup.removeAllViews();
+        }
         parentLayout = new LinearLayout(this);
         parentLayout.setOrientation(LinearLayout.VERTICAL);
-        viewGroup.addView(parentLayout);
+        if (viewGroup != null) {
+            viewGroup.addView(parentLayout);
+        }
         LayoutInflater.from(this).inflate(layoutResID, parentLayout, true);
     }
 
@@ -131,7 +102,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param permissions   请求的权限（数组类型），直接从Manifest中读取相应的值，比如Manifest.permission.WRITE_CONTACTS
      */
     public void performCodeWithPermission(@NonNull String permissionDes, PermissionCallback runnable, @NonNull String... permissions) {
-        if (permissions == null || permissions.length == 0) return;
+        if (permissions.length == 0) return;
 //        this.permissionrequestCode = requestCode;
         this.permissionRunnable = runnable;
         if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.M) || checkPermissionGranted(permissions)) {
@@ -215,7 +186,7 @@ public class BaseActivity extends AppCompatActivity {
                     permissionRunnable = null;
                 }
             } else {
-                Toast.makeText(BaseActivity.this, "暂无权限执行相关操作！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseActivity.this, "暂无权限执行相关操作，请在系统设置中，为本APP授权：存储空间！", Toast.LENGTH_SHORT).show();
                 if (permissionRunnable != null) {
                     permissionRunnable.noPermission();
                     permissionRunnable = null;

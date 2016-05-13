@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.common.utils.MyItemDecoration;
-import com.study.mingappk.test.adapter.MyRecyclerViewAdapter;
-import com.study.mingappk.test.adapter.MyStaggeredViewAdapter;
 import com.study.mingappk.tmain.BackActivity;
 
 import butterknife.Bind;

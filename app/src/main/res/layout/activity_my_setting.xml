@@ -15,28 +15,30 @@
             android:layout_height="wrap_content"
             android:background="@color/stand_bg"
             android:orientation="vertical">
-
             <include layout="@layout/divide_15_top_bottom" />
-
             <com.study.mingappk.tab4.myviews.ListItem1
                 android:id="@+id/click_my_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                listItem1:itemIcon="@mipmap/tab4_changepwd"
+                listItem1:itemIcon="@mipmap/tab4_my_order"
                 listItem1:itemTitle="我的订单" />
-
             <include layout="@layout/divide_1_12" />
-
             <com.study.mingappk.tab4.myviews.ListItem1
                 android:id="@+id/click_shipping_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                listItem1:itemIcon="@mipmap/tab4_check_version"
+                listItem1:itemIcon="@mipmap/tab4_shipping_address"
                 listItem1:itemTitle="我的收货地址" />
-
-
+            <include layout="@layout/divide_1_12" />
+            <com.study.mingappk.tab4.myviews.ListItem1
+                android:id="@+id/click_my_purse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                listItem1:itemIcon="@mipmap/tab4_my_purse"
+                listItem1:itemTitle="我的钱包" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

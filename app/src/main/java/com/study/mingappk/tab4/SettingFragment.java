@@ -3,7 +3,6 @@ package com.study.mingappk.tab4;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jude.utils.JUtils;
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.views.dialog.Dialog_ChangePwd;
@@ -48,10 +48,10 @@ public class SettingFragment extends Fragment {
     ImageView sex;
     @Bind(R.id.account_number)
     TextView accountNumber;
-    private SharedPreferences sp;
-    private SharedPreferences.Editor spEditor;
     private boolean isUpdataMyInfo;//是否更新完个人信息
     private UserInfo.DataEntity dataEntity;
+
+    private String auth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,10 +64,8 @@ public class SettingFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
-
-        sp = mActivity.getSharedPreferences("config", 0);
-        spEditor = sp.edit();
-        isUpdataMyInfo = sp.getBoolean("isUpdataMyInfo", false);
+        auth = Hawk.get(APP.USER_AUTH);
+        isUpdataMyInfo = Hawk.get(APP.IS_UPDATA_MY_INFO, false);
 
         getUserInfoDetail();//在线获取用户信息
     }
@@ -137,7 +135,6 @@ public class SettingFragment extends Fragment {
                                     Toast.LENGTH_LONG).show();
                             return;
                         }
-                        String auth = APP.getInstance().getAuth();
                         MyServiceClient.getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
                                 .enqueue(new Callback<Result>() {
                                     @Override
@@ -193,11 +190,10 @@ public class SettingFragment extends Fragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // APP.getInstance().set_userInfo(null);
-                        spEditor.putString("loginpwd", "");
-                        spEditor.putBoolean("isUpdataMyInfo", false);
-                        spEditor.commit();
-
+                        Hawk.chain()
+                                .put(APP.LOGIN_PASSWORD, "")
+                                .put(APP.IS_UPDATA_MY_INFO, false)
+                                .commit();
                         Intent intent = new Intent(mActivity, LoginActivity.class);
                         startActivity(intent);
                         mActivity.finish();
@@ -219,7 +215,6 @@ public class SettingFragment extends Fragment {
      * 获取用户信息
      */
     public void getUserInfoDetail() {
-        String auth = APP.getInstance().getAuth();
         Call<UserInfo> call = MyServiceClient.getService().getCall_UserInfo(auth);
         call.enqueue(new Callback<UserInfo>() {
             @Override
@@ -245,8 +240,7 @@ public class SettingFragment extends Fragment {
                         }
                         accountNumber.setText("账号：" + accountNo);
 
-                        spEditor.putBoolean("isUpdataMyInfo", true);
-                        spEditor.commit();
+                        Hawk.put(APP.IS_UPDATA_MY_INFO, true);
                     }
                 }
             }
@@ -259,7 +253,7 @@ public class SettingFragment extends Fragment {
 
     }
 
-    @OnClick({R.id.click_user,R.id.click_identity_binding, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
+    @OnClick({R.id.click_user, R.id.click_identity_binding, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.click_user:
@@ -274,12 +268,12 @@ public class SettingFragment extends Fragment {
                 break;
             case R.id.click_my_setting:
 //                Toast.makeText(mActivity, "我的", Toast.LENGTH_SHORT).show();
-                Intent intent2=new Intent(mActivity, MySettingActivity.class);
+                Intent intent2 = new Intent(mActivity, MySettingActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.click_setting_common:
 //                Toast.makeText(mActivity, "通用", Toast.LENGTH_SHORT).show();
-                Intent intent3=new Intent(mActivity, SettingCommonActivity.class);
+                Intent intent3 = new Intent(mActivity, SettingCommonActivity.class);
                 startActivity(intent3);
                 break;
             case R.id.click_store_manager:

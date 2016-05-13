@@ -2,6 +2,7 @@ package com.study.mingappk.tab3.addfollow;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,15 +19,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.A1Provice;
 import com.study.mingappk.model.bean.A2City;
 import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.service.MyServiceClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +76,8 @@ public class FollowR2Fragment extends Fragment {
     private String selected_village_name = null;
     private String vid = null;
 
+    private String auth;
+
     public FollowR2Fragment() {
     }
 
@@ -89,6 +93,7 @@ public class FollowR2Fragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
+        auth = Hawk.get(APP.USER_AUTH);
 
         line1.setVisibility(View.GONE);
         spcity.setVisibility(View.GONE);
@@ -109,8 +114,7 @@ public class FollowR2Fragment extends Fragment {
      * 获取省列表
      */
     private void GetProvinceList() {
-        String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add1(auth)
+        MyServiceClient.getService().getCall_Add1(auth)
                 .enqueue(new Callback<A1Provice>() {
                     @Override
                     public void onResponse(Call<A1Provice> call, Response<A1Provice> response) {
@@ -200,8 +204,7 @@ public class FollowR2Fragment extends Fragment {
      * @param provinceid 省份id
      */
     private void GetCityList(String provinceid) {
-        String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add2(auth, provinceid)
+        MyServiceClient.getService().getCall_Add2(auth, provinceid)
                 .enqueue(new Callback<A2City>() {
                     @Override
                     public void onResponse(Call<A2City> call, Response<A2City> response) {
@@ -287,8 +290,7 @@ public class FollowR2Fragment extends Fragment {
      * @param cityid 市id
      */
     private void GetCountryList(String cityid) {
-        String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add3(auth, cityid)
+        MyServiceClient.getService().getCall_Add3(auth, cityid)
                 .enqueue(new Callback<A3County>() {
                     @Override
                     public void onResponse(Call<A3County> call, Response<A3County> response) {
@@ -372,8 +374,7 @@ public class FollowR2Fragment extends Fragment {
      * @param countryid 县级id
      */
     private void GetTownList(String countryid) {
-        String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add4(auth, countryid)
+        MyServiceClient.getService().getCall_Add4(auth, countryid)
                 .enqueue(new Callback<A4Town>() {
                     @Override
                     public void onResponse(Call<A4Town> call, Response<A4Town> response) {
@@ -458,8 +459,7 @@ public class FollowR2Fragment extends Fragment {
      * @param townid 省份id
      */
     private void GetVillageList(String townid) {
-        String auth = APP.getInstance().getAuth();
-        new MyServiceClient().getService().getCall_Add5(auth, townid)
+        MyServiceClient.getService().getCall_Add5(auth, townid)
                 .enqueue(new Callback<A5Village>() {
                     @Override
                     public void onResponse(Call<A5Village> call, Response<A5Village> response) {
@@ -533,8 +533,7 @@ public class FollowR2Fragment extends Fragment {
                 selected_town_name != null &&
                 selected_village_name != null) {
             final String villageName = selected_province_name + selected_city_name + selected_country_name + selected_town_name + selected_village_name;
-            String auth = APP.getInstance().getAuth();
-            new MyServiceClient().getService().postCall_FollowVillage(auth, vid)
+            MyServiceClient.getService().postCall_FollowVillage(auth, vid)
                     .enqueue(new Callback<Result>() {
                         @Override
                         public void onResponse(Call<Result> call, Response<Result> response) {
@@ -544,7 +543,7 @@ public class FollowR2Fragment extends Fragment {
                                     if (result.getErr() == 0) {
                                         Toast.makeText(mActivity, result.getMsg(), Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent();
-                                        mActivity.setResult(mActivity.RESULT_OK, intent);
+                                        mActivity.setResult(Activity.RESULT_OK, intent);
                                         mActivity.finish();
                                     }
                                 }

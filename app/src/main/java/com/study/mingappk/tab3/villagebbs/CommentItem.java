@@ -35,6 +35,11 @@ class CommentItem {
 //        comment.setTag(MaopaoListBaseFragment.TAG_COMMENT_TEXT, commentData.content);
         //评论人姓名
         String uname = mList.getUname();
+        if(uname.isEmpty()){
+            //若用户名为空，显示手机号，中间四位为*
+            String iphone = mList.getUser_tel();
+            uname= iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
+        }
         name.setText(uname);
         //评论时间
         String date = mList.getCtime();

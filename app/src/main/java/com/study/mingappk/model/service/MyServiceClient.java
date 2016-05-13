@@ -75,7 +75,7 @@ public class MyServiceClient {
         };
 
         Context context = APP.getInstance().getApplicationContext();
-        File cacheDirectory = new File(context.getExternalCacheDir(), "HttpCache");
+        File cacheDirectory = new File(APP.FILE_PATH, "HttpCache");
         Cache cache = new Cache(cacheDirectory, 20 * 1024 * 1024);
 
         OkHttpClient client = new OkHttpClient.Builder()

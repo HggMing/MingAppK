@@ -1,14 +1,15 @@
 package com.study.mingappk.tmain.userlogin;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.tmain.MainActivity;
 
@@ -48,9 +49,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private void init() {
 
-        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
-        String loginname = sp.getString("loginname", "");
-        String loginpwd = sp.getString("loginpwd", "");
+        String loginname = Hawk.get(APP.LOGIN_NAME, "");
+        String loginpwd = Hawk.get(APP.LOGIN_PASSWORD, "");
 
         if (!loginname.equals("") && !loginpwd.equals("")) {
             goLoginAuto();
@@ -79,7 +79,7 @@ public class SplashActivity extends AppCompatActivity {
      */
     private void goLoginAuto() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-        intent.putExtra("isAutoLogin", true);
+        intent.putExtra(LoginActivity.IS_AUTO_LOGIN, true);
         SplashActivity.this.startActivity(intent);
         SplashActivity.this.finish();
     }

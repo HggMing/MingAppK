@@ -24,7 +24,6 @@
         <receiver android:name=".common.receiver.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -82,7 +81,7 @@
             android:name=".tab3.villagebbs.VillageBbsActivity"
             android:label="@string/title_activity_village_bbs" />
         <activity
-            android:name=".tab3.villagebbs.BigImageViewActivity"
+            android:name=".common.views.bigimageview.BigImageViewActivity"
             android:label="@string/title_activity_big_imageview" />
         <activity
             android:name=".tab3.villagesituation.VillageSituationActivity"
@@ -94,7 +93,7 @@
             android:name=".tab3.newpost.BigImageViewActivity"
             android:label="@string/title_activity_big_imageview" />
         <activity
-            android:name=".tab3.villagebbs.BbsDetailActivity"
+            android:name=".tab3.villagebbs.bbsdetail.BbsDetailActivity"
             android:label="@string/title_activity_bbs_detail" />
         <activity
             android:name=".tab4.scommon.SettingCommonActivity"
@@ -102,6 +101,14 @@
         <activity
             android:name=".tab4.mysetting.MySettingActivity"
             android:label="@string/title_activity_mysetting" />
+        <activity
+            android:name=".tab2.frienddetail.FriendDetailActivity"
+            android:label="@string/title_activity_friend_detail" />
+        <activity
+            android:name=".tab2.frienddetail.RemarkNameActivity"
+            android:label="@string/title_activity_remark_name" />
+        <activity android:name=".tab2.frienddetail.FriendBbsActivity" />
+        <activity android:name=".tab2.message.ChatActivity"></activity>
     </application>
 
 </manifest>

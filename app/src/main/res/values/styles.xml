@@ -5,6 +5,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--用于滑动返回的设置-->
+        <!--<item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>-->
         <!--修改Toolbar上menu的字体大小,5.0以上-->
         <item name="android:actionMenuTextAppearance">@style/MyMenuAppearance</item>
         <!--5.0以下-->

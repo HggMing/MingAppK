@@ -4,7 +4,6 @@ package com.study.mingappk.tmain.userlogin;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,14 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.views.dialog.Dialog_Model;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
-import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.tmain.MainActivity;
 import com.study.mingappk.test.TestActivity;
+import com.study.mingappk.tmain.MainActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,6 +32,7 @@ import rx.schedulers.Schedulers;
 
 
 public class LoginActivity extends Activity {
+    public static String IS_AUTO_LOGIN = "是否自动登录";
     final private String TAG = "mm:LoginActivity";
     @Bind(R.id.et_name)
     EditText et_name;
@@ -53,8 +54,6 @@ public class LoginActivity extends Activity {
     private boolean isAutoLogin;
     private boolean isRememberPwd;// 是否记住密码
 
-    private SharedPreferences sp;
-    private SharedPreferences.Editor spEditor;
     private String point;//弹出提示框内容
 
     public void onCreate(Bundle savedInstanceState) {
@@ -63,16 +62,13 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_userlogin);
         ButterKnife.bind(this);
 
-        sp = getSharedPreferences("config", MODE_PRIVATE);
-        spEditor = sp.edit();
-
-        isRememberPwd = sp.getBoolean("isRememberPwd", true);//初始默认记住密码
-        loginname = sp.getString("loginname", "");
-        loginpwd = sp.getString("loginpwd", "");
+        isRememberPwd = Hawk.get(APP.IS_REMEMBER_PASSWORD, true);//初始默认记住密码
+        loginname = Hawk.get(APP.LOGIN_NAME, "");
+        loginpwd = Hawk.get(APP.LOGIN_PASSWORD, "");
 
         setIcon();
 
-        isAutoLogin = getIntent().getBooleanExtra("isAutoLogin", false);
+        isAutoLogin = getIntent().getBooleanExtra(IS_AUTO_LOGIN, false);
         if (isAutoLogin) {
             onClick(btn_login);
         }
@@ -118,7 +114,8 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onNext(Login login) {
                         if (login.getErr() == 0) {
-                            APP.getInstance().setAuth(login.getAuth());//保存认证信息
+                            Hawk.put(APP.USER_AUTH,login.getAuth());//保存认证信息
+                            Hawk.put(APP.ME_UID, login.getInfo().getUid());
                             loginSuccess();
                             return;
                         }
@@ -199,13 +196,21 @@ public class LoginActivity extends Activity {
     private void loginSuccess() {
         SetCanEdit(true);
         if (isRememberPwd) {
-            spEditor.putString("loginname", loginname);
-            spEditor.putString("loginpwd", loginpwd);
-            spEditor.commit();
+//            spEditor.putString(APP.LOGIN_NAME, loginname);
+//            spEditor.putString(APP.LOGIN_PASSWORD, loginpwd);
+//            spEditor.commit();
+            Hawk.chain()
+                    .put(APP.LOGIN_NAME, loginname)
+                    .put(APP.LOGIN_PASSWORD, loginpwd)
+                    .commit();
         } else {
-            spEditor.putString("loginname", "");
-            spEditor.putString("loginpwd", "");
-            spEditor.commit();
+//            spEditor.putString(APP.LOGIN_NAME, "");
+//            spEditor.putString(APP.LOGIN_PASSWORD, "");
+//            spEditor.commit();
+            Hawk.chain()
+                    .put(APP.LOGIN_NAME, "")
+                    .put(APP.LOGIN_PASSWORD, "")
+                    .commit();
         }
 
         Intent intent = new Intent();
@@ -256,13 +261,11 @@ public class LoginActivity extends Activity {
     private void onClickJzmm() {
         if (isRememberPwd) {
             isRememberPwd = false;
-            spEditor.putBoolean("isRememberPwd", false);
-            spEditor.commit();
+            Hawk.put(APP.IS_REMEMBER_PASSWORD, false);
             img_jzmm.setBackgroundResource(R.mipmap.agree_no);
         } else {
             isRememberPwd = true;
-            spEditor.putBoolean("isRememberPwd", true);
-            spEditor.commit();
+            Hawk.put(APP.IS_REMEMBER_PASSWORD, true);
             img_jzmm.setBackgroundResource(R.mipmap.agree);
         }
     }

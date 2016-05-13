@@ -18,13 +18,14 @@ import android.view.ViewGroup;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jude.utils.JUtils;
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.model.bean.FollowVillageList;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
 import com.study.mingappk.common.utils.MyItemDecoration;
+import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.model.bean.FollowVillageList;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab3.addfollow.FollowVillageActivity;
 import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
 
@@ -48,8 +49,9 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
     List<FollowVillageList.DataEntity.ListEntity> mList = new ArrayList<>();
 
-    final private static int PAGE_SIZE = 20;//
+    final private static int PAGE_SIZE = 20;
     private int page = 1;
+    private String auth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
+        auth= Hawk.get(APP.USER_AUTH);
 
         setHasOptionsMenu(true);
         configXRecyclerView();//XRecyclerView配置
@@ -114,7 +117,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
         mXRecyclerView.setAdapter(mAdapter);//设置adapter
         mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
 
-        mXRecyclerView.addItemDecoration(new MyItemDecoration(mActivity, MyItemDecoration.VERTICAL_LIST));//添加分割线
+        mXRecyclerView.addItemDecoration(new MyItemDecoration(mActivity));//添加分割线
         mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 
@@ -143,7 +146,6 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     }
 
     private void getDataList(int page) {
-        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_FollowList(auth, page, PAGE_SIZE)
                 .enqueue(new Callback<FollowVillageList>() {
                     @Override
@@ -211,7 +213,6 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
      */
     private void removeFromServer(final int position) {
         String vid = mList.get(position).getVillage_id();
-        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_DelFollowList(auth, vid).enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

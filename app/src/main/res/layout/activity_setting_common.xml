@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                listItem1:itemIcon="@mipmap/tab4_changepwd"
+                listItem1:itemIcon="@mipmap/tab4_chagepwd"
                 listItem1:itemTitle="修改密码" />
 
             <include layout="@layout/divide_1_12" />
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                listItem1:itemIcon="@mipmap/tab4_my_order"
+                listItem1:itemIcon="@mipmap/tab4_clear_cache"
                 listItem1:itemTitle="清理缓存" />
 
             <include layout="@layout/divide_1_12" />

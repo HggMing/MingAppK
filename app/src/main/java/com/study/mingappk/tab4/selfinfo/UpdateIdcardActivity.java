@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
@@ -44,7 +45,7 @@ public class UpdateIdcardActivity extends BackActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_submit) {
-            String auth = APP.getInstance().getAuth();
+            String auth = Hawk.get(APP.USER_AUTH);
             final String newIdcard = etIdcard.getText().toString();
             if (!BaseTools.checkIdcard(newIdcard)) {
                 Toast.makeText(UpdateIdcardActivity.this, "请输入正确的身份证号！！", Toast.LENGTH_SHORT).show();

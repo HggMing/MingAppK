@@ -8,16 +8,17 @@ import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.FollowVillageList;
+import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.bean.Login;
+import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.bean.Phone2Adress;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.bean.ZanList;
 
-import java.io.File;
-import java.util.Map;
+import java.lang.reflect.Array;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -28,7 +29,6 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -218,7 +218,7 @@ public interface MyService {
             @Part("auth") String auth,
             @Part("files\"; filename=\"jpg") RequestBody file
             // @PartMap Map<String, RequestBody> params,
-            );
+    );
 
     /**
      * @param auth    认证信息
@@ -240,11 +240,12 @@ public interface MyService {
             @Field("file_id") String file_id);
 
     /**
+     * 评论帖子
      *
-     * @param auth 认证信息
-     * @param pid 帖子id
+     * @param auth  认证信息
+     * @param pid   帖子id
      * @param conts 评论内容，最长255个字
-     * @return  结果msg+insert_id
+     * @return 结果msg+insert_id
      */
     @FormUrlEncoded
     @POST("bbs/addcom")
@@ -332,4 +333,96 @@ public interface MyService {
             @Query("auth") String auth,
             @Query("page") int page,
             @Query("pagesize") int pagesize);
+
+    /**
+     * 获取好友的档案信息
+     *
+     * @param auth 认证信息
+     * @param uid  好友id
+     * @return "userinfo":用户信息
+     * "photoinfo":用户相册
+     * "videoinfo":用户视频
+     * "voiceinfo":语音留言（废除）
+     * "scoreinfo":学习成绩
+     * "healthinfo":健康状况
+     * "bbs_top_pic4":帖子最新4图
+     */
+    @GET("arch/info_e")
+    Observable<FriendDetail> getObservable_FriendDetail(
+            @Query("auth") String auth,
+            @Query("uid") String uid);
+
+    /**
+     * 设置好友别名或者称呼
+     *
+     * @param auth  认证信息
+     * @param uid   好友id
+     * @param aname 好友别名或者称呼
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("friend/rname")
+    Observable<Result> postObservabel_RemarkName(
+            @Field("auth") String auth,
+            @Field("uid") String uid,
+            @Field("aname") String aname);
+
+    /**
+     * 获取用户（好友）帖子列表接口
+     *
+     * @param auth     认证信息
+     * @param uid      用户id
+     * @param page     当前页码，默认为：1页
+     * @param pagesize 每页条数，默认20条
+     * @return 帖子列表信息
+     */
+    @GET("bbs/ulist")
+    Observable<BBSList> getObservable_FriendBbsList(
+            @Query("auth") String auth,
+            @Query("uid") String uid,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 用户之间发送消息
+     *
+     * @param from   发送人id
+     * @param to     接收人id
+     * @param ct     消息类型，0文字，1图片，2声音，3html，4内部消息json格式，5交互消息 6应用透传消息json格式,7朋友系统消息json
+     * @param app    发送消息的app
+     * @param txt    消息内容
+     * @param source 发送的资源，默认空数组，如果有资源则是数据流base64后的数据+’.’+资源的扩展名
+     * @param ex     扩展字段， 根据不同应用定义不同的意义
+     * @param mt     发送方式:1即时消息，2异步消息
+     * @param xt     发送人类型 0系统，2用户与用户，1公众号与用户
+     * @return 返回
+     */
+    @FormUrlEncoded
+    @POST("http://push.traimo.com/msg/user_sent")
+    Observable<Result> postObservabel_sendMessage(
+            @Field("from") String from,
+            @Field("to") String to,
+            @Field("ct") int ct,
+            @Field("app") String app,
+            @Field("txt") String txt,
+            @Field("source") Array source,
+            @Field("ex") String ex,
+            @Field("mt") int mt,
+            @Field("xt") int xt);
+
+    /**
+     * 用户获取消息接口
+     *
+     * @param me  接收人id
+     * @param app 需要什么app的消息
+     * @param os  1安卓，2苹果，3winphone，4  web
+     * @return MessageList
+     */
+    @GET("http://push.traimo.com/msg/lists")
+    Observable<MessageList> getObservable_MessageList(
+            @Query("me") String me,
+            @Query("app") String app,
+            @Query("os") int os);
+
+
 }

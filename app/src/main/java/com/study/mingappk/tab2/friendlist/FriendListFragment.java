@@ -1,5 +1,7 @@
 package com.study.mingappk.tab2.friendlist;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jude.utils.JUtils;
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyItemDecoration2;
@@ -23,6 +26,7 @@ import com.study.mingappk.common.views.SideBar;
 import com.study.mingappk.common.views.stickyrecyclerheaders.StickyRecyclerHeadersDecoration;
 import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +37,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 public class FriendListFragment extends Fragment implements FriendListAdapter.OnItemClickListener {
     AppCompatActivity mActivity;
     @Bind(R.id.contact_member)
@@ -48,9 +53,11 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     private int cnt;//列表数据总条数
     final private static int PAGE_SIZE = 50;//
     private int page = 1;
+    private String auth;
 
     private CharacterParser characterParser;
     private PinyinComparator pinyinComparator;
+    private final int IF_REMARK_NAME_CHANGE=1001;//如果修改备注名
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,11 +70,13 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
+        auth= Hawk.get(APP.USER_AUTH);
 //        mActivity.setSupportActionBar(toolbar2);
 
         initView();
         getDataList();//获取friendList数据和cnt值
     }
+
     private void initView() {
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
@@ -111,7 +120,6 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
             public void onLoadMore() {
                 int pages = (int) (cnt / PAGE_SIZE + 1);
                 if (page <= pages) {
-                    String auth = APP.getInstance().getAuth();
                     MyServiceClient.getService().getCall_FriendList(auth, page, PAGE_SIZE).enqueue(new Callback<FriendList>() {
                         @Override
                         public void onResponse(Call<FriendList> call, Response<FriendList> response) {
@@ -141,7 +149,6 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
 
     private void refreshList() {
         page = 1;
-        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_FriendList(auth, page, PAGE_SIZE)
                 .enqueue(new Callback<FriendList>() {
                     @Override
@@ -168,7 +175,6 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
 
     private void getDataList() {
         page = 1;
-        String auth = APP.getInstance().getAuth();
         MyServiceClient.getService().getCall_FriendList(auth, page, PAGE_SIZE).enqueue(new Callback<FriendList>() {
             @Override
             public void onResponse(Call<FriendList> call, Response<FriendList> response) {
@@ -236,7 +242,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
         List<FriendList.DataBean.ListBean> tempList = new ArrayList<>();
         for (int i = 3; i < friendList.getData().getList().size(); i++) {
             tempMember = friendList.getData().getList().get(i);
-            if(tempMember.getName().equals("")){
+            if (tempMember.getName().equals("")) {
                 //若用户名为空，显示手机号，中间四位为*
                 String iphone = friendList.getData().getList().get(i).getPhone();
                 String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
@@ -259,6 +265,13 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     @Override
     public void onItemClick(View view, int position) {
         //点击选项操作
+        if (position > 2) {
+            Intent intent = new Intent(mActivity, FriendDetailActivity.class);
+            String uid = mList.get(position).getUid();
+            intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
+            intent.putExtra(FriendDetailActivity.ITEM_POSTION,position);
+            startActivityForResult(intent,IF_REMARK_NAME_CHANGE);
+        }
     }
 
     @Override
@@ -266,7 +279,18 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
         //长按选项操作
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case IF_REMARK_NAME_CHANGE:
+                if (resultCode == Activity.RESULT_OK) {
+                    mList.clear();
+                   getDataList();
+                }
+                break;
+        }
+    }
 }
 
 

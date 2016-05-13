@@ -20,7 +20,7 @@ public class MySettingActivity extends BackActivity {
         setToolbarTitle(R.string.title_activity_mysetting);
     }
 
-    @OnClick({R.id.click_my_order, R.id.click_shipping_address})
+    @OnClick({R.id.click_my_order, R.id.click_shipping_address,R.id.click_my_purse})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.click_my_order:
@@ -28,6 +28,9 @@ public class MySettingActivity extends BackActivity {
                 break;
             case R.id.click_shipping_address:
                 Toast.makeText(MySettingActivity.this, "我的收货地址", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.click_my_purse:
+                Toast.makeText(MySettingActivity.this, "我的钱包", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

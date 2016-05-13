@@ -1,6 +1,5 @@
 package com.study.mingappk.tab3.villagelist;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,9 @@ import com.study.mingappk.R;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
 
 import java.util.Date;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,29 +24,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Ming on 2016/3/30.
  */
-public class VillageListAdapter extends RecyclerView.Adapter<VillageListAdapter.ViewHolder> {
-
-    private List<FollowVillageList.DataEntity.ListEntity> mList;
-
-    public void setItem(List<FollowVillageList.DataEntity.ListEntity> mList) {
-        this.mList = mList;
-        notifyDataSetChanged();
-    }
-
-    /**
-     * 点击事件接口
-     */
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-
-        void onItemLongClick(View view, int position);
-    }
-
-    public OnItemClickListener mOnItemClickListener;
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mOnItemClickListener = listener;
-    }
+public class VillageListAdapter extends BaseRecyclerViewAdapter<FollowVillageList.DataEntity.ListEntity,VillageListAdapter.ViewHolder> {
 
     /**
      * 创建ViewHolder
@@ -98,11 +75,6 @@ public class VillageListAdapter extends RecyclerView.Adapter<VillageListAdapter.
         } else {
             holder.tvTime.setText("");
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return mList == null ? 0 : mList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
