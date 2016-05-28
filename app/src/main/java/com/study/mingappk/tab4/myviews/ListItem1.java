@@ -35,11 +35,16 @@ public class ListItem1 extends FrameLayout {
         String title = array.getString(R.styleable.ListItem1_itemTitle);
         int icon = array.getResourceId(R.styleable.ListItem1_itemIcon, R.mipmap.user_home_project);
         boolean center = array.getBoolean(R.styleable.ListItem1_itemCenter, false);
+        boolean showArrow=array.getBoolean(R.styleable.ListItem1_showArrow,true);
         array.recycle();
 
         if (title == null) title = "";
         mText.setText(title);
         mIcon.setBackgroundResource(icon);
+
+        if(!showArrow){
+            findViewById(R.id.arrow).setVisibility(GONE);
+        }
 
         if (center) {
             findViewById(R.id.arrow).setVisibility(GONE);
@@ -57,5 +62,10 @@ public class ListItem1 extends FrameLayout {
         }
         mText.setText(s);
     }
-
+    public void setIcon(int icon) {
+        if (icon ==0) {
+            return;
+        }
+        mIcon.setBackgroundResource(icon);
+    }
 }

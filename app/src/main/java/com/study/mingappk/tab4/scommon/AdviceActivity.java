@@ -2,6 +2,8 @@ package com.study.mingappk.tab4.scommon;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -26,11 +28,9 @@ public class AdviceActivity extends BackActivity {
     EditText etContent;
     @Bind(R.id.et_contact)
     EditText etContact;
-    @Bind(R.id.btn_advice)
-    Button btnAdvice;
 
-    String content;//意见反馈
-    String contact;//联系方式
+    private String content;//意见反馈
+    private String contact;//联系方式
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +40,33 @@ public class AdviceActivity extends BackActivity {
         setToolbarTitle(R.string.title_activity_advice);
     }
 
-    @OnClick(R.id.btn_advice)
-    public void onClick() {
-        content = etContent.getText().toString();
-        contact = etContact.getText().toString();
-        mSubmit();//提交
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_submit2, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_submit2) {
+            content = etContent.getText().toString();
+            contact = etContact.getText().toString();
+            mSubmit();//提交
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void mSubmit() {
-        String auth= Hawk.get(APP.USER_AUTH);
-        Call<Result> call = MyServiceClient.getService().getCall_Advice(auth,content, contact);
+        String auth = Hawk.get(APP.USER_AUTH);
+        Call<Result> call = MyServiceClient.getService().getCall_Advice(auth, content, contact);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if (response.isSuccessful()) {
                     Result adviceResult = response.body();
-                    if (adviceResult != null ) {
+                    if (adviceResult != null) {
                         Dialog_Model.Builder builder = new Dialog_Model.Builder(AdviceActivity.this);
                         builder.setTitle("提示");
                         builder.setCannel(false);

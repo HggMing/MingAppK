@@ -1,16 +1,24 @@
 package com.study.mingappk.tmain;
 
-import android.content.SharedPreferences;
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +29,7 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.receiver.MyMsgBroadcastReceiver;
 import com.study.mingappk.tab1.Tab1Fragment;
 import com.study.mingappk.tab2.friendlist.FriendListFragment;
 import com.study.mingappk.tab3.villagelist.VillageListFragment;
@@ -59,11 +68,64 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.tab3_guide)
     ImageView tab3Guide;
 
-    @Bind(R.id.toolbar_title)
+    @Bind(R.id.toolbar_title_main)
     TextView toolbarTitle;
     private FragmentManager fragmentManager;
     private boolean isExit;//是否退出
-    int idToolbar = 1;//toolbar 功能按钮页
+    private int idToolbar = 1;//toolbar 功能按钮页
+    private boolean isFirstRun;//是否初次运行
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        mToolBar.setTitle("");
+        setSupportActionBar(mToolBar);
+
+        //个推,初始化SDK
+//        PushManager.getInstance().initialize(this.getApplicationContext());
+        //接收消息BroadcastReciver
+        MyMsgBroadcastReceiver msReciver = new MyMsgBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MyMsgBroadcastReceiver.MYMSG_ACTION);
+        this.registerReceiver(msReciver, intentFilter);
+
+        fragments.add(new Tab1Fragment());
+        fragments.add(new FriendListFragment());
+        fragments.add(new VillageListFragment());
+        fragments.add(new SettingFragment());
+
+        fragmentManager = this.getSupportFragmentManager();
+
+        viewPager.setSlipping(true);//设置ViewPager是否可以滑动
+        viewPager.setOffscreenPageLimit(4);
+        viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
+        viewPager.setAdapter(new MyPagerAdapter());
+
+        isFirstRun = Hawk.get(APP.IS_FIRST_RUN, true);
+        if(isFirstRun){
+            viewPager.setCurrentItem(2,true);
+            toolbarTitle.setText(getResources().getText(R.string.tab3_main));
+            tab3Guide.setVisibility(View.VISIBLE);
+            Hawk.put(APP.IS_FIRST_RUN, false);
+        }else{
+            toolbarTitle.setText(getResources().getText(R.string.tab1_main));
+        }
+
+        //android6.0 获取运行时权限
+        performCodeWithPermission("为正常体验软件，请进行必要的授权！", new PermissionCallback() {
+            @Override
+            public void hasPermission() {
+                //执行获得权限后相关代码
+            }
+
+            @Override
+            public void noPermission() {
+
+            }
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
 
     @OnClick({R.id.tab3_guide, R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout})
     public void onClick(View view) {
@@ -94,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         public void onPageSelected(int arg0) {
             switch (arg0) {
                 case 0:
-//                    mToolBar.setTitle("动态");
                     toolbarTitle.setText(R.string.tab1_main);
                     idToolbar = 1;
                     mTab1.setImageDrawable(getResources().getDrawable(R.mipmap.tab1_btn1));
@@ -104,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     break;
                 case 1:
-//                    mToolBar.setTitle("老乡");
                     toolbarTitle.setText(R.string.tab2_main);
                     idToolbar = 2;
                     mTab2.setImageDrawable(getResources().getDrawable(R.mipmap.tab2_btn1));
@@ -114,14 +174,8 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     break;
                 case 2:
-//                    mToolBar.setTitle("我的村");
                     toolbarTitle.setText(R.string.tab3_main);
                     idToolbar = 3;
-                    boolean isFirstRun = Hawk.get(APP.IS_FIRST_RUN, true);
-                    if (isFirstRun) {
-                        tab3Guide.setVisibility(View.VISIBLE);
-                        Hawk.put(APP.IS_FIRST_RUN, false);
-                    }
                     mTab3.setImageDrawable(getResources().getDrawable(R.mipmap.tab3_btn1));
                     tTab3.setTextColor(getResources().getColor(R.color.tab_bnt1));
                     setTab1ToB();
@@ -129,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     break;
                 case 3:
-//                    mToolBar.setTitle("设置");
                     toolbarTitle.setText(R.string.tab4_main);
                     idToolbar = 4;
                     mTab4.setImageDrawable(getResources().getDrawable(R.mipmap.tab4_btn1));
@@ -241,28 +294,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        mToolBar.setTitle("");
-        setSupportActionBar(mToolBar);
-        toolbarTitle.setText(getResources().getText(R.string.tab1_main));
-
-        fragments.add(new Tab1Fragment());
-        fragments.add(new FriendListFragment());
-        fragments.add(new VillageListFragment());
-        fragments.add(new SettingFragment());
-
-        fragmentManager = this.getSupportFragmentManager();
-
-        viewPager.setSlipping(true);//设置ViewPager是否可以滑动
-        viewPager.setOffscreenPageLimit(4);
-        viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
-        viewPager.setAdapter(new MyPagerAdapter());
-    }
-
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -317,4 +348,135 @@ public class MainActivity extends AppCompatActivity {
             isExit = false;
         }
     };
+
+    //**************** Android M Permission (Android 6.0权限控制代码封装)*****************************************************
+    private int permissionRequestCode = 88;
+    private PermissionCallback permissionRunnable;
+
+    public interface PermissionCallback {
+        void hasPermission();
+
+        void noPermission();
+    }
+
+    /**
+     * Android M运行时权限请求封装
+     *
+     * @param permissionDes 权限描述
+     * @param runnable      请求权限回调
+     * @param permissions   请求的权限（数组类型），直接从Manifest中读取相应的值，比如Manifest.permission.WRITE_CONTACTS
+     */
+    public void performCodeWithPermission(@NonNull String permissionDes, PermissionCallback runnable, @NonNull String... permissions) {
+        if (permissions.length == 0) return;
+//        this.permissionrequestCode = requestCode;
+        this.permissionRunnable = runnable;
+        if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.M) || checkPermissionGranted(permissions)) {
+            if (permissionRunnable != null) {
+                permissionRunnable.hasPermission();
+                permissionRunnable = null;
+            }
+        } else {
+            //permission has not been granted.
+            requestPermission(permissionDes, permissionRequestCode, permissions);
+        }
+
+    }
+
+    private boolean checkPermissionGranted(String[] permissions) {
+        boolean flag = true;
+        for (String p : permissions) {
+            if (ActivityCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+
+    private void requestPermission(String permissionDes, final int requestCode, final String[] permissions) {
+        if (shouldShowRequestPermissionRationale(permissions)) {
+            // Provide an additional rationale to the user if the permission was not granted
+            // and the user would benefit from additional context for the use of the permission.
+            // For example, if the request has been denied previously.
+
+//            Snackbar.make(getWindow().getDecorView(), requestName,
+//                    Snackbar.LENGTH_INDEFINITE)
+//                    .setAction(R.string.common_ok, new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            ActivityCompat.requestPermissions(BaseAppCompatActivity.this,
+//                                    permissions,
+//                                    requestCode);
+//                        }
+//                    })
+//                    .show();
+            //如果用户之前拒绝过此权限，再提示一次准备授权相关权限
+            new AlertDialog.Builder(this)
+                    .setTitle("提示")
+                    .setMessage(permissionDes)
+                    .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(MainActivity.this, permissions, requestCode);
+                        }
+                    }).show();
+
+        } else {
+            // Contact permissions have not been granted yet. Request them directly.
+            ActivityCompat.requestPermissions(MainActivity.this, permissions, requestCode);
+        }
+    }
+
+    private boolean shouldShowRequestPermissionRationale(String[] permissions) {
+        boolean flag = false;
+        for (String p : permissions) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, p)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == permissionRequestCode) {
+            if (verifyPermissions(grantResults)) {
+                if (permissionRunnable != null) {
+                    permissionRunnable.hasPermission();
+                    permissionRunnable = null;
+                }
+            } else {
+                Toast.makeText(MainActivity.this, "正常体验软件，请在系统设置中，为本APP授权：存储空间！", Toast.LENGTH_SHORT).show();
+                if (permissionRunnable != null) {
+                    permissionRunnable.noPermission();
+                    permissionRunnable = null;
+                }
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+    }
+
+    public boolean verifyPermissions(int[] grantResults) {
+        // At least one result must be checked.
+        if (grantResults.length < 1) {
+            return false;
+        }
+
+        // Verify that each required permission has been granted, otherwise return false.
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+    //********************** END Android M Permission ****************************************
+
 }

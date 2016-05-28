@@ -33,6 +33,31 @@ public class Login {
     private InfoEntity info;
     private String auth;
 
+    /**
+     * 510922103201 : {"id":"549340","province_id":"510","province_name":"四川省","city_id":"510900000000","city_name":"遂宁市","county_id":"510922000000","county_name":"射洪县","town_id":"510922103000","town_name":"金华镇","village_id":"510922103201","village_name":"上方村","bid":"0"}
+     */
+
+
+    public ShopownerBean getShopowner() {
+        return shopowner;
+    }
+
+    public void setShopowner(ShopownerBean shopowner) {
+        this.shopowner = shopowner;
+    }
+
+    /**
+     * is_shopowner : 1
+     * manager_vid : 510922103201
+     */
+
+    private ShopownerBean shopowner;
+
+    /**
+     * 510922103201 : {"id":"549340","province_id":"510","province_name":"四川省","city_id":"510900000000","city_name":"遂宁市","county_id":"510922000000","county_name":"射洪县","town_id":"510922103000","town_name":"金华镇","village_id":"510922103201","village_name":"上方村","bid":"0"}
+     */
+
+
     public void setErr(int err) {
         this.err = err;
     }
@@ -173,6 +198,27 @@ public class Login {
 
         public String getLastdev() {
             return lastdev;
+        }
+    }
+
+    public static class ShopownerBean {
+        private int is_shopowner;
+        private String manager_vid;
+
+        public int getIs_shopowner() {
+            return is_shopowner;
+        }
+
+        public void setIs_shopowner(int is_shopowner) {
+            this.is_shopowner = is_shopowner;
+        }
+
+        public String getManager_vid() {
+            return manager_vid;
+        }
+
+        public void setManager_vid(String manager_vid) {
+            this.manager_vid = manager_vid;
         }
     }
 }

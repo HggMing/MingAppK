@@ -26,6 +26,8 @@ public class MyServiceClient {
 
     private static final String BASE_URL = "http://121.40.105.149:9901/";//API接口的主机地址
     private static final String BASE_URL2 = "http://121.40.105.149:9901";//API接口的主机地址
+    public static final String URL_REG = "http://121.40.105.149:9901/system/clause";//免责条款显示网址
+
 
     public static String getBaseUrl() {
         return BASE_URL2;
@@ -79,7 +81,7 @@ public class MyServiceClient {
         Cache cache = new Cache(cacheDirectory, 20 * 1024 * 1024);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)//设定10秒超时
+//                .connectTimeout(10, TimeUnit.SECONDS)//设定10秒超时
                 .addInterceptor(interceptor)
                 .cache(cache)//设置缓存目录
                 .build();
@@ -87,7 +89,7 @@ public class MyServiceClient {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-//                .client(client)
+                .client(client)
                 .build();
     }
 }

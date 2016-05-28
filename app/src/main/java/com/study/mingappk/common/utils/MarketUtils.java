@@ -117,7 +117,6 @@ public class MarketUtils
 		try {
 			str = new String(asBytes, "utf-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return str;
@@ -445,7 +444,6 @@ public class MarketUtils
 		try {
 			f = Double.valueOf(str);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		return String.format("%.2f", f);
 	}

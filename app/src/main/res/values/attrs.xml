@@ -5,6 +5,7 @@
         <attr name="itemIcon" format="reference" />
         <attr name="itemTitle" format="string" />
         <attr name="itemCenter" format="boolean" />
+        <attr name="showArrow" format="boolean" />
     </declare-styleable>
     <!--自定义控件：图片九宫格配置-->
     <declare-styleable name="NineGridImageView">

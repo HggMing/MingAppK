@@ -19,8 +19,12 @@ public class APP extends Application {
     public static final String IS_FIRST_RUN = "is_first_run";//是否首次运行
     public static final String IS_UPDATA_MY_INFO = "is_updata_myInfo";//是否更新信息
 
+
     public static final String ME_UID = "me_id";//登录用户的uid
+    public static final String ME_HEAD = "me_head";//登录用户的头像
     public static final String USER_AUTH = "user_auth";//用户认证信息
+    public static final String IS_SHOP_OWNER = "is_shop_owner";//是否为店长，1是0不是
+    public static final String IS_REAL_NAME = "is_real_name_binging";//是否实名认证。
 
 
     /**

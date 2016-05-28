@@ -89,7 +89,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
 
         if (id == R.id.action_follow) {
             Intent intent = new Intent(mActivity, FollowVillageActivity.class);
-            startActivityForResult(intent, 0);
+            startActivityForResult(intent, 12355);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -99,7 +99,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case 0:
+            case 12355:
                 if (resultCode == Activity.RESULT_OK) {
                     //关注村圈后更新列表
                     mAdapter.setItem(null);

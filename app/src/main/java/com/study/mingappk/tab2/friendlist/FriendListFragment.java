@@ -236,15 +236,21 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
         //我
         tempMember = friendList.getData().getList().get(2);
         tempMember.setSortLetters("%");
+        if (tempMember.getName().isEmpty()) {
+            //若用户名为空，显示手机号，中间四位为*
+            String iphone = tempMember.getPhone();
+            String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
+            tempMember.setName(showName);
+        }
         mList.add(tempMember);
 
         //其他好友
         List<FriendList.DataBean.ListBean> tempList = new ArrayList<>();
         for (int i = 3; i < friendList.getData().getList().size(); i++) {
             tempMember = friendList.getData().getList().get(i);
-            if (tempMember.getName().equals("")) {
+            if (tempMember.getName().isEmpty()) {
                 //若用户名为空，显示手机号，中间四位为*
-                String iphone = friendList.getData().getList().get(i).getPhone();
+                String iphone = tempMember.getPhone();
                 String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
                 tempMember.setName(showName);
             }

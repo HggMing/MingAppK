@@ -7,12 +7,13 @@ import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
+import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.MessageList;
-import com.study.mingappk.model.bean.Phone2Adress;
+import com.study.mingappk.model.bean.RecommendVillage;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
@@ -25,7 +26,6 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -49,21 +49,85 @@ public interface MyService {
             @Query("pwd") String pwd);
 
     /**
-     * 查询号码归属地接口
+     * 人脸登录：登录接口需要提供正面人脸照片和用户电话号码，系统在得到照片之后将和用户注册照片进行比对，返回结果。
      *
-     * @param apikey api键
-     * @param phone  手机号
-     * @return 归属地信息
+     * @param data    加密后的参数
+     * @param facepic 人脸图片
+     * @return 先base64解密，得到json
      */
-    @GET("http://apis.baidu.com/apistore/mobilenumber/mobilenumber")
-    Call<Phone2Adress> getCall_Phone2Adress(
-            @Header("apikey") String apikey,
-            @Query("phone") String phone);
+    @Multipart
+    @POST("http://capi.nids.com.cn/iras/ver")
+    Call<String> postCall_FaceLogin(
+            @Part("data") String data,
+            @Part("files\"; filename=\"jpg") RequestBody facepic);
 
-    @GET("http://apis.baidu.com/apistore/mobilenumber/mobilenumber")
-    Observable<Phone2Adress> getObservable_Phone2Adress(
-            @Header("apikey") String apikey,
-            @Query("phone") String phone);
+    /**
+     * 验证手机号码是否注册接口
+     *
+     * @param tel 手机号
+     * @return 注册参数sign
+     */
+    @GET("user/telcheck")
+    Observable<CheckPhone> getObservable_CheckPhone(
+            @Query("tel") String tel);
+
+    /**
+     * 获取注册验证码接口
+     *
+     * @param sign 验证手机号时，返回的签名 sign
+     * @param type 类型，1注册，2找回密码,3、重新绑定手机
+     * @param tel  手机号
+     * @return 结果msg
+     */
+    @GET("user/rcode")
+    Observable<Result> getObservable_RCode(
+            @Query("sign") String sign,
+            @Query("type") int type,
+            @Query("tel") String tel);
+
+    /**
+     * 注册接口
+     *
+     * @param tel  手机号码
+     * @param code 验证码
+     * @param pwd  密码（6-16位）
+     * @param sign 签名
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    Observable<Result> postObservable_Register(
+            @Field("tel") String tel,
+            @Field("code") String code,
+            @Field("pwd") String pwd,
+            @Field("sign") String sign);
+
+    /**
+     * 忘记密码，账号检查接口
+     *
+     * @param tel 手机号码
+     * @return 注册参数sign
+     */
+    @GET("password/telcheck")
+    Observable<CheckPhone> getObservable_CheckPhonePSW(
+            @Query("tel") String tel);
+
+    /**
+     * 重置密码接口:该接口主要用户，忘记密码，通过短信验证码重置密码密码的接口
+     *
+     * @param tel  登录账号
+     * @param pwd  密码（6-16位）
+     * @param code 验证码
+     * @param sign 找回密码签名
+     * @return 结果msg（返回有info，暂时不用）
+     */
+    @FormUrlEncoded
+    @POST("password/findpwd")
+    Observable<Result> postObservable_ResetPassword(
+            @Field("tel") String tel,
+            @Field("pwd") String pwd,
+            @Field("code") String code,
+            @Field("sign") String sign);
 
     /**
      * 意见反馈接口
@@ -206,6 +270,15 @@ public interface MyService {
             @Field("vid") String vid);
 
     /**
+     * 获取推荐村圈接口
+     * @param auth 认证信息
+     * @return  推荐的村
+     */
+    @GET("vill/recommend")
+    Observable<RecommendVillage> getObservable_RecommendVillage(
+            @Query("auth") String auth);
+
+    /**
      * 该接口用户帖子的附件上传，包括图片其他压缩包等
      *
      * @param auth 验证参数
@@ -221,6 +294,8 @@ public interface MyService {
     );
 
     /**
+     * 发布新帖子
+     *
      * @param auth    认证信息
      * @param vid     村id
      * @param title   标题，最长64个字
@@ -402,13 +477,13 @@ public interface MyService {
     Observable<Result> postObservabel_sendMessage(
             @Field("from") String from,
             @Field("to") String to,
-            @Field("ct") int ct,
+            @Field("ct") String ct,
             @Field("app") String app,
             @Field("txt") String txt,
             @Field("source") Array source,
             @Field("ex") String ex,
             @Field("mt") int mt,
-            @Field("xt") int xt);
+            @Field("xt") String xt);
 
     /**
      * 用户获取消息接口
@@ -423,6 +498,53 @@ public interface MyService {
             @Query("me") String me,
             @Query("app") String app,
             @Query("os") int os);
+
+    /**
+     * 注册用户（当客户端与推送服务器建立连接后调用）
+     *
+     * @param me  当前的eid
+     * @param os  1安卓，2苹果，3winphone，4  web
+     * @param app 当前应用，yxj
+     * @param cid 第三方连接id
+     * @return 结果msg
+     */
+    @GET("http://push.traimo.com/client/register")
+    Observable<Result> getObservable_RegisterChat(
+            @Query("me") String me,
+            @Query("os") int os,
+            @Query("app") String app,
+            @Query("cid") String cid);
+
+    /**
+     * 申请站长接口
+     *
+     * @param auth     认证信息
+     * @param vid      村id
+     * @param uname    姓名
+     * @param contact  手机号码
+     * @param conts    申请理由
+     * @param sex      性别 0:男 1:女
+     * @param edu      教育程度
+     * @param cid_img1 身份证正面照ID :先通过上传接口将图片上传，这里的参数传返回的ID
+     * @param cid_img2 身份证背面照ID: 先通过上传接口将图片上传，这里的参数传返回的ID
+     * @param q_img    其他材料:注意，这里将所有其他材料上传后组合成字符串，使用”,”分割，如：878,879,880
+     * @param brithday 生日:字符串格式
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("vill/applymaster")
+    Observable<Result> postObservabel_ApplyMaster(
+            @Field("auth") String auth,
+            @Field("vid") String vid,
+            @Field("uname") String uname,
+            @Field("contact") String contact,
+            @Field("conts") String conts,
+            @Field("sex") Array sex,
+            @Field("edu") String edu,
+            @Field("cid_img1") int cid_img1,
+            @Field("cid_img2") int cid_img2,
+            @Field("q_img") int q_img,
+            @Field("brithday") String brithday);
 
 
 }

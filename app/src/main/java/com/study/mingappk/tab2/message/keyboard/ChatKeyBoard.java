@@ -3,6 +3,7 @@ package com.study.mingappk.tab2.message.keyboard;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 
 
 import com.study.mingappk.R;
@@ -22,6 +23,12 @@ public class ChatKeyBoard extends XhsEmoticonsKeyBoard {
     protected void inflateKeyboardBar(){
         mInflater.inflate(R.layout.view_keyboard_userdef, this);
     }
+
+//    @Override
+//    public Button getBtnSend() {
+//        mBtnSend= (Button)inflateFunc().findViewById(R.id.btn_send);
+//        return mBtnSend;
+//    }
 
     @Override
     protected View inflateFunc(){

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/message_list_list_item_right"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="10dp">
 
@@ -28,7 +28,7 @@
         android:layout_marginRight="12dp"
         tools:src="@mipmap/icon" />
 
-    <LinearLayout xmlns:custom="http://schemas.android.com/apk/res/net.coding.program"
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,35 +39,41 @@
         android:background="@drawable/message_list_item_right_selector"
         android:gravity="right"
         android:orientation="vertical"
-        android:paddingBottom="12dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="17dp"
-        android:paddingTop="10dp"
         android:visibility="visible">
 
-        <LinearLayout
-            android:id="@+id/voiceLayout"
+        <ImageView
+            android:id="@+id/voice_play"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|left"
-            android:orientation="horizontal">
+            android:background="@drawable/content_pressed_selector"
+            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/font_black_content"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            tools:text="这是我自己说的话，啦啦" />
 
-            <ImageView
-                android:id="@+id/voice_play"
-                android:layout_width="20sp"
-                android:layout_height="20sp"
-                android:layout_marginRight="4dp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/content_pressed_selector"
-                android:textColor="@color/font_black_content"
-                android:textSize="16sp"
-                tools:text="这是我自己说的话，啦啦" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/msg_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/default_village"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <FrameLayout

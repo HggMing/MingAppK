@@ -11,9 +11,6 @@
     <!--网络相关-->
     <string name="common_ok">确定</string>
     <!--Activity页面lable-->
-    <string name="title_activity_test">测试页1</string>
-    <string name="title_activity_test2">测试页2</string>
-    <string name="title_activity_test3">测试页3</string>
 
     <string name="title_activity_splash">爱简单</string>
     <string name="title_activity_login">登录页</string>
@@ -38,4 +35,10 @@
     <string name="title_activity_about">关于我们</string>
     <string name="title_activity_friend_detail">详细资料</string>
     <string name="title_activity_remark_name">备注信息</string>
+    <string name="title_activity_test_phone_number">验证手机号</string>
+    <string name="title_activity_register">用户注册</string>
+    <string name="title_activity_reset_password">找回密码</string>
+    <string name="title_activity_face_login">人脸登录</string>
+    <string name="title_activity_apply_shop_owner">申请店长</string>
+    <string name="title_real_name_binging">实名认证</string>
 </resources>

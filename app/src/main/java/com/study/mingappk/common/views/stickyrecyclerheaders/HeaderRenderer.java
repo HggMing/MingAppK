@@ -57,7 +57,6 @@ public class HeaderRenderer {
   /**
    * Initializes a clipping rect for the header based on the margins of the header and the padding of the
    * recycler.
-   * FIXME: Currently right margin in VERTICAL orientation and bottom margin in HORIZONTAL
    * orientation are clipped so they look accurate, but the headers are not being drawn at the
    * correctly smaller width and height respectively.
    *

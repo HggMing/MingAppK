@@ -1,5 +1,9 @@
 package com.study.mingappk.tab2.message;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,13 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.litesuits.orm.db.assit.QueryBuilder;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.bean.MessageList;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.database.ChatMsgModel;
+import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.message.keyboard.ChatAppsGridView;
 import com.study.mingappk.tab2.message.keyboard.ChatKeyBoard;
@@ -24,13 +31,15 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import sj.keyboard.widget.EmoticonsEditText;
 import sj.keyboard.widget.FuncLayout;
 
-public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClickListener,FuncLayout.OnFuncKeyBoardListener {
+public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClickListener, FuncLayout.OnFuncKeyBoardListener {
 
     public static String UID = "接收消息，发送消息用户id";
     public static String USER_NAME = "显示的用户名，用于标题";
@@ -40,9 +49,13 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
     ChatKeyBoard ekBar;
 
     private ChatAdapter mAdapter = new ChatAdapter();
-    private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-    private List<MessageList.LBean> mList = new ArrayList<>();
-    private MessageList.LBean leftMessage;
+    private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+    private List<ChatMsgModel> mList = new ArrayList<>();
+    private ChatMsgModel chatMsg;
+    String me;
+    String other;
+    public static final String MYCHAT_ACTION = "com.study.mingappk.newmsg";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +67,34 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
         initEmoticonsKeyBoardBar();//自定义聊天键盘的配置
 
         configXRecyclerView();//XRecyclerView配置
-        getMessageList();//获取bbsList数据
+        MyDB.createDb(ChatActivity.this);
+        //接收实时消息BroadcastReciver
+        NewMsgBroadcastReceiver msReciver = new NewMsgBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MYCHAT_ACTION);
+        this.registerReceiver(msReciver, intentFilter);
+        initDatas();//初始化数据
+    }
+
+    private void initDatas() {
+        me = Hawk.get(APP.ME_UID);
+        other = getIntent().getStringExtra(UID);
+        QueryBuilder<ChatMsgModel> qb = new QueryBuilder<>(ChatMsgModel.class)
+                .whereEquals("_from", other)
+                .whereAppendAnd()
+                .whereEquals("_to", me)
+                .whereAppendAnd()
+                .whereEquals("_type", 1)
+                .whereAppendOr()
+                .whereEquals("_from", me)
+                .whereAppendAnd()
+                .whereEquals("_to", other)
+                .whereAppendAnd()
+                .whereEquals("_type", 0);
+
+        List<ChatMsgModel> chatMsgModels = MyDB.liteOrm.query(qb);
+        mList.addAll(chatMsgModels);
+        mAdapter.addData(mList);
     }
 
     //配置表情键盘
@@ -77,18 +117,18 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
                 ekBar.getEtChat().setText("");
             }
         });
-        ekBar.getEmoticonsToolBarView().addFixedToolItemView(false, R.mipmap.icon_add, null, new View.OnClickListener() {
+        /*ekBar.getEmoticonsToolBarView().addFixedToolItemView(false, R.mipmap.icon_add, null, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ChatActivity.this, "ADD", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, "添加表情库", Toast.LENGTH_SHORT).show();
             }
-        });
-        ekBar.getEmoticonsToolBarView().addToolItemView(R.mipmap.icon_setting, new View.OnClickListener() {
+        });*/
+       /* ekBar.getEmoticonsToolBarView().addToolItemView(R.mipmap.icon_setting, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ChatActivity.this, "SETTING", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, "表情库设置", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
     //配置RecyclerView
@@ -105,12 +145,31 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
         String me_uid = Hawk.get(APP.ME_UID, "");
         MyServiceClient.getService()
                 .getObservable_MessageList(me_uid, "yxj", 1)
+                .flatMap(new Func1<MessageList, Observable<MessageList.LBean>>() {
+                    @Override
+                    public Observable<MessageList.LBean> call(MessageList messageList) {
+                        return Observable.from(messageList.getL());
+                    }
+                })
+                .map(new Func1<MessageList.LBean, ChatMsgModel>() {
+                    @Override
+                    public ChatMsgModel call(MessageList.LBean lBean) {
+                        chatMsg = new ChatMsgModel();
+                        chatMsg.setType(ChatMsgModel.ITEM_TYPE_LEFT);//接收消息
+                        chatMsg.setSt(lBean.getSt());//消息时间
+                        chatMsg.setFrom(lBean.getFrom());//消息来源用户id
+                        chatMsg.setCt(lBean.getCt());//消息类型
+                        chatMsg.setTxt(lBean.getTxt());//类型：文字
+                        chatMsg.setLink(lBean.getLink());//类型：图片or语音
+                        return chatMsg;
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MessageList>() {
+                .subscribe(new Subscriber<ChatMsgModel>() {
                     @Override
                     public void onCompleted() {
-
+                        mAdapter.addData(mList);
                     }
 
                     @Override
@@ -119,10 +178,9 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
                     }
 
                     @Override
-                    public void onNext(MessageList messageList) {
-                        if (messageList != null && messageList.getErr() == 0) {
-                            mList.addAll(messageList.getL());
-                            mAdapter.setItem(mList);
+                    public void onNext(ChatMsgModel chatMsgModel) {
+                        if (chatMsgModel != null) {
+                            mList.add(chatMsgModel);
                         }
                     }
                 });
@@ -137,12 +195,44 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
     public void onItemLongClick(View view, int position) {
 
     }
-    private void OnSendBtnClick(String msg) {
+
+    /**
+     * 发送文字消息
+     *
+     * @param msg 消息内容
+     */
+    private void OnSendBtnClick(final String msg) {
         if (!TextUtils.isEmpty(msg)) {
-            MessageList.LBean bean = new MessageList.LBean();
-//            bean.setContent(msg);
-            mAdapter.addData(bean, true, false);
-            scrollToBottom();
+            chatMsg = new ChatMsgModel();
+            chatMsg.setType(ChatMsgModel.ITEM_TYPE_RIGHT);//发送消息
+            chatMsg.setFrom(me);
+            chatMsg.setTo(other);
+            chatMsg.setSt(String.valueOf(System.currentTimeMillis()));//发送消息时间：当前时间
+            chatMsg.setCt("0");//消息类型：文字
+            chatMsg.setTxt(msg);//消息内容
+            MyServiceClient.getService()
+                    .postObservabel_sendMessage(me, other, "0", "yxj", msg, null, null, 1, "2")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Result>() {
+                        @Override
+                        public void onCompleted() {
+                            chatMsg.setIsShowPro(0);
+                            mAdapter.addData(chatMsg, true, false);
+                            MyDB.insert(chatMsg);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            chatMsg.setIsShowPro(2);
+                            mAdapter.addData(chatMsg, true, false);
+                            MyDB.insert(chatMsg);
+                        }
+
+                        @Override
+                        public void onNext(Result result) {
+                        }
+                    });
         }
     }
 
@@ -161,14 +251,24 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
             }
         });
     }
+
     @Override
     public void OnFuncPop(int i) {
-        scrollToBottom();
     }
 
     @Override
     public void OnFuncClose() {
 
+    }
+
+    class NewMsgBroadcastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (MYCHAT_ACTION.equals(intent.getAction())){
+                initDatas();
+            }
+        }
     }
 }
 

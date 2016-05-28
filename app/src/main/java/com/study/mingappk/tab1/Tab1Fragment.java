@@ -1,6 +1,5 @@
 package com.study.mingappk.tab1;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.study.mingappk.R;
-import com.study.mingappk.test.Test3Activity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class Tab1Fragment extends Fragment {

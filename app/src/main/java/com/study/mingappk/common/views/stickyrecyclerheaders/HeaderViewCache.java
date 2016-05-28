@@ -27,7 +27,6 @@ public class HeaderViewCache implements HeaderProvider {
 
     View header = mHeaderViews.get(headerId);
     if (header == null) {
-      //TODO - recycle views
       RecyclerView.ViewHolder viewHolder = mAdapter.onCreateHeaderViewHolder(parent);
       mAdapter.onBindHeaderViewHolder(viewHolder, position);
       header = viewHolder.itemView;

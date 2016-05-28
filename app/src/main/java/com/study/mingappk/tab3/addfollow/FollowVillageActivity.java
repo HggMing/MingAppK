@@ -33,7 +33,7 @@ public class FollowVillageActivity extends AppCompatActivity {
     ViewPager mViewPager;
     @Bind(R.id.id_coordinatorlayout)
     CoordinatorLayout mCoordinatorLayout;
-    @Bind(R.id.toolbar_title)
+    @Bind(R.id.toolbar_title2)
     TextView toolbarTitle;
 
     // TabLayout中的tab标题

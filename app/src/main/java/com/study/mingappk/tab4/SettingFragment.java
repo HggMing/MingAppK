@@ -25,11 +25,16 @@ import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.mysetting.MySettingActivity;
+import com.study.mingappk.tab4.myviews.ListItem1;
+import com.study.mingappk.tab4.myviews.RealNameBindingActivity;
 import com.study.mingappk.tab4.scommon.SettingCommonActivity;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
+import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
 import com.study.mingappk.tmain.userlogin.LoginActivity;
 
 import butterknife.Bind;
+import butterknife.BindColor;
+import butterknife.BindDrawable;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -46,12 +51,27 @@ public class SettingFragment extends Fragment {
     TextView name;
     @Bind(R.id.sex)
     ImageView sex;
+    @Bind(R.id.store_manager)
+    ImageView storeManager;
     @Bind(R.id.account_number)
     TextView accountNumber;
+    @Bind(R.id.tv_is_binging)
+    TextView tvIsBinging;
+    @Bind(R.id.click_store_manager)
+    ListItem1 clickShop;
+    @BindColor(android.R.color.holo_red_light)
+    int red;
+    @BindColor(android.R.color.holo_blue_light)
+    int blue;
+
     private boolean isUpdataMyInfo;//是否更新完个人信息
     private UserInfo.DataEntity dataEntity;
 
     private String auth;
+    private boolean isBinding;//是否实名认证
+    private int isShopOwner;//是否是店长,1是0不是
+    private final int REQUEST_IS_REAL_NAME_BINGING=123;
+    private final int REQUEST_USER_INFO=122;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,9 +85,33 @@ public class SettingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
         auth = Hawk.get(APP.USER_AUTH);
-        isUpdataMyInfo = Hawk.get(APP.IS_UPDATA_MY_INFO, false);
+        isBinding = Hawk.get(APP.IS_REAL_NAME, false);
+        isShopOwner = Hawk.get(APP.IS_SHOP_OWNER);
 
         getUserInfoDetail();//在线获取用户信息
+
+        initView();//界面初始化
+    }
+
+    private void initView() {
+        //是否实名认证显示
+        if (isBinding) {
+            tvIsBinging.setText("已认证");
+            tvIsBinging.setTextColor(blue);
+        } else {
+            tvIsBinging.setText("未认证");
+            tvIsBinging.setTextColor(red);
+        }
+        //是否为店长显示
+        if (isShopOwner == 1) {
+            clickShop.setText("我的店");
+            clickShop.setIcon(R.mipmap.tab4_mystore);
+            storeManager.setVisibility(View.VISIBLE);//店长图标
+        } else {
+            clickShop.setText("申请店长");
+            clickShop.setIcon(R.mipmap.tab4_store_manager);
+            storeManager.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -80,11 +124,25 @@ public class SettingFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case 0:
+            case REQUEST_USER_INFO:
                 if (resultCode == Activity.RESULT_OK) {
                     //修改数据后在线更新个人信息
+                    isUpdataMyInfo = Hawk.get(APP.IS_UPDATA_MY_INFO, false);
                     if (!isUpdataMyInfo) {
                         getUserInfoDetail();
+                    }
+                }
+                break;
+            case REQUEST_IS_REAL_NAME_BINGING:
+                if (resultCode == Activity.RESULT_OK) {
+                    //是否实名认证显示
+                    isBinding = Hawk.get(APP.IS_REAL_NAME);
+                    if (isBinding) {
+                        tvIsBinging.setText("已认证");
+                        tvIsBinging.setTextColor(blue);
+                    } else {
+                        tvIsBinging.setText("未认证");
+                        tvIsBinging.setTextColor(red);
                     }
                 }
                 break;
@@ -224,15 +282,26 @@ public class SettingFragment extends Fragment {
                     if (userInfo != null && userInfo.getErr() == 0) {
                         dataEntity = userInfo.getData();
                         String headUrl = MyServiceClient.getBaseUrl() + dataEntity.getHead();
+                        Hawk.put(APP.ME_HEAD, headUrl);
                         String uName = dataEntity.getUname();
                         String sexNumber = dataEntity.getSex();
                         String accountNo = dataEntity.getLogname();
-
+                        //头像
                         Glide.with(mActivity)
                                 .load(headUrl)
                                 .bitmapTransform(new CropCircleTransformation(mActivity))
+                                .error(R.mipmap.defalt_user_circle)
                                 .into(iconHead);
-                        name.setText(uName);
+                        //昵称
+                        if (uName.isEmpty()) {
+                            String iphone = dataEntity.getPhone();
+                            String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
+                            name.setText(showName);
+                        } else {
+                            name.setText(uName);
+                        }
+
+                        //性别
                         if ("0".equals(sexNumber)) {
                             sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_boy));
                         } else {
@@ -261,10 +330,12 @@ public class SettingFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(UserDetailActivity.USER_INFO, dataEntity);
                 intent1.putExtras(bundle);
-                startActivityForResult(intent1, 0);
+                startActivityForResult(intent1, REQUEST_USER_INFO);
                 break;
             case R.id.click_identity_binding:
-                Toast.makeText(mActivity, "实名认证", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, "实名认证", Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent(mActivity, RealNameBindingActivity.class);
+                startActivityForResult(intent5,REQUEST_IS_REAL_NAME_BINGING);
                 break;
             case R.id.click_my_setting:
 //                Toast.makeText(mActivity, "我的", Toast.LENGTH_SHORT).show();
@@ -277,7 +348,30 @@ public class SettingFragment extends Fragment {
                 startActivity(intent3);
                 break;
             case R.id.click_store_manager:
-                Toast.makeText(mActivity, "申请店长", Toast.LENGTH_SHORT).show();
+                if (isShopOwner == 1) {
+                    Toast.makeText(mActivity, "进入店长管理页面", Toast.LENGTH_SHORT).show();
+                } else if (isBinding) {
+                    Intent intent4 = new Intent(mActivity, ApplyShopOwnerActivity.class);
+                    startActivity(intent4);
+                } else {
+                    Dialog_Model.Builder builder1 = new Dialog_Model.Builder(mActivity);
+                    builder1.setTitle("提示");
+                    builder1.setCannel(false);
+                    builder1.setMessage("你的账号尚未实名认证，请先进行实名认证。");
+                    builder1.setPositiveButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    Intent intent5 = new Intent(mActivity, RealNameBindingActivity.class);
+                                    startActivityForResult(intent5,REQUEST_IS_REAL_NAME_BINGING);
+                                    dialog.dismiss();
+                                }
+                            });
+                    if (!mActivity.isFinishing()) {
+                        builder1.create().show();
+                    }
+                }
                 break;
             case R.id.click_loyout:
 //                Toast.makeText(mActivity, "退出当前账号", Toast.LENGTH_SHORT).show();

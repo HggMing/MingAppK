@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,11 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UpdateAdressActivity extends BackActivity {
-    A1Provice a1Provice;
-    A2City a2City;
-    A3County a3County;
-    A4Town a4Town;
-    A5Village a5Village;
+
     @Bind(R.id.spprovince)
     Spinner spprovince;
     @Bind(R.id.spcity)
@@ -61,12 +59,18 @@ public class UpdateAdressActivity extends BackActivity {
     @Bind(R.id.line4)
     View line4;
 
+    private A1Provice a1Provice;
+    private A2City a2City;
+    private A3County a3County;
+    private A4Town a4Town;
+    private A5Village a5Village;
+
     private String selected_province_name = null;
     private String selected_city_name = null;
     private String selected_country_name = null;
     private String selected_town_name = null;
     private String selected_village_name = null;
-    private String vid=null;
+    private String vid = null;
     private String auth;
 
     @Override
@@ -75,7 +79,7 @@ public class UpdateAdressActivity extends BackActivity {
         setContentView(R.layout.activity_update_address);
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_update_adress);
-        auth= Hawk.get(APP.USER_AUTH);
+        auth = Hawk.get(APP.USER_AUTH);
 
         line1.setVisibility(View.GONE);
         spcity.setVisibility(View.GONE);
@@ -502,15 +506,30 @@ public class UpdateAdressActivity extends BackActivity {
         });
     }
 
-    @OnClick(R.id.select_vallige_btn)
-    public void onClick() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_submit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_submit) {
+            onItemClick();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void onItemClick() {
         if (selected_province_name != null &&
                 selected_city_name != null &&
                 selected_country_name != null &&
                 selected_town_name != null &&
                 selected_village_name != null) {
             final String newAddress = selected_province_name + selected_city_name + selected_country_name + selected_town_name + selected_village_name;
-            Log.d("mm",newAddress);
+            Log.d("mm", newAddress);
             MyServiceClient.getService().postCall_UpdateInfo(auth, null, null, null, vid)
                     .enqueue(new Callback<Result>() {
                         @Override

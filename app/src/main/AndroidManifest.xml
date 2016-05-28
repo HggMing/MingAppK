@@ -24,7 +24,21 @@
         <receiver android:name=".common.receiver.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 配置第三方Receiver -->
+        <!--
+        根据业务需要，在AndroidManifest.xml添加用于接收透传消息的BroadcastReceiver，
+        第三方开发者需要自行实现该BroadcastReceiver，以便接收CID信息和服务端推送的透传消息。
+        -->
+        <receiver
+            android:name=".common.receiver.PushReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
             </intent-filter>
         </receiver>
 
@@ -40,9 +54,6 @@
         <activity
             android:name=".tmain.MainActivity"
             android:label="@string/title_activity_main" />
-        <activity
-            android:name=".test.TestActivity"
-            android:label="@string/title_activity_test" />
         <activity
             android:name=".tmain.userlogin.LoginActivity"
             android:label="@string/title_activity_login" />
@@ -68,12 +79,6 @@
         <activity
             android:name=".tab4.selfinfo.UpdateAdressActivity"
             android:label="@string/title_activity_update_adress" />
-        <activity
-            android:name=".test.Test2Activity"
-            android:label="@string/title_activity_test2" />
-        <activity
-            android:name=".test.Test3Activity"
-            android:label="@string/title_activity_test3" />
         <activity
             android:name=".tab3.addfollow.FollowVillageActivity"
             android:label="@string/title_activity_follow_village" />
@@ -108,7 +113,17 @@
             android:name=".tab2.frienddetail.RemarkNameActivity"
             android:label="@string/title_activity_remark_name" />
         <activity android:name=".tab2.frienddetail.FriendBbsActivity" />
-        <activity android:name=".tab2.message.ChatActivity"></activity>
+        <activity android:name=".tab2.message.ChatActivity" />
+        <activity
+            android:name=".tmain.register.TestPhoneNumberActivity"
+            android:label="@string/title_activity_test_phone_number"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".tmain.register.RegisterActivity" />
+        <activity android:name=".tmain.WebViewActivity" />
+        <activity android:name=".tmain.register.ResetPasswordActivity" />
+        <activity android:name=".tmain.userlogin.facelogin.FaceLoginActivity" />
+        <activity android:name=".tab4.shop.ApplyShopOwnerActivity" />
+        <activity android:name=".tab4.myviews.RealNameBindingActivity"></activity>
     </application>
 
 </manifest>

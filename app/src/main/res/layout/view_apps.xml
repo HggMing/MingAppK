@@ -13,8 +13,8 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:horizontalSpacing="10dip"
+        android:horizontalSpacing="10dp"
         android:listSelector="@android:color/transparent"
         android:numColumns="4"
-        android:verticalSpacing="30dip" />
+        android:verticalSpacing="30dp" />
 </merge>

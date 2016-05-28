@@ -12,6 +12,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.tmain.MainActivity;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -26,7 +27,10 @@ public class MyDB {
         // 创建数据库
         if (liteOrm == null) {
             // 创建数据库,传入当前上下文对象和数据库名称
-            //DB_NAME = Environment.getExternalStorageDirectory().getAbsolutePath()+"/pinme.db";
+            File folder = new File(APP.FILE_PATH + "DataBase/");
+            if (!folder.exists()) {
+                boolean a = folder.mkdirs();
+            }
             DB_NAME = APP.FILE_PATH + "DataBase/"
                     + "message_to_" + Hawk.get(APP.ME_UID, "") + ".db";
             liteOrm = LiteOrm.newSingleInstance(_activity, DB_NAME);

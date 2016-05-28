@@ -20,8 +20,9 @@ import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.views.dialog.Dialog_Model;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.test.TestActivity;
 import com.study.mingappk.tmain.MainActivity;
+import com.study.mingappk.tmain.register.TestPhoneNumberActivity;
+import com.study.mingappk.tmain.userlogin.facelogin.FaceLoginActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,6 +56,8 @@ public class LoginActivity extends Activity {
     private boolean isRememberPwd;// 是否记住密码
 
     private String point;//弹出提示框内容
+    private static final int REGISTERED_PHONE = 123;//请求返回已注册手机号
+    public static final String REGISTERED_PHONE_NUMBER = "registered_phone_number";//返回已注册手机号
 
     public void onCreate(Bundle savedInstanceState) {
         BaseTools.setFullScreen(this);//隐藏状态栏
@@ -114,8 +117,11 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onNext(Login login) {
                         if (login.getErr() == 0) {
-                            Hawk.put(APP.USER_AUTH,login.getAuth());//保存认证信息
-                            Hawk.put(APP.ME_UID, login.getInfo().getUid());
+                            Hawk.chain()
+                                    .put(APP.USER_AUTH, login.getAuth())//保存认证信息
+                                    .put(APP.ME_UID, login.getInfo().getUid())
+                                    .put(APP.IS_SHOP_OWNER,login.getShopowner().getIs_shopowner())
+                                    .commit();
                             loginSuccess();
                             return;
                         }
@@ -151,8 +157,9 @@ public class LoginActivity extends Activity {
                         btn_login.setClickable(true);
                         btn_login.setText("登录");
                         Intent intent = new Intent();
-                        intent.setClass(LoginActivity.this, TestActivity.class);
-                        intent.putExtra("loginname", loginname);
+                        intent.setClass(LoginActivity.this, TestPhoneNumberActivity.class);
+                        intent.putExtra(TestPhoneNumberActivity.LOGIN_NAME, loginname);
+                        intent.putExtra(TestPhoneNumberActivity.TYPE, 1);
                         startActivity(intent);
                         dialog.dismiss();
                     }
@@ -196,17 +203,11 @@ public class LoginActivity extends Activity {
     private void loginSuccess() {
         SetCanEdit(true);
         if (isRememberPwd) {
-//            spEditor.putString(APP.LOGIN_NAME, loginname);
-//            spEditor.putString(APP.LOGIN_PASSWORD, loginpwd);
-//            spEditor.commit();
             Hawk.chain()
                     .put(APP.LOGIN_NAME, loginname)
                     .put(APP.LOGIN_PASSWORD, loginpwd)
                     .commit();
         } else {
-//            spEditor.putString(APP.LOGIN_NAME, "");
-//            spEditor.putString(APP.LOGIN_PASSWORD, "");
-//            spEditor.commit();
             Hawk.chain()
                     .put(APP.LOGIN_NAME, "")
                     .put(APP.LOGIN_PASSWORD, "")
@@ -235,25 +236,27 @@ public class LoginActivity extends Activity {
                 onClickLogin();
                 break;
             case R.id.btn_facelogin:
-//                Intent intent2 = new Intent();
-//                intent2.setClass(Activity_Login.this, Activity_FaceLogin.class);
-//                startActivity(intent2);
+                Intent intent3 = new Intent();
+                intent3.setClass(this, FaceLoginActivity.class);
+                startActivity(intent3);
 //                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.img_jzmm:
                 onClickJzmm();
                 break;
             case R.id.tv_reg:
-//                intent = new Intent();
-//                intent.setClass(this, Activity_CheckPhone.class);
-//                intent.putExtra("type", 1);
-//                startActivity(intent);
+                Intent intent = new Intent();
+                intent.setClass(this, TestPhoneNumberActivity.class);
+                intent.putExtra(TestPhoneNumberActivity.LOGIN_NAME, "");
+                intent.putExtra(TestPhoneNumberActivity.TYPE, 1);
+                startActivityForResult(intent, REGISTERED_PHONE);
                 break;
             case R.id.tv_forgetpwd:
-//                intent = new Intent();
-//                intent.setClass(this, Activity_CheckPhone.class);
-//                intent.putExtra("type", 2);
-//                startActivity(intent);
+                Intent intent2 = new Intent();
+                intent2.setClass(this, TestPhoneNumberActivity.class);
+                intent2.putExtra(TestPhoneNumberActivity.LOGIN_NAME, "");
+                intent2.putExtra(TestPhoneNumberActivity.TYPE, 2);
+                startActivity(intent2);
                 break;
         }
     }
@@ -298,4 +301,23 @@ public class LoginActivity extends Activity {
         loginByRx();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REGISTERED_PHONE:
+                if (resultCode == Activity.RESULT_OK) {
+                    String result = data.getStringExtra(REGISTERED_PHONE_NUMBER);
+                    et_name.setText(result);
+                    et_pwd.setText("");
+                    Hawk.chain()
+                            .put(APP.LOGIN_NAME, result)
+                            .put(APP.LOGIN_PASSWORD, "")
+                            .commit();
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -133,7 +133,6 @@ public class FollowR2Fragment extends Fragment {
 
                     }
                 });
-
     }
 
     /**
@@ -542,8 +541,7 @@ public class FollowR2Fragment extends Fragment {
                                 if (result != null) {
                                     if (result.getErr() == 0) {
                                         Toast.makeText(mActivity, result.getMsg(), Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent();
-                                        mActivity.setResult(Activity.RESULT_OK, intent);
+                                        mActivity.setResult(Activity.RESULT_OK);
                                         mActivity.finish();
                                     }
                                 }
