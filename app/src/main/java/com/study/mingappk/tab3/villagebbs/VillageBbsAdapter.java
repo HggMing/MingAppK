@@ -59,6 +59,14 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         auth = Hawk.get(APP.USER_AUTH);
         notifyDataSetChanged();
     }
+    public void setItem(List<BBSList.DataEntity.ListEntity> mList,List<BBSList.DataEntity.ListEntity> moreList) {
+        this.mList = mList;
+        auth = Hawk.get(APP.USER_AUTH);
+        if (moreList != null) {
+            mList.addAll(moreList);
+            this.notifyItemRangeInserted(this.mList.size(), moreList.size());
+        }
+    }
 
 
     /**

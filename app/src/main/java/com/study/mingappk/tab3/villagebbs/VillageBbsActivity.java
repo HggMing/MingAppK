@@ -137,8 +137,9 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                     @Override
                     public void onNext(BBSList bbsList) {
                         if (bbsList != null && bbsList.getErr() == 0) {
-                            mList.addAll(bbsList.getData().getList());
-                            mAdapter.setItem(mList);
+//                            mList.addAll(bbsList.getData().getList());
+//                            mAdapter.setItem(mList);
+                            mAdapter.setItem(mList, bbsList.getData().getList());
                         }
                     }
                 });

@@ -28,8 +28,8 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/expand"
         android:layout_toRightOf="@id/expand"
-        android:gravity="center"
         android:singleLine="true"
+        android:textColor="#666666"
         android:textSize="20sp"
         tools:text="推荐的村" />
 

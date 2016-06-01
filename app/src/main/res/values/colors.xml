@@ -45,5 +45,7 @@
     <color name="edit_bg">#EFEFF4</color>
     <color name="white_pressed1">#ffdfdfdf</color>
     <color name="darker_gray">#7a7a7a</color>
+    <color name="swipe_back">#777777</color>
+    <!--滑动返回背景颜色-->
 
 </resources>

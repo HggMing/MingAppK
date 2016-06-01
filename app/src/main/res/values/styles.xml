@@ -5,9 +5,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!--用于滑动返回的设置-->
-        <!--<item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--用于滑动返回的设置:背景透明，不设滑动关闭时背景就是黑的-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--Activity右滑进出的动画，觉得这个不好看随便换成自己的-->
+        <!--<item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>-->
+
         <!--修改Toolbar上menu的字体大小,5.0以上-->
         <item name="android:actionMenuTextAppearance">@style/MyMenuAppearance</item>
         <!--5.0以下-->
@@ -68,6 +71,28 @@
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--自定义搜索控件相关风格-->
+    <style name="MaterialSearchViewStyle">
+        <!-- search bar背景色 -->
+        <item name="searchBackground">@color/colorPrimary</item>
+        <!-- 语音搜索图标 -->
+        <item name="searchVoiceIcon">@drawable/ic_action_voice_search_inverted</item>
+        <!-- 清空文字图标 -->
+        <item name="searchCloseIcon">@drawable/ic_action_navigation_close_inverted</item>
+        <!-- 返回图标 -->
+        <item name="searchBackIcon">@mipmap/app_back</item>
+        <!-- 提供建议，图标 -->
+        <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
+        <!-- 建议列表背景色-->
+        <item name="searchSuggestionBackground">@android:color/white</item>
+        <!-- 文字和光标颜色 -->
+        <item name="android:textColor">@android:color/white</item>
+        <!-- hint文字颜色 -->
+        <!--<item name="android:textColorHint">@android:color/secondary_text_default_material_dark</item>-->
+        <!-- Hint文字内容-->
+        <item name="android:hint">@string/search_hint</item>
+    </style>
 
 
 </resources>

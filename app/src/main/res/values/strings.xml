@@ -10,6 +10,8 @@
     <string name="btn_text_speak">按住 说话</string>
     <!--网络相关-->
     <string name="common_ok">确定</string>
+
+    <string name="search_hint">请输入要搜索的村名</string>
     <!--Activity页面lable-->
 
     <string name="title_activity_splash">爱简单</string>

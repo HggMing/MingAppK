@@ -25,6 +25,9 @@ public abstract class BaseRecyclerViewAdapter<M,T extends RecyclerView.ViewHolde
     protected List<M> mList;
 
     public BaseRecyclerViewAdapter() {
+        if (mList == null) {
+            mList = new ArrayList<>();
+        }
     }
 
     /**
@@ -55,6 +58,9 @@ public abstract class BaseRecyclerViewAdapter<M,T extends RecyclerView.ViewHolde
     }
 
     public void addNewDatas(List<M> datas) {
+        if (mList == null) {
+            mList = new ArrayList<>();
+        }
         if (datas != null) {
             this.mList.addAll(0, datas);
             this.notifyItemRangeInserted(0, datas.size());
@@ -63,6 +69,9 @@ public abstract class BaseRecyclerViewAdapter<M,T extends RecyclerView.ViewHolde
     }
 
     public void addMoreDatas(List<M> datas) {
+        if (mList == null) {
+            mList = new ArrayList<>();
+        }
         if (datas != null) {
             this.mList.addAll(this.mList.size(), datas);
             this.notifyItemRangeInserted(this.mList.size(), datas.size());

@@ -66,7 +66,8 @@ public class BigImageViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         BaseTools.transparentStatusBar(this);//透明状态栏
 
-        mList = getIntent().getParcelableArrayListExtra(IMAGE_LIST);
+//        mList = getIntent().getParcelableArrayListExtra(IMAGE_LIST);
+        mList=getIntent().getExtras().getParcelableArrayList(IMAGE_LIST);
         index = getIntent().getIntExtra(IMAGE_INDEX, 0);
         mViewPager.setAdapter(new SamplePagerAdapter());
         mIndicator.setViewPager(mViewPager);//设置指示器

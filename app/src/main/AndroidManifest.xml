@@ -116,8 +116,7 @@
         <activity android:name=".tab2.message.ChatActivity" />
         <activity
             android:name=".tmain.register.TestPhoneNumberActivity"
-            android:label="@string/title_activity_test_phone_number"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_test_phone_number" />
         <activity android:name=".tmain.register.RegisterActivity" />
         <activity android:name=".tmain.WebViewActivity" />
         <activity android:name=".tmain.register.ResetPasswordActivity" />

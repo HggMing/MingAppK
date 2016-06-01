@@ -2,9 +2,6 @@ package com.study.mingappk.tab3.addfollow;
 
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,15 +11,12 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
-import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.databean.FollowTreeData;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BaseRecyclerViewAdapter;

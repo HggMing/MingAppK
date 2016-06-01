@@ -13,6 +13,7 @@ import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.MessageList;
+import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.RecommendVillage;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
@@ -243,6 +244,15 @@ public interface MyService {
             @Query("auth") String auth,
             @Query("page") int page,
             @Query("pagesize") int pagesize);
+
+    /**
+     * 查询村庄详细地址接口
+     * @param village_name  村名 关键字
+     * @return 详细村地址名
+     */
+    @GET("vill/qlist")
+    Observable<QueryVillageList> getObservable_QueryVillage(
+            @Query("village_name") String village_name);
 
     /**
      * 取消关注村圈接口

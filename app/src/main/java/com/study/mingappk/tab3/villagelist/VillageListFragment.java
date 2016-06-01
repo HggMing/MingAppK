@@ -64,7 +64,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
-        auth= Hawk.get(APP.USER_AUTH);
+        auth = Hawk.get(APP.USER_AUTH);
 
         setHasOptionsMenu(true);
         configXRecyclerView();//XRecyclerView配置
@@ -102,9 +102,9 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
             case 12355:
                 if (resultCode == Activity.RESULT_OK) {
                     //关注村圈后更新列表
-                    mAdapter.setItem(null);
+                    mAdapter.clear();
                     mList.clear();
-                    page=1;
+                    page = 1;
                     getDataList(page);
                 }
                 break;
@@ -132,7 +132,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
             public void onRefresh() {
                 mAdapter.setItem(null);
                 mList.clear();
-                page=1;
+                page = 1;
                 getDataList(page);
                 mXRecyclerView.refreshComplete();
             }
@@ -186,7 +186,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
         String villageName = mList.get(position).getVillage_name();
         Dialog_Model.Builder builder = new Dialog_Model.Builder(mActivity);
         builder.setTitle("提示");
-        builder.setMessage("取消关注" + villageName + "?");
+        builder.setMessage("取消关注" + villageName + "?" + "\n" + "(取消关注后，你将不再看到该村的任何信息，同时该村将会从“我的村”列表中移除！)");
         builder.setNegativeButton("确定",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -213,24 +213,31 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
      */
     private void removeFromServer(final int position) {
         String vid = mList.get(position).getVillage_id();
-        MyServiceClient.getService().getCall_DelFollowList(auth, vid).enqueue(new Callback<Result>() {
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-                if (response.isSuccessful()) {
-                    Result result = response.body();
-                    if (result != null && result.getErr() == 0) {
-                        // Toast.makeText(mActivity, result.getMsg(), Toast.LENGTH_SHORT).show();
-                        mAdapter.notifyItemRemoved(position + 1);
-                        mList.remove(position);
-                        mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
+        MyServiceClient.getService()
+                .getCall_DelFollowList(auth, vid)
+                .enqueue(new Callback<Result>() {
+                    @Override
+                    public void onResponse(Call<Result> call, Response<Result> response) {
+                        if (response.isSuccessful()) {
+                            Result result = response.body();
+                            if (result != null && result.getErr() == 0) {
+                                // Toast.makeText(mActivity, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                if (position == 0) {
+                                    mList.remove(position);
+                                    mAdapter.setItem(mList);
+                                } else {
+                                    mAdapter.notifyItemRemoved(position + 1);
+                                    mList.remove(position);
+                                    mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
+                                }
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Result> call, Throwable t) {
-                JUtils.Log("取消关注村圈出错：" + t.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Result> call, Throwable t) {
+                        JUtils.Log("取消关注村圈出错：" + t.getMessage());
+                    }
+                });
     }
 }
