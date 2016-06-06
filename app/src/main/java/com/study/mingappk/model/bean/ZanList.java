@@ -1,5 +1,8 @@
 package com.study.mingappk.model.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -66,7 +69,7 @@ public class ZanList {
             this.list = list;
         }
 
-        public static class ListBean {
+        public static class ListBean implements Parcelable {
             private String id;
             private String uid;
             private String tid;
@@ -121,6 +124,45 @@ public class ZanList {
             public void setName(String name) {
                 this.name = name;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.id);
+                dest.writeString(this.uid);
+                dest.writeString(this.tid);
+                dest.writeString(this.ctime);
+                dest.writeString(this.user_head);
+                dest.writeString(this.name);
+            }
+
+            public ListBean() {
+            }
+
+            protected ListBean(Parcel in) {
+                this.id = in.readString();
+                this.uid = in.readString();
+                this.tid = in.readString();
+                this.ctime = in.readString();
+                this.user_head = in.readString();
+                this.name = in.readString();
+            }
+
+            public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+                @Override
+                public ListBean createFromParcel(Parcel source) {
+                    return new ListBean(source);
+                }
+
+                @Override
+                public ListBean[] newArray(int size) {
+                    return new ListBean[size];
+                }
+            };
         }
     }
 }

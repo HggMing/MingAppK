@@ -97,54 +97,17 @@
                 android:background="@color/stand_bg"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/click_identity_binding"
+
+                <com.study.mingappk.tab4.safesetting.ListItem1
+                    android:id="@+id/click_safe_center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/list_item_selector"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="13dp"
-                    android:paddingLeft="15sp"
-                    android:paddingRight="15sp"
-                    android:paddingTop="13dp">
-
-                    <View
-                        android:layout_width="@dimen/project_icon_width"
-                        android:layout_height="@dimen/project_icon_width"
-                        android:layout_marginRight="15dp"
-                        android:background="@mipmap/tab4_identity_binding" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="实名认证"
-                        android:textColor="#222222"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_is_binging"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="6dp"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:textSize="16sp"
-                        tools:text="未认证" />
-
-                    <View
-                        android:id="@+id/arrow"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:background="@mipmap/user_home_arrow" />
-                </LinearLayout>
-
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_safe_center"
+                    listItem1:itemTitle="账号安全" />
                 <include layout="@layout/divide_1_12" />
 
-                <com.study.mingappk.tab4.myviews.ListItem1
+                <com.study.mingappk.tab4.safesetting.ListItem1
                     android:id="@+id/click_my_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -154,7 +117,7 @@
 
                 <include layout="@layout/divide_1_12" />
 
-                <com.study.mingappk.tab4.myviews.ListItem1
+                <com.study.mingappk.tab4.safesetting.ListItem1
                     android:id="@+id/click_setting_common"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -164,7 +127,7 @@
 
                 <include layout="@layout/divide_1_12" />
 
-                <com.study.mingappk.tab4.myviews.ListItem1
+                <com.study.mingappk.tab4.safesetting.ListItem1
                     android:id="@+id/click_store_manager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -174,7 +137,7 @@
 
                 <include layout="@layout/divide_15_top" />
 
-                <com.study.mingappk.tab4.myviews.ListItem1
+                <com.study.mingappk.tab4.safesetting.ListItem1
                     android:id="@+id/click_loyout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

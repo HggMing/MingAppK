@@ -95,7 +95,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             Glide.with(mContext).load(imageUrl)
                     .bitmapTransform(new CropCircleTransformation(mContext))
                     .error(R.mipmap.defalt_user_circle)
-                    .into(holder.userHead);//关注村圈图
+                    .into(holder.userHead);
         }
     }
 

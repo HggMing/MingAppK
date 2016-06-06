@@ -83,13 +83,17 @@ public class MainActivity extends AppCompatActivity {
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
 
+        initView();
+    }
+
+    private void initView() {
         //个推,初始化SDK
 //        PushManager.getInstance().initialize(this.getApplicationContext());
         //接收消息BroadcastReciver
-        MyMsgBroadcastReceiver msReciver = new MyMsgBroadcastReceiver();
+        /*MyMsgBroadcastReceiver msReciver = new MyMsgBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MyMsgBroadcastReceiver.MYMSG_ACTION);
-        this.registerReceiver(msReciver, intentFilter);
+        this.registerReceiver(msReciver, intentFilter);*/
 
         fragments.add(new Tab1Fragment());
         fragments.add(new FriendListFragment());
@@ -104,27 +108,14 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(new MyPagerAdapter());
 
         isFirstRun = Hawk.get(APP.IS_FIRST_RUN, true);
-        if(isFirstRun){
-            viewPager.setCurrentItem(2,true);
+        if (isFirstRun) {
+            viewPager.setCurrentItem(2, true);
             toolbarTitle.setText(getResources().getText(R.string.tab3_main));
             tab3Guide.setVisibility(View.VISIBLE);
             Hawk.put(APP.IS_FIRST_RUN, false);
-        }else{
+        } else {
             toolbarTitle.setText(getResources().getText(R.string.tab1_main));
         }
-
-        //android6.0 获取运行时权限
-        performCodeWithPermission("为正常体验软件，请进行必要的授权！", new PermissionCallback() {
-            @Override
-            public void hasPermission() {
-                //执行获得权限后相关代码
-            }
-
-            @Override
-            public void noPermission() {
-
-            }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     @OnClick({R.id.tab3_guide, R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout})

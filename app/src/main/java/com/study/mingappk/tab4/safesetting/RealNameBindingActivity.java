@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4.myviews;
+package com.study.mingappk.tab4.safesetting;
 
 import android.os.Bundle;
 import android.widget.Switch;
@@ -11,7 +11,6 @@ import com.study.mingappk.tmain.BackActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
 
 public class RealNameBindingActivity extends BackActivity {
 
@@ -23,7 +22,7 @@ public class RealNameBindingActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_name_binding);
         ButterKnife.bind(this);
-        setToolbarTitle(R.string.title_real_name_binging);
+        setToolbarTitle(R.string.title_activity_real_name_binging);
 
         boolean isBinging=Hawk.get(APP.IS_REAL_NAME, false);
         if(isBinging){

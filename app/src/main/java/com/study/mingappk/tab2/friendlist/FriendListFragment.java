@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +55,11 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     final private static int PAGE_SIZE = 50;//
     private int page = 1;
     private String auth;
+    private List<String> friendUids = new ArrayList<>();
 
     private CharacterParser characterParser;
     private PinyinComparator pinyinComparator;
-    private final int IF_REMARK_NAME_CHANGE=1001;//如果修改备注名
+    private final int IF_REMARK_NAME_CHANGE = 1001;//如果修改备注名
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
-        auth= Hawk.get(APP.USER_AUTH);
+        auth = Hawk.get(APP.USER_AUTH);
 //        mActivity.setSupportActionBar(toolbar2);
 
         initView();
@@ -185,6 +187,15 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
 
                         combinationLists(friendList);
 
+                        //储存好友uid信息
+                        for (int i = 0; i < mList.size(); i++) {
+                            String uid = mList.get(i).getUid();
+                            if (uid != null) {
+                                friendUids.add(uid);
+                            }
+                        }
+                        Hawk.put(APP.FRIEND_LIST_UID, friendUids);
+
                         if (mAdapter == null) {
                             mAdapter = new FriendListAdapter(mActivity, mList);
                             configXRecyclerView();//XRecyclerView配置
@@ -275,8 +286,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
             Intent intent = new Intent(mActivity, FriendDetailActivity.class);
             String uid = mList.get(position).getUid();
             intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
-            intent.putExtra(FriendDetailActivity.ITEM_POSTION,position);
-            startActivityForResult(intent,IF_REMARK_NAME_CHANGE);
+            startActivityForResult(intent, IF_REMARK_NAME_CHANGE);
         }
     }
 
@@ -292,7 +302,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
             case IF_REMARK_NAME_CHANGE:
                 if (resultCode == Activity.RESULT_OK) {
                     mList.clear();
-                   getDataList();
+                    getDataList();
                 }
                 break;
         }

@@ -42,5 +42,6 @@
     <string name="title_activity_reset_password">找回密码</string>
     <string name="title_activity_face_login">人脸登录</string>
     <string name="title_activity_apply_shop_owner">申请店长</string>
-    <string name="title_real_name_binging">实名认证</string>
+    <string name="title_activity_real_name_binging">实名认证</string>
+    <string name="title_activity_safe_setting">账号安全</string>
 </resources>

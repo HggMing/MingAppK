@@ -25,8 +25,9 @@ import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.mysetting.MySettingActivity;
-import com.study.mingappk.tab4.myviews.ListItem1;
-import com.study.mingappk.tab4.myviews.RealNameBindingActivity;
+import com.study.mingappk.tab4.safesetting.ListItem1;
+import com.study.mingappk.tab4.safesetting.RealNameBindingActivity;
+import com.study.mingappk.tab4.safesetting.SafeSettingActivity;
 import com.study.mingappk.tab4.scommon.SettingCommonActivity;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
 import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
@@ -34,7 +35,6 @@ import com.study.mingappk.tmain.userlogin.LoginActivity;
 
 import butterknife.Bind;
 import butterknife.BindColor;
-import butterknife.BindDrawable;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -55,22 +55,16 @@ public class SettingFragment extends Fragment {
     ImageView storeManager;
     @Bind(R.id.account_number)
     TextView accountNumber;
-    @Bind(R.id.tv_is_binging)
-    TextView tvIsBinging;
     @Bind(R.id.click_store_manager)
     ListItem1 clickShop;
-    @BindColor(android.R.color.holo_red_light)
-    int red;
-    @BindColor(android.R.color.holo_blue_light)
-    int blue;
+
 
     private boolean isUpdataMyInfo;//是否更新完个人信息
     private UserInfo.DataEntity dataEntity;
 
     private String auth;
-    private boolean isBinding;//是否实名认证
     private int isShopOwner;//是否是店长,1是0不是
-    private final int REQUEST_IS_REAL_NAME_BINGING=123;
+    private boolean isBinding;//是否实名认证
     private final int REQUEST_USER_INFO=122;
 
     @Override
@@ -85,7 +79,7 @@ public class SettingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
         auth = Hawk.get(APP.USER_AUTH);
-        isBinding = Hawk.get(APP.IS_REAL_NAME, false);
+
         isShopOwner = Hawk.get(APP.IS_SHOP_OWNER);
 
         getUserInfoDetail();//在线获取用户信息
@@ -94,14 +88,6 @@ public class SettingFragment extends Fragment {
     }
 
     private void initView() {
-        //是否实名认证显示
-        if (isBinding) {
-            tvIsBinging.setText("已认证");
-            tvIsBinging.setTextColor(blue);
-        } else {
-            tvIsBinging.setText("未认证");
-            tvIsBinging.setTextColor(red);
-        }
         //是否为店长显示
         if (isShopOwner == 1) {
             clickShop.setText("我的店");
@@ -130,19 +116,6 @@ public class SettingFragment extends Fragment {
                     isUpdataMyInfo = Hawk.get(APP.IS_UPDATA_MY_INFO, false);
                     if (!isUpdataMyInfo) {
                         getUserInfoDetail();
-                    }
-                }
-                break;
-            case REQUEST_IS_REAL_NAME_BINGING:
-                if (resultCode == Activity.RESULT_OK) {
-                    //是否实名认证显示
-                    isBinding = Hawk.get(APP.IS_REAL_NAME);
-                    if (isBinding) {
-                        tvIsBinging.setText("已认证");
-                        tvIsBinging.setTextColor(blue);
-                    } else {
-                        tvIsBinging.setText("未认证");
-                        tvIsBinging.setTextColor(red);
                     }
                 }
                 break;
@@ -322,7 +295,7 @@ public class SettingFragment extends Fragment {
 
     }
 
-    @OnClick({R.id.click_user, R.id.click_identity_binding, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
+    @OnClick({R.id.click_user, R.id.click_safe_center, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.click_user:
@@ -332,10 +305,10 @@ public class SettingFragment extends Fragment {
                 intent1.putExtras(bundle);
                 startActivityForResult(intent1, REQUEST_USER_INFO);
                 break;
-            case R.id.click_identity_binding:
-//                Toast.makeText(mActivity, "实名认证", Toast.LENGTH_SHORT).show();
-                Intent intent5 = new Intent(mActivity, RealNameBindingActivity.class);
-                startActivityForResult(intent5,REQUEST_IS_REAL_NAME_BINGING);
+            case R.id.click_safe_center:
+//                Toast.makeText(mActivity, "账号安全", Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent(mActivity, SafeSettingActivity.class);
+                startActivity(intent5);
                 break;
             case R.id.click_my_setting:
 //                Toast.makeText(mActivity, "我的", Toast.LENGTH_SHORT).show();
@@ -348,6 +321,7 @@ public class SettingFragment extends Fragment {
                 startActivity(intent3);
                 break;
             case R.id.click_store_manager:
+                isBinding = Hawk.get(APP.IS_REAL_NAME, false);
                 if (isShopOwner == 1) {
                     Toast.makeText(mActivity, "进入店长管理页面", Toast.LENGTH_SHORT).show();
                 } else if (isBinding) {
@@ -364,7 +338,7 @@ public class SettingFragment extends Fragment {
                                 public void onClick(DialogInterface dialog,
                                                     int which) {
                                     Intent intent5 = new Intent(mActivity, RealNameBindingActivity.class);
-                                    startActivityForResult(intent5,REQUEST_IS_REAL_NAME_BINGING);
+                                    startActivity(intent5);
                                     dialog.dismiss();
                                 }
                             });

@@ -1,8 +1,9 @@
-package com.study.mingappk.tab3.villagebbs;
+package com.study.mingappk.tab3.villagebbs.likeusers;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import com.jude.utils.JUtils;
 import com.study.mingappk.R;
 import com.study.mingappk.model.bean.ZanList;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,6 @@ public class LikeUsersArea {
         likeUsersLayout = (LinearLayout) convertView.findViewById(R.id.likeUsersLayout);
         likeUsersLayout.getViewTreeObserver().addOnPreDrawListener(new MyPreDraw(likeUsersAllLayout, likeUsersLayout));
     }
-
 
     private class MyPreDraw implements ViewTreeObserver.OnPreDrawListener {
 
@@ -111,7 +112,9 @@ public class LikeUsersArea {
         }
     }
 
+
     public void displayLikeUser(ZanList zList) {
+        //点赞为0，不显示点赞区域
         if ("0".equals(zList.getData().getCnt())) {
             likeUsersAllLayout.setVisibility(View.GONE);
         } else {
@@ -123,7 +126,7 @@ public class LikeUsersArea {
             return;
         }
 
-        int readUserCount = Integer.parseInt(zList.getData().getCnt());//点赞总数
+        int readUserCount = Integer.parseInt(zList.getData().getCnt());
         List<ZanList.DataBean.ListBean> displayUsers = new ArrayList<>();
         displayUsers.addAll(zList.getData().getList());
 
@@ -131,7 +134,7 @@ public class LikeUsersArea {
 
 //        Log.d("mm", "ddd disgood " + imageCount + "," + displayUsers.size() + "," + readUserCount);
 
-        //  likeUsersLayout.getChildAt(imageCount).setTag(maopaoData.id);
+        likeUsersLayout.getChildAt(imageCount).setTag(zList);
 
         if (displayUsers.size() < imageCount) {
             if (readUserCount <= imageCount) {
@@ -177,7 +180,7 @@ public class LikeUsersArea {
         for (int i = 0; i < imageCount; ++i) {
             View v = likeUsersLayout.getChildAt(i);
             if (v.getVisibility() == View.VISIBLE) {
-                //    v.setTag(displayUsers.get(i).global_key);
+                v.setTag(R.id.tag_like_user_id, displayUsers.get(i).getUid());
             } else {
                 break;
             }
@@ -185,7 +188,7 @@ public class LikeUsersArea {
     }
 
 
-    private void updateImageDisplay(List<ZanList.DataBean.ListBean> likeUsers, int i) {
+    private void updateImageDisplay(final List<ZanList.DataBean.ListBean> likeUsers, final int i) {
         ImageView image = (ImageView) likeUsersLayout.getChildAt(i);
         image.setVisibility(View.VISIBLE);
 
@@ -196,13 +199,19 @@ public class LikeUsersArea {
                 .into(image);
     }
 
+
     View.OnClickListener onClickLikeUsrs = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(mContext,"点击进入显示所有点赞人员页面",Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(getActivity(), LikeUsersListActivity_class);
-//            intent.putExtra("id", (int) v.getTag());
-//            startActivity(intent);
+//            Toast.makeText(mContext, "点击进入显示所有点赞人员页面", Toast.LENGTH_SHORT).show();
+            ZanList mList = (ZanList) v.getTag();
+            int Count = Integer.parseInt(mList.getData().getCnt());//点赞总数
+            List<ZanList.DataBean.ListBean> likeUsers = mList.getData().getList();
+
+            Intent intent = new Intent(mContext, LikeUserListActivity.class);
+            intent.putExtra(LikeUserListActivity.LIKE_USER_COUNT, Count);
+            intent.putParcelableArrayListExtra(LikeUserListActivity.LIKE_USER_LIST, (ArrayList<? extends Parcelable>) likeUsers);
+            mContext.startActivity(intent);
         }
     };
 

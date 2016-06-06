@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.views.sms_autofill.SmsObserver;
+import com.study.mingappk.common.views.sms_autofill.SmsResponseCallback;
+import com.study.mingappk.common.views.sms_autofill.VerificationCodeSmsFilter;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
@@ -47,6 +50,8 @@ public class ResetPasswordActivity extends BackActivity {
     private String resetPhone;//重置密码的手机号
     private String sign;//验证手机号时，返回的签名
 
+    private SmsObserver smsObserver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +62,33 @@ public class ResetPasswordActivity extends BackActivity {
         resetPhone = getIntent().getStringExtra(PHONE);
         sign = getIntent().getStringExtra(SIGN);
         getRCode();//获取验证码
-
+        autoFillRCode();//自动填写验证码
     }
+
+    private void autoFillRCode() {
+        //初始化
+        smsObserver = new SmsObserver(this, new SmsResponseCallback() {
+            @Override
+            public void onCallbackSmsContent(String smsContent) {
+                //这里接收短信
+                etRcode.setText(smsContent);
+            }
+        }, new VerificationCodeSmsFilter("10690498241618"));
+        //注册短信变化监听器
+        smsObserver.registerSMSObserver();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //在不需要再使用短信接收功能的时候,注销短信监听器
+        smsObserver.unregisterSMSObserver();
+    }
+
 
     private void getRCode() {
         MyServiceClient.getService()
-                .getObservable_RCode(sign,2, resetPhone)
+                .getObservable_RCode(sign, 2, resetPhone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result>() {
@@ -120,12 +146,13 @@ public class ResetPasswordActivity extends BackActivity {
 
     /**
      * 重置密码
+     *
      * @param code 验证码
-     * @param pwd 密码
+     * @param pwd  密码
      */
     private void resetPassword(String code, String pwd) {
         MyServiceClient.getService()
-                .postObservable_ResetPassword(resetPhone,pwd, code, sign)
+                .postObservable_ResetPassword(resetPhone, pwd, code, sign)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result>() {
@@ -146,10 +173,10 @@ public class ResetPasswordActivity extends BackActivity {
                         if (result.getErr() == 0) {
                             //重置密码成功后，返回登录界面
                             Hawk.chain()
-                                    .put(APP.LOGIN_NAME,resetPhone)
-                                    .put(APP.LOGIN_PASSWORD,"")
+                                    .put(APP.LOGIN_NAME, resetPhone)
+                                    .put(APP.LOGIN_PASSWORD, "")
                                     .commit();
-                            Intent intent=new Intent(ResetPasswordActivity.this, LoginActivity.class);
+                            Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
                     }

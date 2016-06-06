@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4.myviews;
+package com.study.mingappk.tab4.safesetting;
 
 import android.content.Context;
 import android.content.res.TypedArray;

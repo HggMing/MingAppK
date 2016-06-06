@@ -22,7 +22,7 @@
             android:layout_width="80.0dp"
             android:layout_height="80.0dp"
             android:layout_gravity="center"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/shape_circle"
             android:gravity="center"
             android:textColor="#ffffffff"
             android:textSize="30sp"

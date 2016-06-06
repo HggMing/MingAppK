@@ -18,11 +18,11 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.message.ChatActivity;
-import com.study.mingappk.tab4.selfinfo.UpdateUnameActivity;
 import com.study.mingappk.tmain.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +35,6 @@ import rx.schedulers.Schedulers;
 public class FriendDetailActivity extends BackActivity {
 
     public static String FRIEND_UID = "所选择用户的UID";
-    public static String ITEM_POSTION = "所选用户的索引号";
     public static String NEW_NAME = "添加或修改后的用户备注名";
     @Bind(R.id.icon_head)
     ImageView iconHead;
@@ -65,10 +64,16 @@ public class FriendDetailActivity extends BackActivity {
     Button btnSend;
     @Bind(R.id.rootLayout)
     LinearLayout rootLayout;
+    @Bind(R.id.fd_photos)
+    RelativeLayout fdPhotos;
+    @Bind(R.id.line_12)
+    View line12;
 
-    FriendDetail.DataBean.UserinfoBean userinfoBean;
-    String uid;
-    private final int SET_REMARK_NAME=11;//设置备注名
+    private FriendDetail.DataBean.UserinfoBean userinfoBean;
+    private String uid;
+    private final int SET_REMARK_NAME = 11;//设置备注名
+    private boolean isFriend;//用于判定是否为好友
+    private boolean isMySelf;//用于判定是否为自己
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +82,31 @@ public class FriendDetailActivity extends BackActivity {
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_friend_detail);
 
+        //用于判定是否为好友
+        uid = getIntent().getStringExtra(FRIEND_UID);
+        List<String> friendUids = Hawk.get(APP.FRIEND_LIST_UID);
+        isFriend = friendUids.contains(uid);
+        //判定是否为本人
+        String me_uid=Hawk.get(APP.ME_UID);
+        isMySelf=me_uid.equals(uid);
+
         getFriendDetail();
     }
 
     private void getFriendDetail() {
+        //非好友界面设置
+        if (!isFriend) {
+            line12.setVisibility(View.GONE);
+            fdPhotos.setVisibility(View.GONE);
+            fdMore.setVisibility(View.GONE);
+            btnSend.setText("请求添加为联系人");
+        }
+        //点击自己，屏蔽发消息
+        if (isMySelf) {
+            btnSend.setVisibility(View.GONE);
+        }
+
         String auth = Hawk.get(APP.USER_AUTH);
-        uid = getIntent().getStringExtra(FRIEND_UID);
         Subscriber<FriendDetail> subscriber = new Subscriber<FriendDetail>() {
             @Override
             public void onCompleted() {
@@ -97,10 +121,7 @@ public class FriendDetailActivity extends BackActivity {
             @Override
             public void onNext(FriendDetail friendDetail) {
                 userinfoBean = friendDetail.getData().getUserinfo();
-                //点击自己，屏蔽发消息
-                if (getIntent().getIntExtra(ITEM_POSTION, 0) == 3) {
-                    btnSend.setVisibility(View.GONE);
-                }
+
                 //用户头像
                 String headUrl = MyServiceClient.getBaseUrl() + userinfoBean.getHead();
                 Glide.with(FriendDetailActivity.this)
@@ -140,20 +161,22 @@ public class FriendDetailActivity extends BackActivity {
                         + userinfoBean.getTown_name() + userinfoBean.getVillage_name();
                 getAddress.setText(address);
                 //个人相册图片
-                List<FriendDetail.DataBean.BbsTopPic4Bean> bbsTopPic4List = friendDetail.getData().getBbs_top_pic4();
-                List<ImageView> imageViews = new ArrayList<>();
-                imageViews.add(fdPhoto0);
-                imageViews.add(fdPhoto1);
-                imageViews.add(fdPhoto2);
-                imageViews.add(fdPhoto3);
-                if (bbsTopPic4List.isEmpty()) {
-                    fdPhotosL.setVisibility(View.GONE);
-                } else {
-                    for (int i = 0; i < 4; i++) {
-                        Glide.with(FriendDetailActivity.this)
-                                .load(MyServiceClient.getBaseUrl() + bbsTopPic4List.get(i).getSurl_1())
-                                .centerCrop()
-                                .into(imageViews.get(i));
+                if (isFriend) {
+                    List<FriendDetail.DataBean.BbsTopPic4Bean> bbsTopPic4List = friendDetail.getData().getBbs_top_pic4();
+                    List<ImageView> imageViews = new ArrayList<>();
+                    imageViews.add(fdPhoto0);
+                    imageViews.add(fdPhoto1);
+                    imageViews.add(fdPhoto2);
+                    imageViews.add(fdPhoto3);
+                    if (bbsTopPic4List.isEmpty()) {
+                        fdPhotosL.setVisibility(View.GONE);
+                    } else {
+                        for (int i = 0; i < 4; i++) {
+                            Glide.with(FriendDetailActivity.this)
+                                    .load(MyServiceClient.getBaseUrl() + bbsTopPic4List.get(i).getSurl_1())
+                                    .centerCrop()
+                                    .into(imageViews.get(i));
+                        }
                     }
                 }
             }
@@ -166,7 +189,7 @@ public class FriendDetailActivity extends BackActivity {
     }
 
 
-    @OnClick({R.id.fd_remarks, R.id.fd_photos, R.id.fd_more,R.id.btn_send})
+    @OnClick({R.id.fd_remarks, R.id.fd_photos, R.id.fd_more, R.id.btn_send})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fd_remarks:
@@ -176,7 +199,7 @@ public class FriendDetailActivity extends BackActivity {
                 startActivityForResult(intent1, SET_REMARK_NAME);
                 break;
             case R.id.fd_photos:
-                Intent intent2 = new Intent(this,FriendBbsActivity.class);
+                Intent intent2 = new Intent(this, FriendBbsActivity.class);
                 intent2.putExtra(FriendBbsActivity.UID, uid);
                 intent2.putExtra(FriendBbsActivity.USER_NAME, name.getText().toString());
                 startActivity(intent2);
@@ -186,10 +209,14 @@ public class FriendDetailActivity extends BackActivity {
                 break;
             case R.id.btn_send:
 //                Toast.makeText(FriendDetailActivity.this, "发消息", Toast.LENGTH_SHORT).show();
-                Intent intent4 = new Intent(this,ChatActivity.class);
-                intent4.putExtra(ChatActivity.UID, uid);
-                intent4.putExtra(ChatActivity.USER_NAME, name.getText().toString());
-                startActivity(intent4);
+                if (isFriend) {
+                    Intent intent4 = new Intent(this, ChatActivity.class);
+                    intent4.putExtra(ChatActivity.UID, uid);
+                    intent4.putExtra(ChatActivity.USER_NAME, name.getText().toString());
+                    startActivity(intent4);
+                } else {
+                    Toast.makeText(FriendDetailActivity.this, "添加好友", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

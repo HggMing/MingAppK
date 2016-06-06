@@ -25,6 +25,7 @@ public class APP extends Application {
     public static final String USER_AUTH = "user_auth";//用户认证信息
     public static final String IS_SHOP_OWNER = "is_shop_owner";//是否为店长，1是0不是
     public static final String IS_REAL_NAME = "is_real_name_binging";//是否实名认证。
+    public static final String FRIEND_LIST_UID="friend_list_uid";//好友uid，用于判定是否为好友。
 
 
     /**
@@ -34,12 +35,6 @@ public class APP extends Application {
 
     public static APP getInstance() {
         return instance;
-    }
-
-    public static final Bus bus = new Bus();
-
-    public static Bus getBus() {
-        return bus;
     }
 
     @Override

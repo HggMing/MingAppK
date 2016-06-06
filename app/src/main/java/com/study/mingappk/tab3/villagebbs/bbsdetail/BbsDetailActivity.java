@@ -39,7 +39,8 @@ import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ZanList;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tab3.villagebbs.LikeUsersArea;
+import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
+import com.study.mingappk.tab3.villagebbs.likeusers.LikeUsersArea;
 import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
 import com.study.mingappk.tmain.BackActivity;
 
@@ -104,7 +105,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_bbs_detail);
 
-        auth= Hawk.get(APP.USER_AUTH);
+        auth = Hawk.get(APP.USER_AUTH);
 
 
         bbsDetail = getIntent().getParcelableExtra(BBS_DETAIL);
@@ -125,6 +126,16 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                 .error(R.mipmap.defalt_user_circle)
                 // .placeholder(R.mipmap.defalt_user_circle)
                 .into(bbsHead);
+
+        bbsHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BbsDetailActivity.this, FriendDetailActivity.class);
+                String uid = bbsDetail.getUid();
+                intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
+                startActivity(intent);
+            }
+        });
         //发帖人昵称
         String userName = bbsDetail.getUname();
         if (userName.isEmpty()) {
@@ -200,7 +211,13 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         View.OnClickListener mOnClickUser = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(BbsDetailActivity.this, "点击点赞人头像", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BbsDetailActivity.this, "点击点赞人头像", Toast.LENGTH_SHORT).show();
+                String uid = (String) v.getTag(R.id.tag_like_user_id);
+                if (!uid.isEmpty()) {
+                    Intent intent = new Intent(BbsDetailActivity.this, FriendDetailActivity.class);
+                    intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
+                    startActivity(intent);
+                }
             }
         };
         likeUsersArea = new LikeUsersArea(bbsDetailHead, BbsDetailActivity.this, mOnClickUser);

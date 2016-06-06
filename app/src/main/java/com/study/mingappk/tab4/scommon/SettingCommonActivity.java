@@ -27,14 +27,9 @@ public class SettingCommonActivity extends BackActivity {
         setToolbarTitle(R.string.title_activity_setting_common);
     }
 
-    @OnClick({R.id.click_change_psw, R.id.click_check_version, R.id.click_clear_cache, R.id.click_advice, R.id.click_about})
+    @OnClick({R.id.click_check_version, R.id.click_clear_cache, R.id.click_advice, R.id.click_about})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.click_change_psw:
-//                Toast.makeText(SettingCommonActivity.this, "修改密码", Toast.LENGTH_SHORT).show();
-                Intent intent1 = new Intent(this, ChangePwdActivity.class);
-                startActivity(intent1);
-                break;
             case R.id.click_check_version:
                 Toast.makeText(SettingCommonActivity.this, "检查新版本", Toast.LENGTH_SHORT).show();
                 break;

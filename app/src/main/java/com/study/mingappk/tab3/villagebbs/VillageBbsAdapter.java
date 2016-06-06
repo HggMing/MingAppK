@@ -31,6 +31,8 @@ import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ZanList;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
+import com.study.mingappk.tab3.villagebbs.likeusers.LikeUsersArea;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,7 +61,8 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         auth = Hawk.get(APP.USER_AUTH);
         notifyDataSetChanged();
     }
-    public void setItem(List<BBSList.DataEntity.ListEntity> mList,List<BBSList.DataEntity.ListEntity> moreList) {
+
+    public void setItem(List<BBSList.DataEntity.ListEntity> mList, List<BBSList.DataEntity.ListEntity> moreList) {
         this.mList = mList;
         auth = Hawk.get(APP.USER_AUTH);
         if (moreList != null) {
@@ -98,6 +101,8 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
      */
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final Context mContext = holder.itemView.getContext();
+
         if (mOnItemClickListener != null) {
             holder.bbsItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -118,13 +123,13 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
                             if (response.isSuccessful()) {
                                 Result result = response.body();
                                 if (result != null) {
-                                    Toast.makeText(holder.itemView.getContext(), result.getMsg(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mContext, result.getMsg(), Toast.LENGTH_SHORT).show();
                                     if (result.getErr() == 0) {
                                         //点赞数+1
                                         String likeNumber = String.valueOf(Integer.parseInt(mList.get(position).getZans()) + 1);
                                         holder.bbsLike.setText(likeNumber);
                                         //点赞图标动画
-                                        Animation animPraise = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.scale);
+                                        Animation animPraise = AnimationUtils.loadAnimation(mContext, R.anim.scale);
                                         holder.bbsLikeIcon.setVisibility(View.INVISIBLE);
                                         holder.bbsLiked.setVisibility(View.VISIBLE);
                                         holder.bbsLiked.startAnimation(animPraise);
@@ -141,7 +146,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
 
                         @Override
                         public void onFailure(Call<Result> call, Throwable t) {
-                            Toast.makeText(holder.itemView.getContext(), "点赞出错：" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "点赞出错：" + t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -157,12 +162,21 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         //帖子正文区域***************************************************************************************************************************
         //发帖人头像
         String headUrl = MyServiceClient.getBaseUrl() + mList.get(position).getUserinfo().getHead();
-        Glide.with(holder.itemView.getContext()).load(headUrl)
-                .bitmapTransform(new CropCircleTransformation(holder.itemView.getContext()))
+        Glide.with(mContext).load(headUrl)
+                .bitmapTransform(new CropCircleTransformation(mContext))
                 .priority(Priority.HIGH)
                 .error(R.mipmap.defalt_user_circle)
                 // .placeholder(R.mipmap.defalt_user_circle)
                 .into(holder.bbsHead);
+        holder.bbsHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, FriendDetailActivity.class);
+                String uid = mList.get(position).getUid();
+                intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
+                mContext.startActivity(intent);
+            }
+        });
         //发帖人昵称
         String userName = mList.get(position).getUname();
         if (userName.isEmpty()) {
@@ -223,7 +237,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
             protected void onItemImageClick(Context context, int index, List<BBSList.DataEntity.ListEntity.FilesEntity> list) {
                 super.onItemImageClick(context, index, list);
                 // Toast.makeText(context, "点击第" + index+"个图片", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(holder.itemView.getContext(), BigImageViewActivity.class);
+                Intent intent = new Intent(mContext, BigImageViewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList(BigImageViewActivity.IMAGE_LIST, (ArrayList<? extends Parcelable>) list);
                 bundle.putInt(BigImageViewActivity.IMAGE_INDEX, index);
@@ -247,16 +261,22 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         View.OnClickListener mOnClickUser = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(holder.itemView.getContext(), "点击点赞人头像", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "点击点赞人头像", Toast.LENGTH_SHORT).show();
+                String uid = (String) v.getTag(R.id.tag_like_user_id);
+                if (!uid.isEmpty()) {
+                    Intent intent = new Intent(mContext, FriendDetailActivity.class);
+                    intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
+                    mContext.startActivity(intent);
+                }
             }
         };
-        holder.likeUsersArea = new LikeUsersArea(holder.itemView, holder.itemView.getContext(), mOnClickUser);
+        holder.likeUsersArea = new LikeUsersArea(holder.itemView, mContext, mOnClickUser);
         getLikeList(pid, holder);
         //评论区显示前5条
         View.OnClickListener onClickComment = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(holder.itemView.getContext(), "点击评论", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "点击评论", Toast.LENGTH_SHORT).show();
             }
         };
         holder.commentArea = new CommentArea(holder.itemView, onClickComment);

@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.views.sms_autofill.SmsObserver;
+import com.study.mingappk.common.views.sms_autofill.SmsResponseCallback;
+import com.study.mingappk.common.views.sms_autofill.VerificationCodeSmsFilter;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -58,6 +61,8 @@ public class RegisterActivity extends BackActivity {
     private String regPhone;//注册的手机号
     private String sign;//验证手机号时，返回的签名
 
+    private SmsObserver smsObserver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +74,27 @@ public class RegisterActivity extends BackActivity {
         sign = getIntent().getStringExtra(SIGN);
         read.setText(Html.fromHtml("<u>免责条款</u>"));//使用html实现下划线样式
         getRCode();//获取验证码
+        autoFillRCode();//自动填写验证码
+    }
+
+    private void autoFillRCode() {
+        //初始化
+        smsObserver=new SmsObserver(this, new SmsResponseCallback() {
+            @Override
+            public void onCallbackSmsContent(String smsContent) {
+                //这里接收短信
+                etRcode.setText(smsContent);
+            }
+        }, new VerificationCodeSmsFilter("10690498241618"));
+        //注册短信变化监听器
+        smsObserver.registerSMSObserver();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //在不需要再使用短信接收功能的时候,注销短信监听器
+        smsObserver.unregisterSMSObserver();
     }
 
     private void getRCode() {
