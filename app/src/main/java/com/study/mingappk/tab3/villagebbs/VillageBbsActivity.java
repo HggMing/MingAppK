@@ -44,8 +44,8 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     public static final String VILLAGE_NAME = "village_name";
     public static final String VILLAGE_PIC = "village_pic";
     public static final String COMMENT_NO_NEW = "comment_number_change";
-    public static final String LIKEED_TAG = "标志已经点赞";
-    public static final String LIKE_NO_NEW = "点赞数据+1";
+    public static final String LIKEED_TAG = "liked_tag";//标志已经点赞
+    public static final String LIKE_NO_NEW = "like_no+1";//点赞数据+1
 
 
     @Bind(R.id.toolbar_bbs)
@@ -196,11 +196,15 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                 startActivityForResult(intent, REQUEST_LIKE_COMMENT_NUMBER);
                 break;
             case R.id.bbs_comment:
-                Toast.makeText(this, "点击留言操作", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "点击留言操作", Toast.LENGTH_SHORT).show();
+                bbsDetail = mList.get(position);
+                ppid = position;
+                Intent intent2 = new Intent(this, BbsDetailActivity.class);
+                intent2.putExtra(BbsDetailActivity.BBS_DETAIL, bbsDetail);
+                startActivityForResult(intent2, REQUEST_LIKE_COMMENT_NUMBER);
                 break;
             default:
                 break;
-
         }
     }
 
@@ -242,17 +246,24 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                 break;
             case REQUEST_LIKE_COMMENT_NUMBER://帖子详情页，点赞或评论后，就数据返回显示
                 if (resultCode == RESULT_OK) {
-                    String newCommentNumber = data.getExtras().getString(COMMENT_NO_NEW);
-                    if (newCommentNumber != null && !newCommentNumber.isEmpty()) {
-                        mList.get(ppid).setNums(newCommentNumber);
+                    if (data != null) {
+                        String newCommentNumber = data.getExtras().getString(COMMENT_NO_NEW);
+                        if (newCommentNumber != null && !newCommentNumber.isEmpty()) {
+                            mList.get(ppid).setNums(newCommentNumber);
+                        }
+                        int isCliked = data.getExtras().getInt(LIKEED_TAG);
+                        if (isCliked == 1) {
+                            mList.get(ppid).setMy_is_zan(1);
+                            String newLikeNumber = data.getExtras().getString(LIKE_NO_NEW);
+                            mList.get(ppid).setZans(newLikeNumber);
+                        }
+                        mAdapter.setItem(mList);
+                    }else {//删除帖子后，刷新列表
+                        mAdapter.setItem(null);
+                        mList.clear();
+                        page = 1;
+                        getBBSList(page);
                     }
-                    int isCliked = data.getExtras().getInt(LIKEED_TAG);
-                    if (isCliked == 1) {
-                        mList.get(ppid).setMy_is_zan(1);
-                        String newLikeNumber = data.getExtras().getString(LIKE_NO_NEW);
-                        mList.get(ppid).setZans(newLikeNumber);
-                    }
-                    mAdapter.setItem(mList);
                 }
                 break;
         }

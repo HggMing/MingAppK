@@ -211,7 +211,7 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
             chatMsg.setCt("0");//消息类型：文字
             chatMsg.setTxt(msg);//消息内容
             MyServiceClient.getService()
-                    .postObservabel_sendMessage(me, other, "0", "yxj", msg, null, null, 1, "2")
+                    .postObservable_sendMessage(me, other, "0", "yxj", msg, null, null, 1, "2")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Result>() {

@@ -140,7 +140,7 @@ public class FollowVillageActivity extends AppCompatActivity implements FollowVi
 
     private void configSearch() {
         //是否使用语音搜索
-        searchView.setVoiceSearch(true);
+        searchView.setVoiceSearch(false);
         //自定义光标
         searchView.setCursorDrawable(R.drawable.custom_cursor);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {

@@ -13,14 +13,10 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
 import com.study.mingappk.tmain.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -61,7 +57,7 @@ public class RemarkNameActivity extends BackActivity {
             String uid = getIntent().getStringExtra(UID);
             final String newName = etAname.getText().toString();
 
-            MyServiceClient.getService().postObservabel_RemarkName(auth, uid, newName)
+            MyServiceClient.getService().postObservable_RemarkName(auth, uid, newName)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Result>() {

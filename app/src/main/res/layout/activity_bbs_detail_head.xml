@@ -53,6 +53,18 @@
                 android:textSize="18sp"
                 tools:text="用户名" />
 
+            <ImageView
+                android:id="@+id/bbs_click_del"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/list_item_selector"
+                android:padding="22dp"
+                android:src="@drawable/bbs_click_del"
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,6 +181,19 @@
                 android:textSize="14sp"
                 tools:text="999" />
 
+            <TextView
+                android:id="@+id/bbs_report"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="26dp"
+                android:layout_toLeftOf="@id/bbs_comment"
+                android:background="@drawable/list_item_selector"
+                android:drawablePadding="9dp"
+                android:gravity="center"
+                android:text="举报"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="16sp" />
 
         </RelativeLayout>
     </LinearLayout>

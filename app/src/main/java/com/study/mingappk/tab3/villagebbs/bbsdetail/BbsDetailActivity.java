@@ -1,6 +1,7 @@
 package com.study.mingappk.tab3.villagebbs.bbsdetail;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -8,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +34,14 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.common.views.bigimageview.BigImageViewActivity;
+import com.study.mingappk.common.views.dialog.Dialog_Model;
 import com.study.mingappk.common.views.nineimage.NineGridImageView;
 import com.study.mingappk.common.views.nineimage.NineGridImageViewAdapter;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ZanList;
+import com.study.mingappk.model.service.MyService;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 import com.study.mingappk.tab3.villagebbs.likeusers.LikeUsersArea;
@@ -72,6 +76,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
     @Bind(R.id.comment_input)
     LinearLayout commentInput;
     private ImageView bbsHead;
+    private ImageView bbsDel;
     private TextView bbsUname;
     private TextView bbsContents;
     private NineGridImageView nineGridImage;
@@ -80,6 +85,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
     private TextView bbsLike;
     private ImageView bbsLiked;
     private TextView bbsComment;
+    private TextView bbsReport;
     private LinearLayout bbsDetailHead;
     private LinearLayout bbsLikeLayout;
     private LikeUsersArea likeUsersArea;
@@ -144,6 +150,62 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
             userName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
         }
         bbsUname.setText(userName);
+        //删除帖子按钮（仅发帖人可见）
+        String uid = bbsDetail.getUid();
+        if (Hawk.get(APP.ME_UID).equals(uid)) {
+            bbsDel.setVisibility(View.VISIBLE);
+        }
+        bbsDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog_Model.Builder builder = new Dialog_Model.Builder(BbsDetailActivity.this);
+                builder.setTitle("提示");
+                builder.setMessage("注意删除帖子后无法恢复。是否删除?");
+                builder.setNegativeButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteBbs();
+                                dialog.dismiss();
+                            }
+                        });
+                builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+
+            private void deleteBbs() {
+                String id = bbsDetail.getId();
+                MyServiceClient.getService()
+                        .postObservable_DeleteBbs(auth, id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<Result>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(Result result) {
+                                Toast.makeText(BbsDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                if (result.getErr() == 0) {
+                                    setResult(RESULT_OK);
+                                    finish();
+                                }
+                            }
+                        });
+            }
+        });
         //发帖时间
         String date = bbsDetail.getCtime();
         if (date != null) {
@@ -294,6 +356,60 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                 });
             }
         });
+        //点击举报按钮*************************************************************************************************************
+        bbsReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(BbsDetailActivity.this, "举报帖子", Toast.LENGTH_SHORT).show();
+                if ("举报".equals(bbsReport.getText().toString())) {
+                    Dialog_Model.Builder builder = new Dialog_Model.Builder(BbsDetailActivity.this);
+                    builder.setTitle("提示");
+                    builder.setMessage("感谢你对评论内容的监督，多人举报后该评论将被隐藏，注意恶意举报会被处罚。是否举报?");
+                    builder.setNegativeButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    reportBbs(null);
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                } else {
+                    Toast.makeText(BbsDetailActivity.this, "你已经举报此帖子，等待审核处理。", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            private void reportBbs(String conts) {
+                String bid = bbsDetail.getId();
+                MyServiceClient.getService()
+                        .postObservable_Report(auth, bid, conts)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<Result>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(Result result) {
+                                Toast.makeText(BbsDetailActivity.this, "已举报", Toast.LENGTH_SHORT).show();
+                                bbsReport.setText("已举报");
+                            }
+                        });
+            }
+        });
     }
 
     private void getLikeList(String pid) {
@@ -320,7 +436,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
 
     //配置RecyclerView
     private void configXRecyclerView() {
-//        mAdapter.setOnItemClickListener(BbsDetailActivity.this);
+        mAdapter.setOnItemClickListener(BbsDetailActivity.this);
         mXRecyclerView.setAdapter(mAdapter);//设置adapter
         mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
 
@@ -341,6 +457,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         View header = LayoutInflater.from(this).inflate(R.layout.activity_bbs_detail_head, (ViewGroup) findViewById(android.R.id.content), false);
         bbsHead = (ImageView) header.findViewById(R.id.bbs_head);
         bbsUname = (TextView) header.findViewById(R.id.bbs_uname);
+        bbsDel = (ImageView) header.findViewById(R.id.bbs_click_del);
         bbsContents = (TextView) header.findViewById(R.id.bbs_contents);
         nineGridImage = (NineGridImageView) header.findViewById(R.id.nine_grid_image);
         bbsCtime = (TextView) header.findViewById(R.id.bbs_ctime);
@@ -348,6 +465,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         bbsLike = (TextView) header.findViewById(R.id.bbs_like);
         bbsLiked = (ImageView) header.findViewById(R.id.bbs_liked);
         bbsComment = (TextView) header.findViewById(R.id.bbs_comment);
+        bbsReport = (TextView) header.findViewById(R.id.bbs_report);
         bbsDetailHead = (LinearLayout) header.findViewById(R.id.bbs_detail_head);
         bbsLikeLayout = (LinearLayout) header.findViewById(R.id.bbs_like_layout);
         mXRecyclerView.addHeaderView(header);
@@ -394,8 +512,56 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
     }
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(View view, final int position) {
+        Dialog_Model.Builder builder = new Dialog_Model.Builder(BbsDetailActivity.this);
+        builder.setTitle("提示");
+        builder.setMessage("注意删除评论后无法恢复。是否删除?");
+        builder.setNegativeButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteCommentBbs(position);
+                        dialog.dismiss();
+                    }
+                });
+        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
 
+    private void deleteCommentBbs(int position) {
+        String id = mList.get(position).getId();
+        String auth=Hawk.get(APP.USER_AUTH);
+        MyServiceClient.getService()
+                .postObservable_DeleteComment(auth, id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Result>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        Toast.makeText(BbsDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
+                        if (result.getErr() == 0) {//删除评论后刷新
+                            mAdapter.setItem(null);
+                            mList.clear();
+                            page = 1;
+                            getDataList(page);
+                        }
+                    }
+                });
     }
 
     @Override

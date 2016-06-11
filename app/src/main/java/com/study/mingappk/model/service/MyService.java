@@ -340,6 +340,30 @@ public interface MyService {
             @Field("conts") String conts);
 
     /**
+     * 删除帖子接口
+     * @param auth 认证信息
+     * @param id 帖子id
+     * @return 结果meg
+     */
+    @FormUrlEncoded
+    @POST("bbs/del")
+    Observable<Result> postObservable_DeleteBbs(
+            @Field("auth") String auth,
+            @Field("id") String id);
+
+    /**
+     * 删除帖子评论接口
+     * @param auth 认证信息
+     * @param id 评论id
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("bbs/delcom")
+    Observable<Result> postObservable_DeleteComment(
+            @Field("auth") String auth,
+            @Field("id") String id);
+
+    /**
      * 获取帖子列表接口
      *
      * @param auth     认证信息
@@ -399,6 +423,19 @@ public interface MyService {
             @Query("auth") String auth,
             @Query("pid") String pid);
 
+    /**
+     * 举报帖子接口
+     * @param auth 认证信息
+     * @param bid 帖子id,必填
+     * @param conts 举报原因，选填
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("bbs/report")
+    Observable<Result> postObservable_Report(
+            @Field("auth") String auth,
+            @Field("bid") String bid,
+            @Field("conts") String conts);
 
     /**
      * 分页获取好友列表信息，同时该接口会返回，好友总数cnt，其中uid:10000:小包谷【语音助手】;uid:10001:我们村【客服】
@@ -447,7 +484,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("friend/rname")
-    Observable<Result> postObservabel_RemarkName(
+    Observable<Result> postObservable_RemarkName(
             @Field("auth") String auth,
             @Field("uid") String uid,
             @Field("aname") String aname);
@@ -484,7 +521,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("http://push.traimo.com/msg/user_sent")
-    Observable<Result> postObservabel_sendMessage(
+    Observable<Result> postObservable_sendMessage(
             @Field("from") String from,
             @Field("to") String to,
             @Field("ct") String ct,
@@ -543,7 +580,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("vill/applymaster")
-    Observable<Result> postObservabel_ApplyMaster(
+    Observable<Result> postObservable_ApplyMaster(
             @Field("auth") String auth,
             @Field("vid") String vid,
             @Field("uname") String uname,

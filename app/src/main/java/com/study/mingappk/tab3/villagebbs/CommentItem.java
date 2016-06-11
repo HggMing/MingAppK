@@ -20,12 +20,12 @@ class CommentItem {
 
     public CommentItem(View convertView, View.OnClickListener onClickComment, int i) {
         layout = convertView;
-        layout.setOnClickListener(onClickComment);
+//**        layout.setOnClickListener(onClickComment);
         name = (TextView) convertView.findViewById(R.id.comment_uname);
         time = (TextView) convertView.findViewById(R.id.comment_ctime);
         comment = (TextView) convertView.findViewById(R.id.comment_content);
 //        comment.setMovementMethod(LongClickLinkMovementMethod.getInstance());
-        comment.setOnClickListener(onClickComment);
+//**        comment.setOnClickListener(onClickComment);
 //        comment.setOnLongClickListener(DialogCopy.getInstance());
     }
 
