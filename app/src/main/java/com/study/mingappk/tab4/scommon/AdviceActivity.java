@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.orhanobut.hawk.Hawk;
@@ -12,12 +11,11 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.tmain.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,18 +65,18 @@ public class AdviceActivity extends BackActivity {
                 if (response.isSuccessful()) {
                     Result adviceResult = response.body();
                     if (adviceResult != null) {
-                        Dialog_Model.Builder builder = new Dialog_Model.Builder(AdviceActivity.this);
-                        builder.setTitle("提示");
-                        builder.setCannel(false);
-                        builder.setMessage(adviceResult.getMsg());
-                        builder.setPositiveButton("确定",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
+                        MyDialog.Builder builder = new MyDialog.Builder(AdviceActivity.this);
+                        builder.setTitle("提示")
+                                .setCannel(false)
+                                .setMessage(adviceResult.getMsg())
+                                .setNegativeButton("确定",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog,
+                                                                int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
                         if (!isFinishing()) {
                             builder.create().show();
                         }

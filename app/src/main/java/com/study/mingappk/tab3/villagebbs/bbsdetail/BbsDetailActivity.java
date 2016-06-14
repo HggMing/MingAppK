@@ -9,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +33,15 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.common.views.bigimageview.BigImageViewActivity;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.common.views.nineimage.NineGridImageView;
 import com.study.mingappk.common.views.nineimage.NineGridImageViewAdapter;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ZanList;
-import com.study.mingappk.model.service.MyService;
+import com.study.mingappk.model.database.BbsDetailModel;
+import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 import com.study.mingappk.tab3.villagebbs.likeusers.LikeUsersArea;
@@ -61,11 +61,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.OnItemClickListener {
 
-    public static final String BBS_DETAIL = "bbs detail from VillageBbsActivity";
+    public static final String BBS_DETAIL = "bbs detail from VillageBbsActivity";//bbs详细信息
+    public static final String IS_CLICK_COMMENT = "is_click_comment";//是否点击评论
 
     @Bind(R.id.tab3_bbs_detail)
     XRecyclerView mXRecyclerView;
@@ -95,7 +97,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
     List<BbsCommentList.DataBean.ListBean> mList = new ArrayList<>();
     private BBSList.DataEntity.ListEntity bbsDetail;
 
-    final private static int PAGE_SIZE = 5;
+    final private static int PAGE_SIZE = 10;
     private int page = 1;
     private String pid;
     private String msgNumber;
@@ -113,15 +115,22 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
 
         auth = Hawk.get(APP.USER_AUTH);
 
-
         bbsDetail = getIntent().getParcelableExtra(BBS_DETAIL);
         pid = bbsDetail.getId();
+
+        MyDB.createDb(this);
 
         configXRecyclerView();//XRecyclerView配置
         setBbsDetailHead();
         getDataList(page);//获取followList数据和cnt值
-    }
 
+        //点击村圈列表中的留言，直接打开本页，加载软键盘
+        if (getIntent().getBooleanExtra(IS_CLICK_COMMENT, false)) {
+            commentEdit.requestFocus();
+            InputMethodManager inputManager = (InputMethodManager) commentEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.showSoftInput(commentEdit, 0);
+        }
+    }
 
     private void setBbsDetailHead() {
         //发帖人头像
@@ -158,30 +167,31 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         bbsDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog_Model.Builder builder = new Dialog_Model.Builder(BbsDetailActivity.this);
-                builder.setTitle("提示");
-                builder.setMessage("注意删除帖子后无法恢复。是否删除?");
-                builder.setNegativeButton("确定",
-                        new DialogInterface.OnClickListener() {
+                MyDialog.Builder builder = new MyDialog.Builder(BbsDetailActivity.this);
+                builder.setTitle("提示")
+                        .setMessage("注意删除帖子后无法恢复。是否删除?")
+                        .setNegativeButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        deleteBbs();
+                                        dialog.dismiss();
+                                    }
+                                })
+                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                deleteBbs();
                                 dialog.dismiss();
                             }
-                        });
-                builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
+                        })
+                        .create()
+                        .show();
             }
 
             private void deleteBbs() {
                 String id = bbsDetail.getId();
                 MyServiceClient.getService()
-                        .postObservable_DeleteBbs(auth, id)
+                        .post_DeleteBbs(auth, id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<Result>() {
@@ -312,8 +322,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
             @Override
             public void onClick(View v) {
                 commentEdit.requestFocus();
-                InputMethodManager inputManager =
-                        (InputMethodManager) commentEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputManager = (InputMethodManager) commentEdit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(commentEdit, 0);
             }
         });
@@ -356,39 +365,55 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                 });
             }
         });
-        //点击举报按钮*************************************************************************************************************
+        //举报相关*************************************************************************************************************
+        //从数据库中取出是否举报,初始化举报状态
+        final String bid = bbsDetail.getId();
+
+        List<BbsDetailModel> bbsDetail = MyDB.getQueryAll(BbsDetailModel.class);
+        boolean isReport = false;
+        for(int i=0;i<bbsDetail.size();i++){
+            if(bid.equals(bbsDetail.get(i).getBid())){
+                isReport=true;
+            }
+        }
+        if (isReport) {
+            bbsReport.setText("已举报");
+        } else {
+            bbsReport.setText("举报");
+        }
+        //点击举报按钮
         bbsReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(BbsDetailActivity.this, "举报帖子", Toast.LENGTH_SHORT).show();
                 if ("举报".equals(bbsReport.getText().toString())) {
-                    Dialog_Model.Builder builder = new Dialog_Model.Builder(BbsDetailActivity.this);
-                    builder.setTitle("提示");
-                    builder.setMessage("感谢你对评论内容的监督，多人举报后该评论将被隐藏，注意恶意举报会被处罚。是否举报?");
-                    builder.setNegativeButton("确定",
-                            new DialogInterface.OnClickListener() {
+                    MyDialog.Builder builder = new MyDialog.Builder(BbsDetailActivity.this);
+                    builder.setTitle("提示")
+                            .setMessage("感谢你对评论内容的监督，多人举报后该评论将被隐藏，注意恶意举报会被处罚。是否举报?")
+                            .setNegativeButton("确定",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            reportBbs(null);
+                                            dialog.dismiss();
+                                        }
+                                    })
+                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    reportBbs(null);
                                     dialog.dismiss();
                                 }
-                            });
-                    builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
+                            })
+                            .create()
+                            .show();
                 } else {
                     Toast.makeText(BbsDetailActivity.this, "你已经举报此帖子，等待审核处理。", Toast.LENGTH_SHORT).show();
                 }
             }
 
             private void reportBbs(String conts) {
-                String bid = bbsDetail.getId();
                 MyServiceClient.getService()
-                        .postObservable_Report(auth, bid, conts)
+                        .post_Report(auth, bid, conts)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<Result>() {
@@ -404,8 +429,12 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
 
                             @Override
                             public void onNext(Result result) {
-                                Toast.makeText(BbsDetailActivity.this, "已举报", Toast.LENGTH_SHORT).show();
-                                bbsReport.setText("已举报");
+                                if (result.getErr() == 0) {
+                                    Toast.makeText(BbsDetailActivity.this, "已举报", Toast.LENGTH_SHORT).show();
+                                    bbsReport.setText("已举报");
+                                    BbsDetailModel bbsDetailModel = new BbsDetailModel(bid, true);
+                                    MyDB.insert(bbsDetailModel);
+                                }
                             }
                         });
             }
@@ -413,7 +442,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
     }
 
     private void getLikeList(String pid) {
-        MyServiceClient.getService().getObservable_ZanList(auth, pid, 1, 99)
+        MyServiceClient.getService().get_ZanList(auth, pid, 1, 99)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ZanList>() {
@@ -489,7 +518,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
     }
 
     private void getDataList(int page) {
-        MyServiceClient.getService().getObservable_BbsCommentList(auth, pid, page, PAGE_SIZE)
+        MyServiceClient.getService().get_BbsCommentList(auth, pid, page, PAGE_SIZE)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BbsCommentList>() {
@@ -513,31 +542,32 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
 
     @Override
     public void onItemClick(View view, final int position) {
-        Dialog_Model.Builder builder = new Dialog_Model.Builder(BbsDetailActivity.this);
-        builder.setTitle("提示");
-        builder.setMessage("注意删除评论后无法恢复。是否删除?");
-        builder.setNegativeButton("确定",
-                new DialogInterface.OnClickListener() {
+        MyDialog.Builder builder = new MyDialog.Builder(BbsDetailActivity.this);
+        builder.setTitle("提示")
+                .setMessage("注意删除评论后无法恢复。是否删除?")
+                .setNegativeButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteCommentBbs(position);
+                                dialog.dismiss();
+                            }
+                        })
+                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteCommentBbs(position);
                         dialog.dismiss();
                     }
-                });
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
+                })
+                .create()
+                .show();
     }
 
-    private void deleteCommentBbs(int position) {
+    private void deleteCommentBbs(final int position) {
         String id = mList.get(position).getId();
-        String auth=Hawk.get(APP.USER_AUTH);
+        String auth = Hawk.get(APP.USER_AUTH);
         MyServiceClient.getService()
-                .postObservable_DeleteComment(auth, id)
+                .post_DeleteComment(auth, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result>() {
@@ -554,11 +584,18 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                     @Override
                     public void onNext(Result result) {
                         Toast.makeText(BbsDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
-                        if (result.getErr() == 0) {//删除评论后刷新
-                            mAdapter.setItem(null);
-                            mList.clear();
-                            page = 1;
-                            getDataList(page);
+                        if (result.getErr() == 0) {//删除评论后
+                            //评论数-1
+                            msgNumber = String.valueOf(Integer.parseInt(msgNumber) - 1);
+                            bbsComment.setText(msgNumber);
+                            //评论数改变，返回上一页
+                            bundle.putString(VillageBbsActivity.COMMENT_NO_NEW, msgNumber);
+                            intent.putExtras(bundle);
+                            setResult(RESULT_OK, intent);
+                            //删除评论并刷新
+                            mList.remove(position);
+                            mAdapter.notifyItemRemoved(position + 2);//+2是因为有一个header和下拉刷新部分
+                            mAdapter.notifyItemRangeChanged(position + 2, mAdapter.getItemCount() + 2);
                         }
                     }
                 });
@@ -573,8 +610,8 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
     public void onClick() {
         commentPost.setClickable(false);
         //发送评论
-        String conts = commentEdit.getText().toString();
-        MyServiceClient.getService().postObservable_AddComment(auth, pid, conts)
+        final String conts = commentEdit.getText().toString();
+        MyServiceClient.getService().post_AddComment(auth, pid, conts)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result>() {
@@ -582,11 +619,28 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                     public void onCompleted() {
                         //关闭输入法
                         JUtils.closeInputMethod(BbsDetailActivity.this);
-                        //刷新
-                        mAdapter.setItem(null);
-                        mList.clear();
-                        page = 1;
-                        getDataList(page);
+                        //添加评论并刷新
+                        MyServiceClient.getService().get_BbsCommentList(auth, pid, 1, 3)
+                                .subscribeOn(Schedulers.newThread())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Action1<BbsCommentList>() {
+                                    @Override
+                                    public void call(BbsCommentList bbsCommentList) {
+                                        BbsCommentList.DataBean.ListBean listBean = null;
+                                        for (int i = 0; i < 3; i++) {
+                                            boolean isMyComment = bbsCommentList.getData().getList().get(i).getConts().equals(conts);
+                                            if (isMyComment) {
+                                                listBean = bbsCommentList.getData().getList().get(i);
+                                            }
+                                        }
+                                        if (listBean != null) {
+                                            mList.add(0, listBean);
+                                            mXRecyclerView.scrollToPosition(2);
+                                            mAdapter.notifyItemInserted(2);//+2是因为有一个header和下拉刷新部分
+                                            mAdapter.notifyItemRangeChanged(2, mAdapter.getItemCount() + 2);
+                                        }
+                                    }
+                                });
                     }
 
                     @Override

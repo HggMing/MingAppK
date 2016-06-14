@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4.scommon;
+package com.study.mingappk.tab4.safesetting;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.tmain.BackActivity;
 
 import butterknife.Bind;
@@ -83,22 +83,22 @@ public class ChangePwdActivity extends BackActivity {
                             if (response.isSuccessful()) {
                                 final Result changePwdResult = response.body();
                                 if (changePwdResult != null) {
-                                    Dialog_Model.Builder builder2 = new Dialog_Model.Builder(ChangePwdActivity.this);
-                                    builder2.setTitle("提示");
-                                    builder2.setCannel(false);
-                                    builder2.setMessage(changePwdResult.getMsg());
-                                    builder2.setPositiveButton("确定",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog,
-                                                                    int which) {
-                                                    dialog.dismiss();
-                                                    if (changePwdResult.getErr() == 0) {
-                                                        ChangePwdActivity.this.finish();
-                                                    }
-                                                }
+                                    MyDialog.Builder builder2 = new MyDialog.Builder(ChangePwdActivity.this);
+                                    builder2.setTitle("提示")
+                                            .setCannel(false)
+                                            .setMessage(changePwdResult.getMsg())
+                                            .setNegativeButton("确定",
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog,
+                                                                            int which) {
+                                                            dialog.dismiss();
+                                                            if (changePwdResult.getErr() == 0) {
+                                                                ChangePwdActivity.this.finish();
+                                                            }
+                                                        }
 
-                                            });
+                                                    });
                                     if (!isFinishing()) {
                                         builder2.create().show();
                                     }

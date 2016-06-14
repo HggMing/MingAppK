@@ -22,7 +22,6 @@ import com.study.mingappk.tmain.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -181,7 +180,7 @@ public class FriendDetailActivity extends BackActivity {
                 }
             }
         };
-        MyServiceClient.getService().getObservable_FriendDetail(auth, uid)
+        MyServiceClient.getService().get_FriendDetail(auth, uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

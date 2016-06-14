@@ -32,7 +32,8 @@
 
     <string name="title_activity_mysetting">我的</string>
     <string name="title_activity_setting_common">通用</string>
-    <string name="title_activity_change_pwd">修改密码</string>
+    <string name="title_activity_change_pwd">修改登录密码</string>
+    <string name="title_activity_change_purse_pwd">修改钱包密码</string>
     <string name="title_activity_advice">意见反馈</string>
     <string name="title_activity_about">关于我们</string>
     <string name="title_activity_friend_detail">详细资料</string>

@@ -11,7 +11,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/tsk1"
+            android:background="@drawable/dialog_tsk_1"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="10dp"
@@ -42,7 +42,7 @@
             android:id="@+id/content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/tsk"
+            android:background="@drawable/dialog_tsk"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -128,7 +128,7 @@
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="2"
-                    android:background="@drawable/button_input"
+                    android:background="@drawable/button_theme"
                     android:singleLine="true"
                     android:textColor="#ffffff"
                     android:textSize="18sp" />
@@ -143,7 +143,7 @@
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="2"
-                    android:background="@drawable/button_input"
+                    android:background="@drawable/button_theme"
                     android:singleLine="true"
                     android:textColor="#ffffff"
                     android:textSize="18sp" />

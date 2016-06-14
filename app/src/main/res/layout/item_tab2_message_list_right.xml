@@ -36,7 +36,7 @@
         android:layout_marginLeft="57dp"
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/icon"
-        android:background="@drawable/message_list_item_right_selector"
+        android:background="@drawable/message_right"
         android:gravity="right"
         android:orientation="vertical"
         android:visibility="visible">

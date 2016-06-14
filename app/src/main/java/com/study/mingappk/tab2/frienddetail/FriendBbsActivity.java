@@ -6,7 +6,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -86,7 +85,7 @@ public class FriendBbsActivity extends BackActivity implements VillageBbsAdapter
         String auth = Hawk.get(APP.USER_AUTH);
         String mUid =getIntent().getStringExtra(UID);
         MyServiceClient.getService()
-                .getObservable_FriendBbsList(auth, mUid, page, PAGE_SIZE)
+                .get_FriendBbsList(auth, mUid, page, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BBSList>() {
@@ -120,7 +119,13 @@ public class FriendBbsActivity extends BackActivity implements VillageBbsAdapter
                 startActivityForResult(intent, REQUEST_LIKE_COMMENT_NUMBER);
                 break;
             case R.id.bbs_comment:
-                Toast.makeText(this, "点击留言操作", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "点击留言操作", Toast.LENGTH_SHORT).show();
+                bbsDetail = mList.get(position);
+                ppid = position;
+                Intent intent2 = new Intent(this, BbsDetailActivity.class);
+                intent2.putExtra(BbsDetailActivity.BBS_DETAIL, bbsDetail);
+                intent2.putExtra(BbsDetailActivity.IS_CLICK_COMMENT,true);
+                startActivityForResult(intent2, REQUEST_LIKE_COMMENT_NUMBER);
                 break;
             default:
                 break;

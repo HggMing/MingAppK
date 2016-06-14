@@ -38,7 +38,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="57dp"
         android:layout_toRightOf="@+id/icon"
-        android:background="@drawable/message_list_item_left_selector"
+        android:background="@drawable/message_left"
         android:orientation="vertical"
         android:paddingBottom="12dp"
         android:paddingLeft="17dp"

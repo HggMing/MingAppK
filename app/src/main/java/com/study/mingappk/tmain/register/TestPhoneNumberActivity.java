@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
@@ -76,7 +76,7 @@ public class TestPhoneNumberActivity extends BackActivity {
      * 忘记密码，检查手机号是否存在
      */
     private void checkPhonePSW(final String phone) {
-        MyServiceClient.getService().getObservable_CheckPhonePSW(phone)
+        MyServiceClient.getService().get_CheckPhonePSW(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<CheckPhone>() {
@@ -97,7 +97,7 @@ public class TestPhoneNumberActivity extends BackActivity {
                             intent.putExtra(ResetPasswordActivity.PHONE, phone);
                             intent.putExtra(ResetPasswordActivity.SIGN, checkPhone.getSign());
                             startActivity(intent);
-                        }else{
+                        } else {
                             Toast.makeText(TestPhoneNumberActivity.this, checkPhone.getMsg(), Toast.LENGTH_SHORT).show();
                         }
                         btnOk.setClickable(true);
@@ -109,7 +109,7 @@ public class TestPhoneNumberActivity extends BackActivity {
      * 注册时，检查手机号是否已注册
      */
     private void checkPhone(final String phone) {
-        MyServiceClient.getService().getObservable_CheckPhone(phone)
+        MyServiceClient.getService().get_CheckPhone(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<CheckPhone>() {
@@ -134,22 +134,22 @@ public class TestPhoneNumberActivity extends BackActivity {
                                 startActivity(intent);
                                 break;
                             case 2005://已注册
-                                Dialog_Model.Builder builder1 = new Dialog_Model.Builder(TestPhoneNumberActivity.this);
-                                builder1.setTitle("提示");
-                                builder1.setCannel(false);
-                                builder1.setMessage(checkPhone.getMsg());
-                                builder1.setPositiveButton("确定",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog,
-                                                                int which) {
-                                                Intent intent2 = new Intent();
-                                                intent2.putExtra(LoginActivity.REGISTERED_PHONE_NUMBER, phone);
-                                                setResult(RESULT_OK, intent2);
-                                                finish();
-                                                dialog.dismiss();
-                                            }
-                                        });
+                                MyDialog.Builder builder1 = new MyDialog.Builder(TestPhoneNumberActivity.this);
+                                builder1.setTitle("提示")
+                                        .setCannel(false)
+                                        .setMessage(checkPhone.getMsg())
+                                        .setNegativeButton("确定",
+                                                new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog,
+                                                                        int which) {
+                                                        Intent intent2 = new Intent();
+                                                        intent2.putExtra(LoginActivity.REGISTERED_PHONE_NUMBER, phone);
+                                                        setResult(RESULT_OK, intent2);
+                                                        finish();
+                                                        dialog.dismiss();
+                                                    }
+                                                });
                                 if (!isFinishing()) {
                                     builder1.create().show();
                                 }

@@ -22,7 +22,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyItemDecoration;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -184,23 +184,23 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     public void onItemLongClick(View view, final int position) {
         //长按选项操作
         String villageName = mList.get(position).getVillage_name();
-        Dialog_Model.Builder builder = new Dialog_Model.Builder(mActivity);
-        builder.setTitle("提示");
-        builder.setMessage("取消关注" + villageName + "?" + "\n" + "(取消关注后，你将不再看到该村的任何信息，同时该村将会从“我的村”列表中移除！)");
-        builder.setNegativeButton("确定",
-                new DialogInterface.OnClickListener() {
+        MyDialog.Builder builder = new MyDialog.Builder(mActivity);
+        builder.setTitle("提示")
+                .setMessage("取消关注" + villageName + "?" + "\n" + "(取消关注后，你将不再看到该村的任何信息，同时该村将会从“我的村”列表中移除！)")
+                .setNegativeButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                removeFromServer(position);
+                                dialog.dismiss();
+                            }
+                        })
+                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        removeFromServer(position);
                         dialog.dismiss();
                     }
                 });
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
         if (!mActivity.isFinishing()) {
             builder.create().show();
         }
@@ -222,14 +222,9 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
                             Result result = response.body();
                             if (result != null && result.getErr() == 0) {
                                 // Toast.makeText(mActivity, result.getMsg(), Toast.LENGTH_SHORT).show();
-                                if (position == 0) {
-                                    mList.remove(position);
-                                    mAdapter.setItem(mList);
-                                } else {
                                     mAdapter.notifyItemRemoved(position + 1);
                                     mList.remove(position);
-                                    mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
-                                }
+                                    mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount()+1);
                             }
                         }
                     }

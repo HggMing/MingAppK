@@ -1,16 +1,10 @@
 package com.study.mingappk.tmain.userlogin;
 
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +17,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.MainActivity;
@@ -105,7 +99,7 @@ public class LoginActivity extends Activity {
             loginFailure(point);
             return;
         }
-        MyServiceClient.getService().getObservable_Login(loginname, loginpwd)
+        MyServiceClient.getService().get_Login(loginname, loginpwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Login>() {
@@ -126,7 +120,7 @@ public class LoginActivity extends Activity {
                             Hawk.chain()
                                     .put(APP.USER_AUTH, login.getAuth())//保存认证信息
                                     .put(APP.ME_UID, login.getInfo().getUid())
-                                    .put(APP.IS_SHOP_OWNER,login.getShopowner().getIs_shopowner())
+                                    .put(APP.IS_SHOP_OWNER, login.getShopowner().getIs_shopowner())
                                     .commit();
                             loginSuccess();
                             return;
@@ -150,26 +144,25 @@ public class LoginActivity extends Activity {
     private void loginFailureToReg(String s) {
         SetCanEdit(true);
         btn_login.setText("登录");
-        Dialog_Model.Builder builder1 = new Dialog_Model.Builder(
-                LoginActivity.this);
-        builder1.setTitle("提示");
-        builder1.setCannel(false);
-        builder1.setMessage(s);
-        builder1.setPositiveButton("确定",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                        btn_login.setClickable(true);
-                        btn_login.setText("登录");
-                        Intent intent = new Intent();
-                        intent.setClass(LoginActivity.this, TestPhoneNumberActivity.class);
-                        intent.putExtra(TestPhoneNumberActivity.LOGIN_NAME, loginname);
-                        intent.putExtra(TestPhoneNumberActivity.TYPE, 1);
-                        startActivity(intent);
-                        dialog.dismiss();
-                    }
-                });
+        MyDialog.Builder builder1 = new MyDialog.Builder(LoginActivity.this);
+        builder1.setTitle("提示")
+                .setCannel(false)
+                .setMessage(s)
+                .setNegativeButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                btn_login.setClickable(true);
+                                btn_login.setText("登录");
+                                Intent intent = new Intent();
+                                intent.setClass(LoginActivity.this, TestPhoneNumberActivity.class);
+                                intent.putExtra(TestPhoneNumberActivity.LOGIN_NAME, loginname);
+                                intent.putExtra(TestPhoneNumberActivity.TYPE, 1);
+                                startActivity(intent);
+                                dialog.dismiss();
+                            }
+                        });
         if (!isFinishing()) {
             builder1.create().show();
         }
@@ -183,21 +176,20 @@ public class LoginActivity extends Activity {
     private void loginFailure(String s) {
         SetCanEdit(true);
         btn_login.setText("登录");
-        Dialog_Model.Builder builder = new Dialog_Model.Builder(
-                LoginActivity.this);
-        builder.setTitle("提示");
-        builder.setCannel(false);
-        builder.setMessage(s);
-        builder.setPositiveButton("确定",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                        btn_login.setClickable(true);
-                        btn_login.setText("登录");
-                        dialog.dismiss();
-                    }
-                });
+        MyDialog.Builder builder = new MyDialog.Builder(LoginActivity.this);
+        builder.setTitle("提示")
+                .setCannel(false)
+                .setMessage(s)
+                .setNegativeButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                btn_login.setClickable(true);
+                                btn_login.setText("登录");
+                                dialog.dismiss();
+                            }
+                        });
         if (!isFinishing()) {
             builder.create().show();
         }

@@ -23,6 +23,7 @@ import com.study.mingappk.model.bean.ZanList;
 import java.lang.reflect.Array;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -45,7 +46,7 @@ public interface MyService {
      * @return 用户信息
      */
     @GET("user/login")
-    Observable<Login> getObservable_Login(
+    Observable<Login> get_Login(
             @Query("logname") String logname,
             @Query("pwd") String pwd);
 
@@ -58,9 +59,21 @@ public interface MyService {
      */
     @Multipart
     @POST("http://capi.nids.com.cn/iras/ver")
-    Call<String> postCall_FaceLogin(
+    Observable<ResponseBody> post_FaceLogin(
             @Part("data") String data,
-            @Part("files\"; filename=\"jpg") RequestBody facepic);
+            @Part("facepic\"; filename=\"jpg") RequestBody facepic);
+
+    /**
+     * 人脸认证成功后登录接口：该接口在进行人脸认证成功后，直接调用该接口，进行登录。
+     * 该接口中如果该用户，未绑定就会直接绑定认证的时候提交的账号，如果绑定了 ，就会用绑定的账号登录
+     *
+     * @param sign 人脸认证标识，在进行人脸认证成功后，认证接口返回的sign
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("user/authlogin")
+    Observable<Login> post_FaceLogin2(
+            @Field("sign") String sign);
 
     /**
      * 验证手机号码是否注册接口
@@ -69,7 +82,7 @@ public interface MyService {
      * @return 注册参数sign
      */
     @GET("user/telcheck")
-    Observable<CheckPhone> getObservable_CheckPhone(
+    Observable<CheckPhone> get_CheckPhone(
             @Query("tel") String tel);
 
     /**
@@ -81,7 +94,7 @@ public interface MyService {
      * @return 结果msg
      */
     @GET("user/rcode")
-    Observable<Result> getObservable_RCode(
+    Observable<Result> get_RCode(
             @Query("sign") String sign,
             @Query("type") int type,
             @Query("tel") String tel);
@@ -89,19 +102,21 @@ public interface MyService {
     /**
      * 注册接口
      *
-     * @param tel  手机号码
-     * @param code 验证码
-     * @param pwd  密码（6-16位）
-     * @param sign 签名
+     * @param tel    手机号码
+     * @param code   验证码
+     * @param pwd    密码（6-16位）
+     * @param sign   签名
+     * @param rphone 推荐人手机号
      * @return 结果msg
      */
     @FormUrlEncoded
     @POST("user/register")
-    Observable<Result> postObservable_Register(
+    Observable<Result> post_Register(
             @Field("tel") String tel,
             @Field("code") String code,
             @Field("pwd") String pwd,
-            @Field("sign") String sign);
+            @Field("sign") String sign,
+            @Field("rphone") String rphone);
 
     /**
      * 忘记密码，账号检查接口
@@ -110,7 +125,7 @@ public interface MyService {
      * @return 注册参数sign
      */
     @GET("password/telcheck")
-    Observable<CheckPhone> getObservable_CheckPhonePSW(
+    Observable<CheckPhone> get_CheckPhonePSW(
             @Query("tel") String tel);
 
     /**
@@ -124,7 +139,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("password/findpwd")
-    Observable<Result> postObservable_ResetPassword(
+    Observable<Result> post_ResetPassword(
             @Field("tel") String tel,
             @Field("pwd") String pwd,
             @Field("code") String code,
@@ -247,11 +262,12 @@ public interface MyService {
 
     /**
      * 查询村庄详细地址接口
-     * @param village_name  村名 关键字
+     *
+     * @param village_name 村名 关键字
      * @return 详细村地址名
      */
     @GET("vill/qlist")
-    Observable<QueryVillageList> getObservable_QueryVillage(
+    Observable<QueryVillageList> get_QueryVillage(
             @Query("village_name") String village_name);
 
     /**
@@ -281,11 +297,12 @@ public interface MyService {
 
     /**
      * 获取推荐村圈接口
+     *
      * @param auth 认证信息
-     * @return  推荐的村
+     * @return 推荐的村
      */
     @GET("vill/recommend")
-    Observable<RecommendVillage> getObservable_RecommendVillage(
+    Observable<RecommendVillage> get_RecommendVillage(
             @Query("auth") String auth);
 
     /**
@@ -297,7 +314,7 @@ public interface MyService {
      */
     @Multipart
     @POST("bbs/ufiles")
-    Observable<UploadFiles> postObservable_UploadImage(
+    Observable<UploadFiles> post_UploadImage(
             @Part("auth") String auth,
             @Part("files\"; filename=\"jpg") RequestBody file
             // @PartMap Map<String, RequestBody> params,
@@ -316,7 +333,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("bbs/add")
-    Observable<Result> postObservable_BBSPost(
+    Observable<Result> post_BBSPost(
             @Field("auth") String auth,
             @Field("vid") String vid,
             @Field("title") String title,
@@ -334,32 +351,34 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("bbs/addcom")
-    Observable<Result> postObservable_AddComment(
+    Observable<Result> post_AddComment(
             @Field("auth") String auth,
             @Field("pid") String pid,
             @Field("conts") String conts);
 
     /**
      * 删除帖子接口
+     *
      * @param auth 认证信息
-     * @param id 帖子id
+     * @param id   帖子id
      * @return 结果meg
      */
     @FormUrlEncoded
     @POST("bbs/del")
-    Observable<Result> postObservable_DeleteBbs(
+    Observable<Result> post_DeleteBbs(
             @Field("auth") String auth,
             @Field("id") String id);
 
     /**
      * 删除帖子评论接口
+     *
      * @param auth 认证信息
-     * @param id 评论id
+     * @param id   评论id
      * @return 结果msg
      */
     @FormUrlEncoded
     @POST("bbs/delcom")
-    Observable<Result> postObservable_DeleteComment(
+    Observable<Result> post_DeleteComment(
             @Field("auth") String auth,
             @Field("id") String id);
 
@@ -373,7 +392,7 @@ public interface MyService {
      * @return 帖子列表信息
      */
     @GET("bbs/list")
-    Observable<BBSList> getObservable_BBSList(
+    Observable<BBSList> get_BBSList(
             @Query("auth") String auth,
             @Query("vid") String vid,
             @Query("page") int page,
@@ -389,7 +408,7 @@ public interface MyService {
      * @return 评论列表
      */
     @GET("bbs/comlist")
-    Observable<BbsCommentList> getObservable_BbsCommentList(
+    Observable<BbsCommentList> get_BbsCommentList(
             @Query("auth") String auth,
             @Query("pid") String pid,
             @Query("page") int page,
@@ -405,7 +424,7 @@ public interface MyService {
      * @return 点赞时间，用户头像和名字
      */
     @GET("bbs/zanlist")
-    Observable<ZanList> getObservable_ZanList(
+    Observable<ZanList> get_ZanList(
             @Query("auth") String auth,
             @Query("pid") String pid,
             @Query("page") int page,
@@ -425,14 +444,15 @@ public interface MyService {
 
     /**
      * 举报帖子接口
-     * @param auth 认证信息
-     * @param bid 帖子id,必填
+     *
+     * @param auth  认证信息
+     * @param bid   帖子id,必填
      * @param conts 举报原因，选填
      * @return 结果msg
      */
     @FormUrlEncoded
     @POST("bbs/report")
-    Observable<Result> postObservable_Report(
+    Observable<Result> post_Report(
             @Field("auth") String auth,
             @Field("bid") String bid,
             @Field("conts") String conts);
@@ -470,7 +490,7 @@ public interface MyService {
      * "bbs_top_pic4":帖子最新4图
      */
     @GET("arch/info_e")
-    Observable<FriendDetail> getObservable_FriendDetail(
+    Observable<FriendDetail> get_FriendDetail(
             @Query("auth") String auth,
             @Query("uid") String uid);
 
@@ -484,7 +504,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("friend/rname")
-    Observable<Result> postObservable_RemarkName(
+    Observable<Result> post_RemarkName(
             @Field("auth") String auth,
             @Field("uid") String uid,
             @Field("aname") String aname);
@@ -499,7 +519,7 @@ public interface MyService {
      * @return 帖子列表信息
      */
     @GET("bbs/ulist")
-    Observable<BBSList> getObservable_FriendBbsList(
+    Observable<BBSList> get_FriendBbsList(
             @Query("auth") String auth,
             @Query("uid") String uid,
             @Query("page") int page,
@@ -521,7 +541,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("http://push.traimo.com/msg/user_sent")
-    Observable<Result> postObservable_sendMessage(
+    Observable<Result> post_sendMessage(
             @Field("from") String from,
             @Field("to") String to,
             @Field("ct") String ct,
@@ -541,7 +561,7 @@ public interface MyService {
      * @return MessageList
      */
     @GET("http://push.traimo.com/msg/lists")
-    Observable<MessageList> getObservable_MessageList(
+    Observable<MessageList> get_MessageList(
             @Query("me") String me,
             @Query("app") String app,
             @Query("os") int os);
@@ -580,7 +600,7 @@ public interface MyService {
      */
     @FormUrlEncoded
     @POST("vill/applymaster")
-    Observable<Result> postObservable_ApplyMaster(
+    Observable<Result> post_ApplyMaster(
             @Field("auth") String auth,
             @Field("vid") String vid,
             @Field("uname") String uname,
@@ -593,5 +613,54 @@ public interface MyService {
             @Field("q_img") int q_img,
             @Field("brithday") String brithday);
 
+    @FormUrlEncoded
+    @POST("http://121.40.105.149:9901/verif/realname")
+    Observable<Result> post_Test(
+            @Field("name") String name,
+            @Field("idnum") String idnum,
+            @Field("cid") String cid);
 
+    @GET("http://121.40.105.149:9901/verif/realname")
+    Observable<Result> get_Test(
+            @Query("name") String name,
+            @Query("idnum") String idnum,
+            @Query("cid") String cid);
+
+    /**
+     * 是否设置了交易密码
+     *
+     * @param auth 认证信息
+     * @return is_pwd
+     */
+    @GET("amount/is_set_pwd")
+    Observable<Login> get_IsSetPWD(
+            @Query("auth") String auth);
+
+    /**
+     * 设置交易密码
+     *
+     * @param auth 认证信息
+     * @param pwd  交易密码
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("amount/set_pwd")
+    Observable<Result> post_SetPursePWD(
+            @Field("auth") String auth,
+            @Field("pwd") String pwd);
+
+    /**
+     * 重置交易密码
+     *
+     * @param auth    认证信息
+     * @param old_pwd 原始交易密码
+     * @param new_pwd 新交易密码
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("amount/reset_pwd")
+    Observable<Result> post_ResetPursePWD(
+            @Field("auth") String auth,
+            @Field("old_pwd") String old_pwd,
+            @Field("new_pwd") String new_pwd);
 }

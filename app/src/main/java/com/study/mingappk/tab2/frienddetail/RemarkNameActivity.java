@@ -57,7 +57,7 @@ public class RemarkNameActivity extends BackActivity {
             String uid = getIntent().getStringExtra(UID);
             final String newName = etAname.getText().toString();
 
-            MyServiceClient.getService().postObservable_RemarkName(auth, uid, newName)
+            MyServiceClient.getService().post_RemarkName(auth, uid, newName)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Result>() {

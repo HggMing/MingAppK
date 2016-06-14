@@ -1,6 +1,5 @@
 package com.study.mingappk.tab3.newpost;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,12 +20,11 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.common.utils.PhotoOperate;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
-import com.study.mingappk.tmain.BaseActivity;
 
 import java.io.File;
 import java.io.Serializable;
@@ -195,7 +193,7 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
             };
 
             if (imageList.isEmpty()) {
-                MyServiceClient.getService().postObservable_BBSPost(auth, vid, null, conts, null, null)
+                MyServiceClient.getService().post_BBSPost(auth, vid, null, conts, null, null)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(subscriber);
@@ -214,7 +212,7 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
                                     e.printStackTrace();
                                 }
                                 RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-                                return MyServiceClient.getService().postObservable_UploadImage(auth, requestBody);
+                                return MyServiceClient.getService().post_UploadImage(auth, requestBody);
                             }
                         })
                         .map(new Func1<UploadFiles, String>() {
@@ -239,7 +237,7 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
                         .flatMap(new Func1<String, Observable<Result>>() {
                             @Override
                             public Observable<Result> call(String s) {
-                                return MyServiceClient.getService().postObservable_BBSPost(auth, vid, null, conts, null, s);
+                                return MyServiceClient.getService().post_BBSPost(auth, vid, null, conts, null, s);
                             }
                         })
                         .subscribeOn(Schedulers.io())
@@ -273,25 +271,25 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
                 startActivity(intent);
                 break;
             case R.id.del_picture://点击右上角的×，删除选择的图片
-                Dialog_Model.Builder builder = new Dialog_Model.Builder(this);
-                builder.setTitle("提示");
-                builder.setMessage("要删除这张照片吗?");
-                builder.setNegativeButton("确定",
-                        new DialogInterface.OnClickListener() {
+                MyDialog.Builder builder = new MyDialog.Builder(this);
+                builder.setTitle("提示")
+                        .setMessage("要删除这张照片吗?")
+                        .setNegativeButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        mAdapter.notifyItemRemoved(position);
+                                        imageList.remove(position);
+                                        mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
+                                        dialog.dismiss();
+                                    }
+                                })
+                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mAdapter.notifyItemRemoved(position);
-                                imageList.remove(position);
-                                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
                                 dialog.dismiss();
                             }
                         });
-                builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
                 if (!isFinishing()) {
                     builder.create().show();
                 }

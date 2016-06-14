@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
@@ -35,7 +34,7 @@ public class MyMsgBroadcastReceiver extends BroadcastReceiver {
     private void getMessageList(final Context context) {
         String me_uid = Hawk.get(APP.ME_UID, "");
         MyServiceClient.getService()
-                .getObservable_MessageList(me_uid, "yxj", 1)
+                .get_MessageList(me_uid, "yxj", 1)
                 .flatMap(new Func1<MessageList, Observable<MessageList.LBean>>() {
                     @Override
                     public Observable<MessageList.LBean> call(MessageList messageList) {

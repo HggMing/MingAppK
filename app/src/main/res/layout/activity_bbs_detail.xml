@@ -52,12 +52,12 @@
                 android:layout_marginBottom="7dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="7dp"
-                android:background="@drawable/button_input"
+                android:background="@drawable/button_theme"
                 android:clickable="false"
                 android:enabled="false"
                 android:gravity="center"
                 android:text="发送"
-                android:textColor="@drawable/button_input_text"
+                android:textColor="@drawable/button_theme_text"
                 android:textSize="16sp" />
 
         </LinearLayout>

@@ -2,6 +2,7 @@ package com.study.mingappk.tmain.userlogin.facelogin;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,12 +19,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.common.utils.PhotoOperate;
 import com.study.mingappk.model.bean.CheckPhone;
+import com.study.mingappk.model.bean.Login;
+import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.MainActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,12 +41,12 @@ import butterknife.OnClick;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
-import okhttp3.Headers;
 import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class FaceLoginActivity extends BackActivity {
 
@@ -154,9 +160,9 @@ public class FaceLoginActivity extends BackActivity {
         //2)使用MD5算法加密上述字符串
         String sign = BaseTools.md5(str);
         //3)最终得到参数字符串：（注意，KEY参数不带到参数列表,sign参数加入参数列表）
-        String str2 = other + "&sign =" + sign;
+        String str2 = other + "&sign=" + sign;
         //4)把上述字符串做base64加密，最终得到请求:
-        String paraString = Base64.encodeToString(str2.getBytes(), Base64.DEFAULT);
+        String paraString = Base64.encodeToString(str2.getBytes(), Base64.NO_WRAP);
         //对图片压缩处理
         File file = null;
         try {
@@ -165,69 +171,76 @@ public class FaceLoginActivity extends BackActivity {
             e.printStackTrace();
         }
         if (file != null) {
-            //创建okHttpClient对象
-            OkHttpClient mOkHttpClient = new OkHttpClient();
-
-            RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
-
-            RequestBody requestBody = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("data",paraString)
-                    .addFormDataPart("facepic","123.jpg",fileBody)
-                    .build();
-
-            Request request = new Request.Builder()
-                    .url("http://capi.nids.com.cn/iras/ver")
-                    .post(requestBody)
-                    .build();
-
-            mOkHttpClient
-                    .newCall(request)
-                    .enqueue(new okhttp3.Callback() {
+            final RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+            MyServiceClient.getService()
+                    .post_FaceLogin(paraString, requestBody)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<ResponseBody>() {
                         @Override
-                        public void onFailure(okhttp3.Call call, IOException e) {
-                            Toast.makeText(FaceLoginActivity.this, "请求错误;" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        public void onCompleted() {
+
                         }
 
                         @Override
-                        public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                            String s=response.body().string();
-                            Toast.makeText(FaceLoginActivity.this, "s;" + s, Toast.LENGTH_SHORT).show();
+                        public void onError(Throwable e) {
+                            Toast.makeText(FaceLoginActivity.this, "验证超时，建议重新拍摄清晰正面免冠照片，再次尝试登陆。", Toast.LENGTH_LONG).show();
+                            btnOk.setText("确定");
+                        }
+
+                        @Override
+                        public void onNext(ResponseBody responseBody) {
+                            String s = null;
+                            try {
+                                s = responseBody.string();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             Gson gson = new Gson();
                             CheckPhone result = gson.fromJson(new String(Base64.decode(s, Base64.DEFAULT)), CheckPhone.class);
-                            Toast.makeText(FaceLoginActivity.this, "ERRO;" + result.getErr(), Toast.LENGTH_SHORT).show();
                             if (result.getErr() == 0) {
-                                FaceLogin();
+                                FaceLogin(result.getSign());
+                            } else {
+                                Toast.makeText(FaceLoginActivity.this, result.getErr() + "：" + result.getMsg(), Toast.LENGTH_SHORT).show();
+                                btnOk.setText("确定");
                             }
                         }
                     });
-
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-//            MyServiceClient.getService()
-//                    .postCall_FaceLogin(paraString,requestBody)
-//                    .enqueue(new Callback<String>() {
-//                        @Override
-//                        public void onResponse(Call<String> call, Response<String> response) {
-//                            String s=response.body();
-//                            Toast.makeText(FaceLoginActivity.this, "s;" + s, Toast.LENGTH_SHORT).show();
-//                            Gson gson = new Gson();
-//                            CheckPhone result = gson.fromJson(new String(Base64.decode(s, Base64.DEFAULT)), CheckPhone.class);
-//                            Toast.makeText(FaceLoginActivity.this, "ERRO;" + result.getErr(), Toast.LENGTH_SHORT).show();
-//                            if (result.getErr() == 0) {
-//                                FaceLogin();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<String> call, Throwable t) {
-//                            Toast.makeText(FaceLoginActivity.this, "请求错误;" + t.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
         }
     }
 
-    private void FaceLogin() {
-        Toast.makeText(FaceLoginActivity.this, "人脸登录成功！", Toast.LENGTH_SHORT).show();
+    private void FaceLogin(String sign) {
+        Toast.makeText(FaceLoginActivity.this, "人脸认证成功！", Toast.LENGTH_SHORT).show();
+        MyServiceClient.getService()
+                .post_FaceLogin2(sign)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Login>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Login login) {
+                        Hawk.chain()
+                                .put(APP.USER_AUTH, login.getAuth())//保存认证信息
+                                .put(APP.ME_UID, login.getInfo().getUid())
+                                .put(APP.IS_SHOP_OWNER, login.getShopowner().getIs_shopowner())
+                                .commit();
+                        Intent intent = new Intent();
+                        intent.setClass(FaceLoginActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
     }
 
     //**************** Android M Permission (Android 6.0权限控制代码封装)*****************************************************

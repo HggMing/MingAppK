@@ -8,18 +8,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.tmain.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -68,24 +66,23 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void noPermission() {
-                Dialog_Model.Builder builder = new Dialog_Model.Builder(SplashActivity.this);
-                builder.setTitle("提示");
-                builder.setMessage("我们需要获得储存空间，为你储存个人信息；否则，你将无法正常使用本软件。");
-                builder.setNegativeButton("确定",
-                        new DialogInterface.OnClickListener() {
+                MyDialog.Builder builder = new MyDialog.Builder(SplashActivity.this);
+                builder.setTitle("提示")
+                        .setMessage("我们需要获得储存空间，为你储存个人信息；否则，你将无法正常使用本软件。")
+                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 RequestPermission();
                                 dialog.dismiss();
                             }
+                        })
+                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                                dialog.dismiss();
+                            }
                         });
-                builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                        dialog.dismiss();
-                    }
-                });
                 if (!isFinishing()) {
                     builder.create().show();
                 }
@@ -193,17 +190,17 @@ public class SplashActivity extends AppCompatActivity {
 //                    .show();
             //如果用户之前拒绝过此权限，再提示一次准备授权相关权限
 
-            Dialog_Model.Builder builder = new Dialog_Model.Builder(this);
-            builder.setTitle("提示");
-            builder.setCannel(false);
-            builder.setMessage(permissionDes);
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    ActivityCompat.requestPermissions(SplashActivity.this, permissions, requestCode);
-                    dialog.dismiss();
-                }
-            });
+            MyDialog.Builder builder = new MyDialog.Builder(this);
+            builder.setTitle("提示")
+                    .setCannel(false)
+                    .setMessage(permissionDes)
+                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(SplashActivity.this, permissions, requestCode);
+                            dialog.dismiss();
+                        }
+                    });
             if (!isFinishing()) {
                 builder.create().show();
             }

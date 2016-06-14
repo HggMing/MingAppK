@@ -88,7 +88,7 @@ public class ResetPasswordActivity extends BackActivity {
 
     private void getRCode() {
         MyServiceClient.getService()
-                .getObservable_RCode(sign, 2, resetPhone)
+                .get_RCode(sign, 2, resetPhone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result>() {
@@ -152,7 +152,7 @@ public class ResetPasswordActivity extends BackActivity {
      */
     private void resetPassword(String code, String pwd) {
         MyServiceClient.getService()
-                .postObservable_ResetPassword(resetPhone, pwd, code, sign)
+                .post_ResetPassword(resetPhone, pwd, code, sign)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result>() {

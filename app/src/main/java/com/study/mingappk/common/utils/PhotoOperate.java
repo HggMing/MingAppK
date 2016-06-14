@@ -3,7 +3,6 @@ package com.study.mingappk.common.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.util.Log;
 
 import java.io.File;
@@ -14,7 +13,9 @@ import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+/**
+ * 对图片进行压缩的工具类
+ */
 public class PhotoOperate {
 
     private Context context;
@@ -98,7 +99,7 @@ public class PhotoOperate {
             outputChannel.close();
         }
     }
-    public static void errorLog(Exception e) {
+    private static void errorLog(Exception e) {
         if (e == null) {
             return;
         }

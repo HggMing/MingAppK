@@ -99,7 +99,7 @@ public class RegisterActivity extends BackActivity {
 
     private void getRCode() {
         MyServiceClient.getService()
-                .getObservable_RCode(sign, 1, regPhone)
+                .get_RCode(sign, 1, regPhone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result>() {
@@ -137,6 +137,7 @@ public class RegisterActivity extends BackActivity {
                 String rcode = etRcode.getEditableText().toString();
                 String pwd1 = etPwd1.getEditableText().toString();
                 String pwd2 = etPwd2.getEditableText().toString();
+                String rphone=etPhoneRecommend.getEditableText().toString();
 
                 if (rcode.isEmpty()) {
                     Toast.makeText(this, "验证码不能为空", Toast.LENGTH_LONG).show();
@@ -158,7 +159,7 @@ public class RegisterActivity extends BackActivity {
                     Toast.makeText(this, "请认真阅读免责条款", Toast.LENGTH_LONG).show();
                     return;
                 }
-                register(rcode, pwd1);
+                register(rcode, pwd1,rphone);
                 break;
         }
     }
@@ -166,9 +167,9 @@ public class RegisterActivity extends BackActivity {
     /**
      * 注册
      */
-    private void register(String code, final String pwd) {
+    private void register(String code, final String pwd,String rphone) {
         MyServiceClient.getService()
-                .postObservable_Register(regPhone, code, pwd, sign)
+                .post_Register(regPhone, code, pwd, sign,rphone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result>() {
@@ -194,7 +195,7 @@ public class RegisterActivity extends BackActivity {
     }
 
     private void login(final String pwd) {
-        MyServiceClient.getService().getObservable_Login(regPhone, pwd)
+        MyServiceClient.getService().get_Login(regPhone, pwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Login>() {

@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -121,7 +120,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
         String auth = Hawk.get(APP.USER_AUTH);
         String mVid = getIntent().getStringExtra(VILLAGE_ID);
         MyServiceClient.getService()
-                .getObservable_BBSList(auth, mVid, page, PAGE_SIZE)
+                .get_BBSList(auth, mVid, page, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BBSList>() {
@@ -201,6 +200,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                 ppid = position;
                 Intent intent2 = new Intent(this, BbsDetailActivity.class);
                 intent2.putExtra(BbsDetailActivity.BBS_DETAIL, bbsDetail);
+                intent2.putExtra(BbsDetailActivity.IS_CLICK_COMMENT,true);
                 startActivityForResult(intent2, REQUEST_LIKE_COMMENT_NUMBER);
                 break;
             default:

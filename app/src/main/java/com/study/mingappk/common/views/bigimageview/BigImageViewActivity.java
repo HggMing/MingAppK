@@ -13,7 +13,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -29,7 +28,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.service.MyServiceClient;
 
@@ -67,7 +66,7 @@ public class BigImageViewActivity extends AppCompatActivity {
         BaseTools.transparentStatusBar(this);//透明状态栏
 
 //        mList = getIntent().getParcelableArrayListExtra(IMAGE_LIST);
-        mList=getIntent().getExtras().getParcelableArrayList(IMAGE_LIST);
+        mList = getIntent().getExtras().getParcelableArrayList(IMAGE_LIST);
         index = getIntent().getIntExtra(IMAGE_INDEX, 0);
         mViewPager.setAdapter(new SamplePagerAdapter());
         mIndicator.setViewPager(mViewPager);//设置指示器
@@ -127,36 +126,36 @@ public class BigImageViewActivity extends AppCompatActivity {
                 @Override
                 public boolean onLongClick(View v) {
                     //长按下载图片
-                    Dialog_Model.Builder builder = new Dialog_Model.Builder(container.getContext());
-                    builder.setTitle("提示");
-                    builder.setMessage("下载图片" + "?");
-                    builder.setNegativeButton("确定",
-                            new DialogInterface.OnClickListener() {
+                    MyDialog.Builder builder = new MyDialog.Builder(container.getContext());
+                    builder.setTitle("提示")
+                            .setMessage("下载图片" + "?")
+                            .setNegativeButton("确定",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //android6.0 获取运行时权限
+                                            performCodeWithPermission("App请求存储权限，以便保存图片，请允许！", new PermissionCallback() {
+                                                @Override
+                                                public void hasPermission() {
+                                                    //执行获得权限后相关代码
+                                                    saveImage(imageUrl);
+                                                }
+
+                                                @Override
+                                                public void noPermission() {
+
+                                                }
+                                            }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                                            dialog.dismiss();
+                                        }
+                                    })
+                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //android6.0 获取运行时权限
-                                    performCodeWithPermission("App请求存储权限，以便保存图片，请允许！", new PermissionCallback() {
-                                        @Override
-                                        public void hasPermission() {
-                                            //执行获得权限后相关代码
-                                            saveImage(imageUrl);
-                                        }
-
-                                        @Override
-                                        public void noPermission() {
-
-                                        }
-                                    }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
                                     dialog.dismiss();
                                 }
                             });
-                    builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
                     if (!isFinishing()) {
                         builder.create().show();
                     }

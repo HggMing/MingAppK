@@ -286,7 +286,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
 
 
     private void getLikeList(String pid, final ViewHolder holder) {
-        MyServiceClient.getService().getObservable_ZanList(auth, pid, 1, 99)
+        MyServiceClient.getService().get_ZanList(auth, pid, 1, 99)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ZanList>() {
@@ -308,7 +308,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
     }
 
     private void getCommentList(String pid, final ViewHolder holder) {
-        MyServiceClient.getService().getObservable_BbsCommentList(auth, pid, 1, 6)
+        MyServiceClient.getService().get_BbsCommentList(auth, pid, 1, 6)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BbsCommentList>() {

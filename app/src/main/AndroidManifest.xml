@@ -68,8 +68,11 @@
             android:label="@string/title_activity_advice"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tab4.scommon.ChangePwdActivity"
+            android:name=".tab4.safesetting.ChangePwdActivity"
             android:label="@string/title_activity_change_pwd" />
+        <activity
+            android:name=".tab4.safesetting.ChangePursePwdActivity"
+            android:label="@string/title_activity_change_purse_pwd" />
         <activity
             android:name=".tab4.selfinfo.UserDetailActivity"
             android:label="@string/title_activity_user_detail" />

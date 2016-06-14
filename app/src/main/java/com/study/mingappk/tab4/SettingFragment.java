@@ -20,7 +20,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.views.dialog.Dialog_ChangePwd;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -34,7 +34,6 @@ import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
 import com.study.mingappk.tmain.userlogin.LoginActivity;
 
 import butterknife.Bind;
-import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -65,7 +64,7 @@ public class SettingFragment extends Fragment {
     private String auth;
     private int isShopOwner;//是否是店长,1是0不是
     private boolean isBinding;//是否实名认证
-    private final int REQUEST_USER_INFO=122;
+    private final int REQUEST_USER_INFO = 122;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -173,19 +172,19 @@ public class SettingFragment extends Fragment {
                                         if (response.isSuccessful()) {
                                             Result changePwdResult = response.body();
                                             if (changePwdResult != null) {
-                                                Dialog_Model.Builder builder2 = new Dialog_Model.Builder(mActivity);
-                                                builder2.setTitle("提示");
-                                                builder2.setCannel(false);
-                                                builder2.setMessage(changePwdResult.getMsg());
-                                                builder2.setPositiveButton("确定",
-                                                        new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog,
-                                                                                int which) {
-                                                                dialog.dismiss();
-                                                            }
+                                                MyDialog.Builder builder2 = new MyDialog.Builder(mActivity);
+                                                builder2.setTitle("提示")
+                                                        .setCannel(false)
+                                                        .setMessage(changePwdResult.getMsg())
+                                                        .setNegativeButton("确定",
+                                                                new DialogInterface.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog,
+                                                                                        int which) {
+                                                                        dialog.dismiss();
+                                                                    }
 
-                                                        });
+                                                                });
                                                 if (!mActivity.isFinishing()) {
                                                     builder2.create().show();
                                                 }
@@ -214,29 +213,29 @@ public class SettingFragment extends Fragment {
      * 点击退出登录
      */
     private void logout() {
-        Dialog_Model.Builder builder = new Dialog_Model.Builder(mActivity);
-        builder.setTitle("提示");
-        builder.setMessage("确定退出登录？");
-        builder.setNegativeButton("确定",
-                new DialogInterface.OnClickListener() {
+        MyDialog.Builder builder = new MyDialog.Builder(mActivity);
+        builder.setTitle("提示")
+                .setMessage("确定退出登录？")
+                .setNegativeButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Hawk.chain()
+                                        .put(APP.LOGIN_PASSWORD, "")
+                                        .put(APP.IS_UPDATA_MY_INFO, false)
+                                        .commit();
+                                Intent intent = new Intent(mActivity, LoginActivity.class);
+                                startActivity(intent);
+                                mActivity.finish();
+                                dialog.dismiss();
+                            }
+                        })
+                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Hawk.chain()
-                                .put(APP.LOGIN_PASSWORD, "")
-                                .put(APP.IS_UPDATA_MY_INFO, false)
-                                .commit();
-                        Intent intent = new Intent(mActivity, LoginActivity.class);
-                        startActivity(intent);
-                        mActivity.finish();
                         dialog.dismiss();
                     }
                 });
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
         if (!mActivity.isFinishing()) {
             builder.create().show();
         }
@@ -328,12 +327,11 @@ public class SettingFragment extends Fragment {
                     Intent intent4 = new Intent(mActivity, ApplyShopOwnerActivity.class);
                     startActivity(intent4);
                 } else {
-                    Dialog_Model.Builder builder1 = new Dialog_Model.Builder(mActivity);
-                    builder1.setTitle("提示");
-                    builder1.setCannel(false);
-                    builder1.setMessage("你的账号尚未实名认证，请先进行实名认证。");
-                    builder1.setPositiveButton("确定",
-                            new DialogInterface.OnClickListener() {
+                    MyDialog.Builder builder1 = new MyDialog.Builder(mActivity);
+                    builder1.setTitle("提示")
+                            .setCannel(false)
+                            .setMessage("你的账号尚未实名认证，请先进行实名认证。")
+                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,
                                                     int which) {

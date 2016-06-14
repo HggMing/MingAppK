@@ -26,7 +26,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -126,6 +126,7 @@ public class FollowVillageActivity extends AppCompatActivity implements FollowVi
                     }
                 });
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -180,7 +181,7 @@ public class FollowVillageActivity extends AppCompatActivity implements FollowVi
     private void searchVillage(String village) {
 
         MyServiceClient.getService()
-                .getObservable_QueryVillage(village)
+                .get_QueryVillage(village)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QueryVillageList>() {
@@ -254,24 +255,23 @@ public class FollowVillageActivity extends AppCompatActivity implements FollowVi
     @Override
     public void onItemClick(View view, final int position) {
         String villageName = mList.get(position).getTown_name() + mList.get(position).getVillage_name();
-        Dialog_Model.Builder builder = new Dialog_Model.Builder(this);
-        builder.setTitle("提示");
-        builder.setMessage("是否要关注" + villageName + "?");
-        builder.setNegativeButton("确定",
-                new DialogInterface.OnClickListener() {
+        MyDialog.Builder builder = new MyDialog.Builder(this);
+        builder.setTitle("提示")
+                .setMessage("是否要关注" + villageName + "?")
+                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                followVillage(position);
+                                dialog.dismiss();
+                            }
+                        })
+                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        followVillage(position);
                         dialog.dismiss();
                     }
-                });
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
+                })
+                .create().show();
     }
 
     private void followVillage(int position) {

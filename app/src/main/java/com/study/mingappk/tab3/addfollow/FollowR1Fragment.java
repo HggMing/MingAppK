@@ -2,7 +2,6 @@ package com.study.mingappk.tab3.addfollow;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,8 +17,7 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.utils.MyItemDecoration;
-import com.study.mingappk.common.views.dialog.Dialog_Model;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.RecommendVillage;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.databean.FollowTreeData;
@@ -74,7 +72,7 @@ public class FollowR1Fragment extends Fragment implements FollowR1Adapter.OnItem
     private void getDataList() {
         String auth = Hawk.get(APP.USER_AUTH);
         MyServiceClient.getService()
-                .getObservable_RecommendVillage(auth)
+                .get_RecommendVillage(auth)
                 .flatMap(new Func1<RecommendVillage, Observable<RecommendVillage.DataBean>>() {
                     @Override
                     public Observable<RecommendVillage.DataBean> call(RecommendVillage recommendVillage) {
@@ -146,28 +144,29 @@ public class FollowR1Fragment extends Fragment implements FollowR1Adapter.OnItem
 
     @Override
     public void onItemClick(View view, final int position) {
-        String villageName =mList.get(position).getChild_name();
-        Dialog_Model.Builder builder = new Dialog_Model.Builder(mActivity);
-        builder.setTitle("提示");
-        builder.setMessage("是否要关注" + villageName + "?");
-        builder.setNegativeButton("确定",
-                new DialogInterface.OnClickListener() {
+        String villageName = mList.get(position).getChild_name();
+        MyDialog.Builder builder = new MyDialog.Builder(mActivity);
+        builder.setTitle("提示")
+                .setMessage("是否要关注" + villageName + "?")
+                .setNegativeButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                followVillage(position);
+                                dialog.dismiss();
+                            }
+                        })
+                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        followVillage(position);
                         dialog.dismiss();
                     }
-                });
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
+                })
+                .create().show();
     }
+
     private void followVillage(int position) {
-        String vid=mList.get(position).getVillage_id();
+        String vid = mList.get(position).getVillage_id();
         MyServiceClient.getService().postCall_FollowVillage(auth, vid)
                 .enqueue(new Callback<Result>() {
                     @Override
@@ -190,6 +189,7 @@ public class FollowR1Fragment extends Fragment implements FollowR1Adapter.OnItem
                     }
                 });
     }
+
     @Override
     public void onItemLongClick(View view, int position) {
 

@@ -15,12 +15,12 @@ import android.widget.TextView;
 
 import com.study.mingappk.R;
 
-public class Dialog_Model extends Dialog {
-	public Dialog_Model(Context context) {
+public class MyDialog extends Dialog {
+	public MyDialog(Context context) {
 		super(context);
 	}
 
-	public Dialog_Model(Context context, int theme) {
+	public MyDialog(Context context, int theme) {
 		super(context, theme);
 	}
 
@@ -31,8 +31,9 @@ public class Dialog_Model extends Dialog {
 		public String objInfo;
 		private boolean isCannel = true;
 
-		public void setCannel(boolean isCannel) {
+		public Builder setCannel(boolean isCannel) {
 			this.isCannel = isCannel;
+			return this;
 		}
 
 		// private String positiveButtonText;
@@ -87,48 +88,42 @@ public class Dialog_Model extends Dialog {
 			return this;
 		}
 
-		public Builder setPositiveButton(int positiveButtonText,
-				DialogInterface.OnClickListener listener) {
+		public Builder setPositiveButton(int positiveButtonText, DialogInterface.OnClickListener listener) {
 			this.ok = (String) context.getText(positiveButtonText);
 			this.positiveButtonClickListener = listener;
 			return this;
 		}
 
-		public Builder setPositiveButton(String positiveButtonText,
-				DialogInterface.OnClickListener listener) {
+		public Builder setPositiveButton(String positiveButtonText, DialogInterface.OnClickListener listener) {
 			this.ok = positiveButtonText;
 			this.positiveButtonClickListener = listener;
 			return this;
 		}
 
-		public Builder setNegativeButton(int negativeButtonText,
-				DialogInterface.OnClickListener listener) {
+		public Builder setNegativeButton(int negativeButtonText, DialogInterface.OnClickListener listener) {
 			this.cannle = (String) context.getText(negativeButtonText);
 			this.negativeButtonClickListener = listener;
 			return this;
 		}
 
-		public Builder setNegativeButton(String negativeButtonText,
-				DialogInterface.OnClickListener listener) {
+		public Builder setNegativeButton(String negativeButtonText, DialogInterface.OnClickListener listener) {
 			this.cannle = negativeButtonText;
 			this.negativeButtonClickListener = listener;
 			return this;
 		}
 
 		@SuppressWarnings("deprecation")
-		public Dialog_Model create() {
+		public MyDialog create() {
 
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			final Dialog_Model dialog = new Dialog_Model(context,
-					R.style.MyDialog);
+			final MyDialog dialog = new MyDialog(context, R.style.MyDialog);
 			dialog.setCancelable(isCannel);
 			View layout = inflater.inflate(R.layout.dialog_model, null);
 			dialog.addContentView(layout, new ViewGroup.LayoutParams(
 					ViewGroup.LayoutParams.WRAP_CONTENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT));
-			WindowManager windowManager = ((Activity) context)
-					.getWindowManager();
+			WindowManager windowManager = ((Activity) context).getWindowManager();
 			Display display = windowManager.getDefaultDisplay();
 
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
@@ -141,8 +136,7 @@ public class Dialog_Model extends Dialog {
 			btn_left.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					negativeButtonClickListener.onClick(dialog,
-							DialogInterface.BUTTON_NEGATIVE);
+					negativeButtonClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
 				}
 			});
 			if (null == cannle) {
@@ -150,26 +144,23 @@ public class Dialog_Model extends Dialog {
 				btn_left.setVisibility(View.GONE);
 			}
 
-			Button btn_right = (Button) layout
-					.findViewById(R.id.positiveButton);
+			Button btn_right = (Button) layout.findViewById(R.id.positiveButton);
 			btn_right.setText(ok);
 			btn_right.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					positiveButtonClickListener.onClick(dialog,
-							DialogInterface.BUTTON_POSITIVE);
+					positiveButtonClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
 				}
 			});
 			if (null == ok) {
 				is_show.setVisibility(View.GONE);
-				btn_left.setVisibility(View.GONE);
+				btn_right.setVisibility(View.GONE);
 			}
 			if (message != null) {
 				((TextView) layout.findViewById(R.id.message)).setText(message);
 			}
 			dialog.setContentView(layout);
 			return dialog;
-
 		}
 	}
 

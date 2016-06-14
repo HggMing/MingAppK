@@ -76,6 +76,12 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
         initDatas();//初始化数据
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyDB.liteOrm.close();
+    }
+
     private void initDatas() {
         me = Hawk.get(APP.ME_UID);
         other = getIntent().getStringExtra(UID);
@@ -144,7 +150,7 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
     private void getMessageList() {
         String me_uid = Hawk.get(APP.ME_UID, "");
         MyServiceClient.getService()
-                .getObservable_MessageList(me_uid, "yxj", 1)
+                .get_MessageList(me_uid, "yxj", 1)
                 .flatMap(new Func1<MessageList, Observable<MessageList.LBean>>() {
                     @Override
                     public Observable<MessageList.LBean> call(MessageList messageList) {
@@ -211,7 +217,7 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
             chatMsg.setCt("0");//消息类型：文字
             chatMsg.setTxt(msg);//消息内容
             MyServiceClient.getService()
-                    .postObservable_sendMessage(me, other, "0", "yxj", msg, null, null, 1, "2")
+                    .post_sendMessage(me, other, "0", "yxj", msg, null, null, 1, "2")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Result>() {
