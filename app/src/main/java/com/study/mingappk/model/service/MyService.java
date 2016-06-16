@@ -50,6 +50,32 @@ public interface MyService {
             @Query("logname") String logname,
             @Query("pwd") String pwd);
 
+
+    /**
+     * 进行实名认证，注册接口
+     *
+     * @param data    加密后的参数
+     * @param facepic 正面免冠图片
+     * @param pic1    身份证正面照片
+     * @return 先base64解密，得到json
+     */
+    @Multipart
+    @POST("http://capi.nids.com.cn/iras/reg")
+    Observable<ResponseBody> post_FaceRealBinding(
+            @Part("data") String data,
+            @Part("facepic\"; filename=\"jpg") RequestBody facepic,
+            @Part("pic1\"; filename=\"jpg") RequestBody pic1);
+
+    /**
+     * 验证是否已实名认证
+     * @param data 加密后的参数
+     * @return 先base64解密，得到json
+     */
+    @Multipart
+    @POST("http://capi.nids.com.cn/iras/userinfo")
+    Observable<ResponseBody> post_IsRealBinding(
+            @Part("data") String data);
+
     /**
      * 人脸登录：登录接口需要提供正面人脸照片和用户电话号码，系统在得到照片之后将和用户注册照片进行比对，返回结果。
      *

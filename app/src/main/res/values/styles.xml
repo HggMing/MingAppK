@@ -17,6 +17,11 @@
         <item name="actionMenuTextAppearance">@style/MyMenuAppearance</item>
     </style>
 
+    <style name="OpaqueTheme" parent="AppTheme">
+        <!--关掉这个Activity的透明背景-->
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
     <!--ToolBar按钮文字大小设置-->
     <style name="MyMenuAppearance" parent="TextAppearance.AppCompat.Menu">
         <item name="android:textSize">18sp</item>

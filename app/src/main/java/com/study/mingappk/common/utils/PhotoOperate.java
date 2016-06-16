@@ -30,6 +30,7 @@ public class PhotoOperate {
             String fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             file = File.createTempFile(fileName, ".jpg", context.getCacheDir());
         } catch (IOException e) {
+            errorLog(e);
         }
         return file;
     }
@@ -88,15 +89,18 @@ public class PhotoOperate {
             throws IOException {
         FileChannel inputChannel = null;
         FileChannel outputChannel = null;
-        try {
-            inputChannel = new FileInputStream(source).getChannel();
+        try {inputChannel = new FileInputStream(source).getChannel();
             outputChannel = new FileOutputStream(dest).getChannel();
             outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
         } catch (Exception e) {
             errorLog(e);
         } finally {
-            inputChannel.close();
-            outputChannel.close();
+            if (inputChannel != null) {
+                inputChannel.close();
+            }
+            if (outputChannel != null) {
+                outputChannel.close();
+            }
         }
     }
     private static void errorLog(Exception e) {

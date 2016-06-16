@@ -1,4 +1,4 @@
-package com.study.mingappk.common.utils.pinyin;
+package com.study.mingappk.common.views.pinyin;
 
 
 

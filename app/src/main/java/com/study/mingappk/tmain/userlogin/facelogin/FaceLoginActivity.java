@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -25,6 +27,7 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.common.utils.PhotoOperate;
+import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -66,6 +69,8 @@ public class FaceLoginActivity extends BackActivity {
     Button btnOk;
     private PhotoInfo photoInfo;
     boolean hasFacePhoto = false;
+    private final int REQUEST_PHOTO = 11800;
+    private String photoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,11 +122,34 @@ public class FaceLoginActivity extends BackActivity {
     }
 
     private void takePhoto() {
-        MyGallerFinal aFinal = new MyGallerFinal();
-        GalleryFinal.init(aFinal.getCoreConfig(this));
-        FunctionConfig functionConfig = new FunctionConfig.Builder()
-                .build();
-        GalleryFinal.openCamera(1001, functionConfig, mOnHanlderResultCallback);
+        //使用系统相机拍照方案
+//        MyGallerFinal aFinal = new MyGallerFinal();
+//        GalleryFinal.init(aFinal.getCoreConfig(this));
+//        FunctionConfig functionConfig = new FunctionConfig.Builder()
+//                .build();
+//        GalleryFinal.openCamera(1001, functionConfig, mOnHanlderResultCallback);
+        //使用自定义相机拍照方案
+        Intent intent = new Intent(this, TakePhotoActivity.class);
+        intent.putExtra(TakePhotoActivity.TYPE, TakePhotoActivity.FACE);
+        startActivityForResult(intent, REQUEST_PHOTO);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PHOTO) {
+            if (resultCode == RESULT_OK) {
+                btnFace.setVisibility(View.GONE);
+                imgFaceretake.setVisibility(View.VISIBLE);
+                photoPath = APP.FILE_PATH + "CameraCache/" + TakePhotoActivity.FACE + ".jpg";
+                Glide.with(FaceLoginActivity.this)
+                        .load(photoPath)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(imgFace);
+                hasFacePhoto = true;
+            }
+        }
     }
 
     private GalleryFinal.OnHanlderResultCallback mOnHanlderResultCallback = new GalleryFinal.OnHanlderResultCallback() {
@@ -166,7 +194,8 @@ public class FaceLoginActivity extends BackActivity {
         //对图片压缩处理
         File file = null;
         try {
-            file = new PhotoOperate(this).scal(photoInfo.getPhotoPath());
+//            file = new PhotoOperate(this).scal(photoInfo.getPhotoPath());//调用系统相机方案
+            file = new PhotoOperate(this).scal(photoPath);//自定义相机方案
         } catch (Exception e) {
             e.printStackTrace();
         }

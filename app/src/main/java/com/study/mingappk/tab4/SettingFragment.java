@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.views.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -33,13 +37,19 @@ import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
 import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
 import com.study.mingappk.tmain.userlogin.LoginActivity;
 
+import java.io.IOException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class SettingFragment extends Fragment {
     AppCompatActivity mActivity;
@@ -65,6 +75,7 @@ public class SettingFragment extends Fragment {
     private int isShopOwner;//是否是店长,1是0不是
     private boolean isBinding;//是否实名认证
     private final int REQUEST_USER_INFO = 122;
+    private final int REQUEST_IS_REAL_NAME_BINGING = 133;//请求实名认证
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,7 +94,58 @@ public class SettingFragment extends Fragment {
 
         getUserInfoDetail();//在线获取用户信息
 
+        getIsBinding();//获取是否实名认证
+
         initView();//界面初始化
+    }
+
+    private void getIsBinding() {
+        //1)将除图片外的参数以及机构key组成一个字符串(注意顺序)
+        String phone = Hawk.get(APP.LOGIN_NAME);
+        String other = "compid=9&phone=" + phone;
+        String str = other + "&key=69939442285489888751746749876227";
+        //2)使用MD5算法加密上述字符串
+        String sign = BaseTools.md5(str);
+        //3)最终得到参数字符串：（注意，KEY参数不带到参数列表,sign参数加入参数列表）
+        String str2 = other + "&sign=" + sign;
+        //4)把上述字符串做base64加密，最终得到请求:
+        String paraString = Base64.encodeToString(str2.getBytes(), Base64.NO_WRAP);
+
+        MyServiceClient.getService()
+                .post_IsRealBinding(paraString)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        String s = null;
+                        try {
+                            s = responseBody.string();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Gson gson = new Gson();
+                        CheckPhone result = gson.fromJson(new String(Base64.decode(s, Base64.DEFAULT)), CheckPhone.class);
+                        if (result.getErr() == 0) {
+                            isBinding = true;
+                            Hawk.put(APP.IS_REAL_NAME, true);
+                        }
+                        if (result.getErr() == 1002) {
+                            isBinding = false;
+                            Hawk.put(APP.IS_REAL_NAME, false);
+                        }
+                    }
+                });
     }
 
     private void initView() {
@@ -116,6 +178,12 @@ public class SettingFragment extends Fragment {
                     if (!isUpdataMyInfo) {
                         getUserInfoDetail();
                     }
+                }
+                break;
+            case REQUEST_IS_REAL_NAME_BINGING:
+                if (resultCode == Activity.RESULT_OK) {
+                    //点击申请店长后，实名认证成功
+                   isBinding=true;
                 }
                 break;
         }
@@ -307,7 +375,7 @@ public class SettingFragment extends Fragment {
             case R.id.click_safe_center:
 //                Toast.makeText(mActivity, "账号安全", Toast.LENGTH_SHORT).show();
                 Intent intent5 = new Intent(mActivity, SafeSettingActivity.class);
-                startActivity(intent5);
+                startActivityForResult(intent5,REQUEST_IS_REAL_NAME_BINGING);
                 break;
             case R.id.click_my_setting:
 //                Toast.makeText(mActivity, "我的", Toast.LENGTH_SHORT).show();
@@ -320,7 +388,6 @@ public class SettingFragment extends Fragment {
                 startActivity(intent3);
                 break;
             case R.id.click_store_manager:
-                isBinding = Hawk.get(APP.IS_REAL_NAME, false);
                 if (isShopOwner == 1) {
                     Toast.makeText(mActivity, "进入店长管理页面", Toast.LENGTH_SHORT).show();
                 } else if (isBinding) {
@@ -336,7 +403,7 @@ public class SettingFragment extends Fragment {
                                 public void onClick(DialogInterface dialog,
                                                     int which) {
                                     Intent intent5 = new Intent(mActivity, RealNameBindingActivity.class);
-                                    startActivity(intent5);
+                                    startActivityForResult(intent5,REQUEST_IS_REAL_NAME_BINGING);
                                     dialog.dismiss();
                                 }
                             });

@@ -26,7 +26,7 @@
  * #                                                   #
  */
 
-package com.study.mingappk.common.utils.pinyin;
+package com.study.mingappk.common.views.pinyin;
 
 /**
  *字符解析，用于解析汉字，联系人排序

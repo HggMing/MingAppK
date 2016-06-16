@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -17,14 +18,16 @@ import butterknife.OnClick;
 
 public class SafeSettingActivity extends BackActivity {
 
-    @Bind(R.id.tv_is_binging)
+    @Bind(R.id.tv_is_binding)
     TextView tvIsBinging;
+    @Bind(R.id.arrow_binding)
+    View arrowBinging;
     @BindColor(android.R.color.holo_red_light)
     int red;
     @BindColor(android.R.color.holo_blue_light)
     int blue;
 
-    private final int REQUEST_IS_REAL_NAME_BINGING=123;//请求实名认证
+    private final int REQUEST_IS_REAL_NAME_BINGING = 123;//请求实名认证
     private boolean isBinding;//是否实名认证
 
 
@@ -41,6 +44,7 @@ public class SafeSettingActivity extends BackActivity {
         if (isBinding) {
             tvIsBinging.setText("已认证");
             tvIsBinging.setTextColor(blue);
+            arrowBinging.setVisibility(View.INVISIBLE);
         } else {
             tvIsBinging.setText("未认证");
             tvIsBinging.setTextColor(red);
@@ -52,8 +56,12 @@ public class SafeSettingActivity extends BackActivity {
         switch (view.getId()) {
             case R.id.click_identity_binding:
                 //Toast.makeText(mActivity, "实名认证", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, RealNameBindingActivity.class);
-                startActivityForResult(intent,REQUEST_IS_REAL_NAME_BINGING);
+                if (isBinding) {
+                    Toast.makeText(SafeSettingActivity.this, "已完成实名认证", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(this, RealNameBindingActivity.class);
+                    startActivityForResult(intent, REQUEST_IS_REAL_NAME_BINGING);
+                }
                 break;
             case R.id.click_change_psw:
                 //Toast.makeText(SettingCommonActivity.this, "修改登录密码", Toast.LENGTH_SHORT).show();
@@ -83,6 +91,7 @@ public class SafeSettingActivity extends BackActivity {
                         tvIsBinging.setText("未认证");
                         tvIsBinging.setTextColor(red);
                     }
+                    setResult(RESULT_OK);
                 }
                 break;
         }

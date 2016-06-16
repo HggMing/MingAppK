@@ -4,23 +4,160 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.study.mingappk.tab4.safesetting.RealNameBindingActivity">
+    tools:context=".tab4.safesetting.RealNameBindingActivity">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="是否实名认证"
-            android:textSize="20sp" />
 
-        <Switch
-            android:id="@+id/is_real_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/layout_face"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_notice1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="请拍摄一张正面免冠照片"
+                    android:textColor="#666666"
+                    android:textSize="18sp" />
+
+                <RelativeLayout
+                    android:id="@+id/takelayout_face"
+                    android:layout_width="180dp"
+                    android:layout_height="240dp"
+                    android:layout_below="@id/tv_notice1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/button_takephoto_bg"
+                    android:padding="2dp">
+
+                    <ImageView
+                        android:id="@+id/btn_face"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/button_takephoto" />
+
+                    <ImageView
+                        android:id="@+id/img_face"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/img_faceretake"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignBottom="@id/takelayout_face"
+                    android:layout_marginBottom="-10dp"
+                    android:layout_marginLeft="-25dp"
+                    android:layout_toRightOf="@id/takelayout_face"
+                    android:background="@drawable/button_retakephoto"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_id_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="0dp"
+                android:paddingTop="10dp">
+
+
+                <TextView
+                    android:id="@+id/tv_notice2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="请拍摄一张身份证正面照片"
+                    android:textColor="#666666"
+                    android:textSize="18sp" />
+
+                <RelativeLayout
+                    android:id="@+id/takelayout_id_card"
+                    android:layout_width="285dp"
+                    android:layout_height="180dp"
+                    android:layout_below="@id/tv_notice2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/button_takephoto_bg"
+                    android:padding="2dp">
+
+                    <ImageView
+                        android:id="@+id/btn_id_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/button_takephoto" />
+
+                    <ImageView
+                        android:id="@+id/img_id_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/img_idretake"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignBottom="@id/takelayout_id_card"
+                    android:layout_marginBottom="-10dp"
+                    android:layout_marginLeft="-25dp"
+                    android:layout_toRightOf="@id/takelayout_id_card"
+                    android:background="@drawable/button_retakephoto"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/et_id_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/groupback"
+                android:digits="0123456789xX"
+                android:hint="请输入身份证号"
+                android:inputType="number"
+                android:maxLength="18"
+                android:padding="8dp"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_theme"
+                android:padding="4dp"
+                android:text="确定"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -7,7 +7,6 @@ import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
-import com.squareup.otto.Bus;
 
 public class APP extends Application {
     //存储目录路径

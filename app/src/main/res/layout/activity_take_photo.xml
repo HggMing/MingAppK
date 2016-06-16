@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".common.views.customcamera.TakePhotoActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_shutter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/bottom_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/font_black_2">
+
+            <ImageButton
+                android:id="@+id/btn_take_photo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_take_photo" />
+        </RelativeLayout>
+
+        <com.study.mingappk.common.views.customcamera.CameraSurfaceView
+            android:id="@+id/camera_surfaceview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom_img"
+            android:layout_alignParentTop="true" />
+
+        <ImageView
+            android:id="@+id/above_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom_img"
+            android:layout_alignParentTop="true"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/take_photo_face" />
+    </RelativeLayout>
+
+</RelativeLayout>

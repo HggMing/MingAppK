@@ -87,7 +87,7 @@ public class SplashActivity extends AppCompatActivity {
                     builder.create().show();
                 }
             }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_SMS);
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_SMS,Manifest.permission.CAMERA);
     }
 
     private void init() {
