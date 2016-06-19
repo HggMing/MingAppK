@@ -87,11 +87,17 @@ public class BbsDetailAdapter extends RecyclerView.Adapter<BbsDetailAdapter.View
         //显示数据编辑
         //评论人头像
         String headUrl = MyServiceClient.getBaseUrl() + mList.get(position).getUser_head();
-        Glide.with(mContext).load(headUrl)
-                .bitmapTransform(new CropCircleTransformation(mContext))
-                .error(R.mipmap.defalt_user_circle)
-                // .placeholder(R.mipmap.defalt_user_circle)
-                .into(holder.icon);
+        if (MyServiceClient.DEFAULT_HEAD.equals(headUrl)) {//未设置头像时，更换服务器提供的默认头像为本地
+            Glide.with(mContext)
+                    .load(R.mipmap.defalt_user_circle)
+                    .into(holder.icon);
+        } else {
+            Glide.with(mContext).load(headUrl)
+                    .bitmapTransform(new CropCircleTransformation(mContext))
+                    .error(R.mipmap.defalt_user_circle)
+                    // .placeholder(R.mipmap.defalt_user_circle)
+                    .into(holder.icon);
+        }
         holder.icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

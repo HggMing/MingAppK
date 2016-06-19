@@ -80,8 +80,9 @@ public class RemarkNameActivity extends BackActivity {
                                 intent.putExtra(FriendDetailActivity.NEW_NAME, newName);
                                 setResult(RESULT_OK, intent);
                                 finish();
+                            }else{
+                                Toast.makeText(RemarkNameActivity.this, result.getErr()+":"+result.getMsg(), Toast.LENGTH_SHORT).show();
                             }
-
                         }
                     });
 

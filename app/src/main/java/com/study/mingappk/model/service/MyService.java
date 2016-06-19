@@ -13,6 +13,7 @@ import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.MessageList;
+import com.study.mingappk.model.bean.NewsList;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.RecommendVillage;
 import com.study.mingappk.model.bean.Result;
@@ -68,6 +69,7 @@ public interface MyService {
 
     /**
      * 验证是否已实名认证
+     *
      * @param data 加密后的参数
      * @return 先base64解密，得到json
      */
@@ -283,6 +285,22 @@ public interface MyService {
     @GET("vill/followlist")
     Call<FollowVillageList> getCall_FollowList(
             @Query("auth") String auth,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 获取政务里，消息列表
+     *
+     * @param vid      村id
+     * @param type     1：新闻，2：政策，3：服务，4：资讯
+     * @param page     当前页码，默认为：1页
+     * @param pagesize 每页条数，默认20条
+     * @return 详细列表清单
+     */
+    @GET("news/list")
+    Observable<NewsList> get_NewsList(
+            @Query("vid") String vid,
+            @Query("type") int type,
             @Query("page") int page,
             @Query("pagesize") int pagesize);
 
@@ -659,7 +677,7 @@ public interface MyService {
      * @return is_pwd
      */
     @GET("amount/is_set_pwd")
-    Observable<Login> get_IsSetPWD(
+    Observable<Result> get_IsSetPWD(
             @Query("auth") String auth);
 
     /**

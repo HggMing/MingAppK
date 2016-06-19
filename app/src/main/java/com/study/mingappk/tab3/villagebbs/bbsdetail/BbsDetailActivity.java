@@ -44,8 +44,8 @@ import com.study.mingappk.model.database.BbsDetailModel;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
-import com.study.mingappk.tab3.villagebbs.likeusers.LikeUsersArea;
 import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
+import com.study.mingappk.tab3.villagebbs.likeusers.LikeUsersArea;
 import com.study.mingappk.tmain.BackActivity;
 
 import java.util.ArrayList;
@@ -77,6 +77,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
     Button commentPost;
     @Bind(R.id.comment_input)
     LinearLayout commentInput;
+
     private ImageView bbsHead;
     private ImageView bbsDel;
     private TextView bbsUname;
@@ -371,9 +372,9 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
 
         List<BbsDetailModel> bbsDetail = MyDB.getQueryAll(BbsDetailModel.class);
         boolean isReport = false;
-        for(int i=0;i<bbsDetail.size();i++){
-            if(bid.equals(bbsDetail.get(i).getBid())){
-                isReport=true;
+        for (int i = 0; i < bbsDetail.size(); i++) {
+            if (bid.equals(bbsDetail.get(i).getBid())) {
+                isReport = true;
             }
         }
         if (isReport) {

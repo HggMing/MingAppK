@@ -1,32 +1,25 @@
 package com.study.mingappk.tab3.villagebbs.likeusers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jude.utils.JUtils;
 import com.study.mingappk.R;
 import com.study.mingappk.model.bean.ZanList;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.CropTransformation;
-import jp.wasabeef.glide.transformations.MaskTransformation;
 
 public class LikeUsersArea {
     private Context mContext;
@@ -193,10 +186,16 @@ public class LikeUsersArea {
         image.setVisibility(View.VISIBLE);
 
         String head_like = MyServiceClient.getBaseUrl() + likeUsers.get(i).getUser_head();
-        Glide.with(mContext)
-                .load(head_like)
-                .bitmapTransform(new CropCircleTransformation(mContext))
-                .into(image);
+        if (MyServiceClient.DEFAULT_HEAD.equals(head_like)) {//未设置头像时，更换服务器提供的默认头像为本地
+            Glide.with(mContext)
+                    .load(R.mipmap.defalt_user_circle)
+                    .into(image);
+        } else {
+            Glide.with(mContext)
+                    .load(head_like)
+                    .bitmapTransform(new CropCircleTransformation(mContext))
+                    .into(image);
+        }
     }
 
 

@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:padding="12dp">
 
-   <!-- <TextView
-        android:id="@+id/tv_pos_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@id/img_news_head"
-        android:text=""
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="gone"/>
--->
+    <!-- <TextView
+         android:id="@+id/tv_pos_id"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_marginLeft="8dp"
+         android:layout_toRightOf="@id/img_news_head"
+         android:text=""
+         android:textColor="#000000"
+         android:textSize="18sp"
+         android:textStyle="bold"
+         android:visibility="gone"/>
+ -->
     <TextView
         android:id="@+id/tv_pos_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="8dp"
-        tools:text="就是一些示范！！"
         android:textColor="#000000"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        tools:text="就是一些示范！！" />
     <!--android:layout_toRightOf="@id/tv_pos_id"-->
 
 

@@ -8,12 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -28,6 +30,7 @@ import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab3.addfollow.FollowVillageActivity;
 import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
+import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,8 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
 
     @Bind(R.id.listview_header_text)
     XRecyclerView mXRecyclerView;
+    @Bind(R.id.content_empty)
+    TextView contentEmpty;
 
     private VillageListAdapter mAdapter = new VillageListAdapter();
     private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
@@ -154,6 +159,11 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
                             FollowVillageList followVillageListResult = response.body();
                             if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
                                 mList.addAll(followVillageListResult.getData().getList());
+                                if(mList.isEmpty()){
+                                    contentEmpty.setVisibility(View.VISIBLE);
+                                }else {
+                                    contentEmpty.setVisibility(View.GONE);
+                                }
                                 mAdapter.setItem(mList);
                             }
                         }
@@ -222,9 +232,9 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
                             Result result = response.body();
                             if (result != null && result.getErr() == 0) {
                                 // Toast.makeText(mActivity, result.getMsg(), Toast.LENGTH_SHORT).show();
-                                    mAdapter.notifyItemRemoved(position + 1);
-                                    mList.remove(position);
-                                    mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount()+1);
+                                mAdapter.notifyItemRemoved(position + 1);
+                                mList.remove(position);
+                                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount() + 1);
                             }
                         }
                     }

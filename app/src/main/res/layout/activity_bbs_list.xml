@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginBottom="15dp"
-            app:expandedTitleMarginEnd="104dp"
+            app:expandedTitleMarginEnd="134dp"
             app:expandedTitleMarginStart="20dp"
             app:expandedTitleTextAppearance="@style/MyExpandedTitleTextAppearance"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginRight="20dp"
                     android:src="@drawable/bbs_click_specialty" />
 
                 <TextView
@@ -80,7 +80,7 @@
                     android:id="@+id/icon_village"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
+                    android:layout_marginRight="20dp"
                     android:layout_toLeftOf="@id/icon_specialty"
                     android:src="@drawable/bbs_click_village" />
 
@@ -91,7 +91,54 @@
                     android:layout_below="@id/icon_specialty"
                     android:text="村况"
                     android:textSize="13dp" />
+
+                <ImageView
+                    android:id="@+id/icon_ga"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@id/icon_village"
+                    android:src="@drawable/bbs_click_ga" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/icon_ga"
+                    android:layout_below="@id/icon_specialty"
+                    android:text="政务"
+                    android:textSize="13dp" />
             </RelativeLayout>
+
+            <!--<View-->
+            <!--android:layout_width="47dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_gravity="bottom|right"-->
+            <!--android:layout_marginBottom="50dp"-->
+            <!--android:background="@color/alpha_village" />-->
+
+            <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_marginBottom="50dp">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/icon_ga"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:src="@drawable/bbs_click_ga" />-->
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignLeft="@id/icon_ga"-->
+            <!--android:layout_below="@id/icon_ga"-->
+            <!--android:text="政务"-->
+            <!--android:textSize="13dp" />-->
+            <!--/>-->
+            <!--</RelativeLayout>-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_bbs"
@@ -112,6 +159,17 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <TextView
+        android:id="@+id/content_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingTop="100dp"
+        android:text="目前本村帖子为空，你可以发布新帖！"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -124,59 +182,59 @@
         app:fab_colorRipple="@color/colorAccent2"
         app:fab_type="normal" />
 
-<!--    <LinearLayout
-        android:id="@+id/comment_input"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:orientation="vertical">
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:background="#cfcfcf" />
-
-        <LinearLayout
+    <!--    <LinearLayout
+            android:id="@+id/comment_input"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/input_background"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/comment_edit"
-                android:layout_width="0dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:background="#cfcfcf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_weight="1"
-                android:maxLines="4"
-                android:textSize="14dp"
-                tools:text="双方就爱上了款到即机"/>
-
-            <Button
-                android:id="@+id/comment_post"
-                android:layout_width="48dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="7dp"
                 android:background="@color/input_background"
-                android:gravity="center"
-                android:text="发送"
-                android:textColor="@color/font_black_comment"
-                android:textSize="16sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/comment_edit"
+                    android:layout_width="0dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:maxLines="4"
+                    android:textSize="14dp"
+                    tools:text="双方就爱上了款到即机"/>
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:background="#cfcfcf" />
-    </LinearLayout>-->
+                <Button
+                    android:id="@+id/comment_post"
+                    android:layout_width="48dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:background="@color/input_background"
+                    android:gravity="center"
+                    android:text="发送"
+                    android:textColor="@color/font_black_comment"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:background="#cfcfcf" />
+        </LinearLayout>-->
 </android.support.design.widget.CoordinatorLayout>
 

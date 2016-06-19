@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    buildToolsVersion '24.0.0'
 
     defaultConfig {
         applicationId "com.study.mingappk"
@@ -29,45 +29,47 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     // 工具库
-    compile 'com.jude:utils:1.1.1'
     // 网络请求，采用retrofit+okhttp+RxAndroid
+    //事件总线
+    // 图片处理
+    //Android viewpager指示器
+    // android官方兼容库
+    // 快速构造view插件依赖
+    // 自定义图库，带裁剪、编辑
+    // 下拉刷新 、分页加载的RecyclerView解决方案
+    //随滚动显示与消失的fab
+    //表情键盘 maven { url "https://jitpack.io" }
+    //滑动返回
+//    compile 'com.r0adkll:slidableactivity:2.0.5'
+    //数据储存
+    compile files('libs/lite-orm-1.9.0.jar')
+    // maven { url "https://jitpack.io" }
+    //个推
+//    compile 'com.getui:sdk:2.8.1.0'
+//    compile 'com.getui:ext:2.0.3'
+    //实现SearchView的第三方库
+    compile 'com.jude:utils:1.1.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'io.reactivex:rxandroid:1.1.0'
-    //事件总线
     compile 'org.greenrobot:eventbus:3.0.0'
-    // 图片处理
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'jp.wasabeef:glide-transformations:2.0.0'
     compile 'com.commit451:PhotoView:1.2.5'
-    compile 'me.relex:circleindicator:1.1.8@aar'//Android viewpager指示器
-    // android官方兼容库
+    compile 'me.relex:circleindicator:1.1.8@aar'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:cardview-v7:23.4.0'
-    // 快速构造view插件依赖
     compile 'com.jakewharton:butterknife:7.0.1'
-    // 自定义图库，带裁剪、编辑
     compile 'cn.finalteam:galleryfinal:1.4.8.7'
-    // 下拉刷新 、分页加载的RecyclerView解决方案
     compile 'com.jcodecraeer:xrecyclerview:1.2.6'
-    //随滚动显示与消失的fab
     compile 'com.melnykov:floatingactionbutton:1.3.0'
-    //表情键盘 maven { url "https://jitpack.io" }
     compile 'com.github.w446108264:XhsEmoticonsKeyboard:2.0.2'
-    //滑动返回
-//    compile 'com.r0adkll:slidableactivity:2.0.5'
     compile 'com.jude:swipebackhelper:3.1.0'
-    //数据储存
-    compile files('libs/lite-orm-1.9.0.jar')
-    compile 'com.github.orhanobut:hawk:1.23'// maven { url "https://jitpack.io" }
-    //个推
-//    compile 'com.getui:sdk:2.8.1.0'
-//    compile 'com.getui:ext:2.0.3'
-    //实现SearchView的第三方库
+    compile 'com.github.orhanobut:hawk:1.23'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
 }

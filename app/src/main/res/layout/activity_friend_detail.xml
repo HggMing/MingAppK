@@ -1,9 +1,9 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tab2.frienddetail.FriendDetailActivity">
+    tools:context=".tab2.frienddetail.FriendDetailActivity"
+    tools:ignore="ContentDescription">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                         android:id="@+id/sex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="3dp"
                         tools:ignore="ContentDescription"
                         tools:src="@mipmap/ic_sex_boy" />
                 </LinearLayout>
@@ -74,7 +74,11 @@
                     tools:text="昵称：哈哈哈" />
             </RelativeLayout>
 
-            <include layout="@layout/divide_15_top_bottom" />
+            <View
+                android:id="@+id/divide_remarks"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_section_15"
+                android:background="@mipmap/divide_15_top_bottom" />
 
             <RelativeLayout
                 android:id="@+id/fd_remarks"
@@ -159,7 +163,7 @@
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="个人相册"
+                        android:text="个人动态"
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 

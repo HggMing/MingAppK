@@ -5,9 +5,22 @@
     android:layout_height="match_parent"
     tools:context="com.study.mingappk.tab2.frienddetail.FriendBbsActivity">
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/friend_bbs_list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/friend_bbs_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/content_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="该用户还没有发布过帖子！"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </FrameLayout>
 </RelativeLayout>

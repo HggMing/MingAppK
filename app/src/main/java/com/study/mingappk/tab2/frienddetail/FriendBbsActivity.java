@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -30,10 +32,12 @@ import rx.schedulers.Schedulers;
 
 public class FriendBbsActivity extends BackActivity implements VillageBbsAdapter.OnItemClickListener {
 
-    public static String UID="查看用户帖子，提供用户id";
-    public static String USER_NAME="显示的用户名，用于标题";
+    public static String UID = "查看用户帖子，提供用户id";
+    public static String USER_NAME = "显示的用户名，用于标题";
     @Bind(R.id.friend_bbs_list)
     XRecyclerView mXRecyclerView;
+    @Bind(R.id.content_empty)
+    TextView contentEmpty;
 
     private VillageBbsAdapter mAdapter = new VillageBbsAdapter();
     private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -83,7 +87,7 @@ public class FriendBbsActivity extends BackActivity implements VillageBbsAdapter
 
     private void getBBSList(int page) {
         String auth = Hawk.get(APP.USER_AUTH);
-        String mUid =getIntent().getStringExtra(UID);
+        String mUid = getIntent().getStringExtra(UID);
         MyServiceClient.getService()
                 .get_FriendBbsList(auth, mUid, page, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
@@ -101,7 +105,12 @@ public class FriendBbsActivity extends BackActivity implements VillageBbsAdapter
                     @Override
                     public void onNext(BBSList bbsList) {
                         if (bbsList != null && bbsList.getErr() == 0) {
-                            mAdapter.setItem(mList,bbsList.getData().getList());
+                            if(mList.isEmpty()&&bbsList.getData().getList().isEmpty()){
+                                contentEmpty.setVisibility(View.VISIBLE);
+                            }else {
+                                contentEmpty.setVisibility(View.GONE);
+                            }
+                            mAdapter.setItem(mList, bbsList.getData().getList());
                         }
                     }
                 });
@@ -124,7 +133,7 @@ public class FriendBbsActivity extends BackActivity implements VillageBbsAdapter
                 ppid = position;
                 Intent intent2 = new Intent(this, BbsDetailActivity.class);
                 intent2.putExtra(BbsDetailActivity.BBS_DETAIL, bbsDetail);
-                intent2.putExtra(BbsDetailActivity.IS_CLICK_COMMENT,true);
+                intent2.putExtra(BbsDetailActivity.IS_CLICK_COMMENT, true);
                 startActivityForResult(intent2, REQUEST_LIKE_COMMENT_NUMBER);
                 break;
             default:
@@ -132,10 +141,12 @@ public class FriendBbsActivity extends BackActivity implements VillageBbsAdapter
 
         }
     }
+
     @Override
     public void onItemLongClick(View view, int position) {
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

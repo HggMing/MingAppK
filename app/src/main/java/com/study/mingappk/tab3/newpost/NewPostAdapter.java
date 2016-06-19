@@ -47,7 +47,7 @@ public class NewPostAdapter extends RecyclerView.Adapter<NewPostAdapter.ViewHold
      */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_new_post, parent, false);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tab3_post_image_list, parent, false);
         return new ViewHolder(mView);
     }
 

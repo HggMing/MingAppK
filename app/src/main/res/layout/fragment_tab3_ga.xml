@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".tab3.villagelist.VillageListFragment">
+    tools:context=".tab3.affairs.GovernmentAffairsActivity">
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/listview_header_text"
+        android:id="@+id/g_affairs_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="村圈列表为空，请关注您感兴趣的村！"
         android:textSize="16sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:text="提示语句" />
 
 </android.support.design.widget.CoordinatorLayout>

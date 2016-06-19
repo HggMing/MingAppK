@@ -15,7 +15,7 @@
     <!-- 拦截android实时短信,自动填写短信验证码 -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <!--调用自定义相机-->
+    <!-- 调用自定义相机 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -102,6 +102,7 @@
         <activity
             android:name=".tab3.villagesituation.VillageSituationActivity"
             android:label="@string/title_activity_village_situation" />
+        <activity android:name=".tab3.affairs.GovernmentAffairsActivity" />
         <activity
             android:name=".tab3.newpost.NewPostActivity"
             android:label="@string/title_activity_new_post" />
@@ -139,6 +140,8 @@
         <activity
             android:name=".common.views.customcamera.TakePhotoActivity"
             android:theme="@style/OpaqueTheme" />
+        <activity android:name=".tab3.affairs.NewsDetailActivity" />
+        <activity android:name=".tab3.affairs.NewsDetail2Activity"></activity>
     </application>
 
 </manifest>

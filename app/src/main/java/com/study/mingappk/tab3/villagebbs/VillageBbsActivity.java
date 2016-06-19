@@ -6,17 +6,21 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.jude.swipbackhelper.SwipeBackHelper;
+import com.jude.swipbackhelper.SwipeListener;
 import com.melnykov.fab.FloatingActionButton;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -24,6 +28,7 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab3.affairs.GovernmentAffairsActivity;
 import com.study.mingappk.tab3.newpost.NewPostActivity;
 import com.study.mingappk.tab3.villagebbs.bbsdetail.BbsDetailActivity;
 import com.study.mingappk.tab3.villagesituation.VillageSituationActivity;
@@ -57,12 +62,8 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     ImageView villageImage;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-//    @Bind(R.id.comment_edit)
-//    EditText commentEdit;
-//    @Bind(R.id.comment_post)
-//    Button commentPost;
-//    @Bind(R.id.comment_input)
-//    LinearLayout commentInput;
+    @Bind(R.id.content_empty)
+    TextView contentEmpty;
 
     private VillageBbsAdapter mAdapter = new VillageBbsAdapter();
     private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -73,6 +74,10 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     private int page = 1;
     private int ppid;//点击查看详情的帖子号
     private final int REQUEST_LIKE_COMMENT_NUMBER = 2000;
+    private final int ReQUEST_AFTER_POST = 2001;
+
+    String mVid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +97,11 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
             //设备返回图标样式
             getSupportActionBar().setHomeAsUpIndicator(R.mipmap.app_back);
         }
+        //设置滑动关闭当前，返回上一页
+        swipeBack();
 
         //顶部村名和村图片的加载
+        mVid = getIntent().getStringExtra(VILLAGE_ID);
         String villageName = getIntent().getStringExtra(VILLAGE_NAME);
         mCollapsingToolbarLayout.setTitle(villageName);
         Glide.with(this)
@@ -107,6 +115,47 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SwipeBackHelper.onDestroy(this);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        SwipeBackHelper.onPostCreate(this);
+    }
+
+    private void swipeBack() {
+        SwipeBackHelper.onCreate(this);
+        SwipeBackHelper.getCurrentPage(this)//获取当前页面
+                .setSwipeBackEnable(true)//设置是否可滑动
+//                .setSwipeEdge(200)//可滑动的范围。px。200表示为左边200px的屏幕
+                .setSwipeEdgePercent(0.15f)//可滑动的范围。百分比。0.2表示为左边20%的屏幕
+                .setSwipeSensitivity(0.5f)//对横向滑动手势的敏感程度。0为迟钝 1为敏感
+                .setScrimColor(APP.getInstance().getResources().getColor(R.color.swipe_back))//底层阴影颜色
+                .setClosePercent(0.6f)//触发关闭Activity百分比
+                .setSwipeRelateEnable(true)//是否与下一级activity联动(微信效果)。默认关
+                .setSwipeRelateOffset(500)//activity联动时的偏移量。默认500px。
+                .setDisallowInterceptTouchEvent(false)//不抢占事件，默认关（事件将先由子View处理再由滑动关闭处理）
+                .addListener(new SwipeListener() {//滑动监听
+
+                    @Override
+                    public void onScroll(float percent, int px) {//滑动的百分比与距离
+                    }
+
+                    @Override
+                    public void onEdgeTouch() {//当开始滑动
+                    }
+
+                    @Override
+                    public void onScrollToClose() {//当滑动关闭
+                    }
+                });
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -118,7 +167,6 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
 
     private void getBBSList(int page) {
         String auth = Hawk.get(APP.USER_AUTH);
-        String mVid = getIntent().getStringExtra(VILLAGE_ID);
         MyServiceClient.getService()
                 .get_BBSList(auth, mVid, page, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
@@ -138,6 +186,11 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                         if (bbsList != null && bbsList.getErr() == 0) {
 //                            mList.addAll(bbsList.getData().getList());
 //                            mAdapter.setItem(mList);
+                            if(mList.isEmpty()&&bbsList.getData().getList().isEmpty()){
+                                contentEmpty.setVisibility(View.VISIBLE);
+                            }else {
+                                contentEmpty.setVisibility(View.GONE);
+                            }
                             mAdapter.setItem(mList, bbsList.getData().getList());
                         }
                     }
@@ -200,7 +253,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                 ppid = position;
                 Intent intent2 = new Intent(this, BbsDetailActivity.class);
                 intent2.putExtra(BbsDetailActivity.BBS_DETAIL, bbsDetail);
-                intent2.putExtra(BbsDetailActivity.IS_CLICK_COMMENT,true);
+                intent2.putExtra(BbsDetailActivity.IS_CLICK_COMMENT, true);
                 startActivityForResult(intent2, REQUEST_LIKE_COMMENT_NUMBER);
                 break;
             default:
@@ -213,20 +266,26 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
 
     }
 
-    @OnClick({R.id.icon_specialty, R.id.icon_village, R.id.fab})
+    @OnClick({R.id.icon_specialty, R.id.icon_village, R.id.fab, R.id.icon_ga})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.icon_specialty:
-                break;
             case R.id.icon_village:
                 Intent intent = new Intent(this, VillageSituationActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.icon_specialty:
+                //点击特产
+                break;
+            case R.id.icon_ga:
+                //点击政务
+                Intent intent3 = new Intent(this, GovernmentAffairsActivity.class);
+                intent3.putExtra(GovernmentAffairsActivity.VILLAGE_ID, mVid);
+                startActivity(intent3);
+                break;
             case R.id.fab:
-                Intent intent1 = new Intent(this, NewPostActivity.class);
-                String mVid = getIntent().getStringExtra(VILLAGE_ID);
-                intent1.putExtra(NewPostActivity.VILLAGE_ID, mVid);
-                startActivityForResult(intent1, 11);
+                Intent intent4 = new Intent(this, NewPostActivity.class);
+                intent4.putExtra(NewPostActivity.VILLAGE_ID, mVid);
+                startActivityForResult(intent4, ReQUEST_AFTER_POST);
                 break;
 
         }
@@ -236,7 +295,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case 11://发布新帖子后刷新列表
+            case ReQUEST_AFTER_POST://发布新帖子后刷新列表
                 if (resultCode == RESULT_OK) {
                     mAdapter.setItem(null);
                     mList.clear();
@@ -258,7 +317,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                             mList.get(ppid).setZans(newLikeNumber);
                         }
                         mAdapter.setItem(mList);
-                    }else {//删除帖子后，刷新列表
+                    } else {//删除帖子后，刷新列表
                         mAdapter.setItem(null);
                         mList.clear();
                         page = 1;
@@ -268,5 +327,4 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                 break;
         }
     }
-
 }

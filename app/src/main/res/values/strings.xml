@@ -6,7 +6,6 @@
     <string name="tab3_main">我的村</string>
     <string name="tab4_main">设置</string>
     <!--BaseActivity-->
-    <string name="hint_loading">正在加载中…</string>
     <string name="btn_text_speak">按住 说话</string>
     <!--网络相关-->
     <string name="common_ok">确定</string>
@@ -45,4 +44,5 @@
     <string name="title_activity_apply_shop_owner">申请店长</string>
     <string name="title_activity_real_name_binging">实名认证</string>
     <string name="title_activity_safe_setting">账号安全</string>
+    <string name="title_activity_government_affairs">政务</string>
 </resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.study.mingappk.tab3.affairs.NewsDetailActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/main_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textColor="@color/font_black_content"
+                android:textSize="18sp"
+                tools:text="国务院关于同意设立江西赣江新区的批复" />
+
+            <TextView
+                android:id="@+id/sub_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textColor="@color/font_black_content"
+                android:textSize="18sp"
+                tools:text="国函〔2016〕96号" />
+
+            <TextView
+                android:id="@+id/conts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp"
+                tools:text="江西省人民政府：
+
+　　你省关于设立江西赣江新区的请示收悉。现批复如下：
+
+　　一、同意设立江西赣江新区。江西赣江新区范围包括南昌市青山湖区、新建区和共青城市、永修县的部分区域，规划面积465平方公里。江西赣江新区区位优势明显、交通条件优越、产业特色鲜明、创新能力较强、生态环境良好。要把建设好江西赣江新区作为实施国家区域发展总体战略、推动长江经济带发展的重要举措，为促进江西经济社会发展和中部地区崛起发挥更大的作用。" />
+
+            <TextView
+                android:id="@+id/inscribe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:textSize="16sp"
+                tools:text="国务院" />
+
+            <TextView
+                android:id="@+id/ctime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:textSize="16sp"
+                tools:text="2016年6月6日" />
+
+            <TextView
+                android:id="@+id/mark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                tools:text="来源： 中国政府网" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

@@ -4,7 +4,7 @@
     <color name="colorPrimary">#53ACE5</color>
     <color name="colorPrimaryDark">#53ACE5</color>
     <color name="colorAccent">#53ACE5</color>
-    <color name="colorAccent2">#2c9ae1</color>
+    <color name="colorAccent2">#2075ab</color>
     <!--BaseActivity页面-->
     <color name="font_black_9">#999999</color>
     <!--首页tab按钮颜色-->
@@ -35,7 +35,6 @@
     <color name="task_list_head">#ffe4e4e4</color>
     <!--动态页面-->
     <color name="font_black">#010101</color>
-    <color name="blue_setting">#7AB9DC</color>
 
     <color name="orange">#fa800a</color>
     <color name="alpha_village">#46000000</color>

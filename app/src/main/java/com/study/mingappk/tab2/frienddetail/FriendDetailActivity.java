@@ -45,6 +45,8 @@ public class FriendDetailActivity extends BackActivity {
     TextView name2;
     @Bind(R.id.fd_remarks)
     RelativeLayout fdRemarks;
+    @Bind(R.id.divide_remarks)
+    View divideRemarks;
     @Bind(R.id.get_address)
     TextView getAddress;
     @Bind(R.id.fd_photos_layout)
@@ -74,6 +76,10 @@ public class FriendDetailActivity extends BackActivity {
     private boolean isFriend;//用于判定是否为好友
     private boolean isMySelf;//用于判定是否为自己
 
+    private String uName;//昵称
+    private String aliasName;//备注名
+    private String showName;//带*手机号
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,8 +92,8 @@ public class FriendDetailActivity extends BackActivity {
         List<String> friendUids = Hawk.get(APP.FRIEND_LIST_UID);
         isFriend = friendUids.contains(uid);
         //判定是否为本人
-        String me_uid=Hawk.get(APP.ME_UID);
-        isMySelf=me_uid.equals(uid);
+        String me_uid = Hawk.get(APP.ME_UID);
+        isMySelf = me_uid.equals(uid);
 
         getFriendDetail();
     }
@@ -96,6 +102,8 @@ public class FriendDetailActivity extends BackActivity {
         //非好友界面设置
         if (!isFriend) {
             line12.setVisibility(View.GONE);
+            divideRemarks.setVisibility(View.GONE);
+            fdRemarks.setVisibility(View.GONE);
             fdPhotos.setVisibility(View.GONE);
             fdMore.setVisibility(View.GONE);
             btnSend.setText("请求添加为联系人");
@@ -114,7 +122,9 @@ public class FriendDetailActivity extends BackActivity {
 
             @Override
             public void onError(Throwable e) {
-
+                Glide.with(FriendDetailActivity.this)
+                        .load(R.mipmap.defalt_user_circle)
+                        .into(iconHead);
             }
 
             @Override
@@ -129,10 +139,10 @@ public class FriendDetailActivity extends BackActivity {
                         .error(R.mipmap.defalt_user_circle)
                         .into(iconHead);
                 //用户昵称
-                String uName = userinfoBean.getUname();//昵称
-                String aliasName = userinfoBean.getAlias_name();//备注名
+                uName = userinfoBean.getUname();//昵称
+                aliasName = userinfoBean.getAlias_name();//备注名
                 String iphone = userinfoBean.getPhone();
-                String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
+                showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
                 if (!aliasName.isEmpty()) {
                     name.setText(aliasName);
                     if (!uName.isEmpty()) {
@@ -227,7 +237,22 @@ public class FriendDetailActivity extends BackActivity {
             case SET_REMARK_NAME:
                 if (resultCode == Activity.RESULT_OK) {
                     String result = data.getStringExtra(NEW_NAME);
-                    name.setText(result);
+                    if (!result.isEmpty()) {
+                        name.setText(result);
+                        name2.setVisibility(View.VISIBLE);
+                        if (!uName.isEmpty()) {
+                            name2.setText("昵称：" + uName);
+                        } else {
+                            name2.setText("账号：" + showName);
+                        }
+                    }else {
+                        name2.setVisibility(View.INVISIBLE);
+                        if (!uName.isEmpty()) {
+                            name.setText(uName);
+                        } else {
+                            name.setText(showName);
+                        }
+                    }
                     setResult(RESULT_OK);
                 }
                 break;

@@ -49,16 +49,22 @@ public class LikeUserListAdapter extends BaseRecyclerViewAdapter<ZanList.DataBea
         holder.arrow.setVisibility(View.VISIBLE);
         //好友名字的显示
         String showName = mList.get(position).getName();
-        if(showName.isEmpty()){
-            showName="User"+mList.get(position).getUid();
+        if (showName.isEmpty()) {
+            showName = "User" + mList.get(position).getUid();
         }
         holder.userName.setText(showName);
         //好友头像的显示
         String imageUrl = MyServiceClient.getBaseUrl() + mList.get(position).getUser_head();
-        Glide.with(mContext).load(imageUrl)
-                .bitmapTransform(new CropCircleTransformation(mContext))
-                .error(R.mipmap.defalt_user_circle)
-                .into(holder.userHead);
+        if (MyServiceClient.DEFAULT_HEAD.equals(imageUrl)) {//未设置头像时，更换服务器提供的默认头像为本地
+            Glide.with(mContext)
+                    .load(R.mipmap.defalt_user_circle)
+                    .into(holder.userHead);
+        } else {
+            Glide.with(mContext).load(imageUrl)
+                    .bitmapTransform(new CropCircleTransformation(mContext))
+                    .error(R.mipmap.defalt_user_circle)
+                    .into(holder.userHead);
+        }
 
     }
 

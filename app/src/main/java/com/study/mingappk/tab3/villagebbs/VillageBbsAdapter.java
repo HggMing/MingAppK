@@ -217,8 +217,15 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
             @Override
             protected void onDisplayImage(Context context, ImageView imageView, BBSList.DataEntity.ListEntity.FilesEntity filesEntity) {
                 String imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_2();
+
+
+                //服务器数据bug，部分村的图片文件surl_2地址为空，而surl_1正常
                 if (filesEntity.getSurl_2().isEmpty()) {
                     imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_1();
+                }
+                //服务器数据bug，白石村的图片文件surl_2地址前面多了/home/wwwroot/default/cris/字符串
+                else if ("/home/".equals(filesEntity.getSurl_2().substring(0,6))) {
+                    imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_2().substring(27);
                 }
                 Glide.with(context).load(imageUrl)
                         .asBitmap()

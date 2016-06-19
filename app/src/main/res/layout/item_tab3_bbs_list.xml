@@ -226,23 +226,23 @@
 
                 <include
                     android:id="@+id/comment0"
-                    layout="@layout/item_bbs_list_comment" />
+                    layout="@layout/item_tab3_bbs_list_comment" />
 
                 <include
                     android:id="@+id/comment1"
-                    layout="@layout/item_bbs_list_comment" />
+                    layout="@layout/item_tab3_bbs_list_comment" />
 
                 <include
                     android:id="@+id/comment2"
-                    layout="@layout/item_bbs_list_comment" />
+                    layout="@layout/item_tab3_bbs_list_comment" />
 
                 <include
                     android:id="@+id/comment3"
-                    layout="@layout/item_bbs_list_comment" />
+                    layout="@layout/item_tab3_bbs_list_comment" />
 
                 <include
                     android:id="@+id/comment4"
-                    layout="@layout/item_bbs_list_comment" />
+                    layout="@layout/item_tab3_bbs_list_comment" />
 
                 <RelativeLayout
                     android:id="@+id/commentMore"
