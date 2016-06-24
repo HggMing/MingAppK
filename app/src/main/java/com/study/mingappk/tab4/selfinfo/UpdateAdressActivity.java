@@ -26,6 +26,7 @@ import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
 import com.study.mingappk.tmain.BackActivity;
 
 import java.util.ArrayList;
@@ -33,13 +34,14 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UpdateAdressActivity extends BackActivity {
 
+    public static final String SUBMIT_CODE = "submit_code";
+    public static String JUST_FOR_VID = "just_for_vid";//仅提供村id
     @Bind(R.id.spprovince)
     Spinner spprovince;
     @Bind(R.id.spcity)
@@ -516,10 +518,37 @@ public class UpdateAdressActivity extends BackActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_submit) {
-            onItemClick();
-            return true;
+            String type = getIntent().getStringExtra(SUBMIT_CODE);
+            if (type.equals(JUST_FOR_VID)) {
+                justForVid();
+                return true;
+            } else {
+                onItemClick();
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void justForVid() {
+        if (selected_province_name != null &&
+                selected_city_name != null &&
+                selected_country_name != null &&
+                selected_town_name != null &&
+                selected_village_name != null) {
+            String address = selected_province_name +
+                    selected_city_name +
+                    selected_country_name +
+                    selected_town_name +
+                    selected_village_name;
+
+            Intent intent = new Intent();
+            intent.putExtra(ApplyShopOwnerActivity.VILLAGE_ID, vid);
+            intent.putExtra(ApplyShopOwnerActivity.VILLAGE_NAME, address);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+
     }
 
     public void onItemClick() {
@@ -588,7 +617,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvProvincename = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvProvincename.setText(mList.get(position).getProvice_name());
@@ -625,7 +654,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvCityname = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvCityname.setText(mList.get(position).getCity_name());
@@ -662,7 +691,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvCountryname = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvCountryname.setText(mList.get(position).getCounty_name());
@@ -699,7 +728,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvTownname = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvTownname.setText(mList.get(position).getTown_name());
@@ -736,7 +765,7 @@ public class UpdateAdressActivity extends BackActivity {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvVillagename = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvVillagename.setText(mList.get(position).getVillage_name());

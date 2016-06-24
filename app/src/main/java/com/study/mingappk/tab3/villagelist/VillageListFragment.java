@@ -127,7 +127,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
+        mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
 //        mXRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);//自定义下拉刷新箭头图标
 //        View header =   LayoutInflater.from(this).inflate(R.layout.recyclerview_header, (ViewGroup)findViewById(android.R.id.content),false);
 //        mRecyclerView.addHeaderView(header);

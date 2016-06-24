@@ -13,6 +13,19 @@
     <string name="search_hint">请输入要搜索的村名</string>
     <!--Activity页面lable-->
 
+    <string-array name="sexs">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string-array name="educations">
+        <item>初中</item>
+        <item>高中</item>
+        <item>大专</item>
+        <item>本科</item>
+        <item>硕士</item>
+        <item>博士</item>
+    </string-array>
+
     <string name="title_activity_splash">爱简单</string>
     <string name="title_activity_login">登录页</string>
     <string name="title_activity_main">首页</string>

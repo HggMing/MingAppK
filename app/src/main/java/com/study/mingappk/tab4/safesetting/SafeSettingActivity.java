@@ -1,20 +1,34 @@
 package com.study.mingappk.tab4.safesetting;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.model.bean.CheckPhone;
+import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
 import com.study.mingappk.tmain.BackActivity;
+
+import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class SafeSettingActivity extends BackActivity {
 
@@ -28,7 +42,9 @@ public class SafeSettingActivity extends BackActivity {
     int blue;
 
     private final int REQUEST_IS_REAL_NAME_BINGING = 123;//请求实名认证
+    public static String IS_BINDING="is_binding";
     private boolean isBinding;//是否实名认证
+    private boolean isBindingChecked;//是否检查完实名认证状态
 
 
     @Override
@@ -39,16 +55,60 @@ public class SafeSettingActivity extends BackActivity {
 
         setToolbarTitle(R.string.title_activity_safe_setting);
 
-        isBinding = Hawk.get(APP.IS_REAL_NAME, false);
         //是否实名认证显示
-        if (isBinding) {
-            tvIsBinging.setText("已认证");
-            tvIsBinging.setTextColor(blue);
-            arrowBinging.setVisibility(View.INVISIBLE);
-        } else {
-            tvIsBinging.setText("未认证");
-            tvIsBinging.setTextColor(red);
-        }
+        getIsBinding();
+    }
+
+    private void getIsBinding() {
+        //1)将除图片外的参数以及机构key组成一个字符串(注意顺序)
+        String phone = Hawk.get(APP.LOGIN_NAME);
+        String other = "compid=9&phone=" + phone;
+        String str = other + "&key=69939442285489888751746749876227";
+        //2)使用MD5算法加密上述字符串
+        String sign = BaseTools.md5(str);
+        //3)最终得到参数字符串：（注意，KEY参数不带到参数列表,sign参数加入参数列表）
+        String str2 = other + "&sign=" + sign;
+        //4)把上述字符串做base64加密，最终得到请求:
+        String paraString = Base64.encodeToString(str2.getBytes(), Base64.NO_WRAP);
+
+        MyServiceClient.getService()
+                .post_IsRealBinding(paraString)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+                        isBindingChecked=true;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        String s = null;
+                        try {
+                            s = responseBody.string();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Gson gson = new Gson();
+                        CheckPhone result = gson.fromJson(new String(Base64.decode(s, Base64.DEFAULT)), CheckPhone.class);
+                        if (result.getErr() == 0) {//已经实名认证
+                            tvIsBinging.setText("已认证");
+                            tvIsBinging.setTextColor(blue);
+                            arrowBinging.setVisibility(View.INVISIBLE);
+                            isBinding=true;
+                        }
+                        if (result.getErr() == 1002) {//还没有实名认证
+                            tvIsBinging.setText("未认证");
+                            tvIsBinging.setTextColor(red);
+                            isBinding=false;
+                        }
+                    }
+                });
     }
 
     @OnClick({R.id.click_identity_binding, R.id.click_change_psw, R.id.click_purse_psw})
@@ -58,7 +118,7 @@ public class SafeSettingActivity extends BackActivity {
                 //Toast.makeText(mActivity, "实名认证", Toast.LENGTH_SHORT).show();
                 if (isBinding) {
                     Toast.makeText(SafeSettingActivity.this, "已完成实名认证", Toast.LENGTH_SHORT).show();
-                } else {
+                } else if(isBindingChecked) {
                     Intent intent = new Intent(this, RealNameBindingActivity.class);
                     startActivityForResult(intent, REQUEST_IS_REAL_NAME_BINGING);
                 }
@@ -83,15 +143,15 @@ public class SafeSettingActivity extends BackActivity {
             case REQUEST_IS_REAL_NAME_BINGING:
                 if (resultCode == RESULT_OK) {
                     //是否实名认证显示
-                    isBinding = Hawk.get(APP.IS_REAL_NAME);
+                    isBinding = data.getBooleanExtra(IS_BINDING,false);
                     if (isBinding) {
                         tvIsBinging.setText("已认证");
                         tvIsBinging.setTextColor(blue);
+                        arrowBinging.setVisibility(View.INVISIBLE);
                     } else {
                         tvIsBinging.setText("未认证");
                         tvIsBinging.setTextColor(red);
                     }
-                    setResult(RESULT_OK);
                 }
                 break;
         }

@@ -70,7 +70,7 @@ public class FriendBbsActivity extends BackActivity implements VillageBbsAdapter
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
         //设置XRecyclerView相关
         mXRecyclerView.setPullRefreshEnabled(false);//关闭刷新功能
-        mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
+        mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
 
         mXRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -153,17 +153,24 @@ public class FriendBbsActivity extends BackActivity implements VillageBbsAdapter
         switch (requestCode) {
             case REQUEST_LIKE_COMMENT_NUMBER://帖子详情页，点赞或评论后，就数据返回显示
                 if (resultCode == RESULT_OK) {
-                    String newCommentNumber = data.getExtras().getString(VillageBbsActivity.COMMENT_NO_NEW);
-                    if (newCommentNumber != null && !newCommentNumber.isEmpty()) {
-                        mList.get(ppid).setNums(newCommentNumber);
+                    if (data != null) {
+                        String newCommentNumber = data.getExtras().getString(VillageBbsActivity.COMMENT_NO_NEW);
+                        if (newCommentNumber != null && !newCommentNumber.isEmpty()) {
+                            mList.get(ppid).setNums(newCommentNumber);
+                        }
+                        int isCliked = data.getExtras().getInt(VillageBbsActivity.LIKEED_TAG);
+                        if (isCliked == 1) {
+                            mList.get(ppid).setMy_is_zan(1);
+                            String newLikeNumber = data.getExtras().getString(VillageBbsActivity.LIKE_NO_NEW);
+                            mList.get(ppid).setZans(newLikeNumber);
+                        }
+                        mAdapter.setItem(mList);
+                    } else {//删除帖子后，刷新列表
+                        mAdapter.setItem(null);
+                        mList.clear();
+                        page = 1;
+                        getBBSList(page);
                     }
-                    int isCliked = data.getExtras().getInt(VillageBbsActivity.LIKEED_TAG);
-                    if (isCliked == 1) {
-                        mList.get(ppid).setMy_is_zan(1);
-                        String newLikeNumber = data.getExtras().getString(VillageBbsActivity.LIKE_NO_NEW);
-                        mList.get(ppid).setZans(newLikeNumber);
-                    }
-                    mAdapter.setItem(mList);
                 }
                 break;
         }

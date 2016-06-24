@@ -53,12 +53,13 @@
                         tools:text="备注名" />
 
                     <ImageView
-                        android:id="@+id/sex"
+                        android:id="@+id/apply_state"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="3dp"
                         tools:ignore="ContentDescription"
-                        tools:src="@mipmap/ic_sex_boy" />
+                        tools:src="@mipmap/ic_apply_no" />
                 </LinearLayout>
 
                 <TextView
@@ -70,7 +71,7 @@
                     android:layout_toEndOf="@id/icon_head"
                     android:layout_toRightOf="@id/icon_head"
                     android:textSize="14sp"
-                    tools:text="昵称：哈哈哈" />
+                    tools:text="账号：123" />
             </RelativeLayout>
 
             <include layout="@layout/divide_1_12" />
@@ -101,7 +102,7 @@
                         android:background="@drawable/groupback"
                         android:ellipsize="end"
                         android:hint="真实姓名"
-                        android:textColor="@color/font_black_9"
+                        android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -123,7 +124,6 @@
                     <Spinner
                         android:id="@+id/sp_sex"
                         android:layout_width="0dp"
-                        android:background="@drawable/groupback"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -148,9 +148,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:ellipsize="end"
                         android:background="@drawable/groupback"
-                        android:textColor="@color/font_black_9"
+                        android:ellipsize="end"
+                        android:textColor="@color/font_black_2"
                         android:textSize="16sp"
                         tools:text="一二三四五六七八九十" />
                 </LinearLayout>
@@ -175,11 +175,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:textColor="@color/font_black_9"
-                        android:textSize="16sp"
                         android:background="@drawable/groupback"
-                        tools:text="一二三四五六七八九十" />
+                        android:hint="手机号码"
+                        android:inputType="phone"
+                        android:maxLength="11"
+                        android:textColor="@color/font_black_2"
+                        android:textSize="16sp" />
+
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -200,7 +202,6 @@
                     <Spinner
                         android:id="@+id/sp_education"
                         android:layout_width="0dp"
-                        android:background="@drawable/groupback"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -220,16 +221,21 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <EditText
-                        android:id="@+id/et_village"
+                    <TextView
+                        android:id="@+id/tv_villageName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:textColor="@color/font_black_9"
+                        android:textColor="@color/font_black_2"
                         android:textSize="16sp"
-                        android:background="@drawable/groupback"
                         tools:text="一二三四五六七八九十" />
+
+                    <ImageView
+                        android:id="@+id/et_village"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/list_item_selector"
+                        android:src="@drawable/ic_apply_et_village" />
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -250,16 +256,16 @@
 
                     <ImageView
                         android:id="@+id/img_photo0"
-                        android:layout_width="56dp"
+                        android:layout_width="75dp"
                         android:layout_height="56dp"
-                        android:layout_marginLeft="120dp"
+                        android:layout_marginLeft="90dp"
                         android:src="@mipmap/add_photo_bg" />
 
                     <ImageView
                         android:id="@+id/img_photo1"
-                        android:layout_width="56dp"
+                        android:layout_width="75dp"
                         android:layout_height="56dp"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="20dp"
                         android:src="@mipmap/add_photo_bg" />
                 </LinearLayout>
 
@@ -281,17 +287,17 @@
 
                     <ImageView
                         android:id="@+id/img_photo2"
-                        android:layout_width="56dp"
+                        android:layout_width="75dp"
                         android:layout_height="56dp"
-                        android:layout_marginLeft="120dp"
+                        android:layout_marginLeft="90dp"
                         android:visibility="invisible"
-                        tools:src="@mipmap/icon" />
+                        tools:src="@mipmap/add_photo_bg" />
 
                     <ImageView
                         android:id="@+id/img_photo3"
-                        android:layout_width="56dp"
+                        android:layout_width="75dp"
                         android:layout_height="56dp"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="20dp"
                         android:src="@mipmap/add_photo_bg" />
                 </LinearLayout>
 
@@ -313,7 +319,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_theme"
-                    android:text="发消息"
+                    android:text="申请"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 

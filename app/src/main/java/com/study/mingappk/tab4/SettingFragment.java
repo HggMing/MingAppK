@@ -24,6 +24,7 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.views.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.model.bean.ApplyInfo;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
@@ -35,6 +36,7 @@ import com.study.mingappk.tab4.safesetting.SafeSettingActivity;
 import com.study.mingappk.tab4.scommon.SettingCommonActivity;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
 import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
+import com.study.mingappk.tab4.shop.ShowApplyingActivity;
 import com.study.mingappk.tmain.userlogin.LoginActivity;
 
 import java.io.IOException;
@@ -49,6 +51,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class SettingFragment extends Fragment {
@@ -73,9 +76,8 @@ public class SettingFragment extends Fragment {
 
     private String auth;
     private int isShopOwner;//是否是店长,1是0不是
-    private boolean isBinding;//是否实名认证
     private final int REQUEST_USER_INFO = 122;
-    private final int REQUEST_IS_REAL_NAME_BINGING = 133;//请求实名认证
+    private final int REQUEST_APPLY_PASSED = 123;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,58 +96,7 @@ public class SettingFragment extends Fragment {
 
         getUserInfoDetail();//在线获取用户信息
 
-        getIsBinding();//获取是否实名认证
-
         initView();//界面初始化
-    }
-
-    private void getIsBinding() {
-        //1)将除图片外的参数以及机构key组成一个字符串(注意顺序)
-        String phone = Hawk.get(APP.LOGIN_NAME);
-        String other = "compid=9&phone=" + phone;
-        String str = other + "&key=69939442285489888751746749876227";
-        //2)使用MD5算法加密上述字符串
-        String sign = BaseTools.md5(str);
-        //3)最终得到参数字符串：（注意，KEY参数不带到参数列表,sign参数加入参数列表）
-        String str2 = other + "&sign=" + sign;
-        //4)把上述字符串做base64加密，最终得到请求:
-        String paraString = Base64.encodeToString(str2.getBytes(), Base64.NO_WRAP);
-
-        MyServiceClient.getService()
-                .post_IsRealBinding(paraString)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<ResponseBody>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        String s = null;
-                        try {
-                            s = responseBody.string();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Gson gson = new Gson();
-                        CheckPhone result = gson.fromJson(new String(Base64.decode(s, Base64.DEFAULT)), CheckPhone.class);
-                        if (result.getErr() == 0) {
-                            isBinding = true;
-                            Hawk.put(APP.IS_REAL_NAME, true);
-                        }
-                        if (result.getErr() == 1002) {
-                            isBinding = false;
-                            Hawk.put(APP.IS_REAL_NAME, false);
-                        }
-                    }
-                });
     }
 
     private void initView() {
@@ -180,12 +131,13 @@ public class SettingFragment extends Fragment {
                     }
                 }
                 break;
-            case REQUEST_IS_REAL_NAME_BINGING:
+            case REQUEST_APPLY_PASSED:
                 if (resultCode == Activity.RESULT_OK) {
-                    //点击申请店长后，实名认证成功
-                   isBinding=true;
+                    isShopOwner = 1;
+                    clickShop.setText("我的店");
+                    clickShop.setIcon(R.mipmap.tab4_mystore);
+                    storeManager.setVisibility(View.VISIBLE);//店长图标
                 }
-                break;
         }
     }
 
@@ -375,7 +327,7 @@ public class SettingFragment extends Fragment {
             case R.id.click_safe_center:
 //                Toast.makeText(mActivity, "账号安全", Toast.LENGTH_SHORT).show();
                 Intent intent5 = new Intent(mActivity, SafeSettingActivity.class);
-                startActivityForResult(intent5,REQUEST_IS_REAL_NAME_BINGING);
+                startActivity(intent5);
                 break;
             case R.id.click_my_setting:
 //                Toast.makeText(mActivity, "我的", Toast.LENGTH_SHORT).show();
@@ -390,32 +342,106 @@ public class SettingFragment extends Fragment {
             case R.id.click_store_manager:
                 if (isShopOwner == 1) {
                     Toast.makeText(mActivity, "进入店长管理页面", Toast.LENGTH_SHORT).show();
-                } else if (isBinding) {
-                    Intent intent4 = new Intent(mActivity, ApplyShopOwnerActivity.class);
-                    startActivity(intent4);
                 } else {
-                    MyDialog.Builder builder1 = new MyDialog.Builder(mActivity);
-                    builder1.setTitle("提示")
-                            .setCannel(false)
-                            .setMessage("你的账号尚未实名认证，请先进行实名认证。")
-                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog,
-                                                    int which) {
-                                    Intent intent5 = new Intent(mActivity, RealNameBindingActivity.class);
-                                    startActivityForResult(intent5,REQUEST_IS_REAL_NAME_BINGING);
-                                    dialog.dismiss();
-                                }
-                            });
-                    if (!mActivity.isFinishing()) {
-                        builder1.create().show();
-                    }
+                    //获取申请店长，当前状态
+                    getApplyStatus();
                 }
                 break;
             case R.id.click_loyout:
 //                Toast.makeText(mActivity, "退出当前账号", Toast.LENGTH_SHORT).show();
                 logout();
                 break;
+        }
+    }
+
+    private void getIsBinding() {
+        //1)将除图片外的参数以及机构key组成一个字符串(注意顺序)
+        String phone = Hawk.get(APP.LOGIN_NAME);
+        String other = "compid=9&phone=" + phone;
+        String str = other + "&key=69939442285489888751746749876227";
+        //2)使用MD5算法加密上述字符串
+        String sign = BaseTools.md5(str);
+        //3)最终得到参数字符串：（注意，KEY参数不带到参数列表,sign参数加入参数列表）
+        String str2 = other + "&sign=" + sign;
+        //4)把上述字符串做base64加密，最终得到请求:
+        String paraString = Base64.encodeToString(str2.getBytes(), Base64.NO_WRAP);
+
+        MyServiceClient.getService()
+                .post_IsRealBinding(paraString)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        String s = null;
+                        try {
+                            s = responseBody.string();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Gson gson = new Gson();
+                        CheckPhone result = gson.fromJson(new String(Base64.decode(s, Base64.DEFAULT)), CheckPhone.class);
+                        if (result.getErr() == 0) {//已经实名认证,进入申请界面
+                            Intent intent4 = new Intent(mActivity, ApplyShopOwnerActivity.class);
+                            intent4.putExtra(ApplyShopOwnerActivity.USER_INFO, dataEntity);
+                            startActivity(intent4);
+                        }
+                        if (result.getErr() == 1002) {//还没有实名认证
+                            MyDialog.Builder builder1 = new MyDialog.Builder(mActivity);
+                            builder1.setTitle("提示")
+                                    .setMessage("你的账号尚未实名认证，请先进行实名认证。")
+                                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog,
+                                                            int which) {
+                                            Intent intent5 = new Intent(mActivity, RealNameBindingActivity.class);
+                                            startActivity(intent5);
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            if (!mActivity.isFinishing()) {
+                                builder1.create().show();
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void getApplyStatus() {
+        String vid = Hawk.get(APP.APPLY_INFO_VID + dataEntity.getUid());
+        if (vid == null || vid.isEmpty()) {//假如没有申请过
+            getIsBinding();//获取是否实名认证
+        } else {
+            MyServiceClient.getService()
+                    .get_IsApply(auth, vid)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<ApplyInfo>() {
+                        @Override
+                        public void call(ApplyInfo applyInfo) {
+                            ApplyInfo.DataBean data = applyInfo.getData();
+                            if (data != null) {//已申请过，进入查看申请状态页面
+                                Intent intent = new Intent(mActivity, ShowApplyingActivity.class);
+                                intent.putExtra(ShowApplyingActivity.STATUS_APPLY, data.getStats());
+                                startActivityForResult(intent, REQUEST_APPLY_PASSED);
+                            }
+                        }
+                    });
         }
     }
 }

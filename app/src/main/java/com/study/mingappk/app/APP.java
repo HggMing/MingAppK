@@ -23,8 +23,9 @@ public class APP extends Application {
     public static final String ME_HEAD = "me_head";//登录用户的头像
     public static final String USER_AUTH = "user_auth";//用户认证信息
     public static final String IS_SHOP_OWNER = "is_shop_owner";//是否为店长，1是0不是
-    public static final String IS_REAL_NAME = "is_real_name_binging";//是否实名认证。
-    public static final String FRIEND_LIST_UID="friend_list_uid";//好友uid，用于判定是否为好友。
+    public static final String FRIEND_LIST_UID = "friend_list_uid";//好友uid，用于判定是否为好友。
+    public static String APPLY_INFO="apply_info_";;//储存申请店长人的信息
+    public static String APPLY_INFO_VID="apply_vid_";//储存申请店长,管理的村
 
 
     /**

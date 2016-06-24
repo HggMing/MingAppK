@@ -1,5 +1,4 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +7,6 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:background="@color/divide">
 
         <LinearLayout
@@ -60,8 +58,8 @@
                         android:id="@+id/sex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
                         android:layout_marginLeft="3dp"
+                        android:layout_marginTop="2dp"
                         tools:ignore="ContentDescription"
                         tools:src="@mipmap/ic_sex_boy" />
 
@@ -69,8 +67,8 @@
                         android:id="@+id/store_manager"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
                         android:layout_marginLeft="3dp"
+                        android:layout_marginTop="2dp"
                         android:src="@mipmap/ic_store_manager"
                         android:visibility="visible"
                         tools:ignore="ContentDescription" />
@@ -105,6 +103,7 @@
                     android:focusable="false"
                     listItem1:itemIcon="@mipmap/tab4_safe_center"
                     listItem1:itemTitle="账号安全" />
+
                 <include layout="@layout/divide_1_12" />
 
                 <com.study.mingappk.tab4.safesetting.ListItem1

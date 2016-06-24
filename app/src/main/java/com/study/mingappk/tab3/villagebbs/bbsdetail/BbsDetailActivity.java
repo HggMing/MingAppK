@@ -475,7 +475,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
+        mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mXRecyclerView.setPullRefreshEnabled(false);//关闭刷新功能
 
         int x = Integer.parseInt(bbsDetail.getNums());

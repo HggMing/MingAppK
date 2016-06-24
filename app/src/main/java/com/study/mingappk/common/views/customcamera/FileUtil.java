@@ -49,7 +49,7 @@ public class FileUtil {
             }
             FileOutputStream fout = new FileOutputStream(jpegName);
             BufferedOutputStream bos = new BufferedOutputStream(fout);
-            if (type.equals(TakePhotoActivity.ID_CARD)) {
+            if (type.equals(TakePhotoActivity.ID_CARD)||type.equals(TakePhotoActivity.ID_CARD2)) {
                 b.compress(Bitmap.CompressFormat.JPEG, 30, bos);
             } else {
                 b.compress(Bitmap.CompressFormat.JPEG, 50, bos);

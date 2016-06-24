@@ -218,7 +218,7 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
         });*/
         //设置XRecyclerView相关
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
+        mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
 //        mXRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);//自定义下拉刷新箭头图标
         mXRecyclerView.setPullRefreshEnabled(false);//关闭刷新功能
 

@@ -4,7 +4,6 @@ package com.study.mingappk.tab3.addfollow;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -593,7 +592,7 @@ public class FollowR2Fragment extends Fragment {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvProvincename = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvProvincename.setText(mList.get(position).getProvice_name());
@@ -630,7 +629,7 @@ public class FollowR2Fragment extends Fragment {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvCityname = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvCityname.setText(mList.get(position).getCity_name());
@@ -667,7 +666,7 @@ public class FollowR2Fragment extends Fragment {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvCountryname = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvCountryname.setText(mList.get(position).getCounty_name());
@@ -704,7 +703,7 @@ public class FollowR2Fragment extends Fragment {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvTownname = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvTownname.setText(mList.get(position).getTown_name());
@@ -741,7 +740,7 @@ public class FollowR2Fragment extends Fragment {
         @SuppressLint("ViewHolder")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_update_address, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_text_sp, null);
             if (convertView != null) {
                 TextView tvVillagename = (TextView) convertView.findViewById(R.id.tv_pos_name);
                 tvVillagename.setText(mList.get(position).getVillage_name());

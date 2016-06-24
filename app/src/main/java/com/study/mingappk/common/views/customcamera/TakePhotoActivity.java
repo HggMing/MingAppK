@@ -39,6 +39,7 @@ public class TakePhotoActivity extends Activity implements CameraInterface.CamOp
     private String type;//face或id （；id
     public static String FACE = "face";//(调用前置摄像头）拍正面照片
     public static String ID_CARD = "id_card";//（调用后置摄像头）拍身份证正面照
+    public static String ID_CARD2 = "id_card_2";//（调用后置摄像头）拍身份证反面照
     private static final int WHAT_MSG = 10086;
 
     @Override
@@ -85,7 +86,7 @@ public class TakePhotoActivity extends Activity implements CameraInterface.CamOp
     }
 
     private void initUI() {
-        if (ID_CARD.equals(type)) {
+        if (ID_CARD.equals(type)||ID_CARD2.equals(type)) {
             abovePhoto.setImageResource(R.mipmap.take_photo_id_card);
         }
     }

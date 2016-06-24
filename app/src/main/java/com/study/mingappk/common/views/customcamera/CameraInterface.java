@@ -207,9 +207,11 @@ public class CameraInterface {
                 if (typeString.equals(TakePhotoActivity.FACE)) {
                     Bitmap rotaBitmap = ImageUtil.getRotateBitmap(b, -90.0f);
                     FileUtil.saveBitmap(rotaBitmap, TakePhotoActivity.FACE);
-                } else {
+                } else if (typeString.equals(TakePhotoActivity.ID_CARD))  {
                     // Bitmap rotaBitmap = ImageUtil.getRotateBitmap(b, 90.0f);
                     FileUtil.saveBitmap(b, TakePhotoActivity.ID_CARD);
+                }else{
+                    FileUtil.saveBitmap(b, TakePhotoActivity.ID_CARD2);
                 }
                 if (b != null && b.isRecycled()) {
                     b.recycle();

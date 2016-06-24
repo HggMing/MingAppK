@@ -78,7 +78,7 @@ public class NewsListFragment extends Fragment implements NewsListAdapter.OnItem
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
+        mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
 
         mXRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override

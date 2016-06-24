@@ -141,7 +141,8 @@
             android:name=".common.views.customcamera.TakePhotoActivity"
             android:theme="@style/OpaqueTheme" />
         <activity android:name=".tab3.affairs.NewsDetailActivity" />
-        <activity android:name=".tab3.affairs.NewsDetail2Activity"></activity>
+        <activity android:name=".tab3.affairs.NewsDetail2Activity" />
+        <activity android:name=".tab4.shop.ShowApplyingActivity"></activity>
     </application>
 
 </manifest>

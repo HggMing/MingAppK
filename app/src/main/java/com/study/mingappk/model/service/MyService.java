@@ -5,6 +5,7 @@ import com.study.mingappk.model.bean.A2City;
 import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
+import com.study.mingappk.model.bean.ApplyInfo;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.CheckPhone;
@@ -650,25 +651,24 @@ public interface MyService {
             @Field("uname") String uname,
             @Field("contact") String contact,
             @Field("conts") String conts,
-            @Field("sex") Array sex,
+            @Field("sex") int sex,
             @Field("edu") String edu,
             @Field("cid_img1") int cid_img1,
             @Field("cid_img2") int cid_img2,
             @Field("q_img") int q_img,
             @Field("brithday") String brithday);
 
-    @FormUrlEncoded
-    @POST("http://121.40.105.149:9901/verif/realname")
-    Observable<Result> post_Test(
-            @Field("name") String name,
-            @Field("idnum") String idnum,
-            @Field("cid") String cid);
-
-    @GET("http://121.40.105.149:9901/verif/realname")
-    Observable<Result> get_Test(
-            @Query("name") String name,
-            @Query("idnum") String idnum,
-            @Query("cid") String cid);
+    /**
+     * 查询申请站长状态
+     *
+     * @param auth 认证信息
+     * @param vid  村id
+     * @return  申请人的信息
+     */
+    @GET("vill/applystatus")
+    Observable<ApplyInfo> get_IsApply(
+            @Query("auth") String auth,
+            @Query("vid") String vid);
 
     /**
      * 是否设置了交易密码

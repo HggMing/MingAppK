@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.study.mingappk.tab4.shop.ShowApplyingActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divide">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/rootLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/click_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_item_selector"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:id="@+id/icon_head"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:layout_marginRight="12dp"
+                        android:background="@mipmap/user_detail_sharow"
+                        tools:src="@mipmap/icon" />
+
+                    <LinearLayout
+                        android:id="@+id/layout1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_toRightOf="@id/icon_head">
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/font_black_content"
+                            android:textSize="18sp"
+                            tools:text="备注名" />
+
+                        <ImageView
+                            android:id="@+id/apply_state"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="3dp"
+                            android:src="@mipmap/ic_apply_ing"
+                            android:visibility="gone"
+                            tools:ignore="ContentDescription" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/name2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout1"
+                        android:layout_marginTop="2dp"
+                        android:layout_toEndOf="@id/icon_head"
+                        android:layout_toRightOf="@id/icon_head"
+                        android:textSize="14sp"
+                        tools:text="账号：123" />
+                </RelativeLayout>
+
+                <include layout="@layout/divide_1_12" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="@dimen/padding_3">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="80dp"
+                            android:text="姓名"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp"
+                            tools:text="显示内容" />
+                    </LinearLayout>
+
+                    <include layout="@layout/divide_1_12" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="@dimen/padding_3">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="80dp"
+                            android:text="性别"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_sex"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp"
+                            tools:text="显示内容" />
+                    </LinearLayout>
+
+                    <include layout="@layout/divide_1_12" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="@dimen/padding_3">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="80dp"
+                            android:text="出生日期"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_data"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp"
+                            tools:text="显示内容" />
+                    </LinearLayout>
+
+                    <include layout="@layout/divide_1_12" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="@dimen/padding_3">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="80dp"
+                            android:text="手机号"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp"
+                            tools:text="显示内容" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/divide_1_12" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="@dimen/padding_3">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="80dp"
+                            android:text="学历"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_education"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp"
+                            tools:text="显示内容" />
+                    </LinearLayout>
+
+                    <include layout="@layout/divide_1_12" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="@dimen/padding_3">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="80dp"
+                            android:text="所属村"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_village_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp"
+                            tools:text="显示内容" />
+                    </LinearLayout>
+
+                    <include layout="@layout/divide_1_12" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:minHeight="48dp"
+                        android:padding="@dimen/padding_3">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxEms="4"
+                            android:text="身份证照片（正反两面）"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:id="@+id/img_photo0"
+                            android:layout_width="75dp"
+                            android:layout_height="56dp"
+                            android:layout_marginLeft="90dp"
+                            tools:src="@mipmap/add_photo_bg" />
+
+                        <ImageView
+                            android:id="@+id/img_photo1"
+                            android:layout_width="75dp"
+                            android:layout_height="56dp"
+                            android:layout_marginLeft="20dp"
+                            tools:src="@mipmap/add_photo_bg" />
+                    </LinearLayout>
+
+                    <include layout="@layout/divide_1_12" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:minHeight="48dp"
+                        android:padding="@dimen/padding_3">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxEms="4"
+                            android:text="其它证明文件（非必须项）"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:id="@+id/img_photo2"
+                            android:layout_width="75dp"
+                            android:layout_height="56dp"
+                            android:layout_marginLeft="90dp"
+                            android:visibility="invisible"
+                            tools:src="@mipmap/add_photo_bg" />
+
+                        <ImageView
+                            android:id="@+id/img_photo3"
+                            android:layout_width="75dp"
+                            android:layout_height="56dp"
+                            android:layout_marginLeft="20dp"
+                            tools:src="@mipmap/add_photo_bg" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/apply_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="60dp"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                tools:src="@mipmap/ic_apply_not_passed" />
+        </FrameLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

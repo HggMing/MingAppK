@@ -200,8 +200,9 @@ public class RealNameBindingActivity extends BackActivity {
                             Result result = gson.fromJson(new String(Base64.decode(s, Base64.DEFAULT)), Result.class);
                             if (result.getErr() == 0) {
                                 Toast.makeText(RealNameBindingActivity.this, "实名认证成功", Toast.LENGTH_SHORT).show();
-                                Hawk.put(APP.IS_REAL_NAME,true);
-                                setResult(RESULT_OK);
+                                Intent intent=new Intent();
+                                intent.putExtra(SafeSettingActivity.IS_BINDING,true);
+                                setResult(RESULT_OK,intent);
                                 finish();
                             } else {
                                 Toast.makeText(RealNameBindingActivity.this, result.getErr() + "：" + result.getMsg(), Toast.LENGTH_SHORT).show();
