@@ -7,9 +7,10 @@
     android:layout_height="match_parent"
     tools:context="com.study.mingappk.tab3.addfollow.FollowVillageActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <com.bilibili.magicasakura.widgets.TintAppBarLayout
         android:id="@+id/id_appbarlayout"
         android:layout_width="match_parent"
+        android:background="@color/theme_color_primary"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -18,11 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.Toolbar
+            <com.bilibili.magicasakura.widgets.TintToolbar
                 android:id="@+id/id_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="@color/theme_color_primary"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
@@ -35,7 +36,7 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     tools:text="爱简单" />
-            </android.support.v7.widget.Toolbar>
+            </com.bilibili.magicasakura.widgets.TintToolbar>
 
             <com.miguelcatalan.materialsearchview.MaterialSearchView
                 android:id="@+id/search_view"
@@ -59,7 +60,7 @@
             app:tabIndicatorHeight="3dp"
             app:tabTextAppearance="@style/MyTabTextAppearance" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.bilibili.magicasakura.widgets.TintAppBarLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/x_recyclerview"
         android:layout_width="match_parent"

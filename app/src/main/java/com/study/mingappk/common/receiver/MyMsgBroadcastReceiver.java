@@ -12,6 +12,7 @@ import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab2.message.ChatActivity;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -72,7 +73,7 @@ public class MyMsgBroadcastReceiver extends BroadcastReceiver {
                         if (chatMsgModel != null) {
                             JUtils.Toast("接收到新消息！！");
                             Intent intent = new Intent();
-                            intent.setAction("com.isall.yxj.newmsg");
+                            intent.setAction(ChatActivity.MYCHAT_ACTION);
                             context.sendBroadcast(intent);
                         }
                     }

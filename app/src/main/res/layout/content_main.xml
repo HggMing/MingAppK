@@ -19,11 +19,11 @@
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <android.support.v7.widget.Toolbar
+            <com.bilibili.magicasakura.widgets.TintToolbar
                 android:id="@+id/toolbar_main"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="@color/theme_color_primary"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <TextView
@@ -35,7 +35,7 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     tools:text="爱简单" />
-            </android.support.v7.widget.Toolbar>
+            </com.bilibili.magicasakura.widgets.TintToolbar>
 
         </android.support.design.widget.AppBarLayout>
 
@@ -68,22 +68,23 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageView
+                <com.bilibili.magicasakura.widgets.TintImageView
                     android:id="@+id/img_tab1_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/tab1_btn1" />
+                    android:src="@mipmap/tab1_btn1"
+                    app:imageTint="@color/theme_color_primary" />
 
-                <TextView
+                <com.bilibili.magicasakura.widgets.TintTextView
                     android:id="@+id/text_tab1_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/img_tab1_main"
                     android:layout_centerHorizontal="true"
                     android:text="@string/tab1_main"
-                    android:textColor="@color/tab_bnt1"
+                    android:textColor="@color/theme_color_primary"
                     android:textSize="@dimen/tab_text_size" />
             </RelativeLayout>
 
@@ -94,22 +95,22 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
-                <ImageView
+                <com.bilibili.magicasakura.widgets.TintImageView
                     android:id="@+id/img_tab2_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/tab2_btn0" />
+                    android:src="@drawable/selector_tab2_icon" />
 
-                <TextView
+                <com.bilibili.magicasakura.widgets.TintTextView
                     android:id="@+id/text_tab2_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/img_tab2_main"
                     android:layout_centerHorizontal="true"
                     android:text="@string/tab2_main"
-                    android:textColor="@color/tab_bnt0"
+                    android:textColor="@color/selector_tab_text"
                     android:textSize="@dimen/tab_text_size" />
             </RelativeLayout>
 
@@ -120,22 +121,22 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
-                <ImageView
+                <com.bilibili.magicasakura.widgets.TintImageView
                     android:id="@+id/img_tab3_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/tab3_btn0" />
+                    android:src="@drawable/selector_tab3_icon" />
 
-                <TextView
+                <com.bilibili.magicasakura.widgets.TintTextView
                     android:id="@+id/text_tab3_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/img_tab3_main"
                     android:layout_centerHorizontal="true"
                     android:text="@string/tab3_main"
-                    android:textColor="@color/tab_bnt0"
+                    android:textColor="@color/selector_tab_text"
                     android:textSize="@dimen/tab_text_size" />
             </RelativeLayout>
 
@@ -146,22 +147,23 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
-                <ImageView
+                <com.bilibili.magicasakura.widgets.TintImageView
                     android:id="@+id/img_tab4_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/tab4_btn0" />
+                    android:src="@drawable/selector_tab4_icon" />
 
-                <TextView
+                <com.bilibili.magicasakura.widgets.TintTextView
                     android:id="@+id/text_tab4_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/img_tab4_main"
                     android:layout_centerHorizontal="true"
                     android:text="@string/tab4_main"
-                    android:textColor="@color/tab_bnt0"
+                    android:textColor="@color/selector_tab_text"
+                    android:textIsSelectable="false"
                     android:textSize="@dimen/tab_text_size" />
             </RelativeLayout>
         </LinearLayout>

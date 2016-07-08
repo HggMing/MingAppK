@@ -9,12 +9,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
+import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.finalteam.galleryfinal.model.PhotoInfo;
 
 /**
  * Created by Ming on 2016/4/20.

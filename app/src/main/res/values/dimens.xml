@@ -7,8 +7,6 @@
     <dimen name="divide_section_15">15dp</dimen>
     <!--Item菜单自定义-->
     <dimen name="project_icon_width">23dp</dimen>
-    <!--发布消息界面的图片宽度-->
-    <dimen name="image_add_maopao_width">62dp</dimen>
     <!--tab1的list-->
     <dimen name="divide_height">0.5dp</dimen>
     <dimen name="tab_text_size">12sp</dimen>
@@ -18,6 +16,23 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_12">12dp</dimen>
-    <dimen name="padding_3">6dp</dimen>
+    <dimen name="padding_6">6dp</dimen>
+
+    <dimen name="padding">16dp</dimen>
+
+    <dimen name="margin_16">16dp</dimen>
+    margin
+    <dimen name="textsize_big">20sp</dimen>
+    <dimen name="textsize_large">18sp</dimen>
+    <dimen name="textsize_normal">16sp</dimen>
+    <dimen name="textsize_small">14sp</dimen>
+
+    <!--galleryfinal相关-->
+    <dimen name="fab_icon_size">24dp</dimen>
+    <dimen name="fab_shadow_offset">3dp</dimen>
+    <dimen name="fab_shadow_radius">9dp</dimen>
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_stroke_width">0.0dp</dimen>
+    <dimen name="gf_title_bar_height">56dp</dimen>
 
 </resources>

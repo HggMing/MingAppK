@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        tools:src="@mipmap/icon"></ImageView>
+        tools:src="@mipmap/icon"/>
 
     <TextView
         android:id="@+id/tv_name"
@@ -21,5 +21,5 @@
         android:layout_marginTop="5dp"
         android:textColor="#777"
         android:textSize="12sp"
-        tools:text="图片"></TextView>
+        tools:text="图片"/>
 </RelativeLayout>

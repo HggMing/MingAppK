@@ -1,6 +1,5 @@
 package com.study.mingappk.tab4.safesetting;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
@@ -13,10 +12,8 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
 import com.study.mingappk.tmain.BackActivity;
 
 import java.io.IOException;

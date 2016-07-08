@@ -20,6 +20,11 @@ import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.tmain.MainActivity;
 
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.functions.Action1;
+
 public class SplashActivity extends AppCompatActivity {
 
     public static final int MAX_WAITING_TIME = 200;
@@ -87,19 +92,31 @@ public class SplashActivity extends AppCompatActivity {
                     builder.create().show();
                 }
             }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_SMS,Manifest.permission.CAMERA);
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_SMS, Manifest.permission.CAMERA);
     }
 
     private void init() {
 
-        String loginname = Hawk.get(APP.LOGIN_NAME, "");
-        String loginpwd = Hawk.get(APP.LOGIN_PASSWORD, "");
+        final String loginname = Hawk.get(APP.LOGIN_NAME, "");
+        final String loginpwd = Hawk.get(APP.LOGIN_PASSWORD, "");
 
         if (!loginname.equals("") && !loginpwd.equals("")) {
             goLoginAuto();
         } else {
             goLogin();
         }
+        //延迟4s后执行
+//        Observable.timer(4, TimeUnit.SECONDS)
+//                .subscribe(new Action1<Long>() {
+//                    @Override
+//                    public void call(Long aLong) {
+//                        if (!loginname.equals("") && !loginpwd.equals("")) {
+//                            goLoginAuto();
+//                        } else {
+//                            goLogin();
+//                        }
+//                    }
+//                });
     }
 
 
@@ -107,14 +124,14 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        SplashActivity.this.startActivity(intent);
-        SplashActivity.this.finish();
+        startActivity(intent);
+        this.finish();
     }
 
     private void goLogin() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-        SplashActivity.this.startActivity(intent);
-        SplashActivity.this.finish();
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -123,8 +140,8 @@ public class SplashActivity extends AppCompatActivity {
     private void goLoginAuto() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         intent.putExtra(LoginActivity.IS_AUTO_LOGIN, true);
-        SplashActivity.this.startActivity(intent);
-        SplashActivity.this.finish();
+        startActivity(intent);
+        finish();
     }
 
     //**************** Android M Permission (Android 6.0权限控制代码封装)*****************************************************

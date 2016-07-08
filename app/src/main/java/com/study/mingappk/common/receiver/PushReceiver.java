@@ -1,28 +1,9 @@
 package com.study.mingappk.common.receiver;
 
-import android.app.ActivityManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
-
-import com.orhanobut.hawk.Hawk;
-import com.study.mingappk.R;
-import com.study.mingappk.app.APP;
-import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.userlogin.SplashActivity;
-
-import java.util.List;
-
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 @Deprecated
 public class PushReceiver extends BroadcastReceiver {
@@ -36,8 +17,8 @@ public class PushReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
 
-//        switch (bundle.getInt(PushConsts.CMD_ACTION)) {
-        /*    case PushConsts.GET_MSG_DATA:
+      /*  switch (bundle.getInt(PushConsts.CMD_ACTION)) {
+            case PushConsts.GET_MSG_DATA:
                 // 获取透传数据
                 byte[] payload = bundle.getByteArray("payload");
 
@@ -91,9 +72,9 @@ public class PushReceiver extends BroadcastReceiver {
                         mNotificationManager.notify(1, notification);
                     }
                 }
-                break;*/
+                break;
 
-           /* case PushConsts.GET_CLIENTID:
+            case PushConsts.GET_CLIENTID:
                 // 获取ClientID(CID)
                 // 第三方应用需要将CID上传到第三方服务器，并且将当前用户帐号和CID进行关联，以便日后通过用户帐号查找CID进行消息推送
                 String cid = bundle.getString("clientid");
@@ -117,9 +98,9 @@ public class PushReceiver extends BroadcastReceiver {
                             public void onNext(Result result) {
                             }
                         });
-                break;*/
-           /* default:
-                break;*/
+                break;
+            default:
+                break;
+        }*/
     }
 }
-

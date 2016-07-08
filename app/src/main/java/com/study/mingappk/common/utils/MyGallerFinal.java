@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Environment;
 
+import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -13,15 +13,15 @@ import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.views.gallerfinal.CoreConfig;
+import com.study.mingappk.common.views.gallerfinal.FunctionConfig;
+import com.study.mingappk.common.views.gallerfinal.ImageLoader;
+import com.study.mingappk.common.views.gallerfinal.PauseOnScrollListener;
+import com.study.mingappk.common.views.gallerfinal.ThemeConfig;
+import com.study.mingappk.common.views.gallerfinal.widget.GFImageView;
 
 import java.io.File;
 
-import cn.finalteam.galleryfinal.CoreConfig;
-import cn.finalteam.galleryfinal.FunctionConfig;
-import cn.finalteam.galleryfinal.ImageLoader;
-import cn.finalteam.galleryfinal.PauseOnScrollListener;
-import cn.finalteam.galleryfinal.ThemeConfig;
-import cn.finalteam.galleryfinal.widget.GFImageView;
 
 /**
  * Android自定义相册，实现了拍照、图片选择（单选/多选）、 裁剪（单/多裁剪）、旋转，GalleryFinal为你定制相册。
@@ -29,9 +29,12 @@ import cn.finalteam.galleryfinal.widget.GFImageView;
  */
 public class MyGallerFinal {
     //设置主题
-//    int themeColor=Color.rgb(0x53, 0xAC, 0xE5);
-    int themeColor= APP.getInstance().getResources().getColor(R.color.colorPrimary);
-    int themeColor2= APP.getInstance().getResources().getColor(R.color.colorAccent2);
+
+    //获取当前app主题的颜色
+    Context mContext=APP.getInstance().getApplicationContext();
+    int themeColor=   ThemeUtils.getColorById(mContext, R.color.theme_color_primary);
+    int themeColor2=   ThemeUtils.getColorById(mContext, R.color.theme_color_primary_dark);
+
     ThemeConfig theme = new ThemeConfig.Builder()
             .setTitleBarBgColor(themeColor)//标题栏背景颜色
             .setFabNornalColor(themeColor)//设置Floating按钮Nornal状态颜色
@@ -75,7 +78,7 @@ public class MyGallerFinal {
     ImageLoader imageloader = new GlideImageLoader();
 
     //选择图片加载器
-    class GlideImageLoader implements cn.finalteam.galleryfinal.ImageLoader {
+    class GlideImageLoader implements ImageLoader {
 
         @Override
         public void displayImage(Activity activity, String path, final GFImageView imageView, Drawable defaultDrawable, int width, int height) {

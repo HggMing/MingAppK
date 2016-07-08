@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".tab4.scommon.AdviceActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,53 +13,31 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:text="问题或建议"
-                android:textColor="#333333"
-                android:textSize="22sp" />
+            <com.bilibili.magicasakura.widgets.TintTextView
+                style="@style/TextViewStyle_hint"
+                android:layout_marginTop="25dp"
+                android:text="问题或建议" />
 
-            <EditText
+            <com.bilibili.magicasakura.widgets.TintEditText
                 android:id="@+id/et_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/groupback"
+                style="@style/EditTextStyle_common"
                 android:gravity="left|top"
                 android:hint="欢迎提问题和建议，我们的进步离不开您的反馈！"
                 android:maxLines="10"
-                android:minLines="6"
-                android:padding="8dp" />
+                android:minLines="6" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:text="联系方式（选填）"
-                android:textColor="#333333"
-                android:textSize="22sp" />
+            <com.bilibili.magicasakura.widgets.TintTextView
+                style="@style/TextViewStyle_hint"
+                android:text="联系方式（选填）" />
 
-            <EditText
+            <com.bilibili.magicasakura.widgets.TintEditText
                 android:id="@+id/et_contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/groupback"
-                android:gravity="left|top"
-                android:padding="8dp" />
+                style="@style/EditTextStyle_common" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

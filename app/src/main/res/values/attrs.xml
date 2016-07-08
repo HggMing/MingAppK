@@ -19,4 +19,17 @@
             <enum name="fill" value="1" />
         </attr>
     </declare-styleable>
+    <!--galleryfinal控件相关-->
+    <declare-styleable name="GFFloatingActionButton">
+        <attr name="fabColorPressed" format="color" />
+        <attr name="fabColorNormal" format="color" />
+        <attr name="fabIcon" format="reference" />
+        <attr name="fabTitle" format="string" />
+    </declare-styleable>
+    <declare-styleable name="HorizontalListView">
+        <attr name="dividerWidth" format="dimension" />
+        <attr name="android:divider" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:fadingEdgeLength" />
+    </declare-styleable>
 </resources>

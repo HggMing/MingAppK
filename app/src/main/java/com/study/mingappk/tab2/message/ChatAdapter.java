@@ -11,11 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
 

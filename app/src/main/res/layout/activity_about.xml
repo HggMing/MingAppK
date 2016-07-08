@@ -26,7 +26,7 @@
             android:layout_marginTop="14dp"
             android:text="我们村-乡情零距离"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="@dimen/textsize_normal" />
 
         <TextView
             android:id="@+id/version"
@@ -36,7 +36,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:textColor="@color/font_black_comment"
-            android:textSize="13sp"
+            android:textSize="@dimen/textsize_small"
             tools:text="版本号：1.0.11" />
 
         <RelativeLayout
@@ -51,19 +51,22 @@
                 android:id="@+id/t2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginRight="@dimen/margin_16"
                 android:layout_marginTop="14dp"
                 android:text="客户服务电话：400-009-2006"
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textsize_normal" />
 
             <TextView
                 android:id="@+id/about_update"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/t2"
-                android:layout_margin="20dp"
-                android:textSize="18sp"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginRight="@dimen/margin_16"
+                android:layout_marginTop="20dp"
+                android:textSize="@dimen/textsize_normal"
                 tools:text="版本内容" />
         </RelativeLayout>
     </RelativeLayout>

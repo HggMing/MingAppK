@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -30,7 +30,6 @@ import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab3.addfollow.FollowVillageActivity;
 import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,12 +82,6 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -126,12 +119,12 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
         mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 
+        mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
 //        mXRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);//自定义下拉刷新箭头图标
 //        View header =   LayoutInflater.from(this).inflate(R.layout.recyclerview_header, (ViewGroup)findViewById(android.R.id.content),false);
 //        mRecyclerView.addHeaderView(header);
-
         mXRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
@@ -159,9 +152,9 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
                             FollowVillageList followVillageListResult = response.body();
                             if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
                                 mList.addAll(followVillageListResult.getData().getList());
-                                if(mList.isEmpty()){
+                                if (mList.isEmpty()) {
                                     contentEmpty.setVisibility(View.VISIBLE);
-                                }else {
+                                } else {
                                     contentEmpty.setVisibility(View.GONE);
                                 }
                                 mAdapter.setItem(mList);
@@ -226,23 +219,26 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
         MyServiceClient.getService()
                 .getCall_DelFollowList(auth, vid)
                 .enqueue(new Callback<Result>() {
-                    @Override
-                    public void onResponse(Call<Result> call, Response<Result> response) {
-                        if (response.isSuccessful()) {
-                            Result result = response.body();
-                            if (result != null && result.getErr() == 0) {
-                                // Toast.makeText(mActivity, result.getMsg(), Toast.LENGTH_SHORT).show();
-                                mAdapter.notifyItemRemoved(position + 1);
-                                mList.remove(position);
-                                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount() + 1);
-                            }
-                        }
-                    }
+                             @Override
+                             public void onResponse(Call<Result> call, Response<Result> response) {
+                                 if (response.isSuccessful()) {
+                                     Result result = response.body();
+                                     if (result != null && result.getErr() == 0) {
+                                         // Toast.makeText(mActivity, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                         mList.remove(position);
+                                         mAdapter.notifyItemRemoved(position + 1);
+//                                         mAdapter.notifyItemRangeChanged(position, mList.size()+2);
+                                         mAdapter.notifyDataSetChanged();
+                                     }
+                                 }
+                             }
 
-                    @Override
-                    public void onFailure(Call<Result> call, Throwable t) {
-                        JUtils.Log("取消关注村圈出错：" + t.getMessage());
-                    }
-                });
+                             @Override
+                             public void onFailure(Call<Result> call, Throwable t) {
+                                 JUtils.Log("取消关注村圈出错：" + t.getMessage());
+                             }
+                         }
+
+                );
     }
 }

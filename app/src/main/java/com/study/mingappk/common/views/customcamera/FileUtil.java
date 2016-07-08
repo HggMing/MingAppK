@@ -1,7 +1,6 @@
 package com.study.mingappk.common.views.customcamera;
 
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.util.Log;
 
 import com.study.mingappk.app.APP;

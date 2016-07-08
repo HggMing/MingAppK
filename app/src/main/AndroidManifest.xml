@@ -49,7 +49,20 @@
                 <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
             </intent-filter>
         </receiver>
-
+        <!--gallerfinal相关页面-->
+        <activity
+            android:name="com.study.mingappk.common.views.gallerfinal.PhotoSelectActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.study.mingappk.common.views.gallerfinal.PhotoEditActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.study.mingappk.common.views.gallerfinal.PhotoPreviewActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <!--主程序相关-->
         <activity
             android:name=".tmain.userlogin.SplashActivity"
             android:label="@string/title_activity_splash">
@@ -141,7 +154,6 @@
             android:name=".common.views.customcamera.TakePhotoActivity"
             android:theme="@style/OpaqueTheme" />
         <activity android:name=".tab3.affairs.NewsDetailActivity" />
-        <activity android:name=".tab3.affairs.NewsDetail2Activity" />
         <activity android:name=".tab4.shop.ShowApplyingActivity"></activity>
     </application>
 

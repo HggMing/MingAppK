@@ -571,6 +571,15 @@ public interface MyService {
             @Query("pagesize") int pagesize);
 
     /**
+     * 聊天机器人助手，小苞谷接口
+     * @param data 特定方式加密后字符串
+     * @return 先base64解密，得到json
+     */
+    @Multipart
+    @POST("http://capi.nids.com.cn/znzd/voice")
+    Observable<ResponseBody> post_ChatRobot(
+            @Part("data") String data);
+    /**
      * 用户之间发送消息
      *
      * @param from   发送人id

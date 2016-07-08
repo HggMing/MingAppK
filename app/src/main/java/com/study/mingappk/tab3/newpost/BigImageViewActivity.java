@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -15,12 +14,12 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.finalteam.galleryfinal.model.PhotoInfo;
 import me.relex.circleindicator.CircleIndicator;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;

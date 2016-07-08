@@ -39,6 +39,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.study.mingappk.R;
 
 
@@ -103,7 +104,9 @@ public class SideBar extends View {
             paint.setTextSize(dip2px(mContext, 12));
             // 选中的状态
             if (i == choose) {
-                paint.setColor(getResources().getColor(R.color.colorPrimaryDark));
+//                paint.setColor(getResources().getColor(R.color.colorPrimaryDark));
+                int themeColor=   ThemeUtils.getColorById(getContext(), R.color.theme_color_primary);
+                paint.setColor(themeColor);
                 paint.setFakeBoldText(true);
             }
             // x坐标等于中间-字符串宽度的一半.

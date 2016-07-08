@@ -3,7 +3,6 @@ package com.study.mingappk.tab2.message.keyboard;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 
 
 import com.study.mingappk.R;

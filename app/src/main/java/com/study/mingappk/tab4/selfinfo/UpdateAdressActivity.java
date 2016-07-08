@@ -519,7 +519,7 @@ public class UpdateAdressActivity extends BackActivity {
         int id = item.getItemId();
         if (id == R.id.action_submit) {
             String type = getIntent().getStringExtra(SUBMIT_CODE);
-            if (type.equals(JUST_FOR_VID)) {
+            if (JUST_FOR_VID.equals(type)) {
                 justForVid();
                 return true;
             } else {

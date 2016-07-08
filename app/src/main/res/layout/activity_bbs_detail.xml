@@ -31,33 +31,34 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <EditText
+            <com.bilibili.magicasakura.widgets.TintEditText
                 android:id="@+id/comment_edit"
+                style="@style/EditTextStyle_common"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="0dp"
                 android:layout_weight="1"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="评论帖子"
                 android:maxLength="250"
                 android:maxLines="4"
-                android:textSize="15dp" />
+                android:padding="8dp" />
 
-            <Button
+
+            <com.bilibili.magicasakura.widgets.TintButton
                 android:id="@+id/comment_post"
                 android:layout_width="48dp"
                 android:layout_height="30dp"
                 android:layout_marginBottom="7dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/button_theme"
-                android:clickable="false"
                 android:enabled="false"
                 android:gravity="center"
                 android:text="发送"
-                android:textColor="@drawable/button_theme_text"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
         </LinearLayout>

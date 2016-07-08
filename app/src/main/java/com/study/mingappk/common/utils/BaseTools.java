@@ -1,6 +1,7 @@
 package com.study.mingappk.common.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -9,6 +10,9 @@ import android.os.Build;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.bilibili.magicasakura.utils.ThemeUtils;
+import com.study.mingappk.R;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -55,6 +59,23 @@ public class BaseTools {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);//calculateStatusColor(Color.WHITE, (int) alphaValue)
+        }
+    }
+
+    /**
+     * 实现状态栏颜色随主题变化
+     * @param activity
+     */
+    public static void colorStatusBar(Activity activity) {
+        //状态栏主题变色
+        if (Build.VERSION.SDK_INT >= 21) {//安卓5.0以上
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(ThemeUtils.getColorById(activity, R.color.theme_color_primary));
+            ActivityManager.TaskDescription description = new ActivityManager.TaskDescription(null, null,
+                    ThemeUtils.getThemeAttrColor(activity, android.R.attr.colorPrimary));
+            activity.setTaskDescription(description);
         }
     }
 
@@ -108,6 +129,7 @@ public class BaseTools {
 
     /**
      * 使用MD5算法加密字符串
+     *
      * @param string 字符串
      * @return 加密后的字符串
      */

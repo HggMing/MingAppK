@@ -1,24 +1,18 @@
 package com.study.mingappk.tmain;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +20,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.receiver.MyMsgBroadcastReceiver;
+import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.tab1.Tab1Fragment;
 import com.study.mingappk.tab2.friendlist.FriendListFragment;
 import com.study.mingappk.tab3.villagelist.VillageListFragment;
 import com.study.mingappk.tab4.SettingFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,16 +84,49 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
 
         initView();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        //状态栏主题变色
+        BaseTools.colorStatusBar(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    //主页为singletop模式，更换主题后手动刷新
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeThemeColor(ChangeThemeColorEvent event) {
+        int themeColor = ThemeUtils.getColorById(this, R.color.theme_color_primary);
+        if (event.getType() == 1) {
+            //设置状态栏颜色
+            BaseTools.colorStatusBar(this);
+            //获取当前app主题的颜色,设置toolbar颜色
+            mToolBar.setBackgroundColor(themeColor);
+        }
+//        更改主题后，改变tab4图标颜色
+        mTab4.setImageResource(R.mipmap.tab4_btn1);
+        ColorStateList colorStateList = ThemeUtils.getThemeColorStateList(MainActivity.this, R.color.theme_color_primary);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mTab4.setImageTintList(colorStateList);
+        }
+        tTab4.setTextColor(themeColor);
     }
 
     private void initView() {
         //个推,初始化SDK
 //        PushManager.getInstance().initialize(this.getApplicationContext());
         //接收消息BroadcastReciver
-        /*MyMsgBroadcastReceiver msReciver = new MyMsgBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(MyMsgBroadcastReceiver.MYMSG_ACTION);
-        this.registerReceiver(msReciver, intentFilter);*/
+//        MyMsgBroadcastReceiver msReciver = new MyMsgBroadcastReceiver();
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(MyMsgBroadcastReceiver.MYMSG_ACTION);
+//        this.registerReceiver(msReciver, intentFilter);
 
         fragments.add(new Tab1Fragment());
         fragments.add(new FriendListFragment());
@@ -145,12 +178,29 @@ public class MainActivity extends AppCompatActivity {
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageSelected(int arg0) {
+            int themeColor = ThemeUtils.getColorById(MainActivity.this, R.color.theme_color_primary);
+            ColorStateList colorStateList = ThemeUtils.getThemeColorStateList(MainActivity.this, R.color.theme_color_primary);
             switch (arg0) {
                 case 0:
                     toolbarTitle.setText(R.string.tab1_main);
                     idToolbar = 1;
-                    mTab1.setImageDrawable(getResources().getDrawable(R.mipmap.tab1_btn1));
-                    tTab1.setTextColor(getResources().getColor(R.color.tab_bnt1));   //选中时的字体颜色
+                    /*tTab1.setSelected(true);
+                    tTab2.setSelected(false);
+                    tTab3.setSelected(false);
+                    tTab4.setSelected(false);
+
+                    mTab1.setSelected(true);
+                    mTab2.setSelected(false);
+                    mTab3.setSelected(false);
+                    mTab4.setSelected(false);*/
+                    mTab1.setImageResource(R.mipmap.tab1_btn1);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mTab1.setImageTintList(colorStateList);
+                        mTab2.setImageTintList(null);
+                        mTab3.setImageTintList(null);
+                        mTab4.setImageTintList(null);
+                    }
+                    tTab1.setTextColor(themeColor);   //选中时的字体颜色
                     setTab2ToB();
                     setTab3ToB();
                     setTab4ToB();
@@ -158,8 +208,23 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     toolbarTitle.setText(R.string.tab2_main);
                     idToolbar = 2;
-                    mTab2.setImageDrawable(getResources().getDrawable(R.mipmap.tab2_btn1));
-                    tTab2.setTextColor(getResources().getColor(R.color.tab_bnt1));
+                    /*tTab1.setSelected(false);
+                    tTab2.setSelected(true);
+                    tTab3.setSelected(false);
+                    tTab4.setSelected(false);
+
+                    mTab1.setSelected(false);
+                    mTab2.setSelected(true);
+                    mTab3.setSelected(false);
+                    mTab4.setSelected(false);*/
+                    mTab2.setImageResource(R.mipmap.tab2_btn1);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mTab2.setImageTintList(colorStateList);
+                        mTab1.setImageTintList(null);
+                        mTab3.setImageTintList(null);
+                        mTab4.setImageTintList(null);
+                    }
+                    tTab2.setTextColor(themeColor);
                     setTab1ToB();
                     setTab3ToB();
                     setTab4ToB();
@@ -167,8 +232,23 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     toolbarTitle.setText(R.string.tab3_main);
                     idToolbar = 3;
-                    mTab3.setImageDrawable(getResources().getDrawable(R.mipmap.tab3_btn1));
-                    tTab3.setTextColor(getResources().getColor(R.color.tab_bnt1));
+                   /* tTab1.setSelected(false);
+                    tTab2.setSelected(false);
+                    tTab3.setSelected(true);
+                    tTab4.setSelected(false);
+
+                    mTab1.setSelected(false);
+                    mTab2.setSelected(false);
+                    mTab3.setSelected(true);
+                    mTab4.setSelected(false);*/
+                    mTab3.setImageResource(R.mipmap.tab3_btn1);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mTab3.setImageTintList(colorStateList);
+                        mTab1.setImageTintList(null);
+                        mTab2.setImageTintList(null);
+                        mTab4.setImageTintList(null);
+                    }
+                    tTab3.setTextColor(themeColor);
                     setTab1ToB();
                     setTab2ToB();
                     setTab4ToB();
@@ -176,8 +256,23 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     toolbarTitle.setText(R.string.tab4_main);
                     idToolbar = 4;
-                    mTab4.setImageDrawable(getResources().getDrawable(R.mipmap.tab4_btn1));
-                    tTab4.setTextColor(getResources().getColor(R.color.tab_bnt1));
+                   /* tTab1.setSelected(false);
+                    tTab2.setSelected(false);
+                    tTab3.setSelected(false);
+                    tTab4.setSelected(true);
+
+                    mTab1.setSelected(false);
+                    mTab2.setSelected(false);
+                    mTab3.setSelected(false);
+                    mTab4.setSelected(true);*/
+                    mTab4.setImageResource(R.mipmap.tab4_btn1);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mTab4.setImageTintList(colorStateList);
+                        mTab1.setImageTintList(null);
+                        mTab2.setImageTintList(null);
+                        mTab3.setImageTintList(null);
+                    }
+                    tTab4.setTextColor(themeColor);
                     setTab1ToB();
                     setTab2ToB();
                     setTab3ToB();
@@ -188,22 +283,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         private void setTab1ToB() {
-            mTab1.setImageDrawable(getResources().getDrawable(R.mipmap.tab1_btn0));
+            mTab1.setImageResource(R.mipmap.tab1_btn0);
             tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
         }
 
         private void setTab2ToB() {
-            mTab2.setImageDrawable(getResources().getDrawable(R.mipmap.tab2_btn0));
+            mTab2.setImageResource(R.mipmap.tab2_btn0);
             tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
         }
 
         private void setTab3ToB() {
-            mTab3.setImageDrawable(getResources().getDrawable(R.mipmap.tab3_btn0));
+            mTab3.setImageResource(R.mipmap.tab3_btn0);
             tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
         }
 
         private void setTab4ToB() {
-            mTab4.setImageDrawable(getResources().getDrawable(R.mipmap.tab4_btn0));
+            mTab4.setImageResource(R.mipmap.tab4_btn0);
             tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
         }
 
@@ -285,11 +380,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }*/
+    }
 
     /* @Override
    public boolean onOptionsItemSelected(MenuItem item) {
@@ -308,14 +403,22 @@ public class MainActivity extends AppCompatActivity {
             case 2:
                 menu.findItem(R.id.action_search).setVisible(true);
                 menu.findItem(R.id.action_follow).setVisible(false);
+                menu.findItem(R.id.action_theme).setVisible(false);
                 break;
             case 3:
-                menu.findItem(R.id.action_follow).setVisible(true);
                 menu.findItem(R.id.action_search).setVisible(false);
+                menu.findItem(R.id.action_follow).setVisible(true);
+                menu.findItem(R.id.action_theme).setVisible(false);
+                break;
+            case 4:
+                menu.findItem(R.id.action_search).setVisible(false);
+                menu.findItem(R.id.action_follow).setVisible(false);
+                menu.findItem(R.id.action_theme).setVisible(true);
                 break;
             default:
-                menu.findItem(R.id.action_follow).setVisible(false);
                 menu.findItem(R.id.action_search).setVisible(false);
+                menu.findItem(R.id.action_follow).setVisible(false);
+                menu.findItem(R.id.action_theme).setVisible(false);
                 break;
         }
         return super.onPrepareOptionsMenu(menu);
@@ -340,134 +443,5 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    //**************** Android M Permission (Android 6.0权限控制代码封装)*****************************************************
-    private int permissionRequestCode = 88;
-    private PermissionCallback permissionRunnable;
-
-    public interface PermissionCallback {
-        void hasPermission();
-
-        void noPermission();
-    }
-
-    /**
-     * Android M运行时权限请求封装
-     *
-     * @param permissionDes 权限描述
-     * @param runnable      请求权限回调
-     * @param permissions   请求的权限（数组类型），直接从Manifest中读取相应的值，比如Manifest.permission.WRITE_CONTACTS
-     */
-    public void performCodeWithPermission(@NonNull String permissionDes, PermissionCallback runnable, @NonNull String... permissions) {
-        if (permissions.length == 0) return;
-//        this.permissionrequestCode = requestCode;
-        this.permissionRunnable = runnable;
-        if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.M) || checkPermissionGranted(permissions)) {
-            if (permissionRunnable != null) {
-                permissionRunnable.hasPermission();
-                permissionRunnable = null;
-            }
-        } else {
-            //permission has not been granted.
-            requestPermission(permissionDes, permissionRequestCode, permissions);
-        }
-
-    }
-
-    private boolean checkPermissionGranted(String[] permissions) {
-        boolean flag = true;
-        for (String p : permissions) {
-            if (ActivityCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
-                flag = false;
-                break;
-            }
-        }
-        return flag;
-    }
-
-    private void requestPermission(String permissionDes, final int requestCode, final String[] permissions) {
-        if (shouldShowRequestPermissionRationale(permissions)) {
-            // Provide an additional rationale to the user if the permission was not granted
-            // and the user would benefit from additional context for the use of the permission.
-            // For example, if the request has been denied previously.
-
-//            Snackbar.make(getWindow().getDecorView(), requestName,
-//                    Snackbar.LENGTH_INDEFINITE)
-//                    .setAction(R.string.common_ok, new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            ActivityCompat.requestPermissions(BaseAppCompatActivity.this,
-//                                    permissions,
-//                                    requestCode);
-//                        }
-//                    })
-//                    .show();
-            //如果用户之前拒绝过此权限，再提示一次准备授权相关权限
-            new AlertDialog.Builder(this)
-                    .setTitle("提示")
-                    .setMessage(permissionDes)
-                    .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(MainActivity.this, permissions, requestCode);
-                        }
-                    }).show();
-
-        } else {
-            // Contact permissions have not been granted yet. Request them directly.
-            ActivityCompat.requestPermissions(MainActivity.this, permissions, requestCode);
-        }
-    }
-
-    private boolean shouldShowRequestPermissionRationale(String[] permissions) {
-        boolean flag = false;
-        for (String p : permissions) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, p)) {
-                flag = true;
-                break;
-            }
-        }
-        return flag;
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == permissionRequestCode) {
-            if (verifyPermissions(grantResults)) {
-                if (permissionRunnable != null) {
-                    permissionRunnable.hasPermission();
-                    permissionRunnable = null;
-                }
-            } else {
-                Toast.makeText(MainActivity.this, "正常体验软件，请在系统设置中，为本APP授权：存储空间！", Toast.LENGTH_SHORT).show();
-                if (permissionRunnable != null) {
-                    permissionRunnable.noPermission();
-                    permissionRunnable = null;
-                }
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-    }
-
-    public boolean verifyPermissions(int[] grantResults) {
-        // At least one result must be checked.
-        if (grantResults.length < 1) {
-            return false;
-        }
-
-        // Verify that each required permission has been granted, otherwise return false.
-        for (int result : grantResults) {
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                return false;
-            }
-        }
-        return true;
-    }
-    //********************** END Android M Permission ****************************************
 
 }

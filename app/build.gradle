@@ -28,8 +28,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    // 工具库
+    // 工具库和主题选择
     compile 'com.jude:utils:1.1.1'
+    compile 'com.bilibili:magicasakura:0.1.1@aar'
     // 网络请求，采用retrofit+okhttp+RxAndroid
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
@@ -53,7 +54,7 @@ dependencies {
     // 快速构造view插件依赖
     compile 'com.jakewharton:butterknife:7.0.1'
     // 自定义图库，带裁剪、编辑
-    compile 'cn.finalteam:galleryfinal:1.4.8.7'
+//    compile 'cn.finalteam:galleryfinal:1.4.8.7'
     // 下拉刷新 、分页加载的RecyclerView解决方案
     compile 'com.jcodecraeer:xrecyclerview:1.2.7'
     //随滚动显示与消失的fab
@@ -71,4 +72,5 @@ dependencies {
 //    compile 'com.getui:ext:2.0.3'
     //实现SearchView的第三方库
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
+    compile project(path: ':toolsfinal')
 }

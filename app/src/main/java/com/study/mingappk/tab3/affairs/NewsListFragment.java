@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.study.mingappk.R;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.model.bean.NewsList;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,11 +151,9 @@ public class NewsListFragment extends Fragment implements NewsListAdapter.OnItem
 
     @Override
     public void onItemClick(View view, int position) {
-//        NewsList.DataBean.ListBean newsDetail=mList.get(position);
-        Intent intent = new Intent(mActivity, NewsDetail2Activity.class);
-//        intent.putExtra(NewsDetailActivity.NEWS_DETAIL,newsDetail);
-        intent.putExtra(NewsDetail2Activity.NEWS_ID, mList.get(position).getId());
-        intent.putExtra(NewsDetail2Activity.TYPE, type);
+        Intent intent = new Intent(mActivity, NewsDetailActivity.class);
+        intent.putExtra(NewsDetailActivity.NEWS_ID, mList.get(position).getId());
+        intent.putExtra(NewsDetailActivity.TYPE, type);
         startActivity(intent);
     }
 

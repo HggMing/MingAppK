@@ -13,15 +13,14 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/DialogTextTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:gravity="left"
             android:textColor="#666666"
-            android:textSize="20sp"
+            android:textSize="@dimen/textsize_large"
             android:textStyle="bold"
             tools:text="提示" />
     </LinearLayout>
@@ -37,12 +36,12 @@
             android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:gravity="left"
             android:textColor="#999999"
-            android:textSize="18sp"
+            android:textSize="@dimen/textsize_normal"
             tools:text="对话框的详细信息！" />
 
         <LinearLayout
@@ -65,7 +64,7 @@
                 android:background="@drawable/button_white"
                 android:singleLine="true"
                 android:textColor="@color/font_black_comment"
-                android:textSize="18sp"
+                android:textSize="@dimen/textsize_normal"
                 tools:text="取消" />
 
             <View
@@ -74,15 +73,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <Button
+            <com.bilibili.magicasakura.widgets.TintButton
                 android:id="@+id/negativeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/button_theme"
                 android:singleLine="true"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_normal"
                 tools:text="确定" />
 
             <View

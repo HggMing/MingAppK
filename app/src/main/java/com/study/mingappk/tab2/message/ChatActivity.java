@@ -56,6 +56,8 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
     String other;
     public static final String MYCHAT_ACTION = "com.study.mingappk.newmsg";
 
+    NewMsgBroadcastReceiver msReciver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +71,19 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
         configXRecyclerView();//XRecyclerView配置
         MyDB.createDb(ChatActivity.this);
         //接收实时消息BroadcastReciver
-        NewMsgBroadcastReceiver msReciver = new NewMsgBroadcastReceiver();
+        msReciver = new NewMsgBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MYCHAT_ACTION);
         this.registerReceiver(msReciver, intentFilter);
+
         initDatas();//初始化数据
     }
 
     @Override
     protected void onDestroy() {
+//        MyDB.liteOrm.close();
+        this.unregisterReceiver(msReciver);
         super.onDestroy();
-        MyDB.liteOrm.close();
     }
 
     private void initDatas() {
@@ -267,11 +271,11 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
 
     }
 
-    class NewMsgBroadcastReceiver extends BroadcastReceiver{
+    class NewMsgBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (MYCHAT_ACTION.equals(intent.getAction())){
+            if (MYCHAT_ACTION.equals(intent.getAction())) {
                 initDatas();
             }
         }

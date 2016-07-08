@@ -84,7 +84,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_3">
+                    android:padding="@dimen/padding_6">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -94,16 +94,14 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <EditText
+                    <com.bilibili.magicasakura.widgets.TintEditText
                         android:id="@+id/et_name"
+                        style="@style/EditTextStyle_common"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/groupback"
-                        android:ellipsize="end"
-                        android:hint="真实姓名"
-                        android:textColor="@color/font_black_2"
-                        android:textSize="16sp" />
+                        android:hint="真实姓名" />
+
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -111,7 +109,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_3">
+                    android:padding="@dimen/padding_6">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -133,7 +131,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_3">
+                    android:padding="@dimen/padding_6">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -143,15 +141,12 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <EditText
+                    <com.bilibili.magicasakura.widgets.TintEditText
                         android:id="@+id/et_data"
+                        style="@style/EditTextStyle_common"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/groupback"
-                        android:ellipsize="end"
-                        android:textColor="@color/font_black_2"
-                        android:textSize="16sp"
                         tools:text="一二三四五六七八九十" />
                 </LinearLayout>
 
@@ -160,7 +155,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_3">
+                    android:padding="@dimen/padding_6">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -170,17 +165,13 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <EditText
+                    <com.bilibili.magicasakura.widgets.TintEditText
                         android:id="@+id/et_phone"
+                        style="@style/EditTextStyle_phone"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/groupback"
-                        android:hint="手机号码"
-                        android:inputType="phone"
-                        android:maxLength="11"
-                        android:textColor="@color/font_black_2"
-                        android:textSize="16sp" />
+                        android:hint="手机号码" />
 
                 </LinearLayout>
 
@@ -189,7 +180,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_3">
+                    android:padding="@dimen/padding_6">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -211,7 +202,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_3">
+                    android:padding="@dimen/padding_6">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -230,12 +221,13 @@
                         android:textSize="16sp"
                         tools:text="一二三四五六七八九十" />
 
-                    <ImageView
+                    <com.bilibili.magicasakura.widgets.TintImageView
                         android:id="@+id/et_village"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/list_item_selector"
-                        android:src="@drawable/ic_apply_et_village" />
+                        android:src="@drawable/ic_apply_et_village"
+                        app:imageTint="@color/theme_color_primary" />
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -244,7 +236,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="48dp"
-                    android:padding="@dimen/padding_3">
+                    android:padding="@dimen/padding_6">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -275,7 +267,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="48dp"
-                    android:padding="@dimen/padding_3">
+                    android:padding="@dimen/padding_6">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -310,19 +302,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/divide"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingLeft="@dimen/margin_16"
+                android:paddingRight="@dimen/margin_16">
 
-                <Button
+                <com.bilibili.magicasakura.widgets.TintButton
                     android:id="@+id/btn_send"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_theme"
-                    android:text="申请"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
+                    style="@style/ButtonStyle_1"
+                    android:layout_marginTop="20dp"
+                    android:text="申请" />
             </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

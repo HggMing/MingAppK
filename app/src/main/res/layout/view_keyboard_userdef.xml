@@ -43,18 +43,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:minHeight="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/btn_face"
             android:layout_toRightOf="@+id/btn_voice_or_text"
-            android:background="@null"
+            android:background="@drawable/editview_back"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:lineSpacingExtra="4dp"
-            android:maxLines="4"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
             android:gravity="center_vertical"
             android:hint="点击输入文字"
+            android:lineSpacingExtra="4dp"
+            android:maxLines="4"
+            android:minHeight="40dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:textSize="16sp" />
 
         <!--表情-->
@@ -62,8 +64,8 @@
             android:id="@+id/btn_face"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:layout_toLeftOf="@+id/rl_multi_and_send"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/rl_multi_and_send"
             android:src="@mipmap/chatting_emoticons" />
 
         <RelativeLayout

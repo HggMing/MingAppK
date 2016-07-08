@@ -3,7 +3,6 @@ package com.study.mingappk.model.database;
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.Default;
 import com.litesuits.orm.db.annotation.Table;
-import com.litesuits.orm.db.annotation.Unique;
 
 /**
  * Created by Ming on 2016/6/13.

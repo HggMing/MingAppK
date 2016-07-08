@@ -1,1 +1,31 @@
-<resources></resources>
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/theme_color_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_color_primary</item>
+        <item name="android:colorAccent">@color/theme_color_primary_dark</item>
+        <item name="android:colorControlActivated">@color/theme_color_primary</item>
+        <item name="android:colorControlHighlight">@color/gray_trans</item>
+        <item name="android:colorControlNormal">@android:color/white</item>
+        <item name="android:colorEdgeEffect">@color/gray_trans</item>
+        <!--用于滑动返回的设置:背景透明，不设滑动关闭时背景就是黑的-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--Activity右滑进出的动画，觉得这个不好看随便换成自己的-->
+        <!--<item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>-->
+
+        <!--修改Toolbar上menu的字体大小,5.0以上-->
+        <item name="android:actionMenuTextAppearance">@style/MyMenuAppearance</item>
+        <!--5.0以下-->
+        <item name="actionMenuTextAppearance">@style/MyMenuAppearance</item>
+
+        <item name="themeColorSecondary">@color/theme_color_secondary</item>
+
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:textColorPrimary">@color/text_primary_color</item>
+    </style>
+</resources>

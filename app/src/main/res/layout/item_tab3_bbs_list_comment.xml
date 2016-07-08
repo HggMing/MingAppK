@@ -17,12 +17,12 @@
         android:textSize="15sp"
         tools:text="我就是爱音乐，莫叫我停下来！良辰美景奈何天，千里长征人未还。。" />
 
-    <TextView
+    <com.bilibili.magicasakura.widgets.TintTextView
         android:id="@+id/comment_uname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/comment_content"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/theme_color_primary"
         android:textSize="12sp"
         tools:text="爱我你怕了吗？" />
 

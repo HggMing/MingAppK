@@ -1,6 +1,5 @@
 package com.study.mingappk.tab3.villagebbs;
 
-import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,8 +8,6 @@ import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.BbsCommentList;
 
 import java.util.Date;
-
-import butterknife.Bind;
 
 class CommentItem {
     private TextView comment;

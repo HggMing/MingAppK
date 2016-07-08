@@ -7,15 +7,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_marginRight="@dimen/margin_16"
         android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="15dp"
-        android:text="选择要关注的村"
-        android:textColor="#666666"
-        android:textSize="22sp" />
+
+        <com.bilibili.magicasakura.widgets.TintTextView
+            style="@style/TextViewStyle_hint"
+            android:layout_marginTop="25dp"
+            android:text="选择要关注的村"
+            android:textSize="@dimen/textsize_large" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

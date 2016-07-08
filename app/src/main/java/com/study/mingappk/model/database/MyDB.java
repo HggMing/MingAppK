@@ -1,16 +1,13 @@
 package com.study.mingappk.model.database;
 
 import android.content.Context;
-import android.os.Environment;
 
 import com.litesuits.orm.LiteOrm;
-import com.litesuits.orm.db.DataBase;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.assit.WhereBuilder;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.tmain.MainActivity;
 
 import java.io.File;
 import java.util.List;

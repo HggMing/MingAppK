@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,39 +15,26 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
             android:layout_marginTop="60dp"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:src="@mipmap/defalt_user_circle" />
 
-            <EditText
+            <com.bilibili.magicasakura.widgets.TintEditText
                 android:id="@+id/et_phone_test"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/groupback"
-                android:hint="请输入手机号"
-                android:inputType="phone"
-                android:padding="13dp"
-                android:textSize="18sp" />
+                style="@style/EditTextStyle_phone"
+                android:layout_marginTop="40dp" />
 
-            <Button
+            <com.bilibili.magicasakura.widgets.TintButton
                 android:id="@+id/btn_ok"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/button_theme"
-                android:padding="4dp"
-                android:text="确定"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
+                style="@style/ButtonStyle_1"
+                android:layout_marginTop="40dp" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

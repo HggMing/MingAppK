@@ -46,15 +46,15 @@ public class TestPhoneNumberActivity extends BackActivity {
 
     @OnClick(R.id.btn_ok)
     public void onClick() {
-        btnOk.setClickable(false);
+        btnOk.setEnabled(false);
         String phone = etPhone.getEditableText().toString();
         if (phone.isEmpty()) {
-            btnOk.setClickable(true);
+            btnOk.setEnabled(true);
             Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!BaseTools.checkPhone(phone)) {
-            btnOk.setClickable(true);
+            btnOk.setEnabled(true);
             Toast.makeText(this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -99,8 +99,8 @@ public class TestPhoneNumberActivity extends BackActivity {
                             startActivity(intent);
                         } else {
                             Toast.makeText(TestPhoneNumberActivity.this, checkPhone.getMsg(), Toast.LENGTH_SHORT).show();
+                            btnOk.setEnabled(true);
                         }
-                        btnOk.setClickable(true);
                     }
                 });
     }

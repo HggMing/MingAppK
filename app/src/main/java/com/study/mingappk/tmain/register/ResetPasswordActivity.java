@@ -105,8 +105,8 @@ public class ResetPasswordActivity extends BackActivity {
                     public void onNext(Result result) {
                         if (result.getErr() == 0) {
                             showPhone.setText("验证码已发送到手机" + resetPhone);
-                            btnGetRcode.setClickable(false);//设置不能点击
-                            new MyCountDownTimer(100000, 1000).start();//100秒倒计时
+                            btnGetRcode.setEnabled(false);//设置不能点击
+                            new MyCountDownTimer(100000, 1000).start();//100秒倒计时,每隔1秒刷新显示
                         }
                     }
                 });
@@ -202,7 +202,7 @@ public class ResetPasswordActivity extends BackActivity {
         @Override
         public void onFinish() {
             btnGetRcode.setText("获取验证码");
-            btnGetRcode.setClickable(true);//设置能点击
+            btnGetRcode.setEnabled(true);//设置能点击
         }
     }
 }

@@ -1,62 +1,83 @@
 package com.study.mingappk.tab3.affairs;
 
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import com.study.mingappk.R;
-import com.study.mingappk.model.bean.NewsList;
+import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class NewsDetailActivity extends BackActivity {
 
-    public static String NEWS_DETAIL="news_detail";
-    @Bind(R.id.main_title)
-    TextView mainTitle;
-    @Bind(R.id.sub_title)
-    TextView subTitle;
-    @Bind(R.id.conts)
-    TextView conts;
-    @Bind(R.id.inscribe)
-    TextView inscribe;
-    @Bind(R.id.ctime)
-    TextView ctime;
-    @Bind(R.id.mark)
-    TextView mark;
+    public static String TYPE = "type_for_title";
+    public static String NEWS_ID = "news_id";
+    @Bind(R.id.webView)
+    WebView webView;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
 
-    NewsList.DataBean.ListBean newsDetail;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
         ButterKnife.bind(this);
-        setToolbarTitle("新闻");
+        switch (getIntent().getIntExtra(TYPE, 1)) {
+            case 1:
+                setToolbarTitle("新闻");
+                break;
+            case 2:
+                setToolbarTitle("政策");
+                break;
+            case 3:
+                setToolbarTitle("服务");
+                break;
+            case 4:
+                setToolbarTitle("资讯");
+                break;
+        }
 
         initData();
     }
 
     private void initData() {
-        newsDetail=getIntent().getParcelableExtra(NEWS_DETAIL);
+        //添加进度条
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                progressBar.setProgress(newProgress);
+                if (newProgress == 100) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
+                    animation.setDuration(500);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                        }
 
-        mainTitle.setText(newsDetail.getMaintitle());
-        subTitle.setText(newsDetail.getSubtitle());
-        conts.setText(newsDetail.getConts());
-        inscribe.setText(newsDetail.getInscribe());
-        mark.setText(newsDetail.getMark());
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
 
-        //时间
-        String date = newsDetail.getCtime();
-        if (date != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            String time = dateFormat.format(new Date(Long.valueOf(date + "000")));
-           ctime.setText(time);
-        } else {
-            ctime.setText("");
-        }
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+                    });
+                    progressBar.startAnimation(animation);
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        String id = getIntent().getStringExtra(NEWS_ID);
+        webView.loadUrl(MyServiceClient.getBaseUrl() + "/news/info?id=" + id);
     }
 }

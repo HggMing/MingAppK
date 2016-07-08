@@ -47,14 +47,14 @@
         android:visibility="gone"
         tools:ignore="ContentDescription" />
 
-    <TextView
+    <com.bilibili.magicasakura.widgets.TintTextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/layoutContent"
         android:layout_below="@id/layoutContent"
         android:layout_marginTop="10dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/theme_color_primary"
         android:textSize="12sp"
         tools:text="超级小胖纸" />
 

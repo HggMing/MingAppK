@@ -2,8 +2,6 @@ package com.study.mingappk.model.database;
 
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.Table;
-import com.orhanobut.hawk.Hawk;
-import com.study.mingappk.app.APP;
 
 import java.lang.reflect.Array;
 

@@ -13,18 +13,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
             android:background="@color/white"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:layout_marginTop="15dp"
+            <com.bilibili.magicasakura.widgets.TintTextView
+                style="@style/TextViewStyle_hint"
+                android:layout_marginTop="25dp"
                 android:text="选择要关注的村"
-                android:textColor="#666666"
-                android:textSize="22sp" />
-
+                android:textSize="@dimen/textsize_large" />
 
             <View
                 android:layout_width="match_parent"
@@ -118,19 +116,11 @@
                 android:drawSelectorOnTop="true"
                 android:paddingRight="10dp" />
 
-            <Button
+            <com.bilibili.magicasakura.widgets.TintButton
                 android:id="@+id/follow_vallige_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/ButtonStyle_1"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/button_theme"
-                android:padding="4dp"
-                android:text="关注"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:text="关注" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

@@ -39,18 +39,20 @@ public class VillageListAdapter extends BaseRecyclerViewAdapter<FollowVillageLis
      * 绑定ViewHoler，给item中的控件设置数据
      */
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         if (mOnItemClickListener != null) {
+            final int finalPosition = position;
             holder.tab3Item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(holder.tab3Item, position);
+                    mOnItemClickListener.onItemClick(holder.tab3Item, finalPosition);
                 }
             });
+            final int finalPosition1 = position;
             holder.tab3Item.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    mOnItemClickListener.onItemLongClick(holder.tab3Item, position);
+                    mOnItemClickListener.onItemLongClick(holder.tab3Item, finalPosition1);
                     return true;
                 }
             });

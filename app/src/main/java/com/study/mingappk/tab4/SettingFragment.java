@@ -1,33 +1,42 @@
 package com.study.mingappk.tab4;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.ThemeHelper;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.views.dialog.CardPickerDialog;
 import com.study.mingappk.common.views.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.ApplyInfo;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
+import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.mysetting.MySettingActivity;
 import com.study.mingappk.tab4.safesetting.ListItem1;
@@ -38,6 +47,8 @@ import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
 import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
 import com.study.mingappk.tab4.shop.ShowApplyingActivity;
 import com.study.mingappk.tmain.userlogin.LoginActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -54,7 +65,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class SettingFragment extends Fragment {
+public class SettingFragment extends Fragment implements CardPickerDialog.ClickListener {
     AppCompatActivity mActivity;
 
     @Bind(R.id.icon_head)
@@ -94,9 +105,16 @@ public class SettingFragment extends Fragment {
 
         isShopOwner = Hawk.get(APP.IS_SHOP_OWNER);
 
+        setHasOptionsMenu(true);
         getUserInfoDetail();//在线获取用户信息
 
         initView();//界面初始化
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     private void initView() {
@@ -112,10 +130,23 @@ public class SettingFragment extends Fragment {
         }
     }
 
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.menu_main, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_theme) {
+            //更换主题
+            CardPickerDialog dialog = new CardPickerDialog();
+            dialog.setClickListener(this);
+            dialog.show(mActivity.getSupportFragmentManager(), CardPickerDialog.TAG);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -442,6 +473,30 @@ public class SettingFragment extends Fragment {
                             }
                         }
                     });
+        }
+    }
+
+    @Override
+    public void onConfirm(int currentTheme) {
+        if (ThemeHelper.getTheme(mActivity) != currentTheme) {
+            ThemeHelper.setTheme(mActivity, currentTheme);
+            ThemeUtils.refreshUI(mActivity, new ThemeUtils.ExtraRefreshable() {
+                @Override
+                public void refreshGlobal(Activity activity) {
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        ActivityManager.TaskDescription taskDescription = new ActivityManager
+                                .TaskDescription(null, null, ThemeUtils.getThemeAttrColor(mActivity, android.R.attr.colorPrimary));
+                        mActivity.setTaskDescription(taskDescription);
+                        mActivity.getWindow().setStatusBarColor(ThemeUtils.getColorById(mActivity, R.color.theme_color_primary));
+                    }
+                }
+
+                @Override
+                public void refreshSpecificView(View view) {
+                }
+            });
+            //通知MainActivity更换主题
+            EventBus.getDefault().post(new ChangeThemeColorEvent(0));
         }
     }
 }

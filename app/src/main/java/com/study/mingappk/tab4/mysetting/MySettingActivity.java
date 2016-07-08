@@ -1,26 +1,17 @@
 package com.study.mingappk.tab4.mysetting;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.databean.Test;
-import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 public class MySettingActivity extends BackActivity {
     List<Test> tests;

@@ -23,5 +23,11 @@
         android:visible="false"
         android:icon="@mipmap/main_action_add"
         app:showAsAction="ifRoom" />
-
+    <item
+        android:id="@+id/action_theme"
+        android:orderInCategory="1"
+        android:title="更换主题"
+        android:visible="false"
+        android:icon="@mipmap/main_action_theme"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -9,23 +9,35 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyItemDecoration2;
+import com.study.mingappk.common.views.dialog.CardPickerDialog;
 import com.study.mingappk.common.views.pinyin.CharacterParser;
 import com.study.mingappk.common.views.pinyin.PinyinComparator;
 import com.study.mingappk.common.views.SideBar;
 import com.study.mingappk.common.views.stickyrecyclerheaders.StickyRecyclerHeadersDecoration;
 import com.study.mingappk.model.bean.FriendList;
+import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,6 +71,9 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     private PinyinComparator pinyinComparator;
     private final int IF_REMARK_NAME_CHANGE = 1001;//如果修改备注名
 
+    private boolean k;//用于设置页面更换主题，循序切换
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab2, container, false);
@@ -75,9 +90,42 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
 
         initView();
         getDataList();//获取friendList数据和cnt值
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            //查找好友
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeThemeColor(ChangeThemeColorEvent event) {
+        //通用中，更换主题后，刷新字母快速选择背景颜色
+        if (event.getType() == 1) {
+            if (k) {
+                mUserDialog.setBackgroundResource(R.drawable.shape_circle);
+                k = false;
+            } else {
+                mUserDialog.setBackgroundResource(R.drawable.shape_circle2);
+                k = true;
+            }
+        }
     }
 
     private void initView() {
+        setHasOptionsMenu(true);
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
         mSideBar.setTextView(mUserDialog);
@@ -91,7 +139,6 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
                 }
             }
         });
-
     }
 
     //配置RecyclerView

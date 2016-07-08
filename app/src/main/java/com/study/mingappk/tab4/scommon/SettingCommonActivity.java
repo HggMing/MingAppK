@@ -1,19 +1,28 @@
 package com.study.mingappk.tab4.scommon;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.study.mingappk.R;
+import com.study.mingappk.app.ThemeHelper;
+import com.study.mingappk.common.views.dialog.CardPickerDialog;
 import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.tmain.BackActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SettingCommonActivity extends BackActivity {
+public class SettingCommonActivity extends BackActivity implements CardPickerDialog.ClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +32,15 @@ public class SettingCommonActivity extends BackActivity {
         setToolbarTitle(R.string.title_activity_setting_common);
     }
 
-    @OnClick({R.id.click_check_version, R.id.click_clear_cache, R.id.click_advice, R.id.click_about})
+    @OnClick({R.id.click_change_theme, R.id.click_check_version, R.id.click_clear_cache, R.id.click_advice, R.id.click_about})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.click_change_theme:
+//                Toast.makeText(SettingCommonActivity.this, "更换主题", Toast.LENGTH_SHORT).show();
+                CardPickerDialog dialog = new CardPickerDialog();
+                dialog.setClickListener(this);
+                dialog.show(getSupportFragmentManager(), CardPickerDialog.TAG);
+                break;
             case R.id.click_check_version:
                 Toast.makeText(SettingCommonActivity.this, "检查新版本", Toast.LENGTH_SHORT).show();
                 break;
@@ -70,6 +85,33 @@ public class SettingCommonActivity extends BackActivity {
                 Intent intent5 = new Intent(this, AboutActivity.class);
                 startActivity(intent5);
                 break;
+        }
+    }
+
+    @Override
+    public void onConfirm(int currentTheme) {
+        if (ThemeHelper.getTheme(this) != currentTheme) {
+            ThemeHelper.setTheme(this, currentTheme);
+            ThemeUtils.refreshUI(this, new ThemeUtils.ExtraRefreshable() {
+                @Override
+                public void refreshGlobal(Activity activity) {
+                    //for global setting, just do once
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        ActivityManager.TaskDescription taskDescription = new ActivityManager
+                                .TaskDescription(null, null, ThemeUtils.getThemeAttrColor(SettingCommonActivity.this, android.R.attr.colorPrimary));
+                        setTaskDescription(taskDescription);
+//                        getWindow().setStatusBarColor(ThemeUtils.getColorById(SettingCommonActivity.this, R.color.theme_color_primary_dark));
+                        getWindow().setStatusBarColor(ThemeUtils.getColorById(SettingCommonActivity.this, R.color.theme_color_primary));
+                    }
+                }
+
+                @Override
+                public void refreshSpecificView(View view) {
+                }
+            });
+            //通知MainActivity更换主题
+            EventBus.getDefault().post(new ChangeThemeColorEvent(1));
+//            Toast.makeText(SettingCommonActivity.this, "主题切换成功！", Toast.LENGTH_SHORT).show();
         }
     }
 }

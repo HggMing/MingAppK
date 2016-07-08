@@ -307,10 +307,8 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() == 0) {
                     commentPost.setEnabled(false);
-                    commentPost.setClickable(false);
                 } else {
                     commentPost.setEnabled(true);
-                    commentPost.setClickable(true);
                 }
             }
 
@@ -594,8 +592,10 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                             intent.putExtras(bundle);
                             setResult(RESULT_OK, intent);
                             //删除评论并刷新
+                            Toast.makeText(BbsDetailActivity.this, mList.size()+"+++"+ mAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
                             mList.remove(position);
-                            mAdapter.notifyItemRemoved(position + 2);//+2是因为有一个header和下拉刷新部分
+                            Toast.makeText(BbsDetailActivity.this, mList.size()+"+++"+ mAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
+                            mAdapter.notifyItemRemoved(position + 2);//+1是因为有一个header和下拉刷新部分
                             mAdapter.notifyItemRangeChanged(position + 2, mAdapter.getItemCount() + 2);
                         }
                     }
@@ -609,7 +609,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
 
     @OnClick(R.id.comment_post)
     public void onClick() {
-        commentPost.setClickable(false);
+        commentPost.setEnabled(false);
         //发送评论
         final String conts = commentEdit.getText().toString();
         MyServiceClient.getService().post_AddComment(auth, pid, conts)
@@ -628,7 +628,13 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                                     @Override
                                     public void call(BbsCommentList bbsCommentList) {
                                         BbsCommentList.DataBean.ListBean listBean = null;
-                                        for (int i = 0; i < 3; i++) {
+                                        int k;
+                                        if(bbsCommentList.getData().getList().size()<3){
+                                            k=bbsCommentList.getData().getList().size();
+                                        }else{
+                                            k=3;
+                                        }
+                                        for (int i = 0; i < k; i++) {
                                             boolean isMyComment = bbsCommentList.getData().getList().get(i).getConts().equals(conts);
                                             if (isMyComment) {
                                                 listBean = bbsCommentList.getData().getList().get(i);
@@ -636,7 +642,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                                         }
                                         if (listBean != null) {
                                             mList.add(0, listBean);
-                                            mXRecyclerView.scrollToPosition(2);
+                                            mXRecyclerView.scrollToPosition(0);//滚动到详情页顶部
                                             mAdapter.notifyItemInserted(2);//+2是因为有一个header和下拉刷新部分
                                             mAdapter.notifyItemRangeChanged(2, mAdapter.getItemCount() + 2);
                                         }

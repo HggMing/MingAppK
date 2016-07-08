@@ -1,12 +1,12 @@
 package com.study.mingappk.tab3.villagebbs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,12 +15,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.jude.swipbackhelper.SwipeBackHelper;
-import com.jude.swipbackhelper.SwipeListener;
 import com.melnykov.fab.FloatingActionButton;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -32,6 +31,7 @@ import com.study.mingappk.tab3.affairs.GovernmentAffairsActivity;
 import com.study.mingappk.tab3.newpost.NewPostActivity;
 import com.study.mingappk.tab3.villagebbs.bbsdetail.BbsDetailActivity;
 import com.study.mingappk.tab3.villagesituation.VillageSituationActivity;
+import com.study.mingappk.tmain.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class VillageBbsActivity extends AppCompatActivity implements VillageBbsAdapter.OnItemClickListener {
+public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapter.OnItemClickListener {
     public static final String VILLAGE_ID = "village_id";
     public static final String VILLAGE_NAME = "village_name";
     public static final String VILLAGE_PIC = "village_pic";
@@ -86,9 +86,12 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
         setContentView(R.layout.activity_bbs_list);
         ButterKnife.bind(this);
 
-        BaseTools.transparentStatusBar(this);//透明状态栏
-
         fab.attachToRecyclerView(mXRecyclerView);//fab随recyclerView的滚动，隐藏和出现
+        int themeColor=   ThemeUtils.getColorById(this, R.color.theme_color_primary);
+        int themeColor2=   ThemeUtils.getColorById(this, R.color.theme_color_primary_dark);
+        fab.setColorNormal(themeColor);//fab背景颜色
+        fab.setColorPressed(themeColor2);//fab点击后背景颜色
+        fab.setColorRipple(themeColor2);//fab点击后涟漪颜色
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -97,8 +100,6 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
             //设备返回图标样式
             getSupportActionBar().setHomeAsUpIndicator(R.mipmap.app_back);
         }
-        //设置滑动关闭当前，返回上一页
-        swipeBack();
 
         //顶部村名和村图片的加载
         mVid = getIntent().getStringExtra(VILLAGE_ID);
@@ -115,45 +116,15 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        SwipeBackHelper.onDestroy(this);
-    }
-
-    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        SwipeBackHelper.onPostCreate(this);
+        BaseTools.transparentStatusBar(this);//透明状态栏
+
+        //获取当前app主题的颜色,设置收缩后颜色
+        int themeColor=   ThemeUtils.getColorById(this, R.color.theme_color_primary);
+        mCollapsingToolbarLayout.setContentScrimColor(themeColor);
+        mCollapsingToolbarLayout.setStatusBarScrimColor(themeColor);
     }
-
-    private void swipeBack() {
-        SwipeBackHelper.onCreate(this);
-        SwipeBackHelper.getCurrentPage(this)//获取当前页面
-                .setSwipeBackEnable(true)//设置是否可滑动
-//                .setSwipeEdge(200)//可滑动的范围。px。200表示为左边200px的屏幕
-                .setSwipeEdgePercent(0.15f)//可滑动的范围。百分比。0.2表示为左边20%的屏幕
-                .setSwipeSensitivity(0.5f)//对横向滑动手势的敏感程度。0为迟钝 1为敏感
-                .setScrimColor(APP.getInstance().getResources().getColor(R.color.swipe_back))//底层阴影颜色
-                .setClosePercent(0.6f)//触发关闭Activity百分比
-                .setSwipeRelateEnable(true)//是否与下一级activity联动(微信效果)。默认关
-                .setSwipeRelateOffset(500)//activity联动时的偏移量。默认500px。
-                .setDisallowInterceptTouchEvent(false)//不抢占事件，默认关（事件将先由子View处理再由滑动关闭处理）
-                .addListener(new SwipeListener() {//滑动监听
-
-                    @Override
-                    public void onScroll(float percent, int px) {//滑动的百分比与距离
-                    }
-
-                    @Override
-                    public void onEdgeTouch() {//当开始滑动
-                    }
-
-                    @Override
-                    public void onScrollToClose() {//当滑动关闭
-                    }
-                });
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -186,9 +157,9 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
                         if (bbsList != null && bbsList.getErr() == 0) {
 //                            mList.addAll(bbsList.getData().getList());
 //                            mAdapter.setItem(mList);
-                            if(mList.isEmpty()&&bbsList.getData().getList().isEmpty()){
+                            if (mList.isEmpty() && bbsList.getData().getList().isEmpty()) {
                                 contentEmpty.setVisibility(View.VISIBLE);
-                            }else {
+                            } else {
                                 contentEmpty.setVisibility(View.GONE);
                             }
                             mAdapter.setItem(mList, bbsList.getData().getList());
@@ -207,15 +178,6 @@ public class VillageBbsActivity extends AppCompatActivity implements VillageBbsA
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 //        mXRecyclerView.addItemDecoration(new MyItemDecoration(this, MyItemDecoration.VERTICAL_LIST, 30));//添加分割线
 //        mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
-       /* mXRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                commentInput.setVisibility(View.GONE);
-                JUtils.closeInputMethod(VillageBbsActivity.this);
-                fab.setVisibility(View.VISIBLE);
-            }
-        });*/
         //设置XRecyclerView相关
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
