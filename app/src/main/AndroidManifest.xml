@@ -49,23 +49,24 @@
                 <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
             </intent-filter>
         </receiver>
-        <!--gallerfinal相关页面-->
+        <!-- gallerfinal相关页面 -->
         <activity
-            android:name="com.study.mingappk.common.views.gallerfinal.PhotoSelectActivity"
+            android:name=".common.views.gallerfinal.PhotoSelectActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.study.mingappk.common.views.gallerfinal.PhotoEditActivity"
+            android:name=".common.views.gallerfinal.PhotoEditActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.study.mingappk.common.views.gallerfinal.PhotoPreviewActivity"
+            android:name=".common.views.gallerfinal.PhotoPreviewActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <!--主程序相关-->
+        <!-- 主程序相关 -->
         <activity
             android:name=".tmain.userlogin.SplashActivity"
-            android:label="@string/title_activity_splash">
+            android:label="@string/title_activity_splash"
+            android:theme="@style/OpaqueTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,10 +75,12 @@
         </activity>
         <activity
             android:name=".tmain.MainActivity"
-            android:label="@string/title_activity_main" />
+            android:label="@string/title_activity_main"
+            android:theme="@style/OpaqueTheme" />
         <activity
             android:name=".tmain.userlogin.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login"
+            android:theme="@style/OpaqueTheme" />
         <activity
             android:name=".tab4.scommon.AboutActivity"
             android:label="@string/title_activity_about" />
@@ -154,7 +157,10 @@
             android:name=".common.views.customcamera.TakePhotoActivity"
             android:theme="@style/OpaqueTheme" />
         <activity android:name=".tab3.affairs.NewsDetailActivity" />
-        <activity android:name=".tab4.shop.ShowApplyingActivity"></activity>
+        <activity android:name=".tab4.shop.ShowApplyingActivity" />
+        <activity android:name=".tab3.villagesituation.villageinfo.VillageInfoActivity" />
+        <activity android:name=".tab3.villagesituation.villageinfo.VillageInfoDetailActivity" />
+        <activity android:name=".tab3.villagesituation.villagemaster.VillageMasterActivity"></activity>
     </application>
 
 </manifest>

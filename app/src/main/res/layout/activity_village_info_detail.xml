@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.study.mingappk.tab3.villagesituation.villageinfo.VillageInfoDetailActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="@dimen/textsize_large"
+                android:textStyle="bold"
+                tools:text="魔鬼的步伐：机器人已实现“人类式”行走" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="152dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:src="@mipmap/default_nine_picture" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textSize="@dimen/textsize_normal"
+                tools:text="一位名为DURUS的仿人类机器人已经能够实现“人类式”行走，不仅如此，通过优秀的算法优化，这样行走还会帮助DURUS节省电量。
+            在演示视频中，DURUS的抬脚方式、行走姿态与重心落点被十分准确地控制，除了精密的设备制造，更重要的是千锤百炼之后的行走算法，能够完全模拟人类行走的各种数据，这样我们看视频时才会惊异于机器人如同人类一般的“魔鬼步伐”。
+“人类式行走”只是仿人类机器人发展的其中一步，在未来，我们很有可能与成千上万个机器人一同工作，他们谈吐与行为都与人类十分相似，常人甚至难以区分。" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:textSize="@dimen/textsize_normal"
+                tools:text="2016.08.08" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

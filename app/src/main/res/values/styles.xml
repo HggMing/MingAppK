@@ -2,14 +2,14 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
         <!--用于滑动返回的设置:背景透明，不设滑动关闭时背景就是黑的-->
         <item name="android:windowIsTranslucent">true</item>
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
         <!--Activity右滑进出的动画，觉得这个不好看随便换成自己的-->
-        <!--<item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>-->
+        <item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>
 
         <!--修改Toolbar上menu的字体大小,5.0以上-->
         <item name="android:actionMenuTextAppearance">@style/MyMenuAppearance</item>
@@ -34,7 +34,7 @@
         <item name="android:maxWidth">1080px</item>
     </style>
 
-    <style name="OpaqueTheme" parent="AppTheme">
+    <style name="OpaqueTheme" parent="AppTheme.NoActionBar">
         <!--关掉这个Activity的透明背景-->
         <item name="android:windowIsTranslucent">false</item>
     </style>

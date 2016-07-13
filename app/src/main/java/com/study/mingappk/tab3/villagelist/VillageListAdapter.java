@@ -48,11 +48,10 @@ public class VillageListAdapter extends BaseRecyclerViewAdapter<FollowVillageLis
                     mOnItemClickListener.onItemClick(holder.tab3Item, finalPosition);
                 }
             });
-            final int finalPosition1 = position;
             holder.tab3Item.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    mOnItemClickListener.onItemLongClick(holder.tab3Item, finalPosition1);
+                    mOnItemClickListener.onItemLongClick(holder.tab3Item, finalPosition);
                     return true;
                 }
             });
@@ -82,9 +81,9 @@ public class VillageListAdapter extends BaseRecyclerViewAdapter<FollowVillageLis
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tab3_item)
         RelativeLayout tab3Item;
-        @Bind(R.id.imageView_village)
+        @Bind(R.id.imageView_1)
         ImageView imageViewVillage;
-        @Bind(R.id.tv_villageName)
+        @Bind(R.id.tv_title)
         TextView tvVillageName;
         @Bind(R.id.tv_news)
         TextView tvNews;

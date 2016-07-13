@@ -23,11 +23,12 @@ public class VillageSituationAdapter extends RecyclerView.Adapter<VillageSituati
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    public String[] mTexts={"村况","荣誉室","村官","活动"};
+    public String[] mTexts={"村况","荣誉室","村委","活动","美食"};
     public int[] mIcons={
             R.mipmap.village_situation1,
             R.mipmap.village_situation2,
             R.mipmap.village_situation3,
+            R.mipmap.village_situation4,
             R.mipmap.village_situation4};
 
     public VillageSituationAdapter(Context mContext) {
@@ -47,10 +48,10 @@ public class VillageSituationAdapter extends RecyclerView.Adapter<VillageSituati
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (mOnItemClickListener != null) {
-            holder.mClick.setOnClickListener(new View.OnClickListener() {
+            holder.icon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(holder.mClick,position);
+                    mOnItemClickListener.onItemClick(holder.icon,position);
                 }
             });
         }

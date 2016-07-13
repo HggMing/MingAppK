@@ -76,7 +76,7 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
     private final int REQUEST_LIKE_COMMENT_NUMBER = 2000;
     private final int ReQUEST_AFTER_POST = 2001;
 
-    String mVid;
+    String mVid;//村id
 
 
     @Override
@@ -232,7 +232,9 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.icon_village:
+                //点击村况
                 Intent intent = new Intent(this, VillageSituationActivity.class);
+                intent.putExtra(VillageSituationActivity.VILLAGE_ID,mVid);
                 startActivity(intent);
                 break;
             case R.id.icon_specialty:

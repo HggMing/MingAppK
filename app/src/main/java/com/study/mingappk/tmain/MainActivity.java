@@ -107,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
         if (event.getType() == 1) {
             //设置状态栏颜色
             BaseTools.colorStatusBar(this);
-            //获取当前app主题的颜色,设置toolbar颜色
-            mToolBar.setBackgroundColor(themeColor);
         }
-//        更改主题后，改变tab4图标颜色
+        //获取当前app主题的颜色,设置toolbar颜色
+        mToolBar.setBackgroundColor(themeColor);
+        //更改主题后，改变tab4图标颜色
         mTab4.setImageResource(R.mipmap.tab4_btn1);
         ColorStateList colorStateList = ThemeUtils.getThemeColorStateList(MainActivity.this, R.color.theme_color_primary);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

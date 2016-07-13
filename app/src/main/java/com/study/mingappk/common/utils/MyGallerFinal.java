@@ -84,7 +84,7 @@ public class MyGallerFinal {
         public void displayImage(Activity activity, String path, final GFImageView imageView, Drawable defaultDrawable, int width, int height) {
             Glide.with(activity)
                     .load("file://" + path)
-                    .placeholder(defaultDrawable)
+//                    .placeholder(defaultDrawable)
                     .error(defaultDrawable)
                     .override(width, height)
                     .diskCacheStrategy(DiskCacheStrategy.NONE) //不缓存到SD卡

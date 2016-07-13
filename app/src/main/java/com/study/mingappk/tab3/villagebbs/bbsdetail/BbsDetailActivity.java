@@ -592,11 +592,10 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                             intent.putExtras(bundle);
                             setResult(RESULT_OK, intent);
                             //删除评论并刷新
-                            Toast.makeText(BbsDetailActivity.this, mList.size()+"+++"+ mAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
                             mList.remove(position);
-                            Toast.makeText(BbsDetailActivity.this, mList.size()+"+++"+ mAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
-                            mAdapter.notifyItemRemoved(position + 2);//+1是因为有一个header和下拉刷新部分
-                            mAdapter.notifyItemRangeChanged(position + 2, mAdapter.getItemCount() + 2);
+                            mAdapter.notifyItemRemoved(position + 2);//+2是因为有一个header和下拉刷新部分
+//                            mAdapter.notifyItemRangeChanged(position + 2, mAdapter.getItemCount() + 2);
+                            mAdapter.notifyDataSetChanged();
                         }
                     }
                 });
@@ -644,7 +643,8 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                                             mList.add(0, listBean);
                                             mXRecyclerView.scrollToPosition(0);//滚动到详情页顶部
                                             mAdapter.notifyItemInserted(2);//+2是因为有一个header和下拉刷新部分
-                                            mAdapter.notifyItemRangeChanged(2, mAdapter.getItemCount() + 2);
+//                                            mAdapter.notifyItemRangeChanged(2, mAdapter.getItemCount() + 2);
+                                            mAdapter.notifyDataSetChanged();
                                         }
                                     }
                                 });

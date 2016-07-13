@@ -26,13 +26,15 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.PhotoOperate;
 import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
+import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
 import com.study.mingappk.tmain.MainActivity;
-import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
+import com.study.mingappk.tmain.register.TestPhoneNumberActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -188,6 +190,7 @@ public class FaceLoginActivity extends BackActivity {
         String str2 = other + "&sign=" + sign;
         //4)把上述字符串做base64加密，最终得到请求:
         String paraString = Base64.encodeToString(str2.getBytes(), Base64.NO_WRAP);
+
         //对图片压缩处理
         File file = null;
         try {

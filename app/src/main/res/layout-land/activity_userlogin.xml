@@ -3,6 +3,7 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,14 +13,14 @@
             android:id="@+id/rlayout_sr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="60dp"
             android:background="@mipmap/logback_land"
+            android:paddingLeft="60dp"
             android:paddingRight="60dp">
 
             <EditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginTop="135dp"
                 android:background="@drawable/login_text_view"
                 android:drawableLeft="@mipmap/login_left_phone"
@@ -27,14 +28,13 @@
                 android:hint="手机号"
                 android:inputType="phone"
                 android:padding="12dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff" />
-
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
             <EditText
                 android:id="@+id/et_pwd"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_below="@id/et_name"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/login_text_view"
@@ -43,9 +43,8 @@
                 android:hint="密码"
                 android:inputType="textPassword"
                 android:padding="12dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff" />
-
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
             <RelativeLayout
                 android:id="@+id/layout_jzmm"
@@ -65,21 +64,21 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/img_jzmm"
                     android:layout_toEndOf="@id/img_jzmm"
+                    android:layout_toRightOf="@id/img_jzmm"
                     android:text="记住密码"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/tv_reg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:text="立即注册"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/white" />
             </RelativeLayout>
 
             <Button
@@ -92,8 +91,8 @@
                 android:background="@drawable/button_login"
                 android:gravity="center"
                 android:text="登录"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_large" />
 
             <Button
                 android:id="@+id/btn_facelogin"
@@ -105,8 +104,8 @@
                 android:background="@drawable/button_facelogin"
                 android:gravity="center"
                 android:text="人脸识别登录"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_large" />
 
             <TextView
                 android:id="@+id/tv_forgetpwd"
@@ -116,8 +115,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:text="忘记密码"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_large" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

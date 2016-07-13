@@ -79,7 +79,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
     EditText etPhone;
     @Bind(R.id.sp_education)
     Spinner spEducation;
-    @Bind(R.id.tv_villageName)
+    @Bind(R.id.tv_title)
     TextView tvVillageName;
     @Bind(R.id.et_village)
     ImageView etVillage;

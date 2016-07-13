@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -49,7 +48,7 @@ public class ChatActivity extends BackActivity implements ChatAdapter.OnItemClic
     ChatKeyBoard ekBar;
 
     private ChatAdapter mAdapter = new ChatAdapter();
-    private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+    private RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
     private List<ChatMsgModel> mList = new ArrayList<>();
     private ChatMsgModel chatMsg;
     String me;

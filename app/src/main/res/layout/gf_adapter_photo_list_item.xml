@@ -8,8 +8,8 @@
         android:id="@+id/iv_thumb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_gf_default_photo" />
+        android:scaleType="centerCrop"
+        android:background="@color/gray_light"/>
 
     <ImageView
         android:id="@+id/iv_check"

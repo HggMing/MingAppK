@@ -9,26 +9,19 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bilibili.magicasakura.utils.ThemeUtils;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyItemDecoration2;
-import com.study.mingappk.common.views.dialog.CardPickerDialog;
+import com.study.mingappk.common.views.SideBar;
 import com.study.mingappk.common.views.pinyin.CharacterParser;
 import com.study.mingappk.common.views.pinyin.PinyinComparator;
-import com.study.mingappk.common.views.SideBar;
 import com.study.mingappk.common.views.stickyrecyclerheaders.StickyRecyclerHeadersDecoration;
 import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
@@ -58,7 +51,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     @Bind(R.id.contact_sidebar)
     SideBar mSideBar;
 
-    private XRecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager mLayoutManager;
     private FriendListAdapter mAdapter;
     List<FriendList.DataBean.ListBean> mList = new ArrayList<>();
     private int cnt;//列表数据总条数

@@ -16,10 +16,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bilibili.magicasakura.utils.ThemeUtils;
+import com.bilibili.magicasakura.widgets.TintTextView;
+import com.jude.utils.JUtils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -29,12 +31,14 @@ import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BaseActivity;
+import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,6 +64,10 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
     MaterialSearchView searchView;
     @Bind(R.id.x_recyclerview)
     RecyclerView mXRecyclerView;
+    @Bind(R.id.text_search)
+    TintTextView textSearch;
+    @Bind(R.id.search_page)
+    LinearLayout searchPage;
 
     // TabLayout中的tab标题
     private String[] mTitles;
@@ -70,6 +78,8 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
 
     private FollowVillageAdapter mAdapter = new FollowVillageAdapter();
     List<QueryVillageList.DataBean> mList;
+
+    private String searchText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +122,11 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
             @Override
             public boolean onQueryTextChange(String newText) {
 //                Toast.makeText(FollowVillageActivity.this, "搜索文字改变", Toast.LENGTH_SHORT).show();
-//                searchVillage(newText);
+                textSearch.setText(newText);
+                searchText = newText;
+                mViewPager.setVisibility(View.GONE);
+                searchPage.setVisibility(View.VISIBLE);
+                mXRecyclerView.setVisibility(View.GONE);
                 return false;
             }
         });
@@ -122,7 +136,8 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
             public void onSearchViewShown() {
 //                Toast.makeText(FollowVillageActivity.this, "搜索打开", Toast.LENGTH_SHORT).show();
                 mAdapter.clear();
-                mViewPager.setVisibility(View.VISIBLE);
+                mViewPager.setVisibility(View.GONE);
+                searchPage.setVisibility(View.VISIBLE);
                 mXRecyclerView.setVisibility(View.GONE);
             }
 
@@ -130,9 +145,19 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
             public void onSearchViewClosed() {
 //                Toast.makeText(FollowVillageActivity.this, "搜索关闭", Toast.LENGTH_SHORT).show();
                 mViewPager.setVisibility(View.VISIBLE);
+                searchPage.setVisibility(View.GONE);
                 mXRecyclerView.setVisibility(View.GONE);
             }
         });
+    }
+
+    @OnClick(R.id.click_search)
+    public void onClick() {
+        if (!searchText.isEmpty()) {
+            searchVillage(searchText);
+            //关闭输入法
+            JUtils.closeInputMethod(this);
+        }
     }
 
     private void searchVillage(String village) {
@@ -156,7 +181,10 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
                     public void onNext(QueryVillageList queryVillageList) {
                         if (!queryVillageList.getData().isEmpty()) {
                             mViewPager.setVisibility(View.GONE);
+                            searchPage.setVisibility(View.GONE);
                             mXRecyclerView.setVisibility(View.VISIBLE);
+
+                            mAdapter.clear();
                             mList.clear();
                             mList.addAll(queryVillageList.getData());
                             mAdapter.addNewDatas(mList);

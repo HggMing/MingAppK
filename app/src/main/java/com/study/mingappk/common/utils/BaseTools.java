@@ -3,6 +3,7 @@ package com.study.mingappk.common.utils;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,6 +14,7 @@ import android.view.WindowManager;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.study.mingappk.R;
+import com.study.mingappk.common.views.dialog.MyDialog;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -195,5 +197,21 @@ public class BaseTools {
         return "刚刚";
     }
 
+    /**
+     * 用于调试时，使用对话框显示String信息
+     * @param context
+     */
+    public  static void debugDialog(Context context,String s){
+        new MyDialog.Builder(context)
+                .setTitle("调试信息")
+                .setCannel(false)
+                .setMessage(s)
+                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+    }
 
 }

@@ -10,8 +10,8 @@
     <com.bilibili.magicasakura.widgets.TintAppBarLayout
         android:id="@+id/id_appbarlayout"
         android:layout_width="match_parent"
-        android:background="@color/theme_color_primary"
         android:layout_height="wrap_content"
+        android:background="@color/theme_color_primary"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <FrameLayout
@@ -61,17 +61,63 @@
             app:tabTextAppearance="@style/MyTabTextAppearance" />
 
     </com.bilibili.magicasakura.widgets.TintAppBarLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/x_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/id_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <LinearLayout
+        android:id="@+id/search_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/click_search"
+            android:background="@drawable/list_item_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.bilibili.magicasakura.widgets.TintImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:background="@color/theme_color_primary"
+                android:padding="8dp"
+                android:src="@mipmap/ic_search" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="搜索村庄"
+                android:textSize="@dimen/textsize_normal" />
+
+            <com.bilibili.magicasakura.widgets.TintTextView
+                android:id="@+id/text_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                android:textColor="@color/theme_color_primary"
+                android:textSize="@dimen/textsize_normal"
+                tools:text="搜索村庄" />
+        </LinearLayout>
+
+        <include layout="@layout/divide_1_12" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/x_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

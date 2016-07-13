@@ -70,7 +70,7 @@ public class PhotoListAdapter extends ViewHolderAdapter<PhotoListAdapter.PhotoVi
             path = photoInfo.getPhotoPath();
         }
 
-        holder.mIvThumb.setImageResource(R.drawable.ic_gf_default_photo);
+//        holder.mIvThumb.setImageResource(R.drawable.ic_gf_default_photo);
         Drawable defaultDrawable = mActivity.getResources().getDrawable(R.drawable.ic_gf_default_photo);
         GalleryFinal.getCoreConfig().getImageLoader().displayImage(mActivity, path, holder.mIvThumb, defaultDrawable, mRowWidth, mRowWidth);
         holder.mView.setAnimation(null);

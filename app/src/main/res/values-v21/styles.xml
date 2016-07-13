@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
         <item name="android:colorPrimary">@color/theme_color_primary</item>
         <item name="android:colorPrimaryDark">@color/theme_color_primary</item>
         <item name="android:colorAccent">@color/theme_color_primary_dark</item>
@@ -16,7 +16,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
         <!--Activity右滑进出的动画，觉得这个不好看随便换成自己的-->
-        <!--<item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>-->
+        <item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>
 
         <!--修改Toolbar上menu的字体大小,5.0以上-->
         <item name="android:actionMenuTextAppearance">@style/MyMenuAppearance</item>

@@ -20,6 +20,8 @@ import com.study.mingappk.model.bean.RecommendVillage;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
+import com.study.mingappk.model.bean.VillageInfo;
+import com.study.mingappk.model.bean.VillageMaster;
 import com.study.mingappk.model.bean.ZanList;
 
 import java.lang.reflect.Array;
@@ -290,22 +292,6 @@ public interface MyService {
             @Query("pagesize") int pagesize);
 
     /**
-     * 获取政务里，消息列表
-     *
-     * @param vid      村id
-     * @param type     1：新闻，2：政策，3：服务，4：资讯
-     * @param page     当前页码，默认为：1页
-     * @param pagesize 每页条数，默认20条
-     * @return 详细列表清单
-     */
-    @GET("news/list")
-    Observable<NewsList> get_NewsList(
-            @Query("vid") String vid,
-            @Query("type") int type,
-            @Query("page") int page,
-            @Query("pagesize") int pagesize);
-
-    /**
      * 查询村庄详细地址接口
      *
      * @param village_name 村名 关键字
@@ -350,6 +336,47 @@ public interface MyService {
     Observable<RecommendVillage> get_RecommendVillage(
             @Query("auth") String auth);
 
+    /**
+     * 获取政务里，消息列表
+     *
+     * @param vid      村id
+     * @param type     1：新闻，2：政策，3：服务，4：资讯
+     * @param page     当前页码，默认为：1页
+     * @param pagesize 每页条数，默认20条
+     * @return 详细列表清单
+     */
+    @GET("news/list")
+    Observable<NewsList> get_NewsList(
+            @Query("vid") String vid,
+            @Query("type") int type,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 村况里，荣誉室，活动，美食
+     * @param vid  村id
+     * @param type 1、荣誉室2、活动3、村委（Item不同，单独写）4、美食
+     * @param page 当前页码，默认为：1页
+     * @param pagesize 每页条数，默认20条
+     * @return 详细列表清单
+     */
+    @GET("tool/list")
+    Observable<VillageInfo> get_VillageInfoList(
+            @Query("vid") String vid,
+            @Query("type") int type,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 村况里，村官列表
+     * @param auth 验证参数
+     * @param vid 村id
+     * @return 村官列表
+     */
+    @GET("cg/list")
+    Observable<VillageMaster> get_VillageMasterList(
+            @Query("auth") String auth,
+            @Query("vid") String vid);
     /**
      * 该接口用户帖子的附件上传，包括图片其他压缩包等
      *
@@ -572,6 +599,7 @@ public interface MyService {
 
     /**
      * 聊天机器人助手，小苞谷接口
+     *
      * @param data 特定方式加密后字符串
      * @return 先base64解密，得到json
      */
@@ -579,6 +607,7 @@ public interface MyService {
     @POST("http://capi.nids.com.cn/znzd/voice")
     Observable<ResponseBody> post_ChatRobot(
             @Part("data") String data);
+
     /**
      * 用户之间发送消息
      *
@@ -672,7 +701,7 @@ public interface MyService {
      *
      * @param auth 认证信息
      * @param vid  村id
-     * @return  申请人的信息
+     * @return 申请人的信息
      */
     @GET("vill/applystatus")
     Observable<ApplyInfo> get_IsApply(

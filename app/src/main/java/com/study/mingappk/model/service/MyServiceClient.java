@@ -25,8 +25,6 @@ public class MyServiceClient {
 
     private static final String BASE_URL = "http://121.40.105.149:9901/";//API接口的主机地址
     private static final String BASE_URL2 = "http://121.40.105.149:9901";//API接口的主机地址
-    public static final String URL_REG = "http://121.40.105.149:9901/system/clause";//免责条款显示网址
-
    public static final String DEFAULT_HEAD = "http://121.40.105.149:9901/Public/head/default.png";//服务器提供的默认头像，这里是为了方便替换为本地图片
 
     public static String getBaseUrl() {
