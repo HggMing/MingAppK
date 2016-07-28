@@ -49,8 +49,8 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     @Bind(R.id.content_empty)
     TextView contentEmpty;
 
-    private VillageListAdapter mAdapter = new VillageListAdapter();
-    private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
+    private VillageListAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
     List<FollowVillageList.DataEntity.ListEntity> mList = new ArrayList<>();
 
     final private static int PAGE_SIZE = 20;
@@ -111,9 +111,11 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
 
     //配置RecyclerView
     private void configXRecyclerView() {
-        mAdapter.setOnItemClickListener(VillageListFragment.this);
-        mXRecyclerView.setAdapter(mAdapter);//设置adapter
+        mLayoutManager = new LinearLayoutManager(mActivity);
+        mAdapter = new VillageListAdapter();
         mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
+        mXRecyclerView.setAdapter(mAdapter);//设置adapter
+        mAdapter.setOnItemClickListener(VillageListFragment.this);
 
         mXRecyclerView.addItemDecoration(new MyItemDecoration(mActivity));//添加分割线
         mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能

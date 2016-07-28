@@ -10,6 +10,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.app.APP;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,25 +18,30 @@ import java.util.List;
  */
 public class MyDB {
 
-    public static String DB_NAME;
-    public static LiteOrm liteOrm;
+    static String DB_NAME;
 
-    public static void createDb(Context _activity) {
-        // 创建数据库
-        if (liteOrm == null) {
-            // 创建数据库,传入当前上下文对象和数据库名称
-            File folder = new File(APP.FILE_PATH + "DataBase/");
-            if (!folder.exists()) {
-                boolean a = folder.mkdirs();
-            }
-            DB_NAME = APP.FILE_PATH + "DataBase/"
-                    + "message_to_" + Hawk.get(APP.ME_UID, "") + ".db";
-            liteOrm = LiteOrm.newSingleInstance(_activity, DB_NAME);
-        }
+    public static void setLiteOrm(LiteOrm liteOrm) {
+        MyDB.liteOrm = liteOrm;
     }
 
+    private static volatile LiteOrm liteOrm;
 
-    public static LiteOrm getLiteOrm() {
+    public static LiteOrm createDb(Context _activity) {
+        // 创建数据库
+        if (liteOrm == null) {
+            synchronized (MyDB.class) {
+                if (liteOrm == null) {
+                    // 创建数据库,传入当前上下文对象和数据库名称
+                    File folder = new File(APP.FILE_PATH + "DataBase/");
+                    if (!folder.exists()) {
+                        boolean a = folder.mkdirs();
+                    }
+                    DB_NAME = APP.FILE_PATH + "DataBase/"
+                            + "user_" + Hawk.get(APP.ME_UID, "") + ".db";
+                    liteOrm = LiteOrm.newSingleInstance(_activity, DB_NAME);
+                }
+            }
+        }
         return liteOrm;
     }
 
@@ -45,6 +51,9 @@ public class MyDB {
      * @param t
      */
     public static <T> void insert(T t) {
+        if (t == null) {
+            return;
+        }
         liteOrm.save(t);
     }
 
@@ -56,6 +65,7 @@ public class MyDB {
     public static <T> void insertAll(List<T> list) {
         liteOrm.save(list);
     }
+
 
     /**
      * 查询所有
@@ -75,8 +85,12 @@ public class MyDB {
      * @param value
      * @return
      */
-    public static <T> List<T> getQueryByWhere(Class<T> cla, String field, String[] value) {
-        return liteOrm.<T>query(new QueryBuilder(cla).where(field + "=?", value));
+    public static <T> List<T> getQueryByWhere(Class<T> cla, String field, Object[] value) {
+        return liteOrm.<T>query(new QueryBuilder<T>(cla).where(field + "=?", value));
+    }
+    public static <T> List<T> getQueryByWhere(Class<T> cla, String field, Object value) {
+        QueryBuilder<T> queryBuilder=new QueryBuilder<T>(cla).whereEquals(field, value);
+        return liteOrm.<T>query(queryBuilder);
     }
 
     /**
@@ -89,8 +103,9 @@ public class MyDB {
      * @param length
      * @return
      */
-    public static <T> List<T> getQueryByWhereLength(Class<T> cla, String field, String[] value, int start, int length) {
-        return liteOrm.<T>query(new QueryBuilder(cla).where(field + "=?", value).limit(start, length));
+    public static <T> List<T> getQueryByWhereLength(Class<T> cla, String field, Object[] value, int start, int length) {
+        QueryBuilder<T> queryBuilder=new QueryBuilder<T>(cla).where(field + "=?", value).limit(start, length);
+        return liteOrm.<T>query(queryBuilder);
     }
 
     /**
@@ -100,8 +115,8 @@ public class MyDB {
      * @param field
      * @param value
      */
-    public static <T> void deleteWhere(Class<T> cla, String field, String[] value) {
-        liteOrm.delete(cla, WhereBuilder.create(cla).where(field + "=?", value));
+    public static <T> void deleteWhere(Class<T> cla, String field, Object[] value) {
+        liteOrm.delete(WhereBuilder.create(cla).where(field + "=?", value));
     }
 
     /**
@@ -120,6 +135,9 @@ public class MyDB {
      */
     public static <T> void update(T t) {
         liteOrm.update(t, ConflictAlgorithm.Replace);
+    }
+    public static <T> void update1(T t) {
+        liteOrm.update(t);
     }
 
 

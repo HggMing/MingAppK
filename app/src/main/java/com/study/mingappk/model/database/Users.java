@@ -1,6 +1,7 @@
 package com.study.mingappk.model.database;
 
 import com.litesuits.orm.db.annotation.Check;
+import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.Default;
 import com.litesuits.orm.db.annotation.NotNull;
 import com.litesuits.orm.db.annotation.Table;
@@ -13,6 +14,10 @@ import com.litesuits.orm.db.annotation.Unique;
 @Table("user_table")
 public class Users extends BaseModel {
     private static final long serialVersionUID = 1L;
+
+    @Column("_id")
+    public int id;
+
     // 非空约束 形同于@Check("userName NOT NULL")
     @NotNull
     private String userName;
@@ -81,6 +86,6 @@ public class Users extends BaseModel {
     }
 
     public void setUserID(int id) {
-        super.id = id;
+        this.id = id;
     }
 }

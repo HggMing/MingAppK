@@ -1,5 +1,6 @@
 package com.study.mingappk.tmain;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,11 +22,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
+import com.igexin.sdk.PushManager;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.model.bean.MessageList;
+import com.study.mingappk.model.database.ChatMsgModel;
+import com.study.mingappk.model.database.FriendsModel;
+import com.study.mingappk.model.database.InstantMsgModel;
+import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
+import com.study.mingappk.model.event.DeBugEvent;
+import com.study.mingappk.model.event.InstantMsgEvent;
+import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab1.Tab1Fragment;
 import com.study.mingappk.tab2.friendlist.FriendListFragment;
 import com.study.mingappk.tab3.villagelist.VillageListFragment;
@@ -36,11 +46,15 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,9 +81,11 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mToolBar;
     @Bind(R.id.tab3_guide)
     ImageView tab3Guide;
-
     @Bind(R.id.toolbar_title_main)
     TextView toolbarTitle;
+    @Bind(R.id.badge)
+    TextView badge;
+
     private FragmentManager fragmentManager;
     private boolean isExit;//是否退出
     private int idToolbar = 1;//toolbar 功能按钮页
@@ -84,7 +100,89 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
 
         initView();
+        getMessageList(this);//登录后，向后台获取消息
         EventBus.getDefault().register(this);
+    }
+
+    /**
+     * 获取消息，并本地保存，发出通知
+     *
+     * @param context
+     */
+    private void getMessageList(final Context context) {
+        //请求消息
+        final String me_uid = Hawk.get(APP.ME_UID, "");
+        MyServiceClient.getService()
+                .get_MessageList(me_uid, "yxj", 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<MessageList>() {
+                    @Override
+                    public void call(MessageList messageList) {
+                        //接收到新消息！！
+                        List<MessageList.LBean> lBeanList = messageList.getL();
+                        //列表反向
+                        Collections.reverse(lBeanList);
+                        //消息通知
+                        for (MessageList.LBean lBean : lBeanList) {
+                            ChatMsgModel chatMsg = new ChatMsgModel();
+                            chatMsg.setType(ChatMsgModel.ITEM_TYPE_LEFT);//接收消息
+                            chatMsg.setFrom(lBean.getFrom());//消息来源用户id
+                            chatMsg.setTo(me_uid);
+                            chatMsg.setSt(lBean.getSt());//消息时间
+                            chatMsg.setCt(lBean.getCt());//消息类型
+                            switch (lBean.getCt()) {
+                                case "1":
+                                    chatMsg.setTxt("[图片]");
+                                    break;
+                                case "2":
+                                    chatMsg.setTxt("[语音]");
+                                    break;
+                                default:
+                                    chatMsg.setTxt(lBean.getTxt());//类型：文字
+                                    break;
+                            }
+                            chatMsg.setLink(lBean.getLink());//类型：图片or语音
+                            MyDB.insert(chatMsg);//保存到数据库
+
+                            String uid = chatMsg.getFrom();
+                            FriendsModel friend = MyDB.createDb(context).queryById(uid, FriendsModel.class);
+
+                            //新消息条数，读取及更新
+                            int count = friend.getCount() + 1;
+                            friend.setCount(count);
+                            MyDB.update(friend);
+                            // 登录后发送通知
+                         /*   int requestCode = Integer.parseInt(uid);//唯一标识通知
+                            //点击通知后操作
+                            Intent intent2 = new Intent(context, ChatActivity.class);
+                            intent2.putExtra(ChatActivity.UID, uid);
+                            intent2.putExtra(ChatActivity.USER_NAME, friend.getUname());
+                            PendingIntent pIntent = PendingIntent.getActivity(context, requestCode, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                            //构建通知
+                            int largeIcon = R.mipmap.ic_launcher;
+                            int smallIcon = R.mipmap.tab1_btn1;
+                            String title = friend.getUname();
+                            String ticker = title + ": " + chatMsg.getTxt();
+                            String content = "[" + count + "条]" + ": " + chatMsg.getTxt();
+                            //实例化工具类，并且调用接口
+                            NotifyUtil notify3 = new NotifyUtil(context, requestCode);
+                            notify3.notify_msg(pIntent, smallIcon, largeIcon, ticker, title, content, true, true, false);*/
+
+                            //保存动态并刷新
+                            InstantMsgModel msgModel = new InstantMsgModel(uid, friend.getUicon(), friend.getUname(), chatMsg.getSt(), chatMsg.getTxt(), count);
+                            MyDB.insert(msgModel);
+                            EventBus.getDefault().post(new InstantMsgEvent());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -94,10 +192,10 @@ public class MainActivity extends AppCompatActivity {
         BaseTools.colorStatusBar(this);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    //调试消息显示
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showDeBug(DeBugEvent event) {
+        Toast.makeText(MainActivity.this, "DeBug: " + event.getMsg(), Toast.LENGTH_LONG).show();
     }
 
     //主页为singletop模式，更换主题后手动刷新
@@ -120,13 +218,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        //数据库初始化
+        MyDB.createDb(this);
         //个推,初始化SDK
-//        PushManager.getInstance().initialize(this.getApplicationContext());
-        //接收消息BroadcastReciver
-//        MyMsgBroadcastReceiver msReciver = new MyMsgBroadcastReceiver();
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(MyMsgBroadcastReceiver.MYMSG_ACTION);
-//        this.registerReceiver(msReciver, intentFilter);
+        PushManager.getInstance().initialize(this.getApplicationContext());
 
         fragments.add(new Tab1Fragment());
         fragments.add(new FriendListFragment());
@@ -148,6 +243,26 @@ public class MainActivity extends AppCompatActivity {
             Hawk.put(APP.IS_FIRST_RUN, false);
         } else {
             toolbarTitle.setText(getResources().getText(R.string.tab1_main));
+        }
+
+    }
+
+    /**
+     * 接收到消息，更新tab1处消息徽章计数
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showCount(InstantMsgEvent event) {
+        List< InstantMsgModel> iMsgs = MyDB.getQueryAll(InstantMsgModel.class);
+        int count=0;
+        for(InstantMsgModel iMsg:iMsgs){
+            count+=iMsg.getCount();
+        }
+        if(count>0){
+            badge.setVisibility(View.VISIBLE);
+            badge.setText(String.valueOf(count));
+        }else {
+            badge.setVisibility(View.GONE);
         }
     }
 

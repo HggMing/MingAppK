@@ -99,6 +99,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
     LinearLayout rootLayout;
 
     private String auth;
+    private RequestBody authBody;
     private String vid;
     private String edu;
     private int sex;
@@ -205,8 +206,9 @@ public class ApplyShopOwnerActivity extends BackActivity {
                     if (file1 != null) {
                         requestBody = RequestBody.create(MediaType.parse("image/*"), file1);
                     }
+
                     MyServiceClient.getService()
-                            .post_UploadImage(auth, requestBody)
+                            .post_UploadImage(authBody, requestBody)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Action1<UploadFiles>() {
@@ -237,7 +239,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                         requestBody = RequestBody.create(MediaType.parse("image/*"), file2);
                     }
                     MyServiceClient.getService()
-                            .post_UploadImage(auth, requestBody)
+                            .post_UploadImage(authBody, requestBody)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Action1<UploadFiles>() {
@@ -254,6 +256,8 @@ public class ApplyShopOwnerActivity extends BackActivity {
 
     private void initData() {
         auth = Hawk.get(APP.USER_AUTH);
+        authBody = RequestBody.create(MediaType.parse("text/plain"), auth);
+
         userInfo = getIntent().getParcelableExtra(USER_INFO);
         //头像
         headUrl = MyServiceClient.getBaseUrl() + userInfo.getHead();
@@ -409,7 +413,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                     requestBody = RequestBody.create(MediaType.parse("image/*"), file);
                 }
                 MyServiceClient.getService()
-                        .post_UploadImage(auth, requestBody)
+                        .post_UploadImage(authBody, requestBody)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<UploadFiles>() {

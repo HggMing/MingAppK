@@ -25,10 +25,15 @@ public class MyServiceClient {
 
     private static final String BASE_URL = "http://121.40.105.149:9901/";//API接口的主机地址
     private static final String BASE_URL2 = "http://121.40.105.149:9901";//API接口的主机地址
+    private static final String BASE_URL3 = "http://push.traimo.com/source/";//聊天资源文件base_url
    public static final String DEFAULT_HEAD = "http://121.40.105.149:9901/Public/head/default.png";//服务器提供的默认头像，这里是为了方便替换为本地图片
+
 
     public static String getBaseUrl() {
         return BASE_URL2;
+    }
+    public static String getChatBaseUrl() {
+        return BASE_URL3;
     }
 
     private static MyService mService;
@@ -53,7 +58,6 @@ public class MyServiceClient {
                     request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)//无网络时只从缓存中读取
                             .build();
-                    JUtils.Toast("暂无网络");//子线程安全显示Toast
                 }
 
                 Response response = chain.proceed(request);
@@ -87,7 +91,7 @@ public class MyServiceClient {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(client)
+//                .client(client)
                 .build();
     }
 }

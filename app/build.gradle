@@ -2,20 +2,26 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '24.0.0'
+    buildToolsVersion "24.0.0"
 
     defaultConfig {
         applicationId "com.study.mingappk"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.5.02"
         manifestPlaceholders = [
-                GETUI_APP_ID    : "JNsgkNDx3f9Kxlp0qGJxa9",
-                GETUI_APP_KEY   : "y9e3zY48s06tsakhcpYz27",
-                GETUI_APP_SECRET: "sEFajOmqenAO4avoCQoI62",
+//                GETUI_APP_ID    : "JNsgkNDx3f9Kxlp0qGJxa9",
+//                GETUI_APP_KEY   : "y9e3zY48s06tsakhcpYz27",
+//                GETUI_APP_SECRET: "sEFajOmqenAO4avoCQoI62",
+                GETUI_APP_ID    : "o9Pxlf1lfH7yUHC8nGpDH8",
+                GETUI_APP_KEY   : "UyiZPy1YHX9Zop0KYP8EQ3",
+                GETUI_APP_SECRET: "eesppnBSrw5m6XSpB4UA35",
                 PACKAGE_NAME    : applicationId
         ]
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "mips", "mips64", "x86", "x86_64"
+        }
     }
     buildTypes {
         release {
@@ -62,14 +68,12 @@ dependencies {
     //表情键盘 maven { url "https://jitpack.io" }
     compile 'com.github.w446108264:XhsEmoticonsKeyboard:2.0.2'
     //滑动返回
-//    compile 'com.r0adkll:slidableactivity:2.0.5'
     compile 'com.jude:swipebackhelper:3.1.0'
     //数据储存
-    compile files('libs/lite-orm-1.9.0.jar')
+    compile files('libs/lite-orm-1.9.2.jar')
     compile 'com.github.orhanobut:hawk:1.23'// maven { url "https://jitpack.io" }
     //个推
-//    compile 'com.getui:sdk:2.8.1.0'
-//    compile 'com.getui:ext:2.0.3'
+    compile 'com.getui:sdk:2.9.0.0'
     //实现SearchView的第三方库
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile project(path: ':toolsfinal')

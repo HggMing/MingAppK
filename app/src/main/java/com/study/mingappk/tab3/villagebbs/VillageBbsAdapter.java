@@ -188,7 +188,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         //发帖时间
         String date = mList.get(position).getCtime();
         if (date != null) {
-            String time = BaseTools.getTimeFormatText(new Date(Long.valueOf(date + "000")));
+            String time = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
             holder.bbsCtime.setText(time);
         } else {
             holder.bbsCtime.setText("");

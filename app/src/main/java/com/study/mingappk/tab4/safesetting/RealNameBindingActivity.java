@@ -168,10 +168,11 @@ public class RealNameBindingActivity extends BackActivity {
             e.printStackTrace();
         }
         if (file_facepic != null && file_pic1 != null) {
+            RequestBody data = RequestBody.create(MediaType.parse("text/plain"), paraString);
             final RequestBody rb_facepic = RequestBody.create(MediaType.parse("image/*"), file_facepic);
             final RequestBody rb_pic1 = RequestBody.create(MediaType.parse("image/*"), file_pic1);
             MyServiceClient.getService()
-                    .post_FaceRealBinding(paraString, rb_facepic, rb_pic1)
+                    .post_FaceRealBinding(data, rb_facepic, rb_pic1)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<ResponseBody>() {

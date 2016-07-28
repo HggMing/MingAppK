@@ -1,32 +1,14 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".tab1.Tab1Fragment">
-    <!--android:fitsSystemWindows="true"-->
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_tab1"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/tab1_main" />
-
-    </android.support.design.widget.AppBarLayout>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       >
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/systemLayout"
@@ -53,9 +35,23 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/font_black" />
         </LinearLayout>
+
         <include layout="@layout/divide_1" />
     </RelativeLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/m_x_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/content_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingTop="140dp"
+        android:text="暂无聊天信息"
+        android:textSize="18sp"
+        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>

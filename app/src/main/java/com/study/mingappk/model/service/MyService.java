@@ -66,7 +66,7 @@ public interface MyService {
     @Multipart
     @POST("http://capi.nids.com.cn/iras/reg")
     Observable<ResponseBody> post_FaceRealBinding(
-            @Part("data") String data,
+            @Part("data") RequestBody data,
             @Part("facepic\"; filename=\"jpg") RequestBody facepic,
             @Part("pic1\"; filename=\"jpg") RequestBody pic1);
 
@@ -79,7 +79,7 @@ public interface MyService {
     @Multipart
     @POST("http://capi.nids.com.cn/iras/userinfo")
     Observable<ResponseBody> post_IsRealBinding(
-            @Part("data") String data);
+            @Part("data") RequestBody data);
 
     /**
      * 人脸登录：登录接口需要提供正面人脸照片和用户电话号码，系统在得到照片之后将和用户注册照片进行比对，返回结果。
@@ -91,8 +91,8 @@ public interface MyService {
     @Multipart
     @POST("http://capi.nids.com.cn/iras/ver")
     Observable<ResponseBody> post_FaceLogin(
-            @Part("data") String data,
-            @Part("facepic\"; filename=\"jpg") RequestBody facepic);
+            @Part("data") RequestBody data,
+            @Part("facepic\"; filename=\"face.jpg") RequestBody facepic);
 
     /**
      * 人脸认证成功后登录接口：该接口在进行人脸认证成功后，直接调用该接口，进行登录。
@@ -387,7 +387,7 @@ public interface MyService {
     @Multipart
     @POST("bbs/ufiles")
     Observable<UploadFiles> post_UploadImage(
-            @Part("auth") String auth,
+            @Part("auth") RequestBody auth,
             @Part("files\"; filename=\"jpg") RequestBody file
             // @PartMap Map<String, RequestBody> params,
     );
@@ -606,7 +606,7 @@ public interface MyService {
     @Multipart
     @POST("http://capi.nids.com.cn/znzd/voice")
     Observable<ResponseBody> post_ChatRobot(
-            @Part("data") String data);
+            @Part("data") RequestBody data);
 
     /**
      * 用户之间发送消息
@@ -630,7 +630,7 @@ public interface MyService {
             @Field("ct") String ct,
             @Field("app") String app,
             @Field("txt") String txt,
-            @Field("source") Array source,
+            @Field("source") String source,
             @Field("ex") String ex,
             @Field("mt") int mt,
             @Field("xt") String xt);

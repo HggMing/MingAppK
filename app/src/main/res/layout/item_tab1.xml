@@ -1,70 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/list_item_selector"
     android:foreground="?attr/selectableItemBackground"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="47dp"
         android:layout_height="47dp"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="0dp"
         android:layout_marginLeft="10dp"
-        tools:src="@mipmap/defalt_user_circle"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" />
+        tools:src="@mipmap/defalt_user_circle" />
+
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/name"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="2dp"
         android:singleLine="true"
-        android:text="New Text"
-        android:textColor="@color/font_black_9" />
+        android:textColor="@color/font_black_9"
+        android:textSize="12sp"
+        tools:text="2017-09-16" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/icon"
         android:layout_toLeftOf="@id/time"
         android:layout_toRightOf="@id/icon"
         android:layout_toStartOf="@id/time"
         android:singleLine="true"
-        android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/font_black_content" />
-
-
-
+        android:textColor="@color/font_black_content"
+        android:textSize="18sp"
+        tools:text="昵称" />
 
 
     <!--...只能针对文字，表情图片是没有的，singleLine=false-->
     <TextView
-        android:id="@+id/comment"
+        android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/title"
-        android:layout_alignStart="@id/title"
-        android:layout_below="@id/title"
+        android:layout_alignBottom="@id/icon"
+        android:layout_alignLeft="@id/name"
+        android:layout_alignStart="@id/name"
         android:ellipsize="end"
         android:lines="1"
         android:maxLines="1"
         android:scrollHorizontally="true"
         android:singleLine="false"
-        android:text="Medium Text"
         android:textColor="@color/font_black_9"
-        android:textSize="16sp" />
+        tools:text="消息内容" />
 
-
+    <TextView
+        android:id="@+id/badge"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@id/icon"
+        android:layout_alignEnd="@id/time"
+        android:layout_alignRight="@id/time"
+        android:background="@drawable/shape_red_circle"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        tools:text="999" />
 </RelativeLayout>

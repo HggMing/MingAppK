@@ -20,6 +20,9 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!--获取当前Activity名称-->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
 
     <application
         android:name=".app.APP"
@@ -49,6 +52,7 @@
                 <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
             </intent-filter>
         </receiver>
+
         <!-- gallerfinal相关页面 -->
         <activity
             android:name=".common.views.gallerfinal.PhotoSelectActivity"
@@ -142,6 +146,7 @@
             android:label="@string/title_activity_remark_name" />
         <activity android:name=".tab2.frienddetail.FriendBbsActivity" />
         <activity android:name=".tab2.message.ChatActivity" />
+        <activity android:name=".tab2.message.BigImageActivity" />
         <activity
             android:name=".tmain.register.TestPhoneNumberActivity"
             android:label="@string/title_activity_test_phone_number" />

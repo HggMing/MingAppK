@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.igexin.sdk.PushManager;
 import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -36,6 +37,7 @@ import com.study.mingappk.model.bean.ApplyInfo;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
+import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.mysetting.MySettingActivity;
@@ -56,6 +58,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -275,6 +279,13 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                                         .put(APP.LOGIN_PASSWORD, "")
                                         .put(APP.IS_UPDATA_MY_INFO, false)
                                         .commit();
+                                Hawk.remove(APP.ME_UID);
+                                //停止个推SDK服务
+                                PushManager.getInstance().stopService(mActivity.getApplicationContext());
+                                //关闭数据库
+                                MyDB.createDb(mActivity).close();
+                                MyDB.setLiteOrm(null);
+
                                 Intent intent = new Intent(mActivity, LoginActivity.class);
                                 startActivity(intent);
                                 mActivity.finish();
@@ -396,9 +407,10 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
         String str2 = other + "&sign=" + sign;
         //4)把上述字符串做base64加密，最终得到请求:
         String paraString = Base64.encodeToString(str2.getBytes(), Base64.NO_WRAP);
+        RequestBody data = RequestBody.create(MediaType.parse("text/plain"), paraString);
 
         MyServiceClient.getService()
-                .post_IsRealBinding(paraString)
+                .post_IsRealBinding(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseBody>() {

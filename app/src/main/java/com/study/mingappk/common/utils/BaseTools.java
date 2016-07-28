@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.util.Base64;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,11 +18,14 @@ import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.dialog.MyDialog;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -156,6 +161,83 @@ public class BaseTools {
     }
 
     /**
+     * bitmap转为base64
+     *
+     * @param bitmap 位图
+     * @return Base64
+     */
+    public static String bitmapToBase64(Bitmap bitmap) {
+
+        String result = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            if (bitmap != null) {
+                baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                //压缩大小
+                int options = 90;
+                while (baos.toByteArray().length / 1024 > 100) {
+                    baos.reset();// 重置baos即清空baos
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+                    options -= 10;// 每次都减少10
+                }
+
+                baos.flush();
+                baos.close();
+
+                byte[] bitmapBytes = baos.toByteArray();
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.flush();
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * bitmap转为base64,不压缩图片
+     *
+     * @param bitmap 位图
+     * @return Base64
+     */
+    public static String toBase64(Bitmap bitmap) {
+
+        String result = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            if (bitmap != null) {
+                baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                baos.flush();
+                baos.close();
+                byte[] bitmapBytes = baos.toByteArray();
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.flush();
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    /**
      * 返回文字描述的日期
      *
      * @param date 日期
@@ -170,7 +252,7 @@ public class BaseTools {
         if (date == null) {
             return null;
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.CHINESE);
         String mTime = dateFormat.format(date);
         long diff = new Date().getTime() - date.getTime();
         long r = 0;
@@ -195,6 +277,42 @@ public class BaseTools {
             return r + "分钟前";
         }
         return "刚刚";
+    }
+
+    /**
+     * 格式化时间，动态页面
+     * @param date
+     * @return
+     */
+    public static String getTimeFormat01(Date date) {
+        long minute = 60 * 1000;// 1分钟
+        long hour = 60 * minute;// 1小时
+        long day = 24 * hour;// 1天
+        long day2 = 48 * hour;// 2天
+        if (date == null) {
+            return null;
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.CHINESE);
+        String mTime = dateFormat.format(date);
+//        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("MM月dd日 HH:mm", Locale.CHINESE);
+        String mTime2 = dateFormat2.format(date);
+        long diff = new Date().getTime() - date.getTime();
+        long r = 0;
+
+        if (diff >day2) {//两天前直接显示日期+时间
+            r = (diff /day2);
+            return  mTime2;
+        }
+        if (diff > day) {
+            r = (diff / day);
+            return "昨天 " + mTime;
+        }
+        if (diff > minute) {//当天仅显示时间
+            r = (diff / minute);
+            return  mTime;
+        }
+        return mTime;//1分钟内
     }
 
     /**

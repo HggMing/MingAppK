@@ -64,6 +64,7 @@ public class ShowApplyingActivity extends BackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_applying);
         ButterKnife.bind(this);
+        setToolbarTitle(R.string.title_activity_show_applying);
 
         initDatas();
     }

@@ -119,7 +119,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         bbsDetail = getIntent().getParcelableExtra(BBS_DETAIL);
         pid = bbsDetail.getId();
 
-        MyDB.createDb(this);
+//        MyDB.createDb(this);
 
         configXRecyclerView();//XRecyclerView配置
         setBbsDetailHead();
@@ -220,7 +220,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         //发帖时间
         String date = bbsDetail.getCtime();
         if (date != null) {
-            String time = BaseTools.getTimeFormatText(new Date(Long.valueOf(date + "000")));
+            String time = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
             bbsCtime.setText(time);
         } else {
             bbsCtime.setText("");

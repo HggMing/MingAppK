@@ -41,7 +41,7 @@ class CommentItem {
         //评论时间
         String date = mList.getCtime();
         if (date != null) {
-            String showTime = BaseTools.getTimeFormatText(new Date(Long.valueOf(date + "000")));
+            String showTime = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
             time.setText(showTime);
         } else {
             time.setText("");

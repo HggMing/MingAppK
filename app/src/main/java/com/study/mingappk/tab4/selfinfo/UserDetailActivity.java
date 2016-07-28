@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.common.views.dialog.Dialog_UpdateSex;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
@@ -164,7 +165,7 @@ public class UserDetailActivity extends BackActivity {
                         .bitmapTransform(new CropCircleTransformation(UserDetailActivity.this))
                         .into(iconHead2);
                 Bitmap bitmap = BitmapFactory.decodeFile(photoInfo.getPhotoPath());//图片文件转为Bitmap对象
-                final String newHead = (bitmapToBase64(bitmap) + ".jpg");
+                final String newHead = BaseTools.bitmapToBase64(bitmap) + ".jpg";
                 MyServiceClient.getService().postCall_UpdateHead(auth, newHead).enqueue(new Callback<Result>() {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {
@@ -193,49 +194,6 @@ public class UserDetailActivity extends BackActivity {
             Toast.makeText(UserDetailActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
         }
     };
-
-    /**
-     * bitmap转为base64
-     *
-     * @param bitmap 裁剪后的头像
-     * @return Base64
-     */
-    public static String bitmapToBase64(Bitmap bitmap) {
-
-        String result = null;
-        ByteArrayOutputStream baos = null;
-        try {
-            if (bitmap != null) {
-                baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                //压缩大小
-                int options = 90;
-                while (baos.toByteArray().length / 1024 > 100) {
-                    baos.reset();// 重置baos即清空baos
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
-                    options -= 10;// 每次都减少10
-                }
-
-                baos.flush();
-                baos.close();
-
-                byte[] bitmapBytes = baos.toByteArray();
-                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (baos != null) {
-                    baos.flush();
-                    baos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
 
     /**
      * 修改性别

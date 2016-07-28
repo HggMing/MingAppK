@@ -115,8 +115,7 @@ public class MyDialog extends Dialog {
 		@SuppressWarnings("deprecation")
 		public MyDialog create() {
 
-			LayoutInflater inflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			final MyDialog dialog = new MyDialog(context, R.style.MyDialog);
 			dialog.setCancelable(isCannel);
 			View layout = inflater.inflate(R.layout.dialog_model, null);

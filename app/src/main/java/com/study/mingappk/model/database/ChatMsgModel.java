@@ -1,17 +1,27 @@
 package com.study.mingappk.model.database;
 
 import com.litesuits.orm.db.annotation.Column;
+import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.enums.AssignType;
 
 import java.lang.reflect.Array;
 
 /**
+ * 聊天信息
  * Created by Ming on 2016/5/6.
  */
 @Table("chat_message")
 public class ChatMsgModel extends BaseModel {
     public static final int ITEM_TYPE_LEFT = 1;
     public static final int ITEM_TYPE_RIGHT = 0;
+
+    // 设置为主键,自增
+    @PrimaryKey(AssignType.AUTO_INCREMENT)
+    // 取名为“_id”,如果此处不重新命名,就采用属性名称
+    @Column("_id")
+    private int id;
+
     //发送消息
     private Array source;//发送的资源，默认空数组，如果有资源则是数据流base64后的数据+’.’+资源的扩展名
     private int mt;//发送方式:1即时消息，2异步消息
@@ -24,7 +34,7 @@ public class ChatMsgModel extends BaseModel {
         return isShowPro;
     }
 
-    private int isShowPro;//A是否显示进度条：1显示 other不显示  B是否显示错误提示：2显示 other 不显示，即成功发送为0
+    private int isShowPro;//是否显示错误提示：2显示 other 不显示
     //接收消息
     private String st;//消息发送发出时间***
     private String link;//资源url地址***
@@ -45,11 +55,23 @@ public class ChatMsgModel extends BaseModel {
     private int type;//0:发送消息1：接收消息
 
     public ChatMsgModel() {
-        this.isShowPro=1;//显示发送消息进度条
-        this.mt=1;//即时消息
-        this.xt="2";//用户之间
-        this.app="yxj";//app固定
+        this.isShowPro = 0;
+        this.mt = 1;//即时消息
+        this.xt = "2";//用户之间
+        this.app = "yxj";//app固定
     }
+
+    public ChatMsgModel(int type, String from, String to, String st, String ct, String txt, String link) {
+        this();
+        this.type = type;
+        this.from = from;
+        this.to = to;
+        this.st = st;
+        this.ct = ct;
+        this.txt = txt;
+        this.link = link;
+    }
+
     public int getType() {
         return type;
     }
@@ -57,6 +79,7 @@ public class ChatMsgModel extends BaseModel {
     public void setType(int type) {
         this.type = type;
     }
+
     public Array getSource() {
         return source;
     }

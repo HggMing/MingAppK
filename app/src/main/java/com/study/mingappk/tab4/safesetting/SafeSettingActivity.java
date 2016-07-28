@@ -22,6 +22,8 @@ import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -67,9 +69,10 @@ public class SafeSettingActivity extends BackActivity {
         String str2 = other + "&sign=" + sign;
         //4)把上述字符串做base64加密，最终得到请求:
         String paraString = Base64.encodeToString(str2.getBytes(), Base64.NO_WRAP);
+        RequestBody data = RequestBody.create(MediaType.parse("text/plain"), paraString);
 
         MyServiceClient.getService()
-                .post_IsRealBinding(paraString)
+                .post_IsRealBinding(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseBody>() {

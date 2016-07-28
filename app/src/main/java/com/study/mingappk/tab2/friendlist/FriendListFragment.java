@@ -24,6 +24,8 @@ import com.study.mingappk.common.views.pinyin.CharacterParser;
 import com.study.mingappk.common.views.pinyin.PinyinComparator;
 import com.study.mingappk.common.views.stickyrecyclerheaders.StickyRecyclerHeadersDecoration;
 import com.study.mingappk.model.bean.FriendList;
+import com.study.mingappk.model.database.FriendsModel;
+import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
@@ -81,6 +83,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
         auth = Hawk.get(APP.USER_AUTH);
 //        mActivity.setSupportActionBar(toolbar2);
 
+//        MyDB.createDb(mActivity);
         initView();
         getDataList();//获取friendList数据和cnt值
         EventBus.getDefault().register(this);
@@ -225,7 +228,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
 
                         combinationLists(friendList);
 
-                        //储存好友uid信息
+                        //储存好友信息
                         for (int i = 0; i < mList.size(); i++) {
                             String uid = mList.get(i).getUid();
                             if (uid != null) {
@@ -314,6 +317,16 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
             tempList.add(tempMember);
         }
         Collections.sort(tempList, pinyinComparator);
+
+        //存储好友列表到本地数据库
+        for(FriendList.DataBean.ListBean user:tempList) {
+            String save_uid =user.getUid();
+            String save_uicon=MyServiceClient.getBaseUrl()+user.getHead();
+            String save_uname=user.getName();
+            FriendsModel friendsModel=new FriendsModel(save_uid,save_uname,save_uicon);
+            MyDB.insert(friendsModel);
+        }
+
         mList.addAll(tempList);
     }
 

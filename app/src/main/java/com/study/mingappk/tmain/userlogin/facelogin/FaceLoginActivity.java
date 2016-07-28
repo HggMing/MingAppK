@@ -200,9 +200,10 @@ public class FaceLoginActivity extends BackActivity {
             e.printStackTrace();
         }
         if (file != null) {
-            final RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+            RequestBody data = RequestBody.create(MediaType.parse("text/plain"), paraString);
+            RequestBody ficepic = RequestBody.create(MediaType.parse("image/*"), file);
             MyServiceClient.getService()
-                    .post_FaceLogin(paraString, requestBody)
+                    .post_FaceLogin(data, ficepic)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<ResponseBody>() {

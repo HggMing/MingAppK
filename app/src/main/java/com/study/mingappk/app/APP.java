@@ -12,6 +12,7 @@ import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
 import com.study.mingappk.R;
+import com.study.mingappk.model.database.MyDB;
 
 public class APP extends Application implements ThemeUtils.switchColor {
     //存储目录路径

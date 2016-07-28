@@ -71,7 +71,7 @@ public class VillageListAdapter extends BaseRecyclerViewAdapter<FollowVillageLis
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 //            String time = dateFormat.format(new Date(Long.valueOf(date + "000")));
-            String time = BaseTools.getTimeFormatText(new Date(Long.valueOf(date + "000")));
+            String time = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
             holder.tvTime.setText(time);//最新动态时间
         } else {
             holder.tvTime.setText("");

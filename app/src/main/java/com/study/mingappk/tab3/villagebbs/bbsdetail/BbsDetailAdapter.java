@@ -118,7 +118,7 @@ public class BbsDetailAdapter extends RecyclerView.Adapter<BbsDetailAdapter.View
         //评论时间
         String date = mList.get(position).getCtime();
         if (date != null) {
-            String showTime = BaseTools.getTimeFormatText(new Date(Long.valueOf(date + "000")));
+            String showTime = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
             holder.time.setText(showTime);
         } else {
             holder.time.setText("");

@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.study.mingappk.app.APP;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * 对图片进行压缩的工具类
@@ -24,11 +27,23 @@ public class PhotoOperate {
         this.context = context;
     }
 
+    /**
+     * 创建一个以当前时间命名的临时文件
+     *
+     * @param context
+     * @return
+     */
     private File getTempFile(Context context) {
         File file = null;
         try {
-            String fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            file = File.createTempFile(fileName, ".jpg", context.getCacheDir());
+            String fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINESE).format(new Date());
+            //创建图片保存目录
+            File folder = new File(APP.FILE_PATH + "IMG/");
+            if (!folder.exists()) {
+                boolean a = folder.mkdirs();
+            }
+//            file = File.createTempFile(fileName, ".jpg", context.getCacheDir());
+            file = File.createTempFile(fileName, ".jpg", folder);
         } catch (IOException e) {
             errorLog(e);
         }
@@ -85,11 +100,11 @@ public class PhotoOperate {
         return outputFile;
     }
 
-    private static void copyFileUsingFileChannels(File source, File dest)
-            throws IOException {
+    private static void copyFileUsingFileChannels(File source, File dest) throws IOException {
         FileChannel inputChannel = null;
         FileChannel outputChannel = null;
-        try {inputChannel = new FileInputStream(source).getChannel();
+        try {
+            inputChannel = new FileInputStream(source).getChannel();
             outputChannel = new FileOutputStream(dest).getChannel();
             outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
         } catch (Exception e) {
@@ -103,6 +118,7 @@ public class PhotoOperate {
             }
         }
     }
+
     private static void errorLog(Exception e) {
         if (e == null) {
             return;

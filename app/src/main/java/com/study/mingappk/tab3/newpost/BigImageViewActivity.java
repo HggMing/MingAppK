@@ -26,8 +26,8 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class BigImageViewActivity extends AppCompatActivity {
 
-    public static String IMAGE_LIST = "image_list1";
-    public static String IMAGE_INDEX = "index1";
+    public static String IMAGE_LIST = "image_list_post";
+    public static String IMAGE_INDEX = "index_post";
     @Bind(R.id.view_pager)
     ViewPager mViewPager;
     @Bind(R.id.indicator)

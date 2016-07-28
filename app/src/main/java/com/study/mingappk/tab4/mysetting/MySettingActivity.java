@@ -5,20 +5,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.model.databean.Test;
 import com.study.mingappk.tmain.BackActivity;
-
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MySettingActivity extends BackActivity {
-    List<Test> tests;
-
-    String name;
-    String idnum;
-    int i = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

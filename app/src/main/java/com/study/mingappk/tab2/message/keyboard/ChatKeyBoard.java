@@ -1,8 +1,12 @@
 package com.study.mingappk.tab2.message.keyboard;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 
 
 import com.study.mingappk.R;
@@ -28,6 +32,7 @@ public class ChatKeyBoard extends XhsEmoticonsKeyBoard {
 //        mBtnSend= (Button)inflateFunc().findViewById(R.id.btn_send);
 //        return mBtnSend;
 //    }
+
 
     @Override
     protected View inflateFunc(){
@@ -102,5 +107,29 @@ public class ChatKeyBoard extends XhsEmoticonsKeyBoard {
             toggleFuncView(FUNC_TYPE_APPPS);
             setFuncViewHeight(EmoticonsKeyboardUtils.dip2px(getContext(), APPS_HEIGHT));
         }
+    }
+
+    @Override
+    protected void initEditView() {
+        super.initEditView();
+        this.mEtChat.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if(!TextUtils.isEmpty(s)) {
+                    mBtnSend.setVisibility(VISIBLE);
+                    mBtnMultimedia.setVisibility(GONE);
+//                    mBtnSend.setBackgroundResource(com.keyboard.view.R.drawable.btn_send_bg);
+                    mBtnSend.setBackgroundResource(R.drawable.button_theme);
+                } else {
+                    mBtnMultimedia.setVisibility(VISIBLE);
+                    mBtnSend.setVisibility(GONE);
+                }
+            }
+        });
     }
 }

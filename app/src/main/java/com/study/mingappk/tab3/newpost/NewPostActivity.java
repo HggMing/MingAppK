@@ -211,8 +211,13 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-                                return MyServiceClient.getService().post_UploadImage(auth, requestBody);
+                                RequestBody requestBody = null;
+                                if (file != null) {
+                                    requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+                                }
+                                RequestBody authBody = RequestBody.create(MediaType.parse("text/plain"), auth);
+
+                                return MyServiceClient.getService().post_UploadImage(authBody, requestBody);
                             }
                         })
                         .map(new Func1<UploadFiles, String>() {
