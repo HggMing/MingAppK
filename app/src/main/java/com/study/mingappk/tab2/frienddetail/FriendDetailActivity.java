@@ -16,6 +16,8 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.bean.FriendDetail;
+import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.database.FriendsModel;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.message.ChatActivity;
 import com.study.mingappk.tmain.BackActivity;
@@ -29,12 +31,13 @@ import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class FriendDetailActivity extends BackActivity {
 
-    public static String FRIEND_UID = "所选择用户的UID";
-    public static String NEW_NAME = "添加或修改后的用户备注名";
+    public static String FRIEND_UID = "the_friend_uid";//所选择用户的UID
+    public static String NEW_NAME = "the_user_new_name";//添加或修改后的用户备注名
     @Bind(R.id.icon_head)
     ImageView iconHead;
     @Bind(R.id.name)
@@ -76,6 +79,7 @@ public class FriendDetailActivity extends BackActivity {
     private boolean isFriend;//用于判定是否为好友
     private boolean isMySelf;//用于判定是否为自己
 
+    private String auth;
     private String uName;//昵称
     private String aliasName;//备注名
     private String showName;//带*手机号
@@ -113,7 +117,7 @@ public class FriendDetailActivity extends BackActivity {
             btnSend.setVisibility(View.GONE);
         }
 
-        String auth = Hawk.get(APP.USER_AUTH);
+        auth = Hawk.get(APP.USER_AUTH);
         Subscriber<FriendDetail> subscriber = new Subscriber<FriendDetail>() {
             @Override
             public void onCompleted() {
@@ -194,7 +198,6 @@ public class FriendDetailActivity extends BackActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
-
     }
 
 
@@ -214,7 +217,10 @@ public class FriendDetailActivity extends BackActivity {
                 startActivity(intent2);
                 break;
             case R.id.fd_more:
-                Toast.makeText(FriendDetailActivity.this, "更多，暂时没写", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(FriendDetailActivity.this, "更多，暂时没写", Toast.LENGTH_SHORT).show();
+                Intent intent3 = new Intent(this, FriendMoreActivity.class);
+                intent3.putExtra(FriendMoreActivity.FRIEND_UID, uid);
+                startActivity(intent3);
                 break;
             case R.id.btn_send:
 //                Toast.makeText(FriendDetailActivity.this, "发消息", Toast.LENGTH_SHORT).show();
@@ -224,7 +230,19 @@ public class FriendDetailActivity extends BackActivity {
                     intent4.putExtra(ChatActivity.USER_NAME, name.getText().toString());
                     startActivity(intent4);
                 } else {
-                    Toast.makeText(FriendDetailActivity.this, "添加好友", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(FriendDetailActivity.this, "请求添加好友", Toast.LENGTH_SHORT).show();
+                    String phone = userinfoBean.getPhone();
+                    MyServiceClient.getService()
+                            .get_AddFriendRequest(auth, phone)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<Result>() {
+                                @Override
+                                public void call(Result result) {
+                                    Toast.makeText(FriendDetailActivity.this, result.getMsg(), Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                            });
                 }
                 break;
         }
@@ -245,7 +263,7 @@ public class FriendDetailActivity extends BackActivity {
                         } else {
                             name2.setText("账号：" + showName);
                         }
-                    }else {
+                    } else {
                         name2.setVisibility(View.INVISIBLE);
                         if (!uName.isEmpty()) {
                             name.setText(uName);
@@ -253,7 +271,6 @@ public class FriendDetailActivity extends BackActivity {
                             name.setText(showName);
                         }
                     }
-                    setResult(RESULT_OK);
                 }
                 break;
         }

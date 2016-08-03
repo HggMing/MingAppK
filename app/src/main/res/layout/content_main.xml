@@ -19,24 +19,36 @@
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <com.bilibili.magicasakura.widgets.TintToolbar
-                android:id="@+id/toolbar_main"
+            <FrameLayout
+                android:id="@+id/toolbar_container"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/theme_color_primary"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/toolbar_title_main"
-                    android:layout_width="wrap_content"
+                <com.bilibili.magicasakura.widgets.TintToolbar
+                    android:id="@+id/toolbar_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/theme_color_primary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                    <TextView
+                        android:id="@+id/toolbar_title_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="爱简单" />
+                </com.bilibili.magicasakura.widgets.TintToolbar>
+
+                <com.miguelcatalan.materialsearchview.MaterialSearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    tools:text="爱简单" />
-            </com.bilibili.magicasakura.widgets.TintToolbar>
-
+                    android:hint="请输入要查找用户的手机号码"
+                    app:theme="@style/MaterialSearchViewStyle" />
+            </FrameLayout>
         </android.support.design.widget.AppBarLayout>
 
         <com.study.mingappk.tmain.MainViewPager xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,7 +57,53 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:visibility="visible"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <LinearLayout
+            android:id="@+id/search_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:id="@+id/click_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/list_item_selector">
+
+                <com.bilibili.magicasakura.widgets.TintImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@color/theme_color_primary"
+                    android:padding="8dp"
+                    android:src="@mipmap/ic_search" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="搜索: "
+                    android:textSize="@dimen/textsize_normal" />
+
+                <com.bilibili.magicasakura.widgets.TintTextView
+                    android:id="@+id/text_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:textColor="@color/theme_color_primary"
+                    android:textSize="@dimen/textsize_normal"
+                    tools:text="搜索" />
+            </LinearLayout>
+
+            <include layout="@layout/divide_1_12" />
+
+        </LinearLayout>
 
         <View
             android:id="@+id/view_line_bottom"
@@ -86,6 +144,7 @@
                     android:text="@string/tab1_main"
                     android:textColor="@color/theme_color_primary"
                     android:textSize="@dimen/tab_text_size" />
+
                 <TextView
                     android:id="@+id/badge"
                     android:layout_width="17dp"
@@ -104,8 +163,7 @@
                 android:id="@+id/tab2Layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal">
+                android:layout_weight="1">
 
                 <com.bilibili.magicasakura.widgets.TintImageView
                     android:id="@+id/img_tab2_main"
@@ -124,14 +182,26 @@
                     android:text="@string/tab2_main"
                     android:textColor="@color/selector_tab_text"
                     android:textSize="@dimen/tab_text_size" />
+
+                <TextView
+                    android:id="@+id/badge2"
+                    android:layout_width="17dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="26dp"
+                    android:background="@drawable/shape_red_circle"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="8sp"
+                    android:visibility="gone"
+                    tools:text="99" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/tab3Layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal">
+                android:layout_weight="1">
 
                 <com.bilibili.magicasakura.widgets.TintImageView
                     android:id="@+id/img_tab3_main"
@@ -156,8 +226,7 @@
                 android:id="@+id/tab4Layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal">
+                android:layout_weight="1">
 
                 <com.bilibili.magicasakura.widgets.TintImageView
                     android:id="@+id/img_tab4_main"

@@ -50,7 +50,6 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
     TextView contentEmpty;
 
     private VillageListAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
     List<FollowVillageList.DataEntity.ListEntity> mList = new ArrayList<>();
 
     final private static int PAGE_SIZE = 20;
@@ -111,7 +110,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
 
     //配置RecyclerView
     private void configXRecyclerView() {
-        mLayoutManager = new LinearLayoutManager(mActivity);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
         mAdapter = new VillageListAdapter();
         mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
         mXRecyclerView.setAdapter(mAdapter);//设置adapter

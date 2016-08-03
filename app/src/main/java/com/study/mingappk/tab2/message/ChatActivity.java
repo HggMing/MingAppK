@@ -240,6 +240,24 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
             chatMsg.setSt(String.valueOf(System.currentTimeMillis()));//发送消息时间：当前时间
             chatMsg.setCt("0");//消息类型：文字
             chatMsg.setTxt(msg);//消息内容
+
+            //发送消息后，更新动态
+            InstantMsgModel iMsg = MyDB.createDb(this).queryById(other, InstantMsgModel.class);
+            if (iMsg != null) {//动态存在，即更新
+                iMsg.setTime(String.valueOf(System.currentTimeMillis()).substring(0,10));
+                iMsg.setContent(msg);
+                MyDB.update(iMsg);
+                EventBus.getDefault().post(new InstantMsgEvent());
+            }else{//动态不存在就创建
+                FriendsModel friend = MyDB.createDb(this).queryById(other, FriendsModel.class);
+                String uicon=friend.getUicon();
+                String uname=friend.getUname();
+                String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);//13位时间戳，截取前10位，主要统一
+                InstantMsgModel msgModel = new InstantMsgModel(other,uicon,uname,time,msg,0);
+                MyDB.insert(msgModel);
+                EventBus.getDefault().post(new InstantMsgEvent());
+            }
+            //开始发送
             MyServiceClient.getService()
                     .post_sendMessage(me, other, "0", "yxj", msg, null, null, 1, "2")
                     .subscribeOn(Schedulers.io())
@@ -300,6 +318,24 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
         chatMsg.setCt("1");//消息类型：图片
         chatMsg.setTxt("[图片]");//消息内容
         chatMsg.setLink(imagePath2);
+
+        //发送消息后，更新动态
+        InstantMsgModel iMsg = MyDB.createDb(this).queryById(other, InstantMsgModel.class);
+        if (iMsg != null) {
+            iMsg.setTime(String.valueOf(System.currentTimeMillis()).substring(0,10));
+            iMsg.setContent("[图片]");
+            MyDB.update(iMsg);
+            EventBus.getDefault().post(new InstantMsgEvent());
+        }else{
+            FriendsModel friend = MyDB.createDb(this).queryById(other, FriendsModel.class);
+            String uicon=friend.getUicon();
+            String uname=friend.getUname();
+            String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);//13位时间戳，截取前10位，主要统一
+            InstantMsgModel msgModel = new InstantMsgModel(other,uicon,uname,time,"[图片]",0);
+            MyDB.insert(msgModel);
+            EventBus.getDefault().post(new InstantMsgEvent());
+        }
+        //发送图片
         MyServiceClient.getService()
                 .post_sendMessage(me, other, "1", "yxj", "[图片]", source, null, 1, "2")
                 .subscribeOn(Schedulers.io())

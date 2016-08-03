@@ -48,6 +48,9 @@ public class Tab1Adapter extends BaseRecyclerViewAdapter<InstantMsgModel, Tab1Ad
 
         String uName = data.getUname();
         holder.name.setText(uName);
+        if("10000".equals(data.getUid())||"10001".equals(data.getUid())){//小苞谷和客服
+            holder.name.setTextColor(mContext.getResources().getColor(R.color.purple));
+        }
 
         String msgContent = data.getContent();
         holder.content.setText(msgContent);

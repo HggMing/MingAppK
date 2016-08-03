@@ -69,7 +69,7 @@
                     android:layout_marginLeft="-25dp"
                     android:layout_toRightOf="@id/takelayout_face"
                     android:background="@drawable/button_retakephoto"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -127,7 +127,7 @@
                     android:layout_marginLeft="-25dp"
                     android:layout_toRightOf="@id/takelayout_id_card"
                     android:background="@drawable/button_retakephoto"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <com.bilibili.magicasakura.widgets.TintEditText

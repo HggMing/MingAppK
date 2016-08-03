@@ -265,18 +265,25 @@
                             android:textColor="@color/font_black_2"
                             android:textSize="16sp" />
 
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
                         <ImageView
                             android:id="@+id/img_photo0"
                             android:layout_width="75dp"
                             android:layout_height="56dp"
-                            android:layout_marginLeft="90dp"
+                            android:scaleType="centerCrop"
                             tools:src="@mipmap/add_photo_bg" />
 
                         <ImageView
                             android:id="@+id/img_photo1"
                             android:layout_width="75dp"
                             android:layout_height="56dp"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="8dp"
+                            android:scaleType="centerCrop"
                             tools:src="@mipmap/add_photo_bg" />
                     </LinearLayout>
 
@@ -298,11 +305,16 @@
                             android:textColor="@color/font_black_2"
                             android:textSize="16sp" />
 
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
                         <ImageView
                             android:id="@+id/img_photo2"
                             android:layout_width="75dp"
                             android:layout_height="56dp"
-                            android:layout_marginLeft="90dp"
+                            android:scaleType="centerCrop"
                             android:visibility="invisible"
                             tools:src="@mipmap/add_photo_bg" />
 
@@ -310,7 +322,9 @@
                             android:id="@+id/img_photo3"
                             android:layout_width="75dp"
                             android:layout_height="56dp"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="8dp"
+                            android:scaleType="centerCrop"
                             tools:src="@mipmap/add_photo_bg" />
                     </LinearLayout>
                 </LinearLayout>

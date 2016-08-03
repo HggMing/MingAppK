@@ -1,6 +1,7 @@
 package com.study.mingappk.model.event;
 
 /**
+ * 发送图片消息事件
  * Created by Ming on 2016/7/27.
  */
 public class SendImageEvent {

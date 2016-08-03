@@ -14,7 +14,7 @@
         android:layout_height="90dp"
         android:scaleType="fitCenter"
         android:layout_marginRight="12dp"
-        tools:src="@mipmap/user_home_bg" />
+        tools:src="@mipmap/defalt_user_circle" />
 
     <LinearLayout
         android:layout_width="match_parent"

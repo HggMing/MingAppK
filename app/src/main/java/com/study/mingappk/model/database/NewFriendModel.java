@@ -1,17 +1,17 @@
 package com.study.mingappk.model.database;
 
 import com.litesuits.orm.db.annotation.Column;
+import com.litesuits.orm.db.annotation.Default;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
-import com.litesuits.orm.db.annotation.Unique;
 import com.litesuits.orm.db.enums.AssignType;
 
 /**
- * 动态页面，消息列表
+ * 新的朋友页面，申请好友列表
  * Created by Ming on 2016/7/19.
  */
-@Table("instant_message_list")
-public class InstantMsgModel extends BaseModel {
+@Table("new_friend_list")
+public class NewFriendModel extends BaseModel {
     @PrimaryKey(AssignType.BY_MYSELF)
     @Column("_user_id")
     private String uid;
@@ -19,23 +19,23 @@ public class InstantMsgModel extends BaseModel {
     private String uicon;
     @Column("_user_name")
     private String uname;
-    @Column("_msg_time")
-    private String time;
-    @Column("_msg_content")
-    private String content;
+    @Column("_user_sex")
+    private String usex;
+    @Column("_user_phone")
+    private String uphone;
     @Column("_msg_count")
     private int count;//新消息条数
+    @Column("_type")
+    @Default("0")
+    private int type;//显示状态：0、显示选择按钮1、同意，已添加2、不同意，已拒绝
 
-    public InstantMsgModel() {
-    }
-
-    public InstantMsgModel(String uid, String uicon, String uname, String time, String content, int count) {
+    public NewFriendModel(String uid, String uicon, String uname, String usex, String uphone, int count) {
         this.uid = uid;
+        this.count = count;
         this.uicon = uicon;
         this.uname = uname;
-        this.time = time;
-        this.content = content;
-        this.count = count;
+        this.usex = usex;
+        this.uphone = uphone;
     }
 
     public String getUid() {
@@ -62,20 +62,20 @@ public class InstantMsgModel extends BaseModel {
         this.uname = uname;
     }
 
-    public String getTime() {
-        return time;
+    public String getUsex() {
+        return usex;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setUsex(String usex) {
+        this.usex = usex;
     }
 
-    public String getContent() {
-        return content;
+    public String getUphone() {
+        return uphone;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setUphone(String uphone) {
+        this.uphone = uphone;
     }
 
     public int getCount() {
@@ -84,5 +84,13 @@ public class InstantMsgModel extends BaseModel {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

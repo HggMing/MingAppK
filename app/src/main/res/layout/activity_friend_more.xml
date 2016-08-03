@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.study.mingappk.tab2.frienddetail.FriendMoreActivity"
+    tools:ignore="ContentDescription">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divide">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include layout="@layout/divide_15_top_bottom" />
+
+            <RelativeLayout
+                android:id="@+id/click_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/list_item_selector"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/icon_head"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@mipmap/user_detail_sharow"
+                    tools:src="@mipmap/icon" />
+
+                <LinearLayout
+                    android:id="@+id/layout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/icon_head">
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="@color/font_black_content"
+                        android:textSize="18sp"
+                        tools:text="备注名" />
+
+                    <ImageView
+                        android:id="@+id/sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        tools:ignore="ContentDescription"
+                        tools:src="@mipmap/ic_sex_boy" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout1"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@id/icon_head"
+                    android:layout_toRightOf="@id/icon_head"
+                    android:textSize="14sp"
+                    tools:text="昵称：哈哈哈" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_section_15"
+                android:background="@mipmap/divide_15_top_bottom" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/layout_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/healthinfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.bilibili.magicasakura.widgets.TintTextView
+                            style="@style/TextViewStyle_hint"
+                            android:layout_marginTop="20dp"
+                            android:text="身体健康"
+                            android:textSize="@dimen/textsize_large" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="0dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/divider_color" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/m_x_recyclerview_01"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/scoreinfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.bilibili.magicasakura.widgets.TintTextView
+                            style="@style/TextViewStyle_hint"
+                            android:layout_marginTop="20dp"
+                            android:text="学习成绩"
+                            android:textSize="@dimen/textsize_large" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="0dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/divider_color" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/m_x_recyclerview_02"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp">
+
+                        </android.support.v7.widget.RecyclerView>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/content_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="140dp"
+                    android:paddingBottom="280dp"
+                    android:text="暂无更多信息"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

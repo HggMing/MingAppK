@@ -60,6 +60,7 @@
     <string name="title_activity_advice">意见反馈</string>
     <string name="title_activity_about">关于我们</string>
     <string name="title_activity_friend_detail">详细资料</string>
+    <string name="title_activity_friend_more">更多</string>
     <string name="title_activity_remark_name">备注信息</string>
     <string name="title_activity_test_phone_number">验证手机号</string>
     <string name="title_activity_register">用户注册</string>
@@ -94,4 +95,5 @@
     <string name="selected">已选(%1$s/%2$s)</string>
     <string name="take_photo_fail">拍照失败</string>
     <string name="waiting">请稍等…</string>
+    <string name="title_activity_new_friend">新的朋友</string>
 </resources>

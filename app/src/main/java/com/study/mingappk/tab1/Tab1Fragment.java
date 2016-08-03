@@ -1,5 +1,6 @@
 package com.study.mingappk.tab1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,10 +17,12 @@ import android.widget.TextView;
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.common.utils.MyItemDecoration2;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.database.InstantMsgModel;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.tab2.message.ChatActivity;
+import com.study.mingappk.tab4.safesetting.RealNameBindingActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -55,7 +58,7 @@ public class Tab1Fragment extends Fragment implements Tab1Adapter.OnItemClickLis
         mActivity = (AppCompatActivity) getActivity();
 
         configXRecyclerView();//XRecyclerView配置
-//        MyDB.createDb(mActivity);
+
         initDatas();
         EventBus.getDefault().register(this);
     }
@@ -72,7 +75,7 @@ public class Tab1Fragment extends Fragment implements Tab1Adapter.OnItemClickLis
 
 
     /**
-     * 接到新消息后，更新动态列表
+     * 更新动态列表
      *
      * @param event
      */
@@ -123,8 +126,31 @@ public class Tab1Fragment extends Fragment implements Tab1Adapter.OnItemClickLis
     }
 
     @Override
-    public void onItemLongClick(View view, int position) {
+    public void onItemLongClick(View view, final int position) {
         //长按删除此条动态
-
+        MyDialog.Builder builder = new MyDialog.Builder(mActivity);
+        builder.setTitle("提示")
+                .setMessage("删除该聊天？")
+                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //数据库中删除此条动态
+                        InstantMsgModel iMsg=new InstantMsgModel();
+                        iMsg.setUid( mList.get(position).getUid());
+                        MyDB.delete(iMsg);
+                        //刷新动态
+                        EventBus.getDefault().post(new InstantMsgEvent());
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        if (!mActivity.isFinishing()) {
+            builder.create().show();
+        }
     }
 }

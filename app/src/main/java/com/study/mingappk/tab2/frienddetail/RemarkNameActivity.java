@@ -12,8 +12,11 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.event.RefreshFriendList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -76,6 +79,9 @@ public class RemarkNameActivity extends BackActivity {
 //                            Toast.makeText(RemarkNameActivity.this,  result.getMsg(), Toast.LENGTH_SHORT).show();
                             if (result.getErr() == 0) {
                                 Toast.makeText(RemarkNameActivity.this, "备注成功", Toast.LENGTH_SHORT).show();
+                                //刷新好友列表
+                                EventBus.getDefault().post(new RefreshFriendList());
+                                //更新详情页界面
                                 Intent intent = new Intent();
                                 intent.putExtra(FriendDetailActivity.NEW_NAME, newName);
                                 setResult(RESULT_OK, intent);

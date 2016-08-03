@@ -20,11 +20,10 @@ import com.study.mingappk.model.bean.RecommendVillage;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
+import com.study.mingappk.model.bean.UserInfoByPhone;
 import com.study.mingappk.model.bean.VillageInfo;
 import com.study.mingappk.model.bean.VillageMaster;
 import com.study.mingappk.model.bean.ZanList;
-
-import java.lang.reflect.Array;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -549,6 +548,46 @@ public interface MyService {
             @Query("pagesize") int pagesize);
 
     /**
+     * 通过手机号获取用户的档案信息，用于查询以便添加好友
+
+     * @param auth 认证信息
+     * @param tel 手机号
+     * @return 用户信息
+     */
+    @GET("friend/getuserinfo")
+    Observable<UserInfoByPhone> get_UserInfoByPhone(
+            @Query("auth") String auth,
+            @Query("tel") String tel);
+
+    /**
+     * 发送添加好友的请求
+     * @param auth 认证信息
+     * @param tel 手机号
+     * @return 结果msg
+     */
+    @GET("friend/adde")
+    Observable<Result> get_AddFriendRequest(
+            @Query("auth") String auth,
+            @Query("tel") String tel);
+
+    /**
+     * 同意和拒绝添加好友接口
+     * @param auth 认证信息
+     * @param uid 用户id
+     * @return String
+     */
+    @Multipart
+    @POST("friend/agree")
+    Observable<ResponseBody> post_AddAgree(
+            @Part("auth") RequestBody auth,
+            @Part("uid") RequestBody uid);
+    @Multipart
+    @POST("friend/unagree")
+    Observable<ResponseBody> post_AddUnagree(
+            @Part("auth") RequestBody auth,
+            @Part("uid") RequestBody uid);
+
+    /**
      * 获取好友的档案信息
      *
      * @param auth 认证信息
@@ -580,6 +619,18 @@ public interface MyService {
             @Field("auth") String auth,
             @Field("uid") String uid,
             @Field("aname") String aname);
+
+    /**
+     * 删除好友接口
+     * @param auth 认证信息
+     * @param uid 好友id
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("friend/del")
+    Observable<Result> post_DelFriend(
+            @Field("auth") String auth,
+            @Field("uid") String uid);
 
     /**
      * 获取用户（好友）帖子列表接口

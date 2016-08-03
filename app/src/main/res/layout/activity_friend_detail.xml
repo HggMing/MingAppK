@@ -96,6 +96,12 @@
                     android:text="设置备注"
                     android:textColor="@color/font_black_2"
                     android:textSize="16sp" />
+
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/user_home_arrow" />
             </RelativeLayout>
 
             <include layout="@layout/divide_15_top_bottom" />
@@ -175,41 +181,46 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@mipmap/user_home_arrow"
-                        android:visibility="invisible" />
+                        android:visibility="visible" />
 
                     <LinearLayout
                         android:id="@+id/fd_photos_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="12dp"
+                        android:layout_toLeftOf="@id/arrow1"
                         android:layout_toRightOf="@id/tv_name">
 
                         <ImageView
                             android:id="@+id/fd_photo0"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
                             tools:src="@mipmap/icon" />
 
                         <ImageView
                             android:id="@+id/fd_photo1"
-
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
                             android:layout_marginLeft="8dp"
                             tools:src="@mipmap/icon" />
 
                         <ImageView
                             android:id="@+id/fd_photo2"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
                             android:layout_marginLeft="8dp"
                             tools:src="@mipmap/icon" />
 
                         <ImageView
                             android:id="@+id/fd_photo3"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="60dp"
                             android:layout_marginLeft="8dp"
+                            android:layout_marginRight="2dp"
                             tools:src="@mipmap/icon" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -232,6 +243,12 @@
                         android:text="更多"
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@mipmap/user_home_arrow" />
                 </RelativeLayout>
             </LinearLayout>
 

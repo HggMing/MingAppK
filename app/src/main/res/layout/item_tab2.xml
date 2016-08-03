@@ -31,6 +31,20 @@
         android:textColor="@color/font_black_content"
         tools:text="昨日像那东流水" />
 
+    <TextView
+        android:id="@+id/badge"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/shape_red_circle"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        tools:text="999" />
+
     <View
         android:id="@+id/arrow"
         android:layout_width="20dp"

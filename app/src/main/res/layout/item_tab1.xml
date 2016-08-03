@@ -54,13 +54,15 @@
         android:layout_alignBottom="@id/icon"
         android:layout_alignLeft="@id/name"
         android:layout_alignStart="@id/name"
+        android:layout_toLeftOf="@id/badge"
+        android:layout_marginRight="2dp"
         android:ellipsize="end"
         android:lines="1"
         android:maxLines="1"
         android:scrollHorizontally="true"
         android:singleLine="false"
         android:textColor="@color/font_black_9"
-        tools:text="消息内容" />
+        tools:text="消息内容，消息内容，消息内容，消息内容，消息内容" />
 
     <TextView
         android:id="@+id/badge"
@@ -71,7 +73,7 @@
         android:layout_alignRight="@id/time"
         android:background="@drawable/shape_red_circle"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         android:textColor="@color/white"
         android:textSize="10sp"
         tools:text="999" />

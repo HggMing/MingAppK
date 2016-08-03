@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        tools:src="@mipmap/defalt_user_circle" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/font_black_content"
+            android:textSize="16sp"
+            tools:text="昵称" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="对方请求添加你为朋友"
+            android:textColor="@color/font_black_9" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        android:layout_marginRight="16dp"
+        tools:text="已添加" />
+
+    <LinearLayout
+        android:id="@+id/button_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="visible">
+
+        <com.bilibili.magicasakura.widgets.TintButton
+            android:id="@+id/button_cancle"
+            android:layout_width="54dp"
+            android:layout_height="30dp"
+            android:background="@drawable/button_white"
+            android:singleLine="true"
+            android:text="拒绝"
+            android:textColor="@color/theme_color_primary"
+            android:textSize="@dimen/textsize_normal" />
+
+        <com.bilibili.magicasakura.widgets.TintButton
+            android:id="@+id/button_ok"
+            android:layout_width="54dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_theme"
+            android:singleLine="true"
+            android:text="接受"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_normal" />
+    </LinearLayout>
+</LinearLayout>

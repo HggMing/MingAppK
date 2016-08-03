@@ -120,6 +120,15 @@ public class MyDB {
     }
 
     /**
+     * 删除指定条目
+     * @param t
+     * @param <T>
+     */
+    public static <T> void delete(T t) {
+        liteOrm.delete(t);
+    }
+
+    /**
      * 删除所有
      *
      * @param cla

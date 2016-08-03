@@ -13,6 +13,9 @@ import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.stickyrecyclerheaders.StickyRecyclerHeadersAdapter;
 import com.study.mingappk.model.bean.FriendList;
+import com.study.mingappk.model.database.InstantMsgModel;
+import com.study.mingappk.model.database.MyDB;
+import com.study.mingappk.model.database.NewFriendModel;
 import com.study.mingappk.model.service.MyServiceClient;
 
 import java.util.List;
@@ -83,19 +86,33 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         }
         //显示数据编辑
         //好友名字的显示
-        String showName=mList.get(position).getName();
+        String showName = mList.get(position).getName();
         holder.userName.setText(showName);
         //好友头像的显示
-        if (position==0){
+        if (position == 0) {
             Glide.with(mContext).load(R.mipmap.tab2_new_friend)
                     .bitmapTransform(new CropCircleTransformation(mContext))
-                    .into(holder.userHead);//关注村圈图
-        }else {
+                    .into(holder.userHead);
+        } else {
             String imageUrl = MyServiceClient.getBaseUrl() + mList.get(position).getHead();
             Glide.with(mContext).load(imageUrl)
                     .bitmapTransform(new CropCircleTransformation(mContext))
                     .error(R.mipmap.defalt_user_circle)
                     .into(holder.userHead);
+        }
+        //新的朋友，新消息小红徽章
+        if (position == 0) {
+            List<NewFriendModel> nFriends = MyDB.getQueryAll(NewFriendModel.class);
+            int count = 0;
+            for (NewFriendModel nFriend : nFriends) {
+                count += nFriend.getCount();
+            }
+            if (count > 0) {
+                holder.badge.setVisibility(View.VISIBLE);
+                holder.badge.setText(String.valueOf(count));
+            } else {
+                holder.badge.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -129,6 +146,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             textView.setText(showValue);
         }
     }
+
     public int getPositionForSection(char section) {
         for (int i = 0; i < getItemCount(); i++) {
             String sortStr = mList.get(i).getSortLetters();
@@ -137,7 +155,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                 return i;
             }
         }
-        if(section=='↑'){
+        if (section == '↑') {
             return 0;
         }
         return -1;
@@ -150,6 +168,8 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         TextView userName;
         @Bind(R.id.friends)
         RelativeLayout friends;
+        @Bind(R.id.badge)
+        TextView badge;
 
         ViewHolder(View view) {
             super(view);

@@ -172,7 +172,6 @@
                         android:layout_marginTop="0dp"
                         android:layout_weight="1"
                         android:hint="手机号码" />
-
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -225,6 +224,7 @@
                         android:id="@+id/et_village"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
+                        android:layout_marginRight="6dp"
                         android:background="@drawable/list_item_selector"
                         android:src="@drawable/ic_apply_et_village"
                         app:imageTint="@color/theme_color_primary" />
@@ -246,18 +246,25 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
                     <ImageView
                         android:id="@+id/img_photo0"
                         android:layout_width="75dp"
                         android:layout_height="56dp"
-                        android:layout_marginLeft="90dp"
+                        android:scaleType="centerCrop"
                         android:src="@mipmap/add_photo_bg" />
 
                     <ImageView
                         android:id="@+id/img_photo1"
                         android:layout_width="75dp"
                         android:layout_height="56dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="6dp"
+                        android:scaleType="centerCrop"
                         android:src="@mipmap/add_photo_bg" />
                 </LinearLayout>
 
@@ -277,11 +284,16 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
                     <ImageView
                         android:id="@+id/img_photo2"
                         android:layout_width="75dp"
                         android:layout_height="56dp"
-                        android:layout_marginLeft="90dp"
+                        android:scaleType="centerCrop"
                         android:visibility="invisible"
                         tools:src="@mipmap/add_photo_bg" />
 
@@ -289,7 +301,9 @@
                         android:id="@+id/img_photo3"
                         android:layout_width="75dp"
                         android:layout_height="56dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="6dp"
+                        android:scaleType="centerCrop"
                         android:src="@mipmap/add_photo_bg" />
                 </LinearLayout>
 
