@@ -85,7 +85,7 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_bbs_list);
         ButterKnife.bind(this);
-
+        //设置fab
         fab.attachToRecyclerView(mXRecyclerView);//fab随recyclerView的滚动，隐藏和出现
         int themeColor=   ThemeUtils.getColorById(this, R.color.theme_color_primary);
         int themeColor2=   ThemeUtils.getColorById(this, R.color.theme_color_primary_dark);

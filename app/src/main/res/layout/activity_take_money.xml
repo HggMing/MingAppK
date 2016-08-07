@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.study.mingappk.tab4.mysetting.TakeMoneyActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/divide_15_top_bottom" />
+
+        <LinearLayout
+            android:id="@+id/chose_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_item_selector"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingBottom="13dp"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp"
+            android:paddingTop="13dp">
+
+            <View
+                android:layout_width="@dimen/project_icon_width"
+                android:layout_height="@dimen/project_icon_width"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/ic_message_notification" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bank_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#222222"
+                    android:textSize="16sp"
+                    tools:text="中国工商银行" />
+
+                <TextView
+                    android:id="@+id/bank_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/font_black_9"
+                    android:textSize="14sp"
+                    tools:text="尾号8888" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@mipmap/user_home_arrow" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/total_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@color/white"
+            android:paddingBottom="8dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/font_black_9"
+            android:textSize="16sp"
+            tools:text="当前余额88元" />
+
+        <include layout="@layout/divide_1_12" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="金额"
+                android:textColor="#222222"
+                android:textSize="16sp" />
+
+            <com.bilibili.magicasakura.widgets.TintEditText
+                android:id="@+id/et_money"
+                style="@style/EditTextStyle_common"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="0dp"
+                android:hint="单笔提现最高1000元"
+                android:inputType="numberDecimal"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:text="三个工作日内到帐"
+            android:textColor="@color/font_black_9"
+            android:textSize="16sp" />
+
+        <com.bilibili.magicasakura.widgets.TintButton
+            android:id="@+id/btn_ok"
+            style="@style/ButtonStyle_1"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
+            android:enabled="false"
+            android:text="提现" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

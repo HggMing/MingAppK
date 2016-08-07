@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -36,42 +35,29 @@
                         android:layout_height="54dp"
                         android:layout_marginRight="12dp"
                         android:background="@mipmap/user_detail_sharow"
+                        tools:ignore="ContentDescription"
                         tools:src="@mipmap/icon" />
 
-                    <LinearLayout
-                        android:id="@+id/layout1"
+
+                    <TextView
+                        android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_toRightOf="@id/icon_head">
-
-                        <TextView
-                            android:id="@+id/name"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:textColor="@color/font_black_content"
-                            android:textSize="18sp"
-                            tools:text="备注名" />
-
-                        <ImageView
-                            android:id="@+id/apply_state"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:layout_marginTop="3dp"
-                            android:src="@mipmap/ic_apply_ing"
-                            android:visibility="gone"
-                            tools:ignore="ContentDescription" />
-                    </LinearLayout>
+                        android:layout_toRightOf="@id/icon_head"
+                        android:drawablePadding="6dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="@color/font_black_content"
+                        android:textSize="18sp"
+                        tools:drawableRight="@mipmap/ic_apply_ing"
+                        tools:text="备注名" />
 
                     <TextView
                         android:id="@+id/name2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/layout1"
+                        android:layout_below="@id/name"
                         android:layout_marginTop="2dp"
                         android:layout_toEndOf="@id/icon_head"
                         android:layout_toRightOf="@id/icon_head"

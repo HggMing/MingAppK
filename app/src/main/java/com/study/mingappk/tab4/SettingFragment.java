@@ -184,8 +184,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
         final Dialog_ChangePwd.Builder pwddialog = new Dialog_ChangePwd.Builder(mActivity);
         pwddialog.setTitle("修改登录密码");
 
-        pwddialog
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        pwddialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String oldpwd = pwddialog.et_oldpwd.getEditableText()
@@ -280,6 +279,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                                         .put(APP.IS_UPDATA_MY_INFO, false)
                                         .commit();
                                 Hawk.remove(APP.ME_UID);
+                                Hawk.remove(APP.SELECTED_CARD);
                                 //停止个推SDK服务
                                 PushManager.getInstance().stopService(mActivity.getApplicationContext());
                                 //关闭数据库

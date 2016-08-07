@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Ming on 2016/3/30.
  */
-public class VillageListAdapter extends BaseRecyclerViewAdapter<FollowVillageList.DataEntity.ListEntity,VillageListAdapter.ViewHolder> {
+public class VillageListAdapter extends BaseRecyclerViewAdapter<FollowVillageList.DataEntity.ListEntity, VillageListAdapter.ViewHolder> {
 
     /**
      * 创建ViewHolder
@@ -66,16 +66,10 @@ public class VillageListAdapter extends BaseRecyclerViewAdapter<FollowVillageLis
         holder.tvVillageName.setText(villageName);//关注村圈名称
         String newMessage = mList.get(position).getBbsInfo().getDesc();
         holder.tvNews.setText(newMessage);//村圈最新消息
+
         String date = mList.get(position).getBbsInfo().getCtime();
-        if (date != null) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-//            String time = dateFormat.format(new Date(Long.valueOf(date + "000")));
-            String time = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
-            holder.tvTime.setText(time);//最新动态时间
-        } else {
-            holder.tvTime.setText("");
-        }
+        String time = BaseTools.getTimeFormat(date);
+        holder.tvTime.setText(time);//最新动态时间
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -11,7 +11,7 @@
         android:right="80dp"
         android:top="80dp">
         <shape android:shape="oval">
-            <solid android:color="@color/colorAccent" />
+            <solid android:color="@color/theme_color_primary" />
         </shape>
     </item>
     <item>
@@ -26,7 +26,7 @@
         <shape android:shape="oval">
             <stroke
                 android:width="7dp"
-                android:color="@color/colorAccent"
+                android:color="@color/theme_color_primary"
                 android:dashWidth="0dp" />
         </shape>
     </item>

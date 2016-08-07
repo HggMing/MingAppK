@@ -37,10 +37,6 @@ public class FriendMoreActivity extends BackActivity {
     ImageView iconHead;
     @Bind(R.id.name)
     TextView name;
-    @Bind(R.id.sex)
-    ImageView sex;
-    @Bind(R.id.layout1)
-    LinearLayout layout1;
     @Bind(R.id.name2)
     TextView name2;
     @Bind(R.id.click_user)
@@ -165,9 +161,10 @@ public class FriendMoreActivity extends BackActivity {
                                    //用户性别
                                    String sexNumber = userinfoBean.getSex();
                                    if ("0".equals(sexNumber)) {
-                                       sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_boy));
+                                       name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_sex_boy,0);
+
                                    } else {
-                                       sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_girl));
+                                       name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_sex_girl,0);
                                    }
                                }
                            }

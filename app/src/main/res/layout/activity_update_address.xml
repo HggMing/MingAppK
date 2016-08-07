@@ -13,8 +13,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/margin_16"
             android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -39,6 +39,7 @@
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
                 android:drawSelectorOnTop="true"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:spinnerMode="dropdown" />
 
@@ -58,6 +59,7 @@
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
                 android:drawSelectorOnTop="true"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
 
             <View
@@ -76,6 +78,7 @@
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
                 android:drawSelectorOnTop="true"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
 
             <View
@@ -94,6 +97,7 @@
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
                 android:drawSelectorOnTop="true"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
 
             <View
@@ -111,6 +115,7 @@
                 android:layout_marginRight="4dp"
                 android:animationCache="true"
                 android:drawSelectorOnTop="true"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
 
         </LinearLayout>

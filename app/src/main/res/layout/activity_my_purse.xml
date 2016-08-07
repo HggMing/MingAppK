@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:listItem1="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.study.mingappk.tab4.mysetting.MyPurseActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_12"
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_green"
+            android:textSize="50sp"
+            tools:text="88.88" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 元"
+            android:textColor="@color/font_green"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="余额"
+        android:textColor="@color/font_black_9"
+        android:textSize="16sp" />
+
+    <include layout="@layout/divide_1" />
+
+    <com.study.mingappk.tab4.safesetting.ListItem1
+        android:id="@+id/take_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        listItem1:itemIcon="@mipmap/tab4_purse_psw"
+        listItem1:itemTitle="提现" />
+
+    <com.bilibili.magicasakura.widgets.TintTextView
+        style="@style/TextViewStyle_hint"
+        android:layout_width="match_parent"
+        android:layout_marginTop="0dp"
+        android:background="@mipmap/divide_15_top_bottom"
+        android:paddingBottom="3dp"
+        android:paddingLeft="18dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:text="收支明细"
+        android:textSize="16sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/m_x_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/content_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:paddingTop="100dp"
+            android:text="暂无收支明细！"
+            android:textColor="@color/font_black_9"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>
+
+
+

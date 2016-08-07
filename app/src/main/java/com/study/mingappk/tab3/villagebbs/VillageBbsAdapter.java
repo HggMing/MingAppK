@@ -187,12 +187,9 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         holder.bbsUname.setText(userName);
         //发帖时间
         String date = mList.get(position).getCtime();
-        if (date != null) {
-            String time = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
-            holder.bbsCtime.setText(time);
-        } else {
-            holder.bbsCtime.setText("");
-        }
+        String time = BaseTools.getTimeFormat(date);
+        holder.bbsCtime.setText(time);
+
         //发帖消息正文
         String msgContent = mList.get(position).getConts();
         holder.bbsContents.setText(msgContent);
@@ -224,7 +221,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
                     imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_1();
                 }
                 //服务器数据bug，白石村的图片文件surl_2地址前面多了/home/wwwroot/default/cris/字符串
-                else if ("/home/".equals(filesEntity.getSurl_2().substring(0,6))) {
+                else if ("/home/".equals(filesEntity.getSurl_2().substring(0, 6))) {
                     imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_2().substring(27);
                 }
                 Glide.with(context).load(imageUrl)

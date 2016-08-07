@@ -9,6 +9,7 @@ import android.os.Message;
 import android.view.SurfaceHolder;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,7 +23,7 @@ import butterknife.OnClick;
 
 public class TakePhotoActivity extends Activity implements CameraInterface.CamOpenOverCallback {
     @Bind(R.id.btn_take_photo)
-    ImageButton takePhoto;
+    Button takePhoto;
     @Bind(R.id.bottom_img)
     RelativeLayout bottomImg;
     @Bind(R.id.camera_surfaceview)

@@ -1,0 +1,91 @@
+<!--
+    CardView就是一个卡片样式的FrameLayout。
+
+    参数介绍：
+        app:cardBackgroundColor  :   背景颜色
+        app:cardCornerRadius    ：   设置圆角。
+        app:cardElevation       ：    阴影。
+        app:cardMaxElevation    ：       最大阴影。
+        app:cardPreventCornerOverlap  ： 在v20和之前的版本中添加内边距，
+                                    这个属性是为了防止卡片内容和边角的重叠。
+
+       app:cardUseCompatPadding  ：  设置内边距，v21+的版本和之前的版本仍旧具有一样的计算方式
+-->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_selector"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/yellow_dark"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
+    app:cardMaxElevation="10dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingBottom="22dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="18dp">
+
+        <View
+            android:id="@+id/icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="4dp"
+            android:background="@mipmap/ic_message_notification" />
+
+        <RadioButton
+            android:id="@+id/chose"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:button="@null"
+            android:background="@drawable/radiobutton_chose"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/chose"
+            android:layout_toRightOf="@id/icon"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bank_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="中国工商银行"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="储蓄卡"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/bank_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="**** **** **** 8888"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

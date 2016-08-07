@@ -8,16 +8,19 @@ import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.ApplyInfo;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
+import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.MessageList;
+import com.study.mingappk.model.bean.MoneyDetail;
 import com.study.mingappk.model.bean.NewsList;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.RecommendVillage;
 import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.bean.ResultOther;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.bean.UserInfoByPhone;
@@ -766,7 +769,7 @@ public interface MyService {
      * @return is_pwd
      */
     @GET("amount/is_set_pwd")
-    Observable<Result> get_IsSetPWD(
+    Observable<ResultOther> get_IsSetPWD(
             @Query("auth") String auth);
 
     /**
@@ -796,4 +799,79 @@ public interface MyService {
             @Field("auth") String auth,
             @Field("old_pwd") String old_pwd,
             @Field("new_pwd") String new_pwd);
+    /**
+     * 查询余额，及是否绑定银行卡
+     * @param auth 认证信息
+     * @return money，is_bind
+     */
+    @GET("amount/balance")
+    Observable<ResultOther> get_Money(
+            @Query("auth") String auth);
+
+    /**
+     * 查询收支明细
+     * @param auth 认证信息
+     * @return  明细
+     */
+    @GET("amount/money_detail")
+    Observable<MoneyDetail> get_MoneyDetail(
+            @Query("auth") String auth);
+
+    /**
+     * 获取绑定的银行卡列表
+     * @param auth 认证信息
+     * @return 列表
+     */
+    @GET("amount/cardlist")
+    Observable<CardList> get_CardList(
+            @Query("auth") String auth);
+
+    /**
+     * 添加绑定银行卡接口
+     * @param auth 认证信息
+     * @param bank_name 开户行
+     * @param bank_no 银行卡号
+     * @param bank_true_name 开卡人姓名
+     * @return insert_id
+     */
+    @FormUrlEncoded
+    @POST("amount/bind")
+    Observable<ResultOther> post_AddCard(
+            @Field("auth") String auth,
+            @Field("bank_name") String bank_name,
+            @Field("bank_no") String bank_no,
+            @Field("bank_true_name") String bank_true_name);
+
+    /**
+     *取消绑定银行卡接口
+     * @param auth 认证信息
+     * @param id 编号
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("amount/del")
+    Observable<Result> post_DelCard(
+            @Field("auth") String auth,
+            @Field("id") String id);
+    /**
+     * 提现接口
+     * @param auth 认证信息
+     * @param money 提现金额
+     * @param pwd 钱包密码
+     * @param bank_name 开户行
+     * @param bank_no 银行卡号
+     * @param bank_true_name 开卡人姓名
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("amount/gmoney")
+    Observable<Result> post_TakeMoney(
+            @Field("auth") String auth,
+            @Field("money") String money,
+            @Field("pwd") String pwd,
+            @Field("bank_name") String bank_name,
+            @Field("bank_no") String bank_no,
+            @Field("bank_true_name") String bank_true_name);
+
+
 }

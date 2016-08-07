@@ -110,9 +110,8 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
 
     //配置RecyclerView
     private void configXRecyclerView() {
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(mActivity);
+        mXRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));//设置布局管理器
         mAdapter = new VillageListAdapter();
-        mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
         mXRecyclerView.setAdapter(mAdapter);//设置adapter
         mAdapter.setOnItemClickListener(VillageListFragment.this);
 

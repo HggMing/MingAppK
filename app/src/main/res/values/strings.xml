@@ -37,40 +37,16 @@
         <item>博士</item>
     </string-array>
 
-    <string name="title_activity_splash">爱简单</string>
-    <string name="title_activity_login">登录页</string>
-    <string name="title_activity_main">首页</string>
-
-    <string name="title_activity_follow_village">村圈设置</string>
-    <string name="title_activity_village_situation">村况</string>
-    <string name="title_activity_new_post">发布帖子</string>
-    <string name="title_activity_village_bbs">村圈帖子</string>
-    <string name="title_activity_big_imageview">查看大图</string>
-    <string name="title_activity_bbs_detail">帖子详情</string>
-
-    <string name="title_activity_user_detail">个人信息</string>
-    <string name="title_activity_update_uname">设置用户名</string>
-    <string name="title_activity_update_idcard">填写身份证号</string>
-    <string name="title_activity_update_adress">设置详细地址</string>
-
-    <string name="title_activity_mysetting">我的</string>
-    <string name="title_activity_setting_common">通用</string>
-    <string name="title_activity_change_pwd">修改登录密码</string>
-    <string name="title_activity_change_purse_pwd">修改钱包密码</string>
-    <string name="title_activity_advice">意见反馈</string>
-    <string name="title_activity_about">关于我们</string>
-    <string name="title_activity_friend_detail">详细资料</string>
-    <string name="title_activity_friend_more">更多</string>
-    <string name="title_activity_remark_name">备注信息</string>
-    <string name="title_activity_test_phone_number">验证手机号</string>
-    <string name="title_activity_register">用户注册</string>
-    <string name="title_activity_reset_password">找回密码</string>
-    <string name="title_activity_face_login">人脸登录</string>
-    <string name="title_activity_apply_shop_owner">申请店长</string>
-    <string name="title_activity_show_applying">申请结果</string>
-    <string name="title_activity_real_name_binging">实名认证</string>
-    <string name="title_activity_safe_setting">账号安全</string>
-    <string name="title_activity_government_affairs">政务</string>
+    <string-array name="money_details">
+        <item>其它</item>
+        <item>奖励</item>
+        <item>提现</item>
+        <item>充值</item>
+        <item>订单</item>
+        <item>扣款</item>
+        <item>话费充值奖励</item>
+        <item>流量充值奖励</item>
+    </string-array>
 
     <!--galleryfinal相关-->
     <string name="all_photo">全部图片</string>
@@ -95,5 +71,51 @@
     <string name="selected">已选(%1$s/%2$s)</string>
     <string name="take_photo_fail">拍照失败</string>
     <string name="waiting">请稍等…</string>
+
+    <!--activity标题-->
+    <string name="title_activity_splash">爱简单</string>
+    <string name="title_activity_login">登录页</string>
+    <string name="title_activity_face_login">人脸登录</string>
+    <string name="title_activity_register">用户注册</string>
+    <string name="title_activity_reset_password">找回密码</string>
+    <string name="title_activity_test_phone_number">验证手机号</string>
+    <string name="title_activity_main">首页</string>
+
     <string name="title_activity_new_friend">新的朋友</string>
+    <string name="title_activity_friend_detail">详细资料</string>
+    <string name="title_activity_remark_name">备注信息</string>
+    <string name="title_activity_friend_more">更多</string>
+
+    <string name="title_activity_follow_village">村圈设置</string>
+    <string name="title_activity_village_bbs">村圈帖子</string>
+    <string name="title_activity_bbs_detail">帖子详情</string>
+    <string name="title_activity_big_imageview">查看大图</string>
+    <string name="title_activity_new_post">发布帖子</string>
+    <string name="title_activity_government_affairs">政务</string>
+    <string name="title_activity_village_situation">村况</string>
+
+    <string name="title_activity_user_detail">个人信息</string>
+    <string name="title_activity_update_uname">设置用户名</string>
+    <string name="title_activity_update_idcard">填写身份证号</string>
+    <string name="title_activity_update_adress">设置详细地址</string>
+
+    <string name="title_activity_mysetting">我的</string>
+    <string name="title_activity_my_purse">我的钱包</string>
+    <string name="title_activity_set_purse_pwd">设置钱包密码</string>
+    <string name="title_activity_take_money">余额提现</string>
+    <string name="title_activity_bind_card">我的银行卡</string>
+    <string name="title_activity_add_cards">添加银行卡</string>
+
+    <string name="title_activity_apply_shop_owner">申请店长</string>
+    <string name="title_activity_show_applying">申请结果</string>
+
+    <string name="title_activity_safe_setting">账号安全</string>
+    <string name="title_activity_real_name_binging">实名认证</string>
+    <string name="title_activity_change_pwd">修改登录密码</string>
+    <string name="title_activity_change_purse_pwd">修改钱包密码</string>
+
+    <string name="title_activity_setting_common">通用</string>
+    <string name="title_activity_advice">意见反馈</string>
+    <string name="title_activity_about">关于我们</string>
+
 </resources>

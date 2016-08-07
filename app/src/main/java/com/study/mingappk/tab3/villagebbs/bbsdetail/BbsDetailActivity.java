@@ -219,12 +219,9 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         });
         //发帖时间
         String date = bbsDetail.getCtime();
-        if (date != null) {
-            String time = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
-            bbsCtime.setText(time);
-        } else {
-            bbsCtime.setText("");
-        }
+        String time = BaseTools.getTimeFormat(date);
+        bbsCtime.setText(time);
+
         //发帖消息正文
         String msgContent = bbsDetail.getConts();
         bbsContents.setText(msgContent);

@@ -161,6 +161,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshFriendList(RefreshFriendList event) {
         mList.clear();
+        friendUids.clear();
         getDataList();
     }
 
@@ -232,32 +233,6 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
                 }
             }
         });*/
-    }
-
-    private void refreshList() {
-        page = 1;
-        MyServiceClient.getService().getCall_FriendList(auth, page, PAGE_SIZE)
-                .enqueue(new Callback<FriendList>() {
-                    @Override
-                    public void onResponse(Call<FriendList> call, Response<FriendList> response) {
-                        if (response.isSuccessful()) {
-                            FriendList friendList = response.body();
-                            if (friendList != null && friendList.getErr() == 0) {
-                                mList.clear();
-                                mList.addAll(friendList.getData().getList());
-                                mAdapter.notifyDataSetChanged();
-//                                mXRecyclerView.refreshComplete();
-                                page = 2;
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<FriendList> call, Throwable t) {
-                        JUtils.Log("刷新好友列表出错：" + t.getMessage());
-                    }
-                });
-
     }
 
     private void getDataList() {
@@ -432,6 +407,16 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
                     .setNegativeButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, int which) {
+                            //数据库中删除与此好友的动态
+                            InstantMsgModel iMsg=new InstantMsgModel();
+                            iMsg.setUid( mList.get(position).getUid());
+                            MyDB.delete(iMsg);
+                            //刷新动态
+                            EventBus.getDefault().post(new InstantMsgEvent());
+                            //好友列表中删除与此好友的信息
+                            FriendsModel friend=new FriendsModel();
+                            friend.setUid(mList.get(position).getUid());
+                            MyDB.delete(friend);
                             //删除好友
                             MyServiceClient.getService()
                                     .post_DelFriend(auth, mList.get(position).getUid())

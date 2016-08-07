@@ -6,9 +6,10 @@
     android:background="#ffffff"
     tools:context=".tmain.userlogin.facelogin.FaceLoginActivity">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:ignore="ContentDescription"
         android:scrollbars="none">
 
         <LinearLayout
@@ -87,5 +88,5 @@
                 style="@style/ButtonStyle_1"
                 android:layout_marginTop="20dp" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

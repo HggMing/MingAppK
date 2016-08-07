@@ -22,6 +22,8 @@ public class FriendsModel extends BaseModel {
     @Column("_msg_count")
     private int count;//新消息条数
 
+    public FriendsModel() {
+    }
 
     public FriendsModel(String uid, String uname, String uicon) {
         this.uid = uid;

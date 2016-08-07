@@ -35,38 +35,26 @@
                     android:background="@mipmap/user_detail_sharow"
                     tools:src="@mipmap/icon" />
 
-                <LinearLayout
-                    android:id="@+id/layout1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_toRightOf="@id/icon_head">
 
                     <TextView
                         android:id="@+id/name"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:layout_toRightOf="@id/icon_head"
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:textColor="@color/font_black_content"
                         android:textSize="18sp"
+                        tools:drawableRight="@mipmap/ic_sex_boy"
                         tools:text="备注名" />
 
-                    <ImageView
-                        android:id="@+id/sex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        tools:ignore="ContentDescription"
-                        tools:src="@mipmap/ic_sex_boy" />
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/name2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/layout1"
+                    android:layout_below="@id/name"
                     android:layout_marginTop="2dp"
                     android:layout_toEndOf="@id/icon_head"
                     android:layout_toRightOf="@id/icon_head"
@@ -202,25 +190,25 @@
                             android:id="@+id/fd_photo1"
                             android:layout_width="0dp"
                             android:layout_height="60dp"
-                            android:layout_weight="1"
                             android:layout_marginLeft="8dp"
+                            android:layout_weight="1"
                             tools:src="@mipmap/icon" />
 
                         <ImageView
                             android:id="@+id/fd_photo2"
                             android:layout_width="0dp"
                             android:layout_height="60dp"
-                            android:layout_weight="1"
                             android:layout_marginLeft="8dp"
+                            android:layout_weight="1"
                             tools:src="@mipmap/icon" />
 
                         <ImageView
                             android:id="@+id/fd_photo3"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="60dp"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="2dp"
+                            android:layout_weight="1"
                             tools:src="@mipmap/icon" />
                     </LinearLayout>
                 </RelativeLayout>

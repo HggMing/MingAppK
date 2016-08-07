@@ -97,6 +97,7 @@ public class TestPhoneNumberActivity extends BackActivity {
                             intent.putExtra(ResetPasswordActivity.PHONE, phone);
                             intent.putExtra(ResetPasswordActivity.SIGN, checkPhone.getSign());
                             startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(TestPhoneNumberActivity.this, checkPhone.getMsg(), Toast.LENGTH_SHORT).show();
                             btnOk.setEnabled(true);
@@ -132,6 +133,7 @@ public class TestPhoneNumberActivity extends BackActivity {
                                 intent.putExtra(RegisterActivity.PHONE, phone);
                                 intent.putExtra(RegisterActivity.SIGN, checkPhone.getSign());
                                 startActivity(intent);
+                                finish();
                                 break;
                             case 2005://已注册
                                 MyDialog.Builder builder1 = new MyDialog.Builder(TestPhoneNumberActivity.this);

@@ -14,8 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-
-
             android:orientation="vertical">
 
             <include layout="@layout/divide_15_top_bottom" />
@@ -72,7 +70,6 @@
                         android:src="@mipmap/ic_store_manager"
                         android:visibility="visible"
                         tools:ignore="ContentDescription" />
-
                 </LinearLayout>
 
                 <TextView
@@ -95,6 +92,25 @@
                 android:background="@color/stand_bg"
                 android:orientation="vertical">
 
+                <com.study.mingappk.tab4.safesetting.ListItem1
+                    android:id="@+id/click_my_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_my_setting"
+                    listItem1:itemTitle="我的" />
+
+                <include layout="@layout/divide_1_12" />
+
+                <com.study.mingappk.tab4.safesetting.ListItem1
+                    android:id="@+id/click_store_manager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/tab4_store_manager"
+                    listItem1:itemTitle="申请店长" />
+
+                <include layout="@layout/divide_1_12" />
 
                 <com.study.mingappk.tab4.safesetting.ListItem1
                     android:id="@+id/click_safe_center"
@@ -107,32 +123,12 @@
                 <include layout="@layout/divide_1_12" />
 
                 <com.study.mingappk.tab4.safesetting.ListItem1
-                    android:id="@+id/click_my_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    listItem1:itemIcon="@mipmap/tab4_my_setting"
-                    listItem1:itemTitle="我的" />
-
-                <include layout="@layout/divide_1_12" />
-
-                <com.study.mingappk.tab4.safesetting.ListItem1
                     android:id="@+id/click_setting_common"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     listItem1:itemIcon="@mipmap/tab4_setting_common"
                     listItem1:itemTitle="通用" />
-
-                <include layout="@layout/divide_1_12" />
-
-                <com.study.mingappk.tab4.safesetting.ListItem1
-                    android:id="@+id/click_store_manager"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    listItem1:itemIcon="@mipmap/tab4_store_manager"
-                    listItem1:itemTitle="申请店长" />
 
                 <include layout="@layout/divide_15_top" />
 

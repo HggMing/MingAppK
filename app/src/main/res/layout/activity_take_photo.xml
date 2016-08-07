@@ -16,7 +16,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/font_black_2">
 
-            <ImageButton
+            <com.bilibili.magicasakura.widgets.TintButton
                 android:id="@+id/btn_take_photo"
                 android:layout_width="80dp"
                 android:layout_height="80dp"

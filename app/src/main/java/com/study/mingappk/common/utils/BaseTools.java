@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -71,6 +73,7 @@ public class BaseTools {
 
     /**
      * 实现状态栏颜色随主题变化
+     *
      * @param activity
      */
     public static void colorStatusBar(Activity activity) {
@@ -237,89 +240,201 @@ public class BaseTools {
         return result;
     }
 
+
     /**
-     * 返回文字描述的日期
+     * 功能描述：以指定的格式来格式化日期
      *
-     * @param date 日期
-     * @return 字符串显示
+     * @param date   Date 日期
+     * @param format String 格式
+     * @return String 日期字符串
      */
-    public static String getTimeFormatText(Date date) {
-        long minute = 60 * 1000;// 1分钟
-        long hour = 60 * minute;// 1小时
-        long day = 24 * hour;// 1天
-        long month = 31 * day;// 月
-        long year = 12 * month;// 年
-        if (date == null) {
-            return null;
+    public static String formatDateByFormat(Date date, String format) {
+        String result = "";
+        if (date != null) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINESE);
+                result = sdf.format(date);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.CHINESE);
-        String mTime = dateFormat.format(date);
-        long diff = new Date().getTime() - date.getTime();
-        long r = 0;
-        if (diff > year) {
-            r = (diff / year);
-            return r + "年前 " + mTime;
-        }
-        if (diff > month) {
-            r = (diff / month);
-            return r + "个月前 " + mTime;
-        }
-        if (diff > day) {
-            r = (diff / day);
-            return r + "天前 " + mTime;
-        }
-        if (diff > hour) {
-            r = (diff / hour);
-            return r + "小时前";
-        }
-        if (diff > minute) {
-            r = (diff / minute);
-            return r + "分钟前";
-        }
-        return "刚刚";
+        return result;
     }
 
     /**
-     * 格式化时间，动态页面
-     * @param date
-     * @return
+     * 获得口头时间字符串，如今天，昨天等
+     *
+     * @param d 时间戳（10位或13位都可以）
+     * @return 口头时间字符串
      */
-    public static String getTimeFormat01(Date date) {
-        long minute = 60 * 1000;// 1分钟
-        long hour = 60 * minute;// 1小时
-        long day = 24 * hour;// 1天
-        long day2 = 48 * hour;// 2天
-        if (date == null) {
-            return null;
+    public static String getTimeFormat(String d) {
+        if(d==null){
+            return "";
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.CHINESE);
-        String mTime = dateFormat.format(date);
-//        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("MM月dd日 HH:mm", Locale.CHINESE);
-        String mTime2 = dateFormat2.format(date);
-        long diff = new Date().getTime() - date.getTime();
-        long r = 0;
+        Date date=null;
+        if (d.length() == 10) {
+            date = new Date(Long.valueOf(d + "000"));
+        }
+        if(d.length()==13){
+            date = new Date(Long.valueOf(d));
+        }
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date());
+        int nowYear = now.get(Calendar.YEAR);
+        int nowMonth = now.get(Calendar.MONTH);
+        int nowWeek = now.get(Calendar.WEEK_OF_MONTH);
+        int nowDay = now.get(Calendar.DAY_OF_WEEK);
+        int nowHour = now.get(Calendar.HOUR_OF_DAY);
+        int nowMinute = now.get(Calendar.MINUTE);
 
-        if (diff >day2) {//两天前直接显示日期+时间
-            r = (diff /day2);
-            return  mTime2;
+        Calendar ca = Calendar.getInstance();
+        if (date != null) {
+            ca.setTime(date);
+        } else {
+//            ca.setTime(new Date());
+            return "";
         }
-        if (diff > day) {
-            r = (diff / day);
-            return "昨天 " + mTime;
+        int year = ca.get(Calendar.YEAR);
+        int month = ca.get(Calendar.MONTH);
+        int week = ca.get(Calendar.WEEK_OF_MONTH);
+        int day = ca.get(Calendar.DAY_OF_WEEK);
+        int hour = ca.get(Calendar.HOUR_OF_DAY);
+        int minute = ca.get(Calendar.MINUTE);
+        if (year != nowYear) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINESE);
+            //不同年份
+            return sdf.format(date);
+        } else {
+            if (month != nowMonth) {
+                //不同月份
+                SimpleDateFormat sdf = new SimpleDateFormat("M月dd日 HH:mm",Locale.CHINESE);
+                return sdf.format(date);
+            } else {
+                if (week != nowWeek) {
+                    //不同周
+                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日 HH:mm",Locale.CHINESE);
+                    return sdf.format(date);
+                } else if (day != nowDay) {
+                    if (day + 1 == nowDay) {
+                        return "昨天" + formatDateByFormat(date, "HH:mm");
+                    }
+                    if (day + 2 == nowDay) {
+                        return "前天" + formatDateByFormat(date, "HH:mm");
+                    }
+                    //不同天
+                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日 HH:mm",Locale.CHINESE);
+                    return sdf.format(date);
+                } else {
+                    //同一天
+                    int hourGap = nowHour - hour;
+                    if (hourGap == 0)//1小时内
+                    {
+                        if (nowMinute - minute < 1) {
+                            return "刚刚";
+                        } else {
+                            return (nowMinute - minute) + "分钟前";
+                        }
+                    } else if (hourGap >= 1 && hourGap <= 12) {
+                        return hourGap + "小时前";
+                    } else {
+                        SimpleDateFormat sdf = new SimpleDateFormat("今天 HH:mm",Locale.CHINESE);
+                        return sdf.format(date);
+                    }
+                }
+            }
         }
-        if (diff > minute) {//当天仅显示时间
-            r = (diff / minute);
-            return  mTime;
+    }
+
+    /**
+     * 获得口头时间字符串，如今天，昨天等,简化一天内显示时间HH:mm
+     *
+     * @param d 时间戳（10位或13位都可以）
+     * @return 口头时间字符串
+     */
+    public static String getTimeFormatA(String d) {
+        if(d==null){
+            return "";
         }
-        return mTime;//1分钟内
+        Date date=null;
+        if (d.length() == 10) {
+            date = new Date(Long.valueOf(d + "000"));
+        }
+        if(d.length()==13){
+            date = new Date(Long.valueOf(d));
+        }
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date());
+        int nowYear = now.get(Calendar.YEAR);
+        int nowMonth = now.get(Calendar.MONTH);
+        int nowWeek = now.get(Calendar.WEEK_OF_MONTH);
+        int nowDay = now.get(Calendar.DAY_OF_WEEK);
+        int nowHour = now.get(Calendar.HOUR_OF_DAY);
+        int nowMinute = now.get(Calendar.MINUTE);
+
+        Calendar ca = Calendar.getInstance();
+        if (date != null) {
+            ca.setTime(date);
+        } else {
+//            ca.setTime(new Date());
+            return "";
+        }
+        int year = ca.get(Calendar.YEAR);
+        int month = ca.get(Calendar.MONTH);
+        int week = ca.get(Calendar.WEEK_OF_MONTH);
+        int day = ca.get(Calendar.DAY_OF_WEEK);
+        int hour = ca.get(Calendar.HOUR_OF_DAY);
+        int minute = ca.get(Calendar.MINUTE);
+        if (year != nowYear) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINESE);
+            //不同年份
+            return sdf.format(date);
+        } else {
+            if (month != nowMonth) {
+                //不同月份
+                SimpleDateFormat sdf = new SimpleDateFormat("M月dd日",Locale.CHINESE);
+                return sdf.format(date);
+            } else {
+                if (week != nowWeek) {
+                    //不同周
+                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日",Locale.CHINESE);
+                    return sdf.format(date);
+                } else if (day != nowDay) {
+                    if (day + 1 == nowDay) {
+                        return "昨天" + formatDateByFormat(date, "HH:mm");
+                    }
+                    if (day + 2 == nowDay) {
+                        return "前天" + formatDateByFormat(date, "HH:mm");
+                    }
+                    //不同天
+                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日",Locale.CHINESE);
+                    return sdf.format(date);
+                } else {
+                    //同一天
+                    int hourGap = nowHour - hour;
+                    if (hourGap == 0)//1小时内
+                    {
+                        if (nowMinute - minute < 1) {
+                            return "刚刚";
+                        } else {
+                            return (nowMinute - minute) + "分钟前";
+                        }
+                    } else if (hourGap >= 1 && hourGap <= 12) {
+                        return hourGap + "小时前";
+                    } else {
+                        SimpleDateFormat sdf = new SimpleDateFormat("今天 HH:mm",Locale.CHINESE);
+                        return sdf.format(date);
+                    }
+                }
+            }
+        }
     }
 
     /**
      * 用于调试时，使用对话框显示String信息
+     *
      * @param context
      */
-    public  static void debugDialog(Context context,String s){
+    public static void debugDialog(Context context, String s) {
         new MyDialog.Builder(context)
                 .setTitle("调试信息")
                 .setCannel(false)

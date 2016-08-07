@@ -24,12 +24,8 @@ public class ShowApplyingActivity extends BackActivity {
     ImageView iconHead;
     @Bind(R.id.name)
     TextView name;
-    @Bind(R.id.apply_state)
-    ImageView applyState;
     @Bind(R.id.apply_status)
     ImageView applyStatus;
-    @Bind(R.id.layout1)
-    LinearLayout layout1;
     @Bind(R.id.name2)
     TextView name2;
     @Bind(R.id.click_user)
@@ -73,11 +69,10 @@ public class ShowApplyingActivity extends BackActivity {
         String status=getIntent().getStringExtra(STATUS_APPLY);
         switch (status){
             case "0"://申请中
-                applyState.setVisibility(View.VISIBLE);
+                name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_apply_ing,0);
                 applyStatus.setVisibility(View.GONE);
                 break;
             case "1"://申请通过
-                applyState.setVisibility(View.GONE);
                 applyStatus.setVisibility(View.VISIBLE);
                 Glide.with(this)
                         .load(R.mipmap.ic_apply_passed)
@@ -88,7 +83,6 @@ public class ShowApplyingActivity extends BackActivity {
 
                 break;
             case "2"://申请未通过
-                applyState.setVisibility(View.GONE);
                 applyStatus.setVisibility(View.VISIBLE);
                 Glide.with(this)
                         .load(R.mipmap.ic_apply_not_passed)

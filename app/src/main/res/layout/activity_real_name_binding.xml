@@ -6,10 +6,11 @@
     android:background="@color/white"
     tools:context=".tab4.safesetting.RealNameBindingActivity">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        tools:ignore="ContentDescription">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -139,5 +140,5 @@
                 style="@style/ButtonStyle_1"
                 android:layout_marginTop="20dp" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

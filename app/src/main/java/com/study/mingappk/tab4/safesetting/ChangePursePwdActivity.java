@@ -71,8 +71,8 @@ public class ChangePursePwdActivity extends BackActivity {
                 Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_LONG).show();
                 return true;
             }
-            if (newpwd1.length() < 6 || newpwd1.length() > 16) {
-                Toast.makeText(this, "密码必须在6-16位", Toast.LENGTH_LONG).show();
+            if (newpwd1.length() < 6 ) {
+                Toast.makeText(this, "密码必须在6位", Toast.LENGTH_LONG).show();
                 return true;
             }
             String auth = Hawk.get(APP.USER_AUTH);

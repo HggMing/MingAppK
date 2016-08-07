@@ -51,7 +51,7 @@ public class NewFriendActivity extends BackActivity {
     @Bind(R.id.m_x_recyclerview)
     RecyclerView mXRecyclerView;
 
-    NewFriendAdapter mAdapter;
+    private NewFriendAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,12 +183,8 @@ class NewFriendAdapter extends BaseRecyclerViewAdapter<NewFriendModel, NewFriend
                                 //同意后，刷新好友列表
                                 EventBus.getDefault().post(new RefreshFriendList());
 
-                                //将用户添加到好友列表，用于在详情中判断，展示好友信息页面
-                                String uid = data.getUid();
-                                List<String> friendUids = Hawk.get(APP.FRIEND_LIST_UID);
-                                friendUids.add(uid);
-                                Hawk.put(APP.FRIEND_LIST_UID, friendUids);
                                 //显示已添加好友的详情页面
+                                String uid = data.getUid();
                                 Intent intent = new Intent(mContext, FriendDetailActivity.class);
                                 intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
                                 mContext.startActivity(intent);

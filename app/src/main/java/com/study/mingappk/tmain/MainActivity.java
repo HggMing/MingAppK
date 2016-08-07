@@ -332,7 +332,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             toolbarTitle.setText(getResources().getText(R.string.tab1_main));
         }
-
     }
 
     /**

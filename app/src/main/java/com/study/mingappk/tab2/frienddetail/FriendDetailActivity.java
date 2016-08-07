@@ -2,6 +2,7 @@ package com.study.mingappk.tab2.frienddetail;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,8 +43,6 @@ public class FriendDetailActivity extends BackActivity {
     ImageView iconHead;
     @Bind(R.id.name)
     TextView name;
-    @Bind(R.id.sex)
-    ImageView sex;
     @Bind(R.id.name2)
     TextView name2;
     @Bind(R.id.fd_remarks)
@@ -165,9 +164,9 @@ public class FriendDetailActivity extends BackActivity {
                 //用户性别
                 String sexNumber = userinfoBean.getSex();
                 if ("0".equals(sexNumber)) {
-                    sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_boy));
+                    name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_sex_boy,0);
                 } else {
-                    sex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sex_girl));
+                    name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_sex_girl,0);
                 }
                 //用户地址
                 String address = userinfoBean.getProvince_name() + userinfoBean.getCity_name() + userinfoBean.getCounty_name()

@@ -25,6 +25,7 @@ import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.model.event.NewFriend2Event;
 import com.study.mingappk.model.event.NewFriendEvent;
 import com.study.mingappk.model.event.NewMsgEvent;
+import com.study.mingappk.model.event.RefreshFriendList;
 import com.study.mingappk.model.service.MyService;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.message.ChatActivity;
@@ -157,6 +158,14 @@ public class PushReceiver extends BroadcastReceiver {
                 chatMsg.setLink(lBean.getLink());//类型：图片or语音
                 MyDB.insert(chatMsg);//保存到数据库
 
+
+                String t = lBean.getTxt();
+                if ("1".equals(lBean.getFrom())&t.length() > 10) {
+                    if ("已经同意添加您为好友".equals(t.substring(t.length() - 10, t.length()))) {
+                        //对方同意添加好友后，刷新好友列表
+                        EventBus.getDefault().post(new RefreshFriendList());
+                    }
+                }
 
                 if (isChatting) {
                     //在聊天界面，不显示通知

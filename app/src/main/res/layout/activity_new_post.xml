@@ -7,41 +7,40 @@
     tools:context="com.study.mingappk.tab3.newpost.NewPostActivity">
 
 
+    <LinearLayout
+        android:id="@+id/edit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/edit_layout"
+        <EditText
+            android:id="@+id/edit"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="170dp"
+            android:background="@null"
+            android:gravity="top|left"
+            android:hint="写点什么吧~"
+            android:maxLength="490"
+            android:paddingBottom="14dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="14dp"
+            android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/edit"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:background="@null"
-                android:maxLength="490"
-                android:gravity="top|left"
-                android:hint="写点什么吧~"
-                android:paddingBottom="14dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingTop="14dp"
-                android:textSize="16sp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gridRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/gridRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="10dp" />
-        </LinearLayout>
     <LinearLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
         <View
@@ -55,7 +54,8 @@
             android:background="@color/input_background"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="12dp">
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
 
             <LinearLayout
                 android:layout_width="0dp"

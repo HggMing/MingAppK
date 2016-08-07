@@ -48,7 +48,7 @@ public class Tab1Adapter extends BaseRecyclerViewAdapter<InstantMsgModel, Tab1Ad
 
         String uName = data.getUname();
         holder.name.setText(uName);
-        if("10000".equals(data.getUid())||"10001".equals(data.getUid())){//小苞谷和客服
+        if ("10000".equals(data.getUid()) || "10001".equals(data.getUid())) {//小苞谷和客服
             holder.name.setTextColor(mContext.getResources().getColor(R.color.purple));
         }
 
@@ -56,18 +56,14 @@ public class Tab1Adapter extends BaseRecyclerViewAdapter<InstantMsgModel, Tab1Ad
         holder.content.setText(msgContent);
 
         String date = data.getTime();
-        if (date != null) {
-            String timeFormat = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
-            holder.time.setText(timeFormat);//最新动态时间
-        } else {
-            holder.time.setText("");
-        }
+        String timeFormat = BaseTools.getTimeFormat(date);
+        holder.time.setText(timeFormat);//最新动态时间
 
-        int count=data.getCount();
-        if(count>0){
+        int count = data.getCount();
+        if (count > 0) {
             holder.badge.setVisibility(View.VISIBLE);
             holder.badge.setText(String.valueOf(count));
-        }else {
+        } else {
             holder.badge.setVisibility(View.GONE);
         }
 

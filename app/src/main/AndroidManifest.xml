@@ -69,6 +69,7 @@
         <activity
             android:name=".tmain.userlogin.SplashActivity"
             android:label="@string/title_activity_splash"
+            android:screenOrientation="portrait"
             android:theme="@style/OpaqueTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -79,94 +80,178 @@
         <activity
             android:name=".tmain.MainActivity"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
             android:theme="@style/OpaqueTheme" />
         <activity
             android:name=".tmain.userlogin.LoginActivity"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
             android:theme="@style/OpaqueTheme" />
         <activity
             android:name=".tab4.scommon.AboutActivity"
-            android:label="@string/title_activity_about" />
+            android:label="@string/title_activity_about"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab4.scommon.AdviceActivity"
             android:label="@string/title_activity_advice"
-            android:windowSoftInputMode="stateHidden" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".tab4.safesetting.ChangePwdActivity"
-            android:label="@string/title_activity_change_pwd" />
+            android:label="@string/title_activity_change_pwd"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".tab4.safesetting.ChangePursePwdActivity"
-            android:label="@string/title_activity_change_purse_pwd" />
+            android:label="@string/title_activity_change_purse_pwd"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".tab4.selfinfo.UserDetailActivity"
-            android:label="@string/title_activity_user_detail" />
+            android:label="@string/title_activity_user_detail"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab4.selfinfo.UpdateUnameActivity"
-            android:label="@string/title_activity_update_uname" />
+            android:label="@string/title_activity_update_uname"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab4.selfinfo.UpdateIdcardActivity"
-            android:label="@string/title_activity_update_idcard" />
+            android:label="@string/title_activity_update_idcard"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab4.selfinfo.UpdateAdressActivity"
-            android:label="@string/title_activity_update_adress" />
+            android:label="@string/title_activity_update_adress"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab3.addfollow.FollowVillageActivity"
-            android:label="@string/title_activity_follow_village" />
+            android:label="@string/title_activity_follow_village"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab3.villagebbs.VillageBbsActivity"
-            android:label="@string/title_activity_village_bbs" />
+            android:label="@string/title_activity_village_bbs"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".common.views.bigimageview.BigImageViewActivity"
-            android:label="@string/title_activity_big_imageview" />
+            android:label="@string/title_activity_big_imageview"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab3.villagesituation.VillageSituationActivity"
-            android:label="@string/title_activity_village_situation" />
-        <activity android:name=".tab3.affairs.GovernmentAffairsActivity" />
+            android:label="@string/title_activity_village_situation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab3.affairs.GovernmentAffairsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab3.newpost.NewPostActivity"
-            android:label="@string/title_activity_new_post" />
+            android:label="@string/title_activity_new_post"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab3.newpost.BigImageViewActivity"
-            android:label="@string/title_activity_big_imageview" />
+            android:label="@string/title_activity_big_imageview"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab3.villagebbs.bbsdetail.BbsDetailActivity"
-            android:label="@string/title_activity_bbs_detail" />
+            android:label="@string/title_activity_bbs_detail"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab4.scommon.SettingCommonActivity"
-            android:label="@string/title_activity_setting_common" />
+            android:label="@string/title_activity_setting_common"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab4.mysetting.MySettingActivity"
-            android:label="@string/title_activity_mysetting" />
+            android:label="@string/title_activity_mysetting"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab2.frienddetail.FriendDetailActivity"
-            android:label="@string/title_activity_friend_detail" />
+            android:label="@string/title_activity_friend_detail"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tab2.frienddetail.RemarkNameActivity"
-            android:label="@string/title_activity_remark_name" />
-        <activity android:name=".tab2.frienddetail.FriendBbsActivity" />
-        <activity android:name=".tab2.message.ChatActivity" />
-        <activity android:name=".tab2.message.BigImageActivity" />
+            android:label="@string/title_activity_remark_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab2.frienddetail.FriendBbsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab2.message.ChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab2.message.BigImageActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tmain.register.TestPhoneNumberActivity"
-            android:label="@string/title_activity_test_phone_number" />
-        <activity android:name=".tmain.register.RegisterActivity" />
-        <activity android:name=".tmain.WebViewActivity" />
-        <activity android:name=".tmain.register.ResetPasswordActivity" />
-        <activity android:name=".tmain.userlogin.facelogin.FaceLoginActivity" />
-        <activity android:name=".tab4.shop.ApplyShopOwnerActivity" />
-        <activity android:name=".tab4.safesetting.RealNameBindingActivity" />
-        <activity android:name=".tab3.villagebbs.likeusers.LikeUserListActivity" />
-        <activity android:name=".tab4.safesetting.SafeSettingActivity" />
+            android:label="@string/title_activity_test_phone_number"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tmain.register.RegisterActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tmain.WebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tmain.register.ResetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".tmain.userlogin.facelogin.FaceLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.ApplyShopOwnerActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.safesetting.RealNameBindingActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab3.villagebbs.likeusers.LikeUserListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.safesetting.SafeSettingActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".common.views.customcamera.TakePhotoActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/OpaqueTheme" />
-        <activity android:name=".tab3.affairs.NewsDetailActivity" />
-        <activity android:name=".tab4.shop.ShowApplyingActivity" />
-        <activity android:name=".tab3.villagesituation.villageinfo.VillageInfoActivity" />
-        <activity android:name=".tab3.villagesituation.villageinfo.VillageInfoDetailActivity" />
-        <activity android:name=".tab3.villagesituation.villagemaster.VillageMasterActivity" />
-        <activity android:name=".tab2.frienddetail.FriendMoreActivity" />
-        <activity android:name=".tab2.newfriend.NewFriendActivity"></activity>
-    </application>
+        <activity
+            android:name=".tab3.affairs.NewsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.ShowApplyingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab3.villagesituation.villageinfo.VillageInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab3.villagesituation.villageinfo.VillageInfoDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab3.villagesituation.villagemaster.VillageMasterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab2.frienddetail.FriendMoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab2.newfriend.NewFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.mysetting.MyPurseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.mysetting.SetPursePwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".tab4.mysetting.TakeMoneyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.mysetting.BindCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.mysetting.AddCardsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
+    </application>
 </manifest>

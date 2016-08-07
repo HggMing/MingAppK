@@ -121,13 +121,8 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<ChatMsgModel, RecyclerV
 
             //消息时间
             String date = data.getSt();
-            if (date != null) {
-                String timeFormat = BaseTools.getTimeFormat01(new Date(Long.valueOf(date + "000")));
-                ((LeftViewHolder) holder).time.setText(timeFormat);
-            } else {
-                ((LeftViewHolder) holder).time.setText("");
-            }
-
+            String timeFormat = BaseTools.getTimeFormat(date);
+            ((LeftViewHolder) holder).time.setText(timeFormat);
             //头像
             FriendsModel friend = MyDB.createDb(mContext).queryById(data.getFrom(), FriendsModel.class);
             String headUrl = friend.getUicon();
@@ -260,12 +255,8 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<ChatMsgModel, RecyclerV
         } else if (holder instanceof RightViewHolder) {//发送消息布局
             //发送消息时间
             String date = data.getSt();//13位数时间戳
-            if (date != null) {
-                String timeFormat = BaseTools.getTimeFormat01(new Date(Long.valueOf(date)));
-                ((RightViewHolder) holder).time.setText(timeFormat);
-            } else {
-                ((RightViewHolder) holder).time.setText("");
-            }
+            String timeFormat = BaseTools.getTimeFormat(date);
+            ((RightViewHolder) holder).time.setText(timeFormat);
 
             //头像
             String headUrl = Hawk.get(APP.ME_HEAD);
