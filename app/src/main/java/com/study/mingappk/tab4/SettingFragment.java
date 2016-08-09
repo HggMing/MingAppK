@@ -64,6 +64,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -474,9 +475,19 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                     .get_IsApply(auth, vid)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<ApplyInfo>() {
+                    .subscribe(new Observer<ApplyInfo>() {
                         @Override
-                        public void call(ApplyInfo applyInfo) {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ApplyInfo applyInfo) {
                             ApplyInfo.DataBean data = applyInfo.getData();
                             if (data != null) {//已申请过，进入查看申请状态页面
                                 Intent intent = new Intent(mActivity, ShowApplyingActivity.class);

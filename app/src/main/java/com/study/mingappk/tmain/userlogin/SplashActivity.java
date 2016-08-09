@@ -23,6 +23,7 @@ import com.study.mingappk.tmain.MainActivity;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Observer;
 import rx.functions.Action1;
 
 public class SplashActivity extends AppCompatActivity {
@@ -106,17 +107,27 @@ public class SplashActivity extends AppCompatActivity {
             goLogin();
         }
         //延迟4s后执行
-//        Observable.timer(4, TimeUnit.SECONDS)
-//                .subscribe(new Action1<Long>() {
-//                    @Override
-//                    public void call(Long aLong) {
-//                        if (!loginname.equals("") && !loginpwd.equals("")) {
-//                            goLoginAuto();
-//                        } else {
-//                            goLogin();
-//                        }
-//                    }
-//                });
+        /*Observable.timer(4, TimeUnit.SECONDS)
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        if (!loginname.equals("") && !loginpwd.equals("")) {
+                            goLoginAuto();
+                        } else {
+                            goLogin();
+                        }
+                    }
+                });*/
     }
 
 

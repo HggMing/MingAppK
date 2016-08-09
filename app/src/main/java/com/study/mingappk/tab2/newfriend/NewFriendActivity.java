@@ -21,9 +21,9 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.database.NewFriendModel;
-import com.study.mingappk.model.event.RefreshFriendList;
 import com.study.mingappk.model.event.NewFriend2Event;
 import com.study.mingappk.model.event.NewFriendEvent;
+import com.study.mingappk.model.event.RefreshFriendList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 import com.study.mingappk.tmain.BackActivity;
@@ -42,8 +42,8 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class NewFriendActivity extends BackActivity {
@@ -174,9 +174,19 @@ class NewFriendAdapter extends BaseRecyclerViewAdapter<NewFriendModel, NewFriend
                         .post_AddAgree(authBody, uidBody)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<ResponseBody>() {
+                        .subscribe(new Observer<ResponseBody>() {
                             @Override
-                            public void call(ResponseBody responseBody) {
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(ResponseBody responseBody) {
                                 data.setType(1);
                                 MyDB.update(data);
                                 notifyDataSetChanged();
@@ -191,7 +201,6 @@ class NewFriendAdapter extends BaseRecyclerViewAdapter<NewFriendModel, NewFriend
                                 activity.finish();
                             }
                         });
-
             }
         });
         //点击拒绝按钮
@@ -202,16 +211,24 @@ class NewFriendAdapter extends BaseRecyclerViewAdapter<NewFriendModel, NewFriend
                         .post_AddUnagree(authBody, uidBody)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<ResponseBody>() {
+                        .subscribe(new Observer<ResponseBody>() {
                             @Override
-                            public void call(ResponseBody responseBody) {
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(ResponseBody responseBody) {
                                 data.setType(2);
                                 MyDB.update(data);
                                 notifyDataSetChanged();
                             }
                         });
-
-
             }
         });
     }

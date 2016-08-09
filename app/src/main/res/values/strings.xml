@@ -105,6 +105,7 @@
     <string name="title_activity_take_money">余额提现</string>
     <string name="title_activity_bind_card">我的银行卡</string>
     <string name="title_activity_add_cards">添加银行卡</string>
+    <string name="title_activity_shopping_address">我的收货地址</string>
 
     <string name="title_activity_apply_shop_owner">申请店长</string>
     <string name="title_activity_show_applying">申请结果</string>

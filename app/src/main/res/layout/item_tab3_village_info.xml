@@ -12,12 +12,13 @@
         android:id="@+id/imageView_1"
         android:layout_width="70dp"
         android:layout_height="56dp"
+        android:layout_centerVertical="true"
         android:layout_marginRight="12dp"
         android:scaleType="centerCrop"
         tools:src="@mipmap/user_home_bg" />
 
     <LinearLayout
-        android:id="@+id/village_title_layout"
+        android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/imageView_1"
@@ -32,18 +33,19 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingRight="10dp"
             android:paddingLeft="0dp"
+            android:paddingRight="10dp"
             android:textColor="@color/font_black_content"
-            android:textSize="18sp"
+            android:textSize="@dimen/textsize_large"
             tools:text="上方村" />
 
         <TextView
             android:id="@+id/tv_time"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:textSize="12sp"
+            android:visibility="visible"
             tools:text="00:00" />
     </LinearLayout>
 
@@ -51,10 +53,13 @@
         android:id="@+id/tv_news"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/title_layout"
+        android:layout_marginTop="1dp"
         android:layout_toEndOf="@id/imageView_1"
         android:layout_toRightOf="@id/imageView_1"
         android:ellipsize="end"
+        android:gravity="bottom"
         android:maxLines="2"
+        android:minLines="2"
         tools:text="我多想回到家乡,再回到她的身旁,看她的温柔善良,来抚慰我的心伤," />
 </RelativeLayout>

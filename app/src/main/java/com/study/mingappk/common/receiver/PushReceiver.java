@@ -36,6 +36,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Collections;
 import java.util.List;
 
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -73,9 +74,19 @@ public class PushReceiver extends BroadcastReceiver {
                         getObservable_RegisterChat(me, 1, "yxj", cid)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<Result>() {
+                        .subscribe(new Observer<Result>() {
                             @Override
-                            public void call(Result result) {
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(Result result) {
 
                             }
                         });
@@ -98,9 +109,19 @@ public class PushReceiver extends BroadcastReceiver {
                 .get_MessageList(me_uid, "yxj", 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<MessageList>() {
+                .subscribe(new Observer<MessageList>() {
                     @Override
-                    public void call(MessageList messageList) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(MessageList messageList) {
                         //接收到新消息！！
                         List<MessageList.LBean> lBeanList = messageList.getL();
                         Collections.reverse(lBeanList);//列表反向

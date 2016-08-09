@@ -30,6 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -235,9 +236,19 @@ public class FriendDetailActivity extends BackActivity {
                             .get_AddFriendRequest(auth, phone)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Action1<Result>() {
+                            .subscribe(new Observer<Result>() {
                                 @Override
-                                public void call(Result result) {
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onNext(Result result) {
                                     Toast.makeText(FriendDetailActivity.this, result.getMsg(), Toast.LENGTH_LONG).show();
                                     finish();
                                 }

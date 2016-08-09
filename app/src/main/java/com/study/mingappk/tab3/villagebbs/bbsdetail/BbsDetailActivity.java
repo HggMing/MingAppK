@@ -59,6 +59,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -620,15 +621,25 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                         MyServiceClient.getService().get_BbsCommentList(auth, pid, 1, 3)
                                 .subscribeOn(Schedulers.newThread())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Action1<BbsCommentList>() {
+                                .subscribe(new Observer<BbsCommentList>() {
                                     @Override
-                                    public void call(BbsCommentList bbsCommentList) {
+                                    public void onCompleted() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+
+                                    }
+
+                                    @Override
+                                    public void onNext(BbsCommentList bbsCommentList) {
                                         BbsCommentList.DataBean.ListBean listBean = null;
                                         int k;
-                                        if(bbsCommentList.getData().getList().size()<3){
-                                            k=bbsCommentList.getData().getList().size();
-                                        }else{
-                                            k=3;
+                                        if (bbsCommentList.getData().getList().size() < 3) {
+                                            k = bbsCommentList.getData().getList().size();
+                                        } else {
+                                            k = 3;
                                         }
                                         for (int i = 0; i < k; i++) {
                                             boolean isMyComment = bbsCommentList.getData().getList().get(i).getConts().equals(conts);

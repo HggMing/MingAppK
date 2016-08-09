@@ -184,8 +184,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tmain.register.RegisterActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".tmain.WebViewActivity"
             android:screenOrientation="portrait" />
@@ -198,12 +198,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tab4.shop.ApplyShopOwnerActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".tab4.safesetting.RealNameBindingActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".tab3.villagebbs.likeusers.LikeUserListActivity"
             android:screenOrientation="portrait" />
@@ -236,22 +236,29 @@
             android:name=".tab2.newfriend.NewFriendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.mysetting.MyPurseActivity"
+            android:name=".tab4.mysetting.mypurse.MyPurseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.mysetting.SetPursePwdActivity"
+            android:name=".tab4.mysetting.mypurse.SetPursePwdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".tab4.mysetting.TakeMoneyActivity"
+            android:name=".tab4.mysetting.mypurse.TakeMoneyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.mysetting.BindCardActivity"
+            android:name=".tab4.mysetting.mypurse.BindCardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.mysetting.AddCardsActivity"
+            android:name=".tab4.mysetting.mypurse.AddCardsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-
+        <activity
+            android:name=".tab4.mysetting.shoppingaddress.ShoppingAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.mysetting.shoppingaddress.EditShoppingAdressActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
+
 </manifest>

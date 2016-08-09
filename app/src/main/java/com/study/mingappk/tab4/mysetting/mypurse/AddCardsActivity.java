@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4.mysetting;
+package com.study.mingappk.tab4.mysetting.mypurse;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,13 +15,13 @@ import com.study.mingappk.tmain.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class AddCardsActivity extends BackActivity {
 
-    public static String TYPE="type";//之前无银行卡，则为-1，之前已有银行卡，则为0.
+    public static String TYPE = "type";//之前无银行卡，则为-1，之前已有银行卡，则为0.
     @Bind(R.id.et_name)
     TintEditText etName;
     @Bind(R.id.et_number)
@@ -72,25 +72,30 @@ public class AddCardsActivity extends BackActivity {
                     .post_AddCard(auth, bank_name, bank_no, bank_true_name)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<ResultOther>() {
+                    .subscribe(new Observer<ResultOther>() {
                         @Override
-                        public void call(ResultOther resultOther) {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ResultOther resultOther) {
                             //添加的卡在最上方，则选择的序号+1
-                            int type=getIntent().getIntExtra(TYPE,-1);
-                            int mSelect=Hawk.get(APP.SELECTED_CARD,type);
-                            Hawk.put(APP.SELECTED_CARD,mSelect+1);
+                            int type = getIntent().getIntExtra(TYPE, -1);
+                            int mSelect = Hawk.get(APP.SELECTED_CARD, type);
+                            Hawk.put(APP.SELECTED_CARD, mSelect + 1);
 
                             setResult(RESULT_OK);
                             finish();
                         }
                     });
-
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
 }

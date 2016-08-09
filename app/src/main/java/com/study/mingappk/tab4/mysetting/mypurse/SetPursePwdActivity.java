@@ -1,6 +1,5 @@
-package com.study.mingappk.tab4.mysetting;
+package com.study.mingappk.tab4.mysetting.mypurse;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,14 +10,13 @@ import com.bilibili.magicasakura.widgets.TintEditText;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Subscriber;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -75,9 +73,19 @@ public class SetPursePwdActivity extends BackActivity {
             .post_SetPursePWD(auth,pwd1)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Result>() {
+                    .subscribe(new Observer<Result>() {
                         @Override
-                        public void call(Result result) {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Result result) {
                             if(result.getErr()==0){
                                 Toast.makeText(SetPursePwdActivity.this, "钱包密码设置成功！", Toast.LENGTH_SHORT).show();
                                 //进入提现页面

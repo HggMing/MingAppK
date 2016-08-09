@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.study.mingappk.tab4.mysetting.MyPurseActivity">
+    tools:context=".tab4.mysetting.mypurse.MyPurseActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"

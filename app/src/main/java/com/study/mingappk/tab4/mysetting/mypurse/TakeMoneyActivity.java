@@ -1,11 +1,10 @@
-package com.study.mingappk.tab4.mysetting;
+package com.study.mingappk.tab4.mysetting.mypurse;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,7 +14,6 @@ import com.bilibili.magicasakura.widgets.TintEditText;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.views.dialog.Dialog_InputPwd;
 import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.Result;
@@ -26,6 +24,7 @@ import com.study.mingappk.tmain.BackActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -76,9 +75,19 @@ public class TakeMoneyActivity extends BackActivity {
                 .get_CardList(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<CardList>() {
+                .subscribe(new Observer<CardList>() {
                     @Override
-                    public void call(CardList cardList) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(CardList cardList) {
                         if (!cardList.getData().isEmpty()) {
                             CardList.DataBean dataBean = cardList.getData().get(mSelectedCard);
                             //显示开户行
@@ -107,9 +116,19 @@ public class TakeMoneyActivity extends BackActivity {
                 .get_Money(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ResultOther>() {
+                .subscribe(new Observer<ResultOther>() {
                     @Override
-                    public void call(ResultOther resultOther) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultOther resultOther) {
                         total_money = resultOther.getMoney();
                         totalMoney.setText("当前余额" + total_money + "元");
                     }
@@ -192,9 +211,19 @@ public class TakeMoneyActivity extends BackActivity {
                                         .post_TakeMoney(auth, money, pwd, bank_name, bank_no, bank_user_name)
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Action1<Result>() {
+                                        .subscribe(new Observer<Result>() {
                                             @Override
-                                            public void call(Result result) {
+                                            public void onCompleted() {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Throwable e) {
+
+                                            }
+
+                                            @Override
+                                            public void onNext(Result result) {
                                                 Toast.makeText(TakeMoneyActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                                 finish();
                                             }

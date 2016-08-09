@@ -21,6 +21,7 @@ import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.RecommendVillage;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ResultOther;
+import com.study.mingappk.model.bean.ShoppingAddress;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.bean.UserInfoByPhone;
@@ -356,9 +357,10 @@ public interface MyService {
 
     /**
      * 村况里，荣誉室，活动，美食
-     * @param vid  村id
-     * @param type 1、荣誉室2、活动3、村委（Item不同，单独写）4、美食
-     * @param page 当前页码，默认为：1页
+     *
+     * @param vid      村id
+     * @param type     1、荣誉室2、活动3、村委（Item不同，单独写）4、美食
+     * @param page     当前页码，默认为：1页
      * @param pagesize 每页条数，默认20条
      * @return 详细列表清单
      */
@@ -371,14 +373,16 @@ public interface MyService {
 
     /**
      * 村况里，村官列表
+     *
      * @param auth 验证参数
-     * @param vid 村id
+     * @param vid  村id
      * @return 村官列表
      */
     @GET("cg/list")
     Observable<VillageMaster> get_VillageMasterList(
             @Query("auth") String auth,
             @Query("vid") String vid);
+
     /**
      * 该接口用户帖子的附件上传，包括图片其他压缩包等
      *
@@ -552,9 +556,9 @@ public interface MyService {
 
     /**
      * 通过手机号获取用户的档案信息，用于查询以便添加好友
-
+     *
      * @param auth 认证信息
-     * @param tel 手机号
+     * @param tel  手机号
      * @return 用户信息
      */
     @GET("friend/getuserinfo")
@@ -564,8 +568,9 @@ public interface MyService {
 
     /**
      * 发送添加好友的请求
+     *
      * @param auth 认证信息
-     * @param tel 手机号
+     * @param tel  手机号
      * @return 结果msg
      */
     @GET("friend/adde")
@@ -575,8 +580,9 @@ public interface MyService {
 
     /**
      * 同意和拒绝添加好友接口
+     *
      * @param auth 认证信息
-     * @param uid 用户id
+     * @param uid  用户id
      * @return String
      */
     @Multipart
@@ -584,6 +590,7 @@ public interface MyService {
     Observable<ResponseBody> post_AddAgree(
             @Part("auth") RequestBody auth,
             @Part("uid") RequestBody uid);
+
     @Multipart
     @POST("friend/unagree")
     Observable<ResponseBody> post_AddUnagree(
@@ -625,8 +632,9 @@ public interface MyService {
 
     /**
      * 删除好友接口
+     *
      * @param auth 认证信息
-     * @param uid 好友id
+     * @param uid  好友id
      * @return 结果msg
      */
     @FormUrlEncoded
@@ -799,8 +807,10 @@ public interface MyService {
             @Field("auth") String auth,
             @Field("old_pwd") String old_pwd,
             @Field("new_pwd") String new_pwd);
+
     /**
      * 查询余额，及是否绑定银行卡
+     *
      * @param auth 认证信息
      * @return money，is_bind
      */
@@ -810,8 +820,9 @@ public interface MyService {
 
     /**
      * 查询收支明细
+     *
      * @param auth 认证信息
-     * @return  明细
+     * @return 明细
      */
     @GET("amount/money_detail")
     Observable<MoneyDetail> get_MoneyDetail(
@@ -819,6 +830,7 @@ public interface MyService {
 
     /**
      * 获取绑定的银行卡列表
+     *
      * @param auth 认证信息
      * @return 列表
      */
@@ -828,9 +840,10 @@ public interface MyService {
 
     /**
      * 添加绑定银行卡接口
-     * @param auth 认证信息
-     * @param bank_name 开户行
-     * @param bank_no 银行卡号
+     *
+     * @param auth           认证信息
+     * @param bank_name      开户行
+     * @param bank_no        银行卡号
      * @param bank_true_name 开卡人姓名
      * @return insert_id
      */
@@ -843,9 +856,10 @@ public interface MyService {
             @Field("bank_true_name") String bank_true_name);
 
     /**
-     *取消绑定银行卡接口
+     * 取消绑定银行卡接口
+     *
      * @param auth 认证信息
-     * @param id 编号
+     * @param id   编号
      * @return 结果msg
      */
     @FormUrlEncoded
@@ -853,13 +867,15 @@ public interface MyService {
     Observable<Result> post_DelCard(
             @Field("auth") String auth,
             @Field("id") String id);
+
     /**
      * 提现接口
-     * @param auth 认证信息
-     * @param money 提现金额
-     * @param pwd 钱包密码
-     * @param bank_name 开户行
-     * @param bank_no 银行卡号
+     *
+     * @param auth           认证信息
+     * @param money          提现金额
+     * @param pwd            钱包密码
+     * @param bank_name      开户行
+     * @param bank_no        银行卡号
      * @param bank_true_name 开卡人姓名
      * @return
      */
@@ -872,6 +888,52 @@ public interface MyService {
             @Field("bank_name") String bank_name,
             @Field("bank_no") String bank_no,
             @Field("bank_true_name") String bank_true_name);
+
+    /**
+     * 获取收货地址列表
+     * @param auth 认证信息
+     * @return 列表
+     */
+    @GET("orders/addrlist")
+    Observable<ShoppingAddress> get_ShoppingAddress(
+            @Query("auth") String auth);
+
+    /**
+     * 添加收货地址列表
+     * @param auth 认证信息
+     * @param uname 收货人姓名
+     * @param addr 收货地址
+     * @param tel 手机
+     * @param is_def 是否默认
+     * @param zipcode 邮政编码
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("orders/newaddr")
+    Observable<Result> post_AddShoppingAddress(
+            @Field("auth") String auth,
+            @Field("uname") String uname,
+            @Field("addr") String addr,
+            @Field("tel") String tel,
+            @Field("is_def") String is_def,
+            @Field("zipcode") String zipcode);
+    //修改收货地址
+    @FormUrlEncoded
+    @POST("orders/editaddr")
+    Observable<Result> post_EditShoppingAddress(
+            @Field("auth") String auth,
+            @Field("id") String id,
+            @Field("uname") String uname,
+            @Field("addr") String addr,
+            @Field("tel") String tel,
+            @Field("is_def") String is_def,
+            @Field("zipcode") String zipcode);
+    //删除地址
+    @FormUrlEncoded
+    @POST("orders/deladdr")
+    Observable<Result> post_DelShoppingAddress(
+            @Field("auth") String auth,
+            @Field("id") String id);
 
 
 }

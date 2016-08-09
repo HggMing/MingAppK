@@ -1,6 +1,5 @@
 package com.study.mingappk.tab2.friendlist;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -32,10 +31,10 @@ import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.model.database.FriendsModel;
 import com.study.mingappk.model.database.InstantMsgModel;
 import com.study.mingappk.model.database.MyDB;
-import com.study.mingappk.model.event.RefreshFriendList;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.model.event.NewFriendEvent;
+import com.study.mingappk.model.event.RefreshFriendList;
 import com.study.mingappk.model.event.ShowSideBarEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
@@ -55,10 +54,13 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+/**
+ * 老乡
+ */
 public class FriendListFragment extends Fragment implements FriendListAdapter.OnItemClickListener {
     AppCompatActivity mActivity;
     @Bind(R.id.contact_member)
@@ -422,9 +424,19 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
                                     .post_DelFriend(auth, mList.get(position).getUid())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Action1<Result>() {
+                                    .subscribe(new Observer<Result>() {
                                         @Override
-                                        public void call(Result result) {
+                                        public void onCompleted() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+
+                                        }
+
+                                        @Override
+                                        public void onNext(Result result) {
                                             if (result.getErr() == 0) {
                                                 //刷新好友列表
                                                 EventBus.getDefault().post(new RefreshFriendList());

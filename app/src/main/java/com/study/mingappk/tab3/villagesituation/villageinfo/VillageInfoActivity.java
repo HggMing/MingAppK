@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -110,9 +111,19 @@ public class VillageInfoActivity extends BackActivity implements BaseRecyclerVie
                 .get_VillageInfoList(vid, type, page, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<VillageInfo>() {
+                .subscribe(new Observer<VillageInfo>() {
                     @Override
-                    public void call(VillageInfo villageInfo) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(VillageInfo villageInfo) {
                         mList.addAll(villageInfo.getData());
                         if (mList.isEmpty()) {
                             contentEmpty.setVisibility(View.VISIBLE);

@@ -1,17 +1,14 @@
 package com.study.mingappk.tab3.villagebbs;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -82,7 +79,6 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_bbs_list);
         ButterKnife.bind(this);
         //设置fab
@@ -118,7 +114,7 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        BaseTools.transparentStatusBar(this);//透明状态栏
+        BaseTools.transparentStatusBar2(this);//透明状态栏
 
         //获取当前app主题的颜色,设置收缩后颜色
         int themeColor=   ThemeUtils.getColorById(this, R.color.theme_color_primary);

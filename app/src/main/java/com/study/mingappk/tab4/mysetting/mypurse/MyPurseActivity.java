@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4.mysetting;
+package com.study.mingappk.tab4.mysetting.mypurse;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -29,6 +28,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -64,9 +64,19 @@ public class MyPurseActivity extends BackActivity {
                 .get_Money(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ResultOther>() {
+                .subscribe(new Observer<ResultOther>() {
                     @Override
-                    public void call(ResultOther resultOther) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultOther resultOther) {
                         money.setText(resultOther.getMoney());
                     }
                 });
@@ -75,9 +85,19 @@ public class MyPurseActivity extends BackActivity {
                 .get_MoneyDetail(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<MoneyDetail>() {
+                .subscribe(new Observer<MoneyDetail>() {
                     @Override
-                    public void call(MoneyDetail moneyDetail) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(MoneyDetail moneyDetail) {
                         mList.addAll(moneyDetail.getData().getList());
                         if (mList.isEmpty()) {
                             contentEmpty.setVisibility(View.VISIBLE);
@@ -105,77 +125,88 @@ public class MyPurseActivity extends BackActivity {
     @OnClick(R.id.take_money)
     public void onClick() {
         //检测是否设置钱包密码
-        String auth= Hawk.get(APP.USER_AUTH);
+        String auth = Hawk.get(APP.USER_AUTH);
         MyServiceClient.getService()
                 .get_IsSetPWD(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ResultOther>() {
+                .subscribe(new Observer<ResultOther>() {
                     @Override
-                    public void call(ResultOther resultOther) {
-                        if(resultOther.getIs_pwd()==1){//已设置密码
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResultOther resultOther) {
+                        if (resultOther.getIs_pwd() == 1) {//已设置密码
 //                            Toast.makeText(MyPurseActivity.this, "提现", Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(MyPurseActivity.this,TakeMoneyActivity.class);
+                            Intent intent = new Intent(MyPurseActivity.this, TakeMoneyActivity.class);
                             startActivity(intent);
-                        }else{
+                        } else {
                             //设置钱包密码
-                            Intent intent=new Intent(MyPurseActivity.this,SetPursePwdActivity.class);
+                            Intent intent = new Intent(MyPurseActivity.this, SetPursePwdActivity.class);
                             startActivity(intent);
                         }
                     }
                 });
+    }
 
+    static class MyPurseAdapter extends BaseRecyclerViewAdapter<MoneyDetail.DataBean.ListBean, MyPurseAdapter.ViewHolder> {
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tab4_my_purse, parent, false);
+            return new ViewHolder(mView);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            Context mContext = holder.itemView.getContext();
+            MoneyDetail.DataBean.ListBean data = mList.get(position);
+
+            //显示奖励类型
+            int type = Integer.valueOf(data.getTypes());
+            String[] titleName = mContext.getResources().getStringArray(R.array.money_details);
+            holder.title.setText(titleName[type]);
+
+            //显示时间
+            String date = data.getCtime();
+            String timeFormat = BaseTools.getTimeFormat(date);
+            holder.time.setText(timeFormat);
+
+            //显示获得方式备注
+            holder.content.setText(data.getMemo());
+            //显示收支
+            if (type == 2 || type == 5) {
+                holder.pointsChange.setText("-" + data.getMoney());
+                holder.pointsChange.setTextColor(mContext.getResources().getColor(R.color.red));
+            } else {
+                holder.pointsChange.setText("+" + data.getMoney());
+                holder.pointsChange.setTextColor(mContext.getResources().getColor(R.color.font_green));
+            }
+        }
+
+        static class ViewHolder extends RecyclerView.ViewHolder {
+            @Bind(R.id.title)
+            TextView title;
+            @Bind(R.id.time)
+            TextView time;
+            @Bind(R.id.content)
+            TextView content;
+            @Bind(R.id.pointsChange)
+            TextView pointsChange;
+
+            ViewHolder(View view) {
+                super(view);
+                ButterKnife.bind(this, view);
+            }
+        }
     }
 }
 
-class MyPurseAdapter extends BaseRecyclerViewAdapter<MoneyDetail.DataBean.ListBean, MyPurseAdapter.ViewHolder> {
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tab4_my_purse, parent, false);
-        return new ViewHolder(mView);
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Context mContext = holder.itemView.getContext();
-        MoneyDetail.DataBean.ListBean data = mList.get(position);
-
-        //显示奖励类型
-        int type =Integer.valueOf(data.getTypes());
-        String[] titleName=mContext.getResources().getStringArray(R.array.money_details);
-        holder.title.setText(titleName[type]);
-
-        //显示时间
-        String date = data.getCtime();
-        String timeFormat = BaseTools.getTimeFormat(date);
-        holder.time.setText(timeFormat);
-
-        //显示获得方式备注
-        holder.content.setText(data.getMemo());
-        //显示收支
-        if (type==2||type==5) {
-            holder.pointsChange.setText("-" + data.getMoney());
-            holder.pointsChange.setTextColor(mContext.getResources().getColor(R.color.red));
-        } else {
-            holder.pointsChange.setText("+"+data.getMoney());
-            holder.pointsChange.setTextColor(mContext.getResources().getColor(R.color.font_green));
-        }
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.title)
-        TextView title;
-        @Bind(R.id.time)
-        TextView time;
-        @Bind(R.id.content)
-        TextView content;
-        @Bind(R.id.pointsChange)
-        TextView pointsChange;
-
-        ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-    }
-}

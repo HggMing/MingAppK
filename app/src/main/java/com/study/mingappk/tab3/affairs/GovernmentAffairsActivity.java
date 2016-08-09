@@ -23,6 +23,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 政务
+ */
 public class GovernmentAffairsActivity extends BaseActivity {
 
     @Bind(R.id.id_toolbar)

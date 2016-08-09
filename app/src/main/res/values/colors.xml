@@ -79,6 +79,8 @@
     <color name="black">#ff000000</color>
     <color name="stand_bg">#ffffffff</color>
     <color name="divider_color">#dedede</color>
+    <color name="card">#d2ba04</color>
+
     <!--tab4文字-->
     <color name="font_black_comment">#ff666666</color>
     <color name="font_black_content">#ff222222</color>

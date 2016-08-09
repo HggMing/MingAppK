@@ -65,6 +65,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -146,11 +147,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                Toast.makeText(FollowVillageActivity.this, "搜索文字改变", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "搜索文字改变", Toast.LENGTH_SHORT).show();
                 textSearch.setText(newText);
                 searchText = newText;
-                viewPager.setVisibility(View.GONE);
-                searchPage.setVisibility(View.VISIBLE);
                 return false;
             }
         });
@@ -158,14 +157,14 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-//                Toast.makeText(FollowVillageActivity.this, "搜索打开", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "搜索打开", Toast.LENGTH_SHORT).show();
                 viewPager.setVisibility(View.GONE);
                 searchPage.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onSearchViewClosed() {
-//                Toast.makeText(FollowVillageActivity.this, "搜索关闭", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "搜索关闭", Toast.LENGTH_SHORT).show();
                 viewPager.setVisibility(View.VISIBLE);
                 searchPage.setVisibility(View.GONE);
             }
@@ -184,9 +183,19 @@ public class MainActivity extends AppCompatActivity {
                 .get_MessageList(me_uid, "yxj", 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<MessageList>() {
+                .subscribe(new Observer<MessageList>() {
                     @Override
-                    public void call(MessageList messageList) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(MessageList messageList) {
                         //接收到新消息！！
                         List<MessageList.LBean> lBeanList = messageList.getL();
                         //列表反向
@@ -210,9 +219,9 @@ public class MainActivity extends AppCompatActivity {
 
                                 ChatMsgModel chatMsg = new ChatMsgModel();
                                 chatMsg.setType(ChatMsgModel.ITEM_TYPE_LEFT);//接收消息
-                                if("1".equals(lBean.getFrom())){
+                                if ("1".equals(lBean.getFrom())) {
                                     chatMsg.setFrom("10001");//系统消息由"我们村客服"发来
-                                }else {
+                                } else {
                                     chatMsg.setFrom(lBean.getFrom());//消息来源用户id
                                 }
                                 chatMsg.setTo(me_uid);
@@ -356,13 +365,14 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 接收到新的朋友请求消息，更新tab2处消息徽章计数
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showCount2(NewFriendEvent event) {
-        List<NewFriendModel> nFriends=MyDB.getQueryAll(NewFriendModel.class);
+        List<NewFriendModel> nFriends = MyDB.getQueryAll(NewFriendModel.class);
         int count = 0;
-        for (NewFriendModel nFriend:nFriends) {
+        for (NewFriendModel nFriend : nFriends) {
             count += nFriend.getCount();
         }
         if (count > 0) {
@@ -413,9 +423,19 @@ public class MainActivity extends AppCompatActivity {
                 .get_UserInfoByPhone(auth, searchText)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<UserInfoByPhone>() {
+                .subscribe(new Observer<UserInfoByPhone>() {
                     @Override
-                    public void call(UserInfoByPhone userInfoByPhone) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(UserInfoByPhone userInfoByPhone) {
                         if (userInfoByPhone.getErr() == 0) {
                             String uid = userInfoByPhone.getData().getUid();
                             Intent intent = new Intent(MainActivity.this, FriendDetailActivity.class);

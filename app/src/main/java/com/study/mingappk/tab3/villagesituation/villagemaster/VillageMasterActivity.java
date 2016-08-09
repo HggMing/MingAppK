@@ -23,10 +23,14 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+/**
+ * 村委
+ */
 public class VillageMasterActivity extends BackActivity {
 
     @Bind(R.id.m_x_recyclerview)
@@ -78,9 +82,19 @@ public class VillageMasterActivity extends BackActivity {
                 .get_VillageMasterList(auth,vid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<VillageMaster>() {
+                .subscribe(new Observer<VillageMaster>() {
                     @Override
-                    public void call(VillageMaster villageMaster) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(VillageMaster villageMaster) {
                         mList.addAll(villageMaster.getData().getList());
                         if (mList.isEmpty()) {
                             contentEmpty.setVisibility(View.VISIBLE);

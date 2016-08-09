@@ -42,6 +42,7 @@ import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -211,9 +212,19 @@ public class ApplyShopOwnerActivity extends BackActivity {
                             .post_UploadImage(authBody, requestBody)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Action1<UploadFiles>() {
+                            .subscribe(new Observer<UploadFiles>() {
                                 @Override
-                                public void call(UploadFiles uploadFiles) {
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onNext(UploadFiles uploadFiles) {
                                     cid_img1 = Integer.parseInt(uploadFiles.getInsert_id());
                                 }
                             });
@@ -242,9 +253,19 @@ public class ApplyShopOwnerActivity extends BackActivity {
                             .post_UploadImage(authBody, requestBody)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Action1<UploadFiles>() {
+                            .subscribe(new Observer<UploadFiles>() {
                                 @Override
-                                public void call(UploadFiles uploadFiles) {
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onNext(UploadFiles uploadFiles) {
                                     cid_img2 = Integer.parseInt(uploadFiles.getInsert_id());
                                 }
                             });
@@ -351,9 +372,19 @@ public class ApplyShopOwnerActivity extends BackActivity {
                         .post_ApplyMaster(auth, vid, uname, contact, conts, sex, edu, cid_img1, cid_img2, q_img, brithday)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<Result>() {
+                        .subscribe(new Observer<Result>() {
                             @Override
-                            public void call(Result result) {
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(Result result) {
                                 if (result.getErr() == 0) {
                                     //申请成功后，显示申请中界面
                                     Intent intent1 = new Intent(ApplyShopOwnerActivity.this, ShowApplyingActivity.class);
@@ -416,9 +447,19 @@ public class ApplyShopOwnerActivity extends BackActivity {
                         .post_UploadImage(authBody, requestBody)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<UploadFiles>() {
+                        .subscribe(new Observer<UploadFiles>() {
                             @Override
-                            public void call(UploadFiles uploadFiles) {
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(UploadFiles uploadFiles) {
                                 q_img = Integer.parseInt(uploadFiles.getInsert_id());
                             }
                         });

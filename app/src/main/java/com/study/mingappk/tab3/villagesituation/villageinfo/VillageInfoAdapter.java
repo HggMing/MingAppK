@@ -60,8 +60,8 @@ public class VillageInfoAdapter extends BaseRecyclerViewAdapter<VillageInfo.Data
         TextView tvTitle;
         @Bind(R.id.tv_time)
         TextView tvTime;
-        @Bind(R.id.village_title_layout)
-        LinearLayout villageTitleLayout;
+        @Bind(R.id.title_layout)
+        LinearLayout titleLayout;
         @Bind(R.id.tv_news)
         TextView tvNews;
         @Bind(R.id.tab3_item)

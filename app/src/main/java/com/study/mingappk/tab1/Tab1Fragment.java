@@ -15,14 +15,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.study.mingappk.R;
-import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.database.InstantMsgModel;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.tab2.message.ChatActivity;
-import com.study.mingappk.tab4.safesetting.RealNameBindingActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,7 +31,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-
+/**
+ * 动态
+ */
 public class Tab1Fragment extends Fragment implements Tab1Adapter.OnItemClickListener {
     AppCompatActivity mActivity;
     @Bind(R.id.m_x_recyclerview)
