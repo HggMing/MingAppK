@@ -140,7 +140,7 @@ public class FaceLoginActivity extends BackActivity {
             if (resultCode == RESULT_OK) {
                 btnFace.setVisibility(View.GONE);
                 imgFaceretake.setVisibility(View.VISIBLE);
-                photoPath = APP.FILE_PATH + "CameraCache/" + TakePhotoActivity.FACE + ".jpg";
+                photoPath = APP.FILE_PATH + "UserCache/" + TakePhotoActivity.FACE + ".jpg";
                 Glide.with(FaceLoginActivity.this)
                         .load(photoPath)
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -262,6 +262,7 @@ public class FaceLoginActivity extends BackActivity {
                                 .put(APP.USER_AUTH, login.getAuth())//保存认证信息
                                 .put(APP.ME_UID, login.getInfo().getUid())
                                 .put(APP.IS_SHOP_OWNER, login.getShopowner().getIs_shopowner())
+                                .put(APP.LOGIN_NAME,etPhone.getText().toString().trim())
                                 .commit();
                         Intent intent = new Intent();
                         intent.setClass(FaceLoginActivity.this, MainActivity.class);

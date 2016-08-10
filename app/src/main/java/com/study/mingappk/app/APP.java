@@ -36,7 +36,6 @@ public class APP extends Application implements ThemeUtils.switchColor {
     public static final String SELECTED_CARD = "selected_card";//存储用户的默认提现银行卡，注销登录时须清空。
 
 
-
     /**
      * 单例模式中获取唯一的Application实例
      */

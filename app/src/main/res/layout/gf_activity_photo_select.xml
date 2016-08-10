@@ -159,6 +159,7 @@
             android:backgroundTint="@android:color/white"
             android:cacheColorHint="@android:color/transparent"
             android:divider="#d2d2d7"
+            android:visibility="gone"
             android:dividerHeight="0.5dp" />
     </LinearLayout>
 

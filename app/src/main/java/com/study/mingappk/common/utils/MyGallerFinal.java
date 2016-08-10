@@ -138,7 +138,7 @@ public class MyGallerFinal {
                 .setPauseOnScrollListener(pauseOnScrollListener)//设置imageloader滑动加载图片优化OnScrollListener,根据选择的ImageLoader来选择PauseOnScrollListener
                 .setNoAnimcation(true)//关闭动画
                 .setEditPhotoCacheFolder(new File(APP.FILE_PATH + "EditTemp/"))//配置编辑（裁剪和旋转）功能产生的cache文件保存目录，不做配置的话默认保存在/sdcard/GalleryFinal/edittemp/
-                .setTakePhotoFolder(new File(APP.FILE_PATH, "CameraCache/"))//设置拍照保存目录，默认是/sdcard/DICM/GalleryFinal/
+                .setTakePhotoFolder(new File(APP.FILE_PATH, "MyCamera/"))//设置拍照保存目录，默认是/sdcard/DICM/GalleryFinal/
                 .build();
     }
 }

@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ming.toolsfinal.adapter.RecyclingPagerAdapter;
+import com.study.mingappk.common.views.gallertools.adapter.RecyclingPagerAdapter;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public abstract class ViewHolderRecyclingPagerAdapter<VH extends ViewHolderRecyc
 
     public ViewHolderRecyclingPagerAdapter(Context context, List<T> list) {
         this.mContext = context;
-        this.mList= list;
+        this.mList = list;
         this.mInflater = LayoutInflater.from(mContext);
     }
 

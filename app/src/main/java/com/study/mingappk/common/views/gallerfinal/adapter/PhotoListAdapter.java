@@ -24,12 +24,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 
-
-import com.ming.toolsfinal.adapter.ViewHolderAdapter;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.common.views.gallerfinal.widget.GFImageView;
+import com.study.mingappk.common.views.gallertools.adapter.ViewHolderAdapter;
 
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class PhotoListAdapter extends ViewHolderAdapter<PhotoListAdapter.PhotoVi
         super(activity, list);
         this.mSelectList = selectList;
         this.mScreenWidth = screenWidth;
-        this.mRowWidth = mScreenWidth/3;
+        this.mRowWidth = mScreenWidth / 3;
         this.mActivity = activity;
     }
 
@@ -78,7 +77,7 @@ public class PhotoListAdapter extends ViewHolderAdapter<PhotoListAdapter.PhotoVi
             holder.mView.setAnimation(AnimationUtils.loadAnimation(mActivity, GalleryFinal.getCoreConfig().getAnimation()));
         }
         holder.mIvCheck.setImageResource(GalleryFinal.getGalleryTheme().getIconCheck());
-        if ( GalleryFinal.getFunctionConfig().isMutiSelect() ) {
+        if (GalleryFinal.getFunctionConfig().isMutiSelect()) {
             holder.mIvCheck.setVisibility(View.VISIBLE);
             if (mSelectList.contains(photoInfo)) {
                 holder.mIvCheck.setBackgroundColor(GalleryFinal.getGalleryTheme().getCheckSelectedColor());
@@ -100,6 +99,7 @@ public class PhotoListAdapter extends ViewHolderAdapter<PhotoListAdapter.PhotoVi
         public GFImageView mIvThumb;
         public ImageView mIvCheck;
         View mView;
+
         public PhotoViewHolder(View view) {
             super(view);
             mView = view;

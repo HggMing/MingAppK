@@ -19,13 +19,13 @@ package com.study.mingappk.common.views.gallerfinal;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.ming.toolsfinal.DeviceUtils;
-import com.ming.toolsfinal.StringUtils;
-import com.ming.toolsfinal.io.FileUtils;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.common.views.gallerfinal.utils.ILogger;
 import com.study.mingappk.common.views.gallerfinal.utils.Utils;
+import com.study.mingappk.common.views.gallertools.DeviceUtils;
+import com.study.mingappk.common.views.gallertools.StringUtils;
+import com.study.mingappk.common.views.gallertools.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;

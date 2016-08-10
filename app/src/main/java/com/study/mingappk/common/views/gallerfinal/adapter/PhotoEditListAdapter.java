@@ -21,13 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-
-import com.ming.toolsfinal.adapter.ViewHolderAdapter;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 import com.study.mingappk.common.views.gallerfinal.PhotoEditActivity;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.common.views.gallerfinal.widget.GFImageView;
+import com.study.mingappk.common.views.gallertools.adapter.ViewHolderAdapter;
 
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class PhotoEditListAdapter extends ViewHolderAdapter<PhotoEditListAdapter
     public PhotoEditListAdapter(PhotoEditActivity activity, List<PhotoInfo> list, int screenWidth) {
         super(activity, list);
         mActivity = activity;
-        this.mRowWidth = screenWidth/5;
+        this.mRowWidth = screenWidth / 5;
     }
 
     @Override
@@ -75,6 +74,7 @@ public class PhotoEditListAdapter extends ViewHolderAdapter<PhotoEditListAdapter
     public class ViewHolder extends ViewHolderAdapter.ViewHolder {
         GFImageView mIvPhoto;
         ImageView mIvDelete;
+
         public ViewHolder(View view) {
             super(view);
             mIvPhoto = (GFImageView) view.findViewById(R.id.iv_photo);
@@ -95,7 +95,7 @@ public class PhotoEditListAdapter extends ViewHolderAdapter<PhotoEditListAdapter
             PhotoInfo photoInfo = null;
             try {
                 photoInfo = getDatas().remove(position);
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             notifyDataSetChanged();

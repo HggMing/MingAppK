@@ -234,7 +234,7 @@ public class RealNameBindingActivity extends BackActivity {
                 if (resultCode == RESULT_OK) {
                     btnFace.setVisibility(View.GONE);
                     imgFaceretake.setVisibility(View.VISIBLE);
-                    photoPath1 = APP.FILE_PATH + "CameraCache/" + TakePhotoActivity.FACE + ".jpg";
+                    photoPath1 = APP.FILE_PATH + "UserCache/" + TakePhotoActivity.FACE + ".jpg";
                     Glide.with(this)
                             .load(photoPath1)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -247,7 +247,7 @@ public class RealNameBindingActivity extends BackActivity {
                 if (resultCode == RESULT_OK) {
                     btnIdCard.setVisibility(View.GONE);
                     imgIdretake.setVisibility(View.VISIBLE);
-                    photoPath2 = APP.FILE_PATH + "CameraCache/" + TakePhotoActivity.ID_CARD + ".jpg";
+                    photoPath2 = APP.FILE_PATH + "UserCache/" + TakePhotoActivity.ID_CARD + ".jpg";
                     Glide.with(this)
                             .load(photoPath2)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)

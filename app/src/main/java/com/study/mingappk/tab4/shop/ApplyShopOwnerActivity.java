@@ -190,7 +190,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                 break;
             case REQUEST_PHOTO_ID_CARD://返回身份证正面
                 if (resultCode == RESULT_OK) {
-                    String photoPath1 = APP.FILE_PATH + "CameraCache/" + TakePhotoActivity.ID_CARD + ".jpg";
+                    String photoPath1 = APP.FILE_PATH + "UserCache/" + TakePhotoActivity.ID_CARD + ".jpg";
                     Glide.with(this)
                             .load(photoPath1)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -232,7 +232,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                 break;
             case REQUEST_PHOTO_ID_CARD2://返回身份证反面
                 if (resultCode == RESULT_OK) {
-                    String photoPath2 = APP.FILE_PATH + "CameraCache/" + TakePhotoActivity.ID_CARD2 + ".jpg";
+                    String photoPath2 = APP.FILE_PATH + "UserCache/" + TakePhotoActivity.ID_CARD2 + ".jpg";
                     Glide.with(this)
                             .load(photoPath2)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)

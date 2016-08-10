@@ -26,11 +26,11 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.ming.toolsfinal.ActivityManager;
-import com.ming.toolsfinal.DateUtils;
-import com.ming.toolsfinal.DeviceUtils;
-import com.ming.toolsfinal.StringUtils;
-import com.ming.toolsfinal.io.FileUtils;
+import com.study.mingappk.common.views.gallertools.ActivityManager;
+import com.study.mingappk.common.views.gallertools.DateUtils;
+import com.study.mingappk.common.views.gallertools.DeviceUtils;
+import com.study.mingappk.common.views.gallertools.StringUtils;
+import com.study.mingappk.common.views.gallertools.io.FileUtils;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.common.views.gallerfinal.permission.EasyPermissions;

@@ -24,13 +24,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ming.toolsfinal.adapter.ViewHolderAdapter;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.gallerfinal.FunctionConfig;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoFolderInfo;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.common.views.gallerfinal.widget.GFImageView;
+import com.study.mingappk.common.views.gallertools.adapter.ViewHolderAdapter;
 
 import java.util.List;
 

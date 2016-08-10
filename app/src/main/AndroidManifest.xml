@@ -52,6 +52,11 @@
             </intent-filter>
         </receiver>
 
+        <!--配置自定义glide设置-->
+        <meta-data
+            android:name="com.study.mingappk.common.utils.MyGlideModule"
+            android:value="GlideModule" />
+
         <!-- gallerfinal相关页面 -->
         <activity
             android:name=".common.views.gallerfinal.PhotoSelectActivity"

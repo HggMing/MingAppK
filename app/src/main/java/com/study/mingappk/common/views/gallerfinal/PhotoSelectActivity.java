@@ -33,9 +33,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ming.toolsfinal.DeviceUtils;
-import com.ming.toolsfinal.StringUtils;
-import com.ming.toolsfinal.io.FilenameUtils;
+import com.study.mingappk.common.views.gallertools.DeviceUtils;
+import com.study.mingappk.common.views.gallertools.StringUtils;
+import com.study.mingappk.common.views.gallertools.io.FilenameUtils;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.gallerfinal.adapter.FolderListAdapter;
 import com.study.mingappk.common.views.gallerfinal.adapter.PhotoListAdapter;

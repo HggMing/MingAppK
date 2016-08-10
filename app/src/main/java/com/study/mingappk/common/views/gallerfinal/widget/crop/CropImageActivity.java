@@ -31,7 +31,7 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.ming.toolsfinal.io.FilenameUtils;
+import com.study.mingappk.common.views.gallertools.io.FilenameUtils;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 import com.study.mingappk.common.views.gallerfinal.utils.ILogger;

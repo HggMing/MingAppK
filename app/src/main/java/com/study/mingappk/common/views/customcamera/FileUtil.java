@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class FileUtil {
     private static final String TAG = "FileUtil";
-    private static final String DST_FOLDER_NAME = "CameraCache/";
+    private static final String DST_FOLDER_NAME = "UserCache/";
     private static String storagePath="";
 
     /**
@@ -24,6 +24,11 @@ public class FileUtil {
             File f = new File(storagePath);
             if (!f.exists()) {
                 f.mkdirs();
+                try {
+                    new File(storagePath,".nomedia").createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return storagePath;

@@ -38,9 +38,10 @@ public class PhotoOperate {
         try {
             String fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINESE).format(new Date());
             //创建图片保存目录
-            File folder = new File(APP.FILE_PATH + "IMG/");
+            File folder = new File(APP.FILE_PATH + "UserCache/");
             if (!folder.exists()) {
                 boolean a = folder.mkdirs();
+                File nomedia=new File (folder,".nomedia");
             }
 //            file = File.createTempFile(fileName, ".jpg", context.getCacheDir());
             file = File.createTempFile(fileName, ".jpg", folder);

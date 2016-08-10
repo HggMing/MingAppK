@@ -1,11 +1,11 @@
 package com.study.mingappk.common.views.gallerfinal.utils;
 
 
-import com.ming.toolsfinal.BuildConfig;
-import com.ming.toolsfinal.logger.LoggerFactory;
-import com.ming.toolsfinal.logger.LoggerPrinter;
-import com.ming.toolsfinal.logger.Printer;
-import com.ming.toolsfinal.logger.Settings;
+import com.study.mingappk.BuildConfig;
+import com.study.mingappk.common.views.gallertools.logger.LoggerFactory;
+import com.study.mingappk.common.views.gallertools.logger.LoggerPrinter;
+import com.study.mingappk.common.views.gallertools.logger.Printer;
+import com.study.mingappk.common.views.gallertools.logger.Settings;
 
 /**
  * Desction:

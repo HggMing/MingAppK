@@ -31,10 +31,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ming.toolsfinal.ActivityManager;
-import com.ming.toolsfinal.StringUtils;
-import com.ming.toolsfinal.io.FileUtils;
-import com.ming.toolsfinal.io.FilenameUtils;
+import com.study.mingappk.common.views.gallertools.StringUtils;
+import com.study.mingappk.common.views.gallertools.io.FileUtils;
+import com.study.mingappk.common.views.gallertools.io.FilenameUtils;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.gallerfinal.adapter.PhotoEditListAdapter;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
@@ -47,6 +46,7 @@ import com.study.mingappk.common.views.gallerfinal.widget.HorizontalListView;
 import com.study.mingappk.common.views.gallerfinal.widget.crop.CropImageActivity;
 import com.study.mingappk.common.views.gallerfinal.widget.crop.CropImageView;
 import com.study.mingappk.common.views.gallerfinal.widget.zoonview.PhotoView;
+import com.study.mingappk.common.views.gallertools.ActivityManager;
 
 import java.io.File;
 import java.io.IOException;

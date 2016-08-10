@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ming.toolsfinal.DeviceUtils;
+import com.study.mingappk.common.views.gallertools.DeviceUtils;
 import com.study.mingappk.R;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
