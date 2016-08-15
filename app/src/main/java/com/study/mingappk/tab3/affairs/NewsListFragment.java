@@ -117,7 +117,7 @@ public class NewsListFragment extends Fragment implements NewsListAdapter.OnItem
                     @Override
                     public void onNext(NewsList newsList) {
                         mList.addAll(newsList.getData().getList());
-                        if (mList.isEmpty()) {
+                        if (mList.isEmpty()||mList==null) {
                             contentEmpty.setVisibility(View.VISIBLE);
                             String s = null;
                             switch (type) {

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.ZanList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
@@ -49,7 +50,7 @@ public class LikeUserListAdapter extends BaseRecyclerViewAdapter<ZanList.DataBea
         holder.arrow.setVisibility(View.VISIBLE);
         //好友名字的显示
         String showName = mList.get(position).getName();
-        if (showName.isEmpty()) {
+        if (StringTools.isEmpty(showName)) {
             showName = "User" + mList.get(position).getUid();
         }
         holder.userName.setText(showName);

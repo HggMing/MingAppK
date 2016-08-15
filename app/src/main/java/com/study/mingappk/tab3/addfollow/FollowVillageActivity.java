@@ -26,6 +26,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.Result;
@@ -153,7 +154,7 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
 
     @OnClick(R.id.click_search)
     public void onClick() {
-        if (!searchText.isEmpty()) {
+        if (!StringTools.isEmpty(searchText)) {
             searchVillage(searchText);
             //关闭输入法
             JUtils.closeInputMethod(this);
@@ -179,7 +180,7 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
 
                     @Override
                     public void onNext(QueryVillageList queryVillageList) {
-                        if (!queryVillageList.getData().isEmpty()) {
+                        if (!queryVillageList.getData().isEmpty()||queryVillageList.getData()!=null) {
                             mViewPager.setVisibility(View.GONE);
                             searchPage.setVisibility(View.GONE);
                             mXRecyclerView.setVisibility(View.VISIBLE);
@@ -243,14 +244,14 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
         MyDialog.Builder builder = new MyDialog.Builder(this);
         builder.setTitle("提示")
                 .setMessage("是否要关注" + villageName + "?")
-                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         followVillage(position);
                         dialog.dismiss();
                     }
                 })
-                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

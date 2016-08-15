@@ -16,6 +16,7 @@ import com.study.mingappk.common.views.dialog.CardPickerDialog;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,7 +49,7 @@ public class SettingCommonActivity extends BackActivity implements CardPickerDia
                 MyDialog.Builder builder = new MyDialog.Builder(this);
                 builder.setTitle("提示")
                         .setMessage("清除程序数据和缓存（不会删除下载的图片）？")
-                        .setNegativeButton("确定",
+                        .setPositiveButton("确定",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -65,7 +66,7 @@ public class SettingCommonActivity extends BackActivity implements CardPickerDia
                                         dialog.dismiss();
                                     }
                                 })
-                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -107,6 +108,7 @@ public class SettingCommonActivity extends BackActivity implements CardPickerDia
 
                 @Override
                 public void refreshSpecificView(View view) {
+
                 }
             });
             //通知MainActivity更换主题

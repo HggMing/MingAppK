@@ -87,7 +87,7 @@ public class ChangePwdActivity extends BackActivity {
                                     builder2.setTitle("提示")
                                             .setCannel(false)
                                             .setMessage(changePwdResult.getMsg())
-                                            .setNegativeButton("确定",
+                                            .setPositiveButton("确定",
                                                     new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialog,

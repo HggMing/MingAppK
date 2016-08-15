@@ -23,6 +23,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.bigimageview.BigImageViewActivity;
 import com.study.mingappk.common.views.nineimage.NineGridImageView;
 import com.study.mingappk.common.views.nineimage.NineGridImageViewAdapter;
@@ -179,7 +180,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
         });
         //发帖人昵称
         String userName = mList.get(position).getUname();
-        if (userName.isEmpty()) {
+        if (StringTools.isEmpty(userName)) {
             //若用户名为空，显示手机号，中间四位为*
             String iphone = mList.get(position).getUserinfo().getPhone();
             userName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
@@ -217,7 +218,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
 
 
                 //服务器数据bug，部分村的图片文件surl_2地址为空，而surl_1正常
-                if (filesEntity.getSurl_2().isEmpty()) {
+                if (StringTools.isEmpty(filesEntity.getSurl_2())) {
                     imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_1();
                 }
                 //服务器数据bug，白石村的图片文件surl_2地址前面多了/home/wwwroot/default/cris/字符串
@@ -267,7 +268,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
             public void onClick(View v) {
 //                Toast.makeText(mContext, "点击点赞人头像", Toast.LENGTH_SHORT).show();
                 String uid = (String) v.getTag(R.id.tag_like_user_id);
-                if (!uid.isEmpty()) {
+                if (!StringTools.isEmpty(uid)) {
                     Intent intent = new Intent(mContext, FriendDetailActivity.class);
                     intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
                     mContext.startActivity(intent);

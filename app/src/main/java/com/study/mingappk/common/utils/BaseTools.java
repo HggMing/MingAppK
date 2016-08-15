@@ -70,6 +70,7 @@ public class BaseTools {
             window.setStatusBarColor(Color.TRANSPARENT);//calculateStatusColor(Color.WHITE, (int) alphaValue)
         }
     }
+
     public static void transparentStatusBar2(Activity activity) {
         //5.0 全透明实现
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -278,14 +279,14 @@ public class BaseTools {
      * @return 口头时间字符串
      */
     public static String getTimeFormat(String d) {
-        if(d==null){
+        if (d == null) {
             return "";
         }
-        Date date=null;
+        Date date = null;
         if (d.length() == 10) {
             date = new Date(Long.valueOf(d + "000"));
         }
-        if(d.length()==13){
+        if (d.length() == 13) {
             date = new Date(Long.valueOf(d));
         }
         Calendar now = Calendar.getInstance();
@@ -311,18 +312,18 @@ public class BaseTools {
         int hour = ca.get(Calendar.HOUR_OF_DAY);
         int minute = ca.get(Calendar.MINUTE);
         if (year != nowYear) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINESE);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
             //不同年份
             return sdf.format(date);
         } else {
             if (month != nowMonth) {
                 //不同月份
-                SimpleDateFormat sdf = new SimpleDateFormat("M月dd日 HH:mm",Locale.CHINESE);
+                SimpleDateFormat sdf = new SimpleDateFormat("M月dd日 HH:mm", Locale.CHINESE);
                 return sdf.format(date);
             } else {
                 if (week != nowWeek) {
                     //不同周
-                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日 HH:mm",Locale.CHINESE);
+                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日 HH:mm", Locale.CHINESE);
                     return sdf.format(date);
                 } else if (day != nowDay) {
                     if (day + 1 == nowDay) {
@@ -332,7 +333,7 @@ public class BaseTools {
                         return "前天" + formatDateByFormat(date, "HH:mm");
                     }
                     //不同天
-                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日 HH:mm",Locale.CHINESE);
+                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日 HH:mm", Locale.CHINESE);
                     return sdf.format(date);
                 } else {
                     //同一天
@@ -347,7 +348,7 @@ public class BaseTools {
                     } else if (hourGap >= 1 && hourGap <= 12) {
                         return hourGap + "小时前";
                     } else {
-                        SimpleDateFormat sdf = new SimpleDateFormat("今天 HH:mm",Locale.CHINESE);
+                        SimpleDateFormat sdf = new SimpleDateFormat("今天 HH:mm", Locale.CHINESE);
                         return sdf.format(date);
                     }
                 }
@@ -362,14 +363,14 @@ public class BaseTools {
      * @return 口头时间字符串
      */
     public static String getTimeFormatA(String d) {
-        if(d==null){
+        if (d == null) {
             return "";
         }
-        Date date=null;
+        Date date = null;
         if (d.length() == 10) {
             date = new Date(Long.valueOf(d + "000"));
         }
-        if(d.length()==13){
+        if (d.length() == 13) {
             date = new Date(Long.valueOf(d));
         }
         Calendar now = Calendar.getInstance();
@@ -395,18 +396,18 @@ public class BaseTools {
         int hour = ca.get(Calendar.HOUR_OF_DAY);
         int minute = ca.get(Calendar.MINUTE);
         if (year != nowYear) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINESE);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
             //不同年份
             return sdf.format(date);
         } else {
             if (month != nowMonth) {
                 //不同月份
-                SimpleDateFormat sdf = new SimpleDateFormat("M月dd日",Locale.CHINESE);
+                SimpleDateFormat sdf = new SimpleDateFormat("M月dd日", Locale.CHINESE);
                 return sdf.format(date);
             } else {
                 if (week != nowWeek) {
                     //不同周
-                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日",Locale.CHINESE);
+                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日", Locale.CHINESE);
                     return sdf.format(date);
                 } else if (day != nowDay) {
                     if (day + 1 == nowDay) {
@@ -416,7 +417,7 @@ public class BaseTools {
                         return "前天" + formatDateByFormat(date, "HH:mm");
                     }
                     //不同天
-                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日",Locale.CHINESE);
+                    SimpleDateFormat sdf = new SimpleDateFormat("M月dd日", Locale.CHINESE);
                     return sdf.format(date);
                 } else {
                     //同一天
@@ -431,7 +432,7 @@ public class BaseTools {
                     } else if (hourGap >= 1 && hourGap <= 12) {
                         return hourGap + "小时前";
                     } else {
-                        SimpleDateFormat sdf = new SimpleDateFormat("今天 HH:mm",Locale.CHINESE);
+                        SimpleDateFormat sdf = new SimpleDateFormat("今天 HH:mm", Locale.CHINESE);
                         return sdf.format(date);
                     }
                 }
@@ -449,12 +450,12 @@ public class BaseTools {
                 .setTitle("调试信息")
                 .setCannel(false)
                 .setMessage(s)
-                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton("确定",new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                }).create().show();
+                })
+                .create().show();
     }
-
 }

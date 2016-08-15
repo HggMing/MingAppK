@@ -7,14 +7,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
-import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.VillageInfo;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -59,7 +58,7 @@ public class VillageInfoDetailActivity extends BackActivity {
         String title = data.getTitle();
         mTitle.setText(title);
         //图片
-        if (data.getPic().isEmpty()) {
+        if (StringTools.isEmpty(data.getPic())) {
             mImage.setVisibility(View.GONE);
         } else {
             String imageUrl = MyServiceClient.getBaseUrl() + data.getPic();

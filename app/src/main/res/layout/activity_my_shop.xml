@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.study.mingappk.tab4.shop.MyShopActivity"
+    tools:ignore="ContentDescription">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/divide_15_top_bottom" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/icon_head"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_marginRight="12dp"
+                tools:src="@mipmap/defalt_user_circle" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@id/icon_head"
+                android:textSize="@dimen/textsize_normal"
+                tools:text="我的兴农易站" />
+
+            <TextView
+                android:id="@+id/shop_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@id/icon_head"
+                android:layout_toRightOf="@id/icon_head"
+                android:textSize="@dimen/textsize_small"
+                tools:text="管理村，详细地址" />
+        </RelativeLayout>
+
+        <include layout="@layout/divide_1_12" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:baselineAligned="true">
+
+            <RelativeLayout
+                android:id="@+id/tab1Layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@mipmap/divide_15_top"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/img_tab1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/shop_tab1" />
+
+                <com.bilibili.magicasakura.widgets.TintTextView
+                    android:id="@+id/text_tab1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_tab1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:text="村店维护"
+                    android:textColor="@color/theme_color_primary"
+                    android:textSize="@dimen/textsize_small" />
+
+                <com.bilibili.magicasakura.widgets.TintView
+                    android:id="@+id/view_tab1"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_below="@id/text_tab1"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/theme_color_primary" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/tab2Layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/img_tab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/shop_tab2" />
+
+                <com.bilibili.magicasakura.widgets.TintTextView
+                    android:id="@+id/text_tab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_tab2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:text="村况维护"
+                    android:textColor="@color/selector_tab_text"
+                    android:textSize="@dimen/textsize_small" />
+
+                <com.bilibili.magicasakura.widgets.TintView
+                    android:id="@+id/view_tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_below="@id/text_tab2"
+                    android:layout_marginTop="5dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/tab3Layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/img_tab3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/shop_tab3" />
+
+                <com.bilibili.magicasakura.widgets.TintTextView
+                    android:id="@+id/text_tab3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_tab3"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:text="本村帖子"
+                    android:textColor="@color/selector_tab_text"
+                    android:textSize="@dimen/textsize_small" />
+
+                <com.bilibili.magicasakura.widgets.TintView
+                    android:id="@+id/view_tab3"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_below="@id/text_tab3"
+                    android:layout_marginTop="5dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/tab4Layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/img_tab4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/shop_tab4" />
+
+                <com.bilibili.magicasakura.widgets.TintTextView
+                    android:id="@+id/text_tab4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_tab4"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:text="本村用户"
+                    android:textColor="@color/selector_tab_text"
+                    android:textSize="@dimen/textsize_small" />
+
+                <com.bilibili.magicasakura.widgets.TintView
+                    android:id="@+id/view_tab4"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_below="@id/text_tab4"
+                    android:layout_marginTop="5dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <include layout="@layout/divide_15_top_bottom" />
+
+        <com.study.mingappk.tmain.MainViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/white" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+</android.support.design.widget.CoordinatorLayout>

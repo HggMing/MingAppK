@@ -188,7 +188,7 @@ public interface MyService {
      * @return 是否成功
      */
     @GET("feedback/add")
-    Call<Result> getCall_Advice(
+    Observable<Result> get_Advice(
             @Query("auth") String auth,
             @Query("content") String content,
             @Query("contact") String contact);

@@ -11,14 +11,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.bumptech.glide.Glide;
@@ -30,23 +27,23 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.app.ThemeHelper;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.utils.StringTools;
+import com.study.mingappk.common.views.CustomItem;
 import com.study.mingappk.common.views.dialog.CardPickerDialog;
-import com.study.mingappk.common.views.dialog.Dialog_ChangePwd;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.ApplyInfo;
 import com.study.mingappk.model.bean.CheckPhone;
-import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.mysetting.MySettingActivity;
-import com.study.mingappk.tab4.safesetting.ListItem1;
 import com.study.mingappk.tab4.safesetting.RealNameBindingActivity;
 import com.study.mingappk.tab4.safesetting.SafeSettingActivity;
 import com.study.mingappk.tab4.scommon.SettingCommonActivity;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
 import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
+import com.study.mingappk.tab4.shop.MyShopActivity;
 import com.study.mingappk.tab4.shop.ShowApplyingActivity;
 import com.study.mingappk.tmain.userlogin.LoginActivity;
 
@@ -67,7 +64,6 @@ import retrofit2.Response;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class SettingFragment extends Fragment implements CardPickerDialog.ClickListener {
@@ -84,7 +80,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
     @Bind(R.id.account_number)
     TextView accountNumber;
     @Bind(R.id.click_store_manager)
-    ListItem1 clickShop;
+    CustomItem clickShop;
 
 
     private boolean isUpdataMyInfo;//是否更新完个人信息
@@ -178,100 +174,13 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
     }
 
     /**
-     * 修改密码,使用对话框方式
-     */
-
-    private void changePwd() {
-        final Dialog_ChangePwd.Builder pwddialog = new Dialog_ChangePwd.Builder(mActivity);
-        pwddialog.setTitle("修改登录密码");
-
-        pwddialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String oldpwd = pwddialog.et_oldpwd.getEditableText()
-                                .toString();
-                        String newpwd1 = pwddialog.et_newpwd1.getEditableText()
-                                .toString();
-                        String newpwd2 = pwddialog.et_newpwd2.getEditableText()
-                                .toString();
-
-                        if (oldpwd.equals("")) {
-                            Toast.makeText(mActivity, "旧密码不能为空",
-                                    Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        if (newpwd1.equals("")) {
-                            Toast.makeText(mActivity, "新密码不能为空",
-                                    Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        if (newpwd2.equals("")) {
-                            Toast.makeText(mActivity, "确认密码不能为空",
-                                    Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        if (!newpwd1.equals(newpwd2)) {
-                            Toast.makeText(mActivity, "两次输入密码不一致",
-                                    Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        if (newpwd1.length() < 6 || newpwd1.length() > 16) {
-                            Toast.makeText(mActivity, "密码必须在6-16位",
-                                    Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        MyServiceClient.getService().getCall_ChangePwd(auth, oldpwd, newpwd1)
-                                .enqueue(new Callback<Result>() {
-                                    @Override
-                                    public void onResponse(Call<Result> call, Response<Result> response) {
-                                        if (response.isSuccessful()) {
-                                            Result changePwdResult = response.body();
-                                            if (changePwdResult != null) {
-                                                MyDialog.Builder builder2 = new MyDialog.Builder(mActivity);
-                                                builder2.setTitle("提示")
-                                                        .setCannel(false)
-                                                        .setMessage(changePwdResult.getMsg())
-                                                        .setNegativeButton("确定",
-                                                                new DialogInterface.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(DialogInterface dialog,
-                                                                                        int which) {
-                                                                        dialog.dismiss();
-                                                                    }
-
-                                                                });
-                                                if (!mActivity.isFinishing()) {
-                                                    builder2.create().show();
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<Result> call, Throwable t) {
-                                        Toast.makeText(mActivity, "修改密码失败", Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                        dialog.dismiss();
-                    }
-
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).create().show();
-    }
-
-    /**
      * 点击退出登录
      */
     private void logout() {
         MyDialog.Builder builder = new MyDialog.Builder(mActivity);
         builder.setTitle("提示")
                 .setMessage("确定退出登录？")
-                .setNegativeButton("确定",
+                .setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -281,6 +190,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                                         .commit();
                                 Hawk.remove(APP.ME_UID);
                                 Hawk.remove(APP.SELECTED_CARD);
+                                Hawk.remove(APP.MANAGER_ADDRESS);
                                 //停止个推SDK服务
                                 PushManager.getInstance().stopService(mActivity.getApplicationContext());
                                 //关闭数据库
@@ -293,7 +203,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                                 dialog.dismiss();
                             }
                         })
-                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -328,7 +238,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                                 .error(R.mipmap.defalt_user_circle)
                                 .into(iconHead);
                         //昵称
-                        if (uName.isEmpty()) {
+                        if (StringTools.isEmpty(uName)) {
                             String iphone = dataEntity.getPhone();
                             String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
                             name.setText(showName);
@@ -360,38 +270,36 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
     @OnClick({R.id.click_user, R.id.click_safe_center, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.click_user:
+            case R.id.click_user://点击编辑用户
                 Intent intent1 = new Intent(mActivity, UserDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(UserDetailActivity.USER_INFO, dataEntity);
                 intent1.putExtras(bundle);
                 startActivityForResult(intent1, REQUEST_USER_INFO);
                 break;
-            case R.id.click_safe_center:
-//                Toast.makeText(mActivity, "账号安全", Toast.LENGTH_SHORT).show();
-                Intent intent5 = new Intent(mActivity, SafeSettingActivity.class);
-                startActivity(intent5);
-                break;
-            case R.id.click_my_setting:
-//                Toast.makeText(mActivity, "我的", Toast.LENGTH_SHORT).show();
+            case R.id.click_my_setting://我的
                 Intent intent2 = new Intent(mActivity, MySettingActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.click_setting_common:
-//                Toast.makeText(mActivity, "通用", Toast.LENGTH_SHORT).show();
-                Intent intent3 = new Intent(mActivity, SettingCommonActivity.class);
-                startActivity(intent3);
-                break;
+
             case R.id.click_store_manager:
-                if (isShopOwner == 1) {
-                    Toast.makeText(mActivity, "进入店长管理页面", Toast.LENGTH_SHORT).show();
+                if (isShopOwner == 1) {//进入店长管理页面
+                    Intent intent3 = new Intent(mActivity, MyShopActivity.class);
+                    startActivity(intent3);
                 } else {
                     //获取申请店长，当前状态
                     getApplyStatus();
                 }
                 break;
-            case R.id.click_loyout:
-//                Toast.makeText(mActivity, "退出当前账号", Toast.LENGTH_SHORT).show();
+            case R.id.click_safe_center://账号安全
+                Intent intent4 = new Intent(mActivity, SafeSettingActivity.class);
+                startActivity(intent4);
+                break;
+            case R.id.click_setting_common://通用
+                Intent intent5 = new Intent(mActivity, SettingCommonActivity.class);
+                startActivity(intent5);
+                break;
+            case R.id.click_loyout://退出当前账号
                 logout();
                 break;
         }
@@ -443,7 +351,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                             MyDialog.Builder builder1 = new MyDialog.Builder(mActivity);
                             builder1.setTitle("提示")
                                     .setMessage("你的账号尚未实名认证，请先进行实名认证。")
-                                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog,
                                                             int which) {
@@ -452,7 +360,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                                             dialog.dismiss();
                                         }
                                     })
-                                    .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
@@ -468,7 +376,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
 
     private void getApplyStatus() {
         String vid = Hawk.get(APP.APPLY_INFO_VID + dataEntity.getUid());
-        if (vid == null || vid.isEmpty()) {//假如没有申请过
+        if (StringTools.isEmpty(vid)) {//假如没有申请过
             getIsBinding();//获取是否实名认证
         } else {
             MyServiceClient.getService()

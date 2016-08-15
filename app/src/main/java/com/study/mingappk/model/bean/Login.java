@@ -1,5 +1,9 @@
 package com.study.mingappk.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Map;
+
 /**
  * 登录信息 返回
  * Created by Ming on 2016/3/11.
@@ -221,4 +225,152 @@ public class Login {
             this.manager_vid = manager_vid;
         }
     }
+
+
+    public Map<String, VidInfoBean> getVid_info() {
+        return vid_info;
+    }
+
+    public void setVid_info(Map<String, VidInfoBean> vid_info) {
+        this.vid_info = vid_info;
+    }
+
+    private Map<String,VidInfoBean> vid_info;
+
+    public static class VidInfoBean {
+        /**
+         * id : 244602
+         * province_id : 350
+         * province_name : 福建省
+         * city_id : 350800000000
+         * city_name : 龙岩市
+         * county_id : 350881000000
+         * county_name : 漳平市
+         * town_id : 350881100000
+         * town_name : 新桥镇
+         * village_id : 350881100203
+         * village_name : 西埔村
+         * bid : 0
+         * pwd : null
+         */
+
+        private String id;
+        private String province_id;
+        private String province_name;
+        private String city_id;
+        private String city_name;
+        private String county_id;
+        private String county_name;
+        private String town_id;
+        private String town_name;
+        private String village_id;
+        private String village_name;
+        private String bid;
+        private Object pwd;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getProvince_id() {
+            return province_id;
+        }
+
+        public void setProvince_id(String province_id) {
+            this.province_id = province_id;
+        }
+
+        public String getProvince_name() {
+            return province_name;
+        }
+
+        public void setProvince_name(String province_name) {
+            this.province_name = province_name;
+        }
+
+        public String getCity_id() {
+            return city_id;
+        }
+
+        public void setCity_id(String city_id) {
+            this.city_id = city_id;
+        }
+
+        public String getCity_name() {
+            return city_name;
+        }
+
+        public void setCity_name(String city_name) {
+            this.city_name = city_name;
+        }
+
+        public String getCounty_id() {
+            return county_id;
+        }
+
+        public void setCounty_id(String county_id) {
+            this.county_id = county_id;
+        }
+
+        public String getCounty_name() {
+            return county_name;
+        }
+
+        public void setCounty_name(String county_name) {
+            this.county_name = county_name;
+        }
+
+        public String getTown_id() {
+            return town_id;
+        }
+
+        public void setTown_id(String town_id) {
+            this.town_id = town_id;
+        }
+
+        public String getTown_name() {
+            return town_name;
+        }
+
+        public void setTown_name(String town_name) {
+            this.town_name = town_name;
+        }
+
+        public String getVillage_id() {
+            return village_id;
+        }
+
+        public void setVillage_id(String village_id) {
+            this.village_id = village_id;
+        }
+
+        public String getVillage_name() {
+            return village_name;
+        }
+
+        public void setVillage_name(String village_name) {
+            this.village_name = village_name;
+        }
+
+        public String getBid() {
+            return bid;
+        }
+
+        public void setBid(String bid) {
+            this.bid = bid;
+        }
+
+        public Object getPwd() {
+            return pwd;
+        }
+
+        public void setPwd(Object pwd) {
+            this.pwd = pwd;
+        }
+    }
+
 }

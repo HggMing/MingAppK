@@ -18,7 +18,7 @@
 
             <include layout="@layout/divide_15_top_bottom" />
 
-            <com.study.mingappk.tab4.safesetting.ListItem1
+            <com.study.mingappk.common.views.CustomItem
                 android:id="@+id/click_my_purse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
 
             <include layout="@layout/divide_15_top_bottom" />
 
-            <com.study.mingappk.tab4.safesetting.ListItem1
+            <com.study.mingappk.common.views.CustomItem
                 android:id="@+id/click_my_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
 
             <include layout="@layout/divide_1_12" />
 
-            <com.study.mingappk.tab4.safesetting.ListItem1
+            <com.study.mingappk.common.views.CustomItem
                 android:id="@+id/click_shopping_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -20,6 +20,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.common.utils.PhotoOperate;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.model.bean.Result;
@@ -159,7 +160,7 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
             vid = getIntent().getStringExtra(VILLAGE_ID);
             final String conts = edit.getText().toString();
 
-            if (conts.isEmpty()) {
+            if (StringTools.isEmpty(conts)) {
                 Toast.makeText(NewPostActivity.this, "请输入帖子内容。", Toast.LENGTH_SHORT).show();
                 item.setEnabled(true);
                 return true;
@@ -192,7 +193,7 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
                 }
             };
 
-            if (imageList.isEmpty()) {
+            if (imageList.isEmpty()||imageList==null) {
                 MyServiceClient.getService().post_BBSPost(auth, vid, null, conts, null, null)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -279,7 +280,7 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
                 MyDialog.Builder builder = new MyDialog.Builder(this);
                 builder.setTitle("提示")
                         .setMessage("要删除这张照片吗?")
-                        .setNegativeButton("确定",
+                        .setPositiveButton("确定",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -289,7 +290,7 @@ public class NewPostActivity extends BackActivity implements NewPostAdapter.OnIt
                                         dialog.dismiss();
                                     }
                                 })
-                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

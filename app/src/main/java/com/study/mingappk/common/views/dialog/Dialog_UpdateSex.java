@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Layout;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -33,18 +35,20 @@ public class Dialog_UpdateSex extends Dialog implements DialogInterface {
         private String negativeButtonText;
         private int icon;
 
-        public RadioGroup sex = null;
-        private RadioButton male = null;
-        private RadioButton female = null;
+        private String mysex = "";//sex初始状况
 
-        public String sexStr = "";
+        public RadioButton male;
+        public RadioButton female;
+
+        public LinearLayout maleAll;
+        public LinearLayout femaleAll;
+
 
         public Builder setMysex(String mysex) {
             this.mysex = mysex;
             return this;
         }
 
-        private String mysex = "";
 
         private DialogInterface.OnClickListener positiveButtonClickListener,
                 negativeButtonClickListener;
@@ -111,64 +115,29 @@ public class Dialog_UpdateSex extends Dialog implements DialogInterface {
             final Dialog_UpdateSex dialog = new Dialog_UpdateSex(context, R.style.MyDialog);
 
             View layout = inflater.inflate(R.layout.dialog_updatesex, null);
-            dialog.addContentView(layout, new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            WindowManager windowManager = ((Activity) context)
-                    .getWindowManager();
+            dialog.addContentView(layout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            WindowManager windowManager = ((Activity) context).getWindowManager();
             Display display = windowManager.getDefaultDisplay();
             WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-            lp.width = (int) (display.getWidth() - 30); // 设置宽度
+            lp.width = (int) (display.getWidth() - 80); // 设置宽度
+
             ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);
             ((TextView) layout.findViewById(R.id.title)).setText(title);
 
-            sex = (RadioGroup) layout.findViewById(R.id.sex);
             male = (RadioButton) layout.findViewById(R.id.male);
             female = (RadioButton) layout.findViewById(R.id.female);
+            maleAll = (LinearLayout) layout.findViewById(R.id.male_all);
+            femaleAll = (LinearLayout) layout.findViewById(R.id.female_all);
 
             //根据本身性别，决定radio的默认选择
             if ("0".equals(mysex)) {
                 male.setChecked(true);
-                sexStr = "男";
+                female.setChecked(false);
             } else {
                 female.setChecked(true);
-                sexStr = "女";
+                male.setChecked(false);
             }
-//            sex.setOnCheckedChangeListener(onCheckedChangeListener);
 
-
-//            sex.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(RadioGroup group, int checkedId) {
-//
-//                    if (male.getId() == checkedId) {
-//                        sexStr2 = "男";
-//                    } else if (female.getId() == checkedId) {
-//                        sexStr2 = "女";
-//                    }
-//                }
-//            });
-
-
-            Button btn_left = (Button) layout.findViewById(R.id.btn_OK);
-            btn_left.setText(negativeButtonText);
-            btn_left.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    negativeButtonClickListener.onClick(dialog,
-                            DialogInterface.BUTTON_NEGATIVE);
-                }
-            });
-
-            Button btn_right = (Button) layout.findViewById(R.id.btn_Cancel);
-            btn_right.setText(positiveButtonText);
-            btn_right.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    positiveButtonClickListener.onClick(dialog,
-                            DialogInterface.BUTTON_POSITIVE);
-                }
-            });
 
             dialog.setContentView(layout);
             return dialog;

@@ -100,7 +100,7 @@ public class ChangePursePwdActivity extends BackActivity {
                             builder.setTitle("提示")
                                     .setCannel(false)
                                     .setMessage(result.getMsg())
-                                    .setNegativeButton("确定",
+                                    .setPositiveButton("确定",
                                             new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog,

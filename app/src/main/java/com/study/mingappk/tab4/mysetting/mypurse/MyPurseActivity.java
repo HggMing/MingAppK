@@ -99,7 +99,7 @@ public class MyPurseActivity extends BackActivity {
                     @Override
                     public void onNext(MoneyDetail moneyDetail) {
                         mList.addAll(moneyDetail.getData().getList());
-                        if (mList.isEmpty()) {
+                        if (mList.isEmpty()||mList==null) {
                             contentEmpty.setVisibility(View.VISIBLE);
                         } else {
                             contentEmpty.setVisibility(View.GONE);

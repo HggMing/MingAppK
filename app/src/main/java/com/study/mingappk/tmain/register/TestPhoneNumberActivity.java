@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -39,7 +40,7 @@ public class TestPhoneNumberActivity extends BackActivity {
         setToolbarTitle(R.string.title_activity_test_phone_number);
 
         String login = getIntent().getStringExtra(LOGIN_NAME);
-        if (!login.isEmpty()) {
+        if (!StringTools.isEmpty(login)) {
             etPhone.setText(login);
         }
     }
@@ -48,7 +49,7 @@ public class TestPhoneNumberActivity extends BackActivity {
     public void onClick() {
         btnOk.setEnabled(false);
         String phone = etPhone.getEditableText().toString();
-        if (phone.isEmpty()) {
+        if (StringTools.isEmpty(phone)) {
             btnOk.setEnabled(true);
             Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
             return;
@@ -140,7 +141,7 @@ public class TestPhoneNumberActivity extends BackActivity {
                                 builder1.setTitle("提示")
                                         .setCannel(false)
                                         .setMessage(checkPhone.getMsg())
-                                        .setNegativeButton("确定",
+                                        .setPositiveButton("确定",
                                                 new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog,

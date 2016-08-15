@@ -52,7 +52,7 @@
             </intent-filter>
         </receiver>
 
-        <!--配置自定义glide设置-->
+        <!-- 配置自定义glide设置 -->
         <meta-data
             android:name="com.study.mingappk.common.utils.MyGlideModule"
             android:value="GlideModule" />
@@ -264,6 +264,7 @@
             android:name=".tab4.mysetting.shoppingaddress.EditShoppingAdressActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".tab4.shop.MyShopActivity"></activity>
     </application>
 
 </manifest>

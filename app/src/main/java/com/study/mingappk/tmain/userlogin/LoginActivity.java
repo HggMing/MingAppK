@@ -117,6 +117,20 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onNext(Login login) {
                         if (login.getErr() == 0) {
+                            //储存店长管理村地址
+                            if (login.getShopowner().getIs_shopowner() == 1) {
+                                String manager_vid = login.getShopowner().getManager_vid();
+                                if (manager_vid != null && manager_vid.length() >= 12) {
+                                    String key_vid = manager_vid.substring(0, 12);//取出第一个店长vid
+                                    Login.VidInfoBean vidInfoBean = login.getVid_info().get(key_vid);
+                                    String vName = vidInfoBean.getProvince_name() +
+                                            vidInfoBean.getCity_name() +
+                                            vidInfoBean.getCounty_name() +
+                                            vidInfoBean.getTown_name() +
+                                            vidInfoBean.getVillage_name();//店长村详细地址
+                                    Hawk.put(APP.MANAGER_ADDRESS,vName);
+                                }
+                            }
                             Hawk.chain()
                                     .put(APP.USER_AUTH, login.getAuth())//保存认证信息
                                     .put(APP.ME_UID, login.getInfo().getUid())
@@ -148,7 +162,7 @@ public class LoginActivity extends Activity {
         builder1.setTitle("提示")
                 .setCannel(false)
                 .setMessage(s)
-                .setNegativeButton("确定",
+                .setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog,
@@ -180,7 +194,7 @@ public class LoginActivity extends Activity {
         builder.setTitle("提示")
                 .setCannel(false)
                 .setMessage(s)
-                .setNegativeButton("确定",
+                .setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog,

@@ -75,14 +75,14 @@ public class SplashActivity extends AppCompatActivity {
                 MyDialog.Builder builder = new MyDialog.Builder(SplashActivity.this);
                 builder.setTitle("提示")
                         .setMessage("我们需要获得储存空间，为你储存个人信息；否则，你将无法正常使用本软件。")
-                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 RequestPermission();
                                 dialog.dismiss();
                             }
                         })
-                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();
@@ -222,7 +222,7 @@ public class SplashActivity extends AppCompatActivity {
             builder.setTitle("提示")
                     .setCannel(false)
                     .setMessage(permissionDes)
-                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(SplashActivity.this, permissions, requestCode);

@@ -98,7 +98,7 @@ public class Dialog_InputPwd extends Dialog implements DialogInterface {
             WindowManager windowManager = ((Activity) context).getWindowManager();
             Display display = windowManager.getDefaultDisplay();
             WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-            lp.width = (int) (display.getWidth() - 30); // 设置宽度
+            lp.width = (int) (display.getWidth() - 80); // 设置宽度
 
             ((TextView) layout.findViewById(R.id.title)).setText(title);
             et_pwd = (EditText) layout.findViewById(R.id.et_pwd);

@@ -125,7 +125,7 @@ public class VillageInfoActivity extends BackActivity implements BaseRecyclerVie
                     @Override
                     public void onNext(VillageInfo villageInfo) {
                         mList.addAll(villageInfo.getData());
-                        if (mList.isEmpty()) {
+                        if (mList.isEmpty()||mList==null) {
                             contentEmpty.setVisibility(View.VISIBLE);
                         } else {
                             contentEmpty.setVisibility(View.GONE);

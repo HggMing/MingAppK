@@ -123,7 +123,7 @@
         <item name="android:background">@drawable/editview_background</item>
         <item name="android:textCursorDrawable">@drawable/edittext_cursor</item>
         <item name="android:padding">13dp</item>
-        <item name="android:textSize">@dimen/textsize_large</item>
+        <item name="android:textSize">@dimen/textsize_normal</item>
     </style>
     <!--手机号文本输入-->
     <style name="EditTextStyle_phone" parent="EditTextStyle_common">

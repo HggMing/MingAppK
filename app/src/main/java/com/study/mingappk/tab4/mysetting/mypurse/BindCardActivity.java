@@ -96,7 +96,7 @@ public class BindCardActivity extends BackActivity {
 
                     @Override
                     public void onNext(CardList cardList) {
-                        if (cardList.getData().isEmpty()) {
+                        if (cardList.getData().isEmpty()||cardList.getData()==null) {
                             type = -1;
                             contentEmpty.setVisibility(View.VISIBLE);
                         } else {
@@ -174,7 +174,7 @@ public class BindCardActivity extends BackActivity {
                     MyDialog.Builder builder = new MyDialog.Builder(mActivity);
                     builder.setTitle("提示")
                             .setMessage("解除与该银行卡的绑定？")
-                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     String auth = Hawk.get(APP.USER_AUTH);
@@ -210,7 +210,7 @@ public class BindCardActivity extends BackActivity {
                                     dialog.dismiss();
                                 }
                             })
-                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();

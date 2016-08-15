@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -23,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="left"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -49,23 +52,40 @@
             android:textSize="16sp"
             android:visibility="gone" />
 
-        <RadioGroup
+        <LinearLayout
             android:id="@+id/sex"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/male"
+            <LinearLayout
+                android:id="@+id/male_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:background="@drawable/list_item_selector"
+                android:foreground="?attr/selectableItemBackground"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp">
 
-                android:layout_marginRight="25dp"
-                android:button="@null"
-                android:drawableRight="@android:drawable/btn_radio"
-                android:text="男"
-                android:textColor="#FF404040"
-                android:textSize="@dimen/textsize_normal" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:text="男"
+                    android:textColor="#FF404040"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <com.bilibili.magicasakura.widgets.TintRadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:clickable="false"
+                    app:compoundButtonTint="@color/theme_color_primary"
+                    tools:checked="true" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -74,62 +94,34 @@
                 android:layout_marginRight="15dp"
                 android:background="@color/divide_line" />
 
-            <RadioButton
-                android:id="@+id/female"
+            <LinearLayout
+                android:id="@+id/female_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:button="@null"
-                android:drawableRight="@android:drawable/btn_radio"
-                android:text="女"
-                android:textColor="#FF404040"
-                android:textSize="@dimen/textsize_normal" />
+                android:background="@drawable/list_item_selector"
+                android:foreground="?attr/selectableItemBackground"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp">
 
-        </RadioGroup>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:text="女"
+                    android:textColor="#FF404040"
+                    android:textSize="@dimen/textsize_normal" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/btn_OK"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:background="@drawable/button_theme"
-                android:singleLine="true"
-                android:textColor="#ffffff"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/btn_Cancel"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:background="@drawable/button_theme"
-                android:singleLine="true"
-                android:textColor="#ffffff"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                <com.bilibili.magicasakura.widgets.TintRadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:clickable="false"
+                    app:compoundButtonTint="@color/theme_color_primary"
+                    tools:checked="true" />
+            </LinearLayout>
         </LinearLayout>
 
         <View

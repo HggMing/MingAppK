@@ -128,7 +128,7 @@ public class BigImageActivity extends AppCompatActivity {
                     MyDialog.Builder builder = new MyDialog.Builder(container.getContext());
                     builder.setTitle("提示")
                             .setMessage("下载图片" + "?")
-                            .setNegativeButton("确定",
+                            .setPositiveButton("确定",
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -137,7 +137,7 @@ public class BigImageActivity extends AppCompatActivity {
                                             dialog.dismiss();
                                         }
                                     })
-                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();

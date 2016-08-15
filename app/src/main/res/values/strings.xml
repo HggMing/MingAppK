@@ -8,45 +8,10 @@
     <!--BackActivity-->
     <string name="btn_text_speak">按住 说话</string>
     <!--网络相关-->
-    <string name="common_ok">确定</string>
-
     <string name="search_hint">请输入要搜索的村名</string>
     <!--Activity页面lable-->
 
-    <string-array name="theme_colors">
-        <item>theme_color_primary</item>
-        <item>purple</item>
-        <item>pink</item>
-        <item>green</item>
-        <item>green_light</item>
-        <item>yellow</item>
-        <item>orange</item>
-        <item>red</item>
-    </string-array>
 
-    <string-array name="sexs">
-        <item>男</item>
-        <item>女</item>
-    </string-array>
-    <string-array name="educations">
-        <item>初中</item>
-        <item>高中</item>
-        <item>大专</item>
-        <item>本科</item>
-        <item>硕士</item>
-        <item>博士</item>
-    </string-array>
-
-    <string-array name="money_details">
-        <item>其它</item>
-        <item>奖励</item>
-        <item>提现</item>
-        <item>充值</item>
-        <item>订单</item>
-        <item>扣款</item>
-        <item>话费充值奖励</item>
-        <item>流量充值奖励</item>
-    </string-array>
 
     <!--galleryfinal相关-->
     <string name="all_photo">全部图片</string>
@@ -109,6 +74,7 @@
 
     <string name="title_activity_apply_shop_owner">申请店长</string>
     <string name="title_activity_show_applying">申请结果</string>
+    <string name="title_activity_my_shop">我的店</string>
 
     <string name="title_activity_safe_setting">账号安全</string>
     <string name="title_activity_real_name_binging">实名认证</string>

@@ -152,7 +152,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
                             FollowVillageList followVillageListResult = response.body();
                             if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
                                 mList.addAll(followVillageListResult.getData().getList());
-                                if (mList.isEmpty()) {
+                                if (mList.isEmpty()||mList==null) {
                                     contentEmpty.setVisibility(View.VISIBLE);
                                 } else {
                                     contentEmpty.setVisibility(View.GONE);
@@ -190,7 +190,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
         MyDialog.Builder builder = new MyDialog.Builder(mActivity);
         builder.setTitle("提示")
                 .setMessage("取消关注" + villageName + "?" + "\n" + "(取消关注后，你将不再看到该村的任何信息，同时该村将会从“我的村”列表中移除！)")
-                .setNegativeButton("确定",
+                .setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -198,7 +198,7 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
                                 dialog.dismiss();
                             }
                         })
-                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

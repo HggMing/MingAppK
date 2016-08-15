@@ -148,7 +148,7 @@ public class FollowR1Fragment extends Fragment implements FollowR1Adapter.OnItem
         MyDialog.Builder builder = new MyDialog.Builder(mActivity);
         builder.setTitle("提示")
                 .setMessage("是否要关注" + villageName + "?")
-                .setNegativeButton("确定",
+                .setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -156,7 +156,7 @@ public class FollowR1Fragment extends Fragment implements FollowR1Adapter.OnItem
                                 dialog.dismiss();
                             }
                         })
-                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

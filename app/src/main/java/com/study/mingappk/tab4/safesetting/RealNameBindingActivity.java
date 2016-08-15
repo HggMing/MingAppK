@@ -19,6 +19,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.PhotoOperate;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -112,7 +113,7 @@ public class RealNameBindingActivity extends BackActivity {
                     return;
                 }
                 String idNum = etIdNum.getText().toString().trim();
-                if (idNum.isEmpty() || !BaseTools.checkIdcard(idNum)) {
+                if (StringTools.isEmpty(idNum) || !BaseTools.checkIdcard(idNum)) {
                     Toast.makeText(this, "请正确输入身份证号", Toast.LENGTH_SHORT).show();
                     return;
                 }

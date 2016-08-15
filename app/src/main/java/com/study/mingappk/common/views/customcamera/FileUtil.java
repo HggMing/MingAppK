@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -19,7 +20,7 @@ public class FileUtil {
      * @return
      */
     private static String initPath() {
-        if (storagePath.isEmpty()) {
+        if (StringTools.isEmpty(storagePath)) {
             storagePath = APP.FILE_PATH + DST_FOLDER_NAME;
             File f = new File(storagePath);
             if (!f.exists()) {

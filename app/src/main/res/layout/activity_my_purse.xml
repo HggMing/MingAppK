@@ -41,7 +41,7 @@
 
     <include layout="@layout/divide_1" />
 
-    <com.study.mingappk.tab4.safesetting.ListItem1
+    <com.study.mingappk.common.views.CustomItem
         android:id="@+id/take_money"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

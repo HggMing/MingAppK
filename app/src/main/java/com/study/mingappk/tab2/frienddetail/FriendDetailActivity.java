@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.database.FriendsModel;
@@ -147,16 +148,16 @@ public class FriendDetailActivity extends BackActivity {
                 aliasName = userinfoBean.getAlias_name();//备注名
                 String iphone = userinfoBean.getPhone();
                 showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
-                if (!aliasName.isEmpty()) {
+                if (!StringTools.isEmpty(aliasName)) {
                     name.setText(aliasName);
-                    if (!uName.isEmpty()) {
+                    if (!StringTools.isEmpty(uName)) {
                         name2.setText("昵称：" + uName);
                     } else {
                         name2.setText("账号：" + showName);
                     }
                 } else {
                     name2.setVisibility(View.INVISIBLE);
-                    if (!uName.isEmpty()) {
+                    if (!StringTools.isEmpty(uName)) {
                         name.setText(uName);
                     } else {
                         name.setText(showName);
@@ -265,17 +266,17 @@ public class FriendDetailActivity extends BackActivity {
             case SET_REMARK_NAME:
                 if (resultCode == Activity.RESULT_OK) {
                     String result = data.getStringExtra(NEW_NAME);
-                    if (!result.isEmpty()) {
+                    if (!StringTools.isEmpty(result)) {
                         name.setText(result);
                         name2.setVisibility(View.VISIBLE);
-                        if (!uName.isEmpty()) {
+                        if (!StringTools.isEmpty(uName)) {
                             name2.setText("昵称：" + uName);
                         } else {
                             name2.setText("账号：" + showName);
                         }
                     } else {
                         name2.setVisibility(View.INVISIBLE);
-                        if (!uName.isEmpty()) {
+                        if (!StringTools.isEmpty(uName)) {
                             name.setText(uName);
                         } else {
                             name.setText(showName);

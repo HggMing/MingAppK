@@ -20,6 +20,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyItemDecoration2;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.SideBar;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.common.views.pinyin.CharacterParser;
@@ -309,7 +310,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
         //我
         tempMember = friendList.getData().getList().get(2);
         tempMember.setSortLetters("%");
-        if (tempMember.getName().isEmpty()) {
+        if (StringTools.isEmpty(tempMember.getName())) {
             //若用户名为空，显示手机号，中间四位为*
             String iphone = tempMember.getPhone();
             String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
@@ -321,7 +322,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
         List<FriendList.DataBean.ListBean> tempList = new ArrayList<>();
         for (int i = 3; i < friendList.getData().getList().size(); i++) {
             tempMember = friendList.getData().getList().get(i);
-            if (tempMember.getName().isEmpty()) {
+            if (StringTools.isEmpty(tempMember.getName())) {
                 //若用户名为空，显示手机号，中间四位为*
                 String iphone = tempMember.getPhone();
                 String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
@@ -406,7 +407,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
             MyDialog.Builder builder = new MyDialog.Builder(mActivity);
             builder.setTitle("提示")
                     .setMessage("确定删除老乡“" + mList.get(position).getName() + "”？")
-                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, int which) {
                             //数据库中删除与此好友的动态
@@ -446,7 +447,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
                                     });
                         }
                     })
-                    .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

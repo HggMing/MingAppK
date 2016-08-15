@@ -103,7 +103,7 @@ public class ShoppingAddressActivity extends BackActivity implements ShoppingAdd
                     public void onNext(ShoppingAddress shoppingAddress) {
                         mList.clear();
                         mList.addAll(shoppingAddress.getData());
-                        if (shoppingAddress.getData().isEmpty()) {
+                        if (shoppingAddress.getData().isEmpty()||shoppingAddress.getData()==null) {
                             contentEmpty.setVisibility(View.VISIBLE);
                         } else {
                             contentEmpty.setVisibility(View.GONE);
@@ -238,7 +238,7 @@ class ShoppingAddressAdapter extends BaseRecyclerViewAdapter<ShoppingAddress.Dat
                 MyDialog.Builder builder = new MyDialog.Builder(mActivity);
                 builder.setTitle("提示")
                         .setMessage("确定删除此地址信息吗？")
-                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String auth = Hawk.get(APP.USER_AUTH);
@@ -267,7 +267,7 @@ class ShoppingAddressAdapter extends BaseRecyclerViewAdapter<ShoppingAddress.Dat
                                 dialog.dismiss();
                             }
                         })
-                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

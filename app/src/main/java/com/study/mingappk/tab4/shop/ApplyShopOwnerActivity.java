@@ -1,5 +1,6 @@
 package com.study.mingappk.tab4.shop;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,10 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.common.utils.PhotoOperate;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
+import com.study.mingappk.common.views.dialog.Dialog_Select_Date;
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.model.bean.ApplyInfo2;
 import com.study.mingappk.model.bean.Result;
@@ -74,16 +78,18 @@ public class ApplyShopOwnerActivity extends BackActivity {
     EditText etName;
     @Bind(R.id.sp_sex)
     Spinner spSex;
-    @Bind(R.id.et_data)
-    EditText etData;
+    @Bind(R.id.sp_sex_all)
+    LinearLayout spSexAll;
+    @Bind(R.id.tv_date)
+    TextView tvDate;
     @Bind(R.id.et_phone)
     EditText etPhone;
     @Bind(R.id.sp_education)
     Spinner spEducation;
+    @Bind(R.id.sp_edu_all)
+    LinearLayout spEduAll;
     @Bind(R.id.tv_title)
     TextView tvVillageName;
-    @Bind(R.id.et_village)
-    ImageView etVillage;
     @Bind(R.id.img_photo0)
     ImageView imgPhoto0;
     @Bind(R.id.img_photo1)
@@ -102,12 +108,12 @@ public class ApplyShopOwnerActivity extends BackActivity {
     private String auth;
     private RequestBody authBody;
     private String vid;
-    private String edu;
-    private int sex;
+    private String edu = "初中";
+    private int sex = 0;
     private int cid_img1 = 0;
     private int cid_img2 = 0;
     private int q_img;
-    private String brithday = "生日";
+    private String brithday;
 
     private String headUrl;
     private String showName;
@@ -150,6 +156,12 @@ public class ApplyShopOwnerActivity extends BackActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        spEduAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spEducation.performClick();
+            }
+        });
     }
 
     private void settingSex() {
@@ -172,6 +184,12 @@ public class ApplyShopOwnerActivity extends BackActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        spSexAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spSex.performClick();
             }
         });
     }
@@ -289,7 +307,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                 .into(iconHead);
         //昵称
         String uName = userInfo.getUname();
-        if (uName.isEmpty()) {
+        if (StringTools.isEmpty(uName)) {
             String iphone = userInfo.getPhone();
             showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
         } else {
@@ -305,9 +323,28 @@ public class ApplyShopOwnerActivity extends BackActivity {
     }
 
 
-    @OnClick({R.id.et_village, R.id.img_photo0, R.id.img_photo1, R.id.img_photo3, R.id.btn_send})
+    @OnClick({R.id.et_date, R.id.et_village, R.id.img_photo0, R.id.img_photo1, R.id.img_photo3, R.id.btn_send})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.et_date:
+                //选择生日
+                final Dialog_Select_Date.Builder builder = new Dialog_Select_Date.Builder(this);
+                builder.setTitle("请选择你的出生日期")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                brithday = builder.date;
+                                tvDate.setText(brithday);
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+                break;
             case R.id.et_village:
                 //选择村
                 final Intent intent = new Intent(this, UpdateAdressActivity.class);
@@ -331,19 +368,19 @@ public class ApplyShopOwnerActivity extends BackActivity {
                 String contact = etPhone.getEditableText().toString();
                 String conts = "申请理由";
 
-                if (uname.isEmpty()) {
+                if (StringTools.isEmpty(uname)) {
                     Toast.makeText(this, "请填写申请人真实姓名。", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (brithday.isEmpty()) {
+                if (StringTools.isEmpty(brithday)) {
                     Toast.makeText(this, "请填写申请人生日。", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (contact.isEmpty()) {
+                if (StringTools.isEmpty(contact)) {
                     Toast.makeText(this, "请填写申请人手机号。", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (vid.isEmpty()) {
+                if (StringTools.isEmpty(vid)) {
                     Toast.makeText(this, "请选择要申请店长的村。", Toast.LENGTH_LONG).show();
                     return;
                 }

@@ -34,6 +34,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.AddFriendRequest;
 import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.bean.UserInfoByPhone;
@@ -43,7 +44,6 @@ import com.study.mingappk.model.database.InstantMsgModel;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.database.NewFriendModel;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
-import com.study.mingappk.model.event.DeBugEvent;
 import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.model.event.NewFriendEvent;
 import com.study.mingappk.model.event.ShowSideBarEvent;
@@ -67,27 +67,34 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.viewPager_main)
     MainViewPager viewPager;
-    @Bind(R.id.img_tab1_main)
-    ImageView mTab1;
+    @Bind(R.id.img_tab1_main_1)
+    ImageView mTab11;
+    @Bind(R.id.img_tab1_main_0)
+    ImageView mTab10;
     @Bind(R.id.text_tab1_main)
     TextView tTab1;
-    @Bind(R.id.img_tab2_main)
-    ImageView mTab2;
+    @Bind(R.id.img_tab2_main_1)
+    ImageView mTab21;
+    @Bind(R.id.img_tab2_main_0)
+    ImageView mTab20;
     @Bind(R.id.text_tab2_main)
     TextView tTab2;
-    @Bind(R.id.img_tab3_main)
-    ImageView mTab3;
+    @Bind(R.id.img_tab3_main_1)
+    ImageView mTab31;
+    @Bind(R.id.img_tab3_main_0)
+    ImageView mTab30;
     @Bind(R.id.text_tab3_main)
     TextView tTab3;
-    @Bind(R.id.img_tab4_main)
-    ImageView mTab4;
+    @Bind(R.id.img_tab4_main_1)
+    ImageView mTab41;
+    @Bind(R.id.img_tab4_main_0)
+    ImageView mTab40;
     @Bind(R.id.text_tab4_main)
     TextView tTab4;
     @Bind(R.id.toolbar_main)
@@ -289,12 +296,6 @@ public class MainActivity extends AppCompatActivity {
         BaseTools.colorStatusBar(this);
     }
 
-    //调试消息显示
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void showDeBug(DeBugEvent event) {
-        Toast.makeText(MainActivity.this, "DeBug: " + event.getMsg(), Toast.LENGTH_LONG).show();
-    }
-
     //主页为singletop模式，更换主题后手动刷新
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void changeThemeColor(ChangeThemeColorEvent event) {
@@ -306,11 +307,12 @@ public class MainActivity extends AppCompatActivity {
         //获取当前app主题的颜色,设置toolbar颜色
         mToolBar.setBackgroundColor(themeColor);
         //更改主题后，改变tab4图标颜色
-        mTab4.setImageResource(R.mipmap.tab4_btn1);
+       /* mTab4.setImageResource(R.mipmap.tab4_btn1);
         ColorStateList colorStateList = ThemeUtils.getThemeColorStateList(MainActivity.this, R.color.theme_color_primary);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mTab4.setImageTintList(colorStateList);
-        }
+        }*/
+        mTab41.refreshDrawableState();
         tTab4.setTextColor(themeColor);
     }
 
@@ -390,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
                 tab3Guide.setVisibility(View.GONE);
                 break;
             case R.id.click_search://点击搜索好友
-                if (!searchText.isEmpty()) {
+                if (!StringTools.isEmpty(searchText)) {
                     searchFriend(searchText);
                     //关闭输入法
                     JUtils.closeInputMethod(this);
@@ -461,23 +463,16 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     toolbarTitle.setText(R.string.tab1_main);
                     idToolbar = 1;
-                    /*tTab1.setSelected(true);
-                    tTab2.setSelected(false);
-                    tTab3.setSelected(false);
-                    tTab4.setSelected(false);
-
-                    mTab1.setSelected(true);
-                    mTab2.setSelected(false);
-                    mTab3.setSelected(false);
-                    mTab4.setSelected(false);*/
-                    mTab1.setImageResource(R.mipmap.tab1_btn1);
+                   /* mTab1.setImageResource(R.mipmap.tab1_btn1);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         mTab1.setImageTintList(colorStateList);
                         mTab2.setImageTintList(null);
                         mTab3.setImageTintList(null);
                         mTab4.setImageTintList(null);
-                    }
+                    }*/
                     tTab1.setTextColor(themeColor);   //选中时的字体颜色
+                    mTab11.setVisibility(View.VISIBLE);
+                    mTab10.setVisibility(View.GONE);
                     setTab2ToB();
                     setTab3ToB();
                     setTab4ToB();
@@ -485,23 +480,16 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     toolbarTitle.setText(R.string.tab2_main);
                     idToolbar = 2;
-                    /*tTab1.setSelected(false);
-                    tTab2.setSelected(true);
-                    tTab3.setSelected(false);
-                    tTab4.setSelected(false);
-
-                    mTab1.setSelected(false);
-                    mTab2.setSelected(true);
-                    mTab3.setSelected(false);
-                    mTab4.setSelected(false);*/
-                    mTab2.setImageResource(R.mipmap.tab2_btn1);
+                   /* mTab2.setImageResource(R.mipmap.tab2_btn1);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         mTab2.setImageTintList(colorStateList);
                         mTab1.setImageTintList(null);
                         mTab3.setImageTintList(null);
                         mTab4.setImageTintList(null);
-                    }
+                    }*/
                     tTab2.setTextColor(themeColor);
+                    mTab21.setVisibility(View.VISIBLE);
+                    mTab20.setVisibility(View.GONE);
                     setTab1ToB();
                     setTab3ToB();
                     setTab4ToB();
@@ -509,23 +497,16 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     toolbarTitle.setText(R.string.tab3_main);
                     idToolbar = 3;
-                   /* tTab1.setSelected(false);
-                    tTab2.setSelected(false);
-                    tTab3.setSelected(true);
-                    tTab4.setSelected(false);
-
-                    mTab1.setSelected(false);
-                    mTab2.setSelected(false);
-                    mTab3.setSelected(true);
-                    mTab4.setSelected(false);*/
-                    mTab3.setImageResource(R.mipmap.tab3_btn1);
+                   /* mTab3.setImageResource(R.mipmap.tab3_btn1);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         mTab3.setImageTintList(colorStateList);
                         mTab1.setImageTintList(null);
                         mTab2.setImageTintList(null);
                         mTab4.setImageTintList(null);
-                    }
+                    }*/
                     tTab3.setTextColor(themeColor);
+                    mTab31.setVisibility(View.VISIBLE);
+                    mTab30.setVisibility(View.GONE);
                     setTab1ToB();
                     setTab2ToB();
                     setTab4ToB();
@@ -533,23 +514,16 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     toolbarTitle.setText(R.string.tab4_main);
                     idToolbar = 4;
-                   /* tTab1.setSelected(false);
-                    tTab2.setSelected(false);
-                    tTab3.setSelected(false);
-                    tTab4.setSelected(true);
-
-                    mTab1.setSelected(false);
-                    mTab2.setSelected(false);
-                    mTab3.setSelected(false);
-                    mTab4.setSelected(true);*/
-                    mTab4.setImageResource(R.mipmap.tab4_btn1);
+                   /* mTab4.setImageResource(R.mipmap.tab4_btn1);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         mTab4.setImageTintList(colorStateList);
                         mTab1.setImageTintList(null);
                         mTab2.setImageTintList(null);
                         mTab3.setImageTintList(null);
-                    }
+                    }*/
                     tTab4.setTextColor(themeColor);
+                    mTab41.setVisibility(View.VISIBLE);
+                    mTab40.setVisibility(View.GONE);
                     setTab1ToB();
                     setTab2ToB();
                     setTab3ToB();
@@ -560,23 +534,31 @@ public class MainActivity extends AppCompatActivity {
 
 
         private void setTab1ToB() {
-            mTab1.setImageResource(R.mipmap.tab1_btn0);
+//            mTab1.setImageResource(R.mipmap.tab1_btn0);
             tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
+            mTab11.setVisibility(View.GONE);
+            mTab10.setVisibility(View.VISIBLE);
         }
 
         private void setTab2ToB() {
-            mTab2.setImageResource(R.mipmap.tab2_btn0);
+//            mTab2.setImageResource(R.mipmap.tab2_btn0);
             tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
+            mTab21.setVisibility(View.GONE);
+            mTab20.setVisibility(View.VISIBLE);
         }
 
         private void setTab3ToB() {
-            mTab3.setImageResource(R.mipmap.tab3_btn0);
+//            mTab3.setImageResource(R.mipmap.tab3_btn0);
             tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
+            mTab31.setVisibility(View.GONE);
+            mTab30.setVisibility(View.VISIBLE);
         }
 
         private void setTab4ToB() {
-            mTab4.setImageResource(R.mipmap.tab4_btn0);
+//            mTab4.setImageResource(R.mipmap.tab4_btn0);
             tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
+            mTab41.setVisibility(View.GONE);
+            mTab40.setVisibility(View.VISIBLE);
         }
 
         @Override

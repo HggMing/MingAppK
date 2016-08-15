@@ -14,6 +14,7 @@ import com.bilibili.magicasakura.widgets.TintEditText;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.dialog.Dialog_InputPwd;
 import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.Result;
@@ -88,7 +89,7 @@ public class TakeMoneyActivity extends BackActivity {
 
                     @Override
                     public void onNext(CardList cardList) {
-                        if (!cardList.getData().isEmpty()) {
+                        if (!cardList.getData().isEmpty()||cardList.getData()!=null) {
                             CardList.DataBean dataBean = cardList.getData().get(mSelectedCard);
                             //显示开户行
                             bank_name = dataBean.getBank_name();
@@ -102,7 +103,7 @@ public class TakeMoneyActivity extends BackActivity {
                             //开户人
                             bank_user_name = dataBean.getBank_true_name();
                         } else {
-                            bank_name="";//用于判定未选卡
+                            bank_name = "";//用于判定未选卡
                             bankName.setText("未绑定银行卡");
                             bankNumber.setText("请点击此处，添加银行卡");
                         }
@@ -202,7 +203,7 @@ public class TakeMoneyActivity extends BackActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 pwd = pwdDialog.et_pwd.getEditableText().toString();
 
-                                if (pwd.isEmpty()) {
+                                if (StringTools.isEmpty(pwd)) {
                                     Toast.makeText(TakeMoneyActivity.this, "钱包密码不能为空", Toast.LENGTH_LONG).show();
                                     return;
                                 }
@@ -225,7 +226,9 @@ public class TakeMoneyActivity extends BackActivity {
                                             @Override
                                             public void onNext(Result result) {
                                                 Toast.makeText(TakeMoneyActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
-                                                finish();
+                                                if (result.getErr() == 0) {
+                                                    finish();
+                                                }
                                             }
                                         });
                                 dialog.dismiss();

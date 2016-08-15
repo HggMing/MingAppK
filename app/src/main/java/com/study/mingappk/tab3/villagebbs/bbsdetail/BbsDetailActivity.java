@@ -32,6 +32,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyItemDecoration;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.bigimageview.BigImageViewActivity;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.common.views.nineimage.NineGridImageView;
@@ -155,7 +156,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         });
         //发帖人昵称
         String userName = bbsDetail.getUname();
-        if (userName.isEmpty()) {
+        if (StringTools.isEmpty(userName)) {
             //若用户名为空，显示手机号，中间四位为*
             String iphone = bbsDetail.getUserinfo().getPhone();
             userName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
@@ -170,9 +171,8 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
             @Override
             public void onClick(View v) {
                 MyDialog.Builder builder = new MyDialog.Builder(BbsDetailActivity.this);
-                builder.setTitle("提示")
-                        .setMessage("注意删除帖子后无法恢复。是否删除?")
-                        .setNegativeButton("确定",
+                builder.setMessage("注意删除帖子后无法恢复。是否删除?")
+                        .setPositiveButton("确定",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -180,14 +180,13 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                                         dialog.dismiss();
                                     }
                                 })
-                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
                         })
-                        .create()
-                        .show();
+                        .create().show();
             }
 
             private void deleteBbs() {
@@ -247,7 +246,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
             @Override
             protected void onDisplayImage(Context context, ImageView imageView, BBSList.DataEntity.ListEntity.FilesEntity filesEntity) {
                 String imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_2();
-                if (filesEntity.getSurl_2().isEmpty()) {
+                if (StringTools.isEmpty(filesEntity.getSurl_2())) {
                     imageUrl = MyServiceClient.getBaseUrl() + filesEntity.getSurl_1();
                 }
                 Glide.with(context).load(imageUrl)
@@ -284,7 +283,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
             public void onClick(View v) {
 //                Toast.makeText(BbsDetailActivity.this, "点击点赞人头像", Toast.LENGTH_SHORT).show();
                 String uid = (String) v.getTag(R.id.tag_like_user_id);
-                if (!uid.isEmpty()) {
+                if (!StringTools.isEmpty(uid)) {
                     Intent intent = new Intent(BbsDetailActivity.this, FriendDetailActivity.class);
                     intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
                     startActivity(intent);
@@ -387,7 +386,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                     MyDialog.Builder builder = new MyDialog.Builder(BbsDetailActivity.this);
                     builder.setTitle("提示")
                             .setMessage("感谢你对评论内容的监督，多人举报后该评论将被隐藏，注意恶意举报会被处罚。是否举报?")
-                            .setNegativeButton("确定",
+                            .setPositiveButton("确定",
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -395,14 +394,13 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                                             dialog.dismiss();
                                         }
                                     })
-                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             })
-                            .create()
-                            .show();
+                            .create().show();
                 } else {
                     Toast.makeText(BbsDetailActivity.this, "你已经举报此帖子，等待审核处理。", Toast.LENGTH_SHORT).show();
                 }
@@ -542,7 +540,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
         MyDialog.Builder builder = new MyDialog.Builder(BbsDetailActivity.this);
         builder.setTitle("提示")
                 .setMessage("注意删除评论后无法恢复。是否删除?")
-                .setNegativeButton("确定",
+                .setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -550,7 +548,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                                 dialog.dismiss();
                             }
                         })
-                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         applicationId "com.study.mingappk"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.5.02"
+        versionName "1.6.3"
         manifestPlaceholders = [
 //                GETUI_APP_ID    : "JNsgkNDx3f9Kxlp0qGJxa9",
 //                GETUI_APP_KEY   : "y9e3zY48s06tsakhcpYz27",

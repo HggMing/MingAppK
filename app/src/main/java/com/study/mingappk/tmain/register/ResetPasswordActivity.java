@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.sms_autofill.SmsObserver;
 import com.study.mingappk.common.views.sms_autofill.SmsResponseCallback;
 import com.study.mingappk.common.views.sms_autofill.VerificationCodeSmsFilter;
@@ -123,11 +124,11 @@ public class ResetPasswordActivity extends BackActivity {
                 String pwd1 = etPwd1.getEditableText().toString();
                 String pwd2 = etPwd2.getEditableText().toString();
 
-                if (rcode.isEmpty()) {
+                if (StringTools.isEmpty(rcode)) {
                     Toast.makeText(this, "验证码不能为空", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (pwd1.isEmpty()) {
+                if (StringTools.isEmpty(pwd1)) {
                     Toast.makeText(this, "密码不能为空", Toast.LENGTH_LONG).show();
                     return;
                 }

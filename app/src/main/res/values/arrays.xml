@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="theme_colors">
+        <item>theme_color_primary</item>
+        <item>purple</item>
+        <item>pink</item>
+        <item>green</item>
+        <item>green_light</item>
+        <item>yellow</item>
+        <item>orange</item>
+        <item>red</item>
+    </string-array>
+
+    <string-array name="sexs">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="educations">
+        <item>初中</item>
+        <item>高中</item>
+        <item>大专</item>
+        <item>本科</item>
+        <item>硕士</item>
+        <item>博士</item>
+    </string-array>
+
+    <string-array name="money_details">
+        <item>其它</item>
+        <item>奖励</item>
+        <item>提现</item>
+        <item>充值</item>
+        <item>订单</item>
+        <item>扣款</item>
+        <item>话费充值奖励</item>
+        <item>流量充值奖励</item>
+    </string-array>
+
+    <string-array name="month_name">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
+
+</resources>

@@ -68,8 +68,6 @@
     <color name="font_black_9">#999999</color>
     <!--首页tab按钮颜色-->
     <color name="tab_bnt0">#676767</color>
-    <color name="tab_bnt1">#6dacea</color>
-    <color name="tab_background">#ffffffff</color>
     <!--tab分割线颜色-->
     <color name="line_bottom">#c7c7c7</color>
     <!--全透明背景-->

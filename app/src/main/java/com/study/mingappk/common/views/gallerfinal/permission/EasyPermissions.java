@@ -26,6 +26,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
+import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.common.views.gallerfinal.utils.ILogger;
 
 import java.lang.reflect.InvocationTargetException;
@@ -117,7 +118,25 @@ public class EasyPermissions {
         }
 
         if (shouldShowRationale) {
-            AlertDialog dialog = new AlertDialog.Builder(getActivity(object))
+           /* AlertDialog dialog = new AlertDialog.Builder(getActivity(object))
+                    .setMessage(rationale)
+                    .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            executePermissionsRequest(object, perms, requestCode);
+                        }
+                    })
+                    .setNegativeButton(negativeButton, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing, user does not want to request
+                            PermissionCallbacks callbacks = (PermissionCallbacks) object;
+                            if(callbacks != null) {
+                                callbacks.onPermissionsDenied(new ArrayList<String>());
+                            }
+                        }
+                    }).create();*/
+             MyDialog dialog=new MyDialog.Builder(getActivity(object))
                     .setMessage(rationale)
                     .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
                         @Override

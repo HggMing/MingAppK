@@ -16,6 +16,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
@@ -109,7 +110,7 @@ public class BbsDetailAdapter extends RecyclerView.Adapter<BbsDetailAdapter.View
         });
         //评论人姓名
         String uname = mList.get(position).getUname();
-        if (uname.isEmpty()) {
+        if (StringTools.isEmpty(uname)) {
             //若用户名为空，显示手机号，中间四位为*
             String iphone = mList.get(position).getUser_tel();
             uname = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);

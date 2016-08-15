@@ -16,11 +16,13 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.sms_autofill.SmsObserver;
 import com.study.mingappk.common.views.sms_autofill.SmsResponseCallback;
 import com.study.mingappk.common.views.sms_autofill.VerificationCodeSmsFilter;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.service.MyService;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
 import com.study.mingappk.tmain.MainActivity;
@@ -29,6 +31,7 @@ import com.study.mingappk.tmain.WebViewActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -63,6 +66,7 @@ public class RegisterActivity extends BackActivity {
 
     private SmsObserver smsObserver;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +83,7 @@ public class RegisterActivity extends BackActivity {
 
     private void autoFillRCode() {
         //初始化
-        smsObserver=new SmsObserver(this, new SmsResponseCallback() {
+        smsObserver = new SmsObserver(this, new SmsResponseCallback() {
             @Override
             public void onCallbackSmsContent(String smsContent) {
                 //这里接收短信
@@ -123,28 +127,28 @@ public class RegisterActivity extends BackActivity {
                 });
     }
 
-    @OnClick({R.id.btn_get_rcode, R.id.btn_register,R.id.read})
+    @OnClick({R.id.btn_get_rcode, R.id.btn_register, R.id.read})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_get_rcode:
                 getRCode();
                 break;
             case R.id.read:
-                Intent intent=new Intent(this,WebViewActivity.class);
-                intent.putExtra(WebViewActivity.TAG,WebViewActivity.TITLE_NAME1);
+                Intent intent = new Intent(this, WebViewActivity.class);
+                intent.putExtra(WebViewActivity.TAG, WebViewActivity.TITLE_NAME1);
                 startActivity(intent);
                 break;
             case R.id.btn_register:
                 String rcode = etRcode.getEditableText().toString();
                 String pwd1 = etPwd1.getEditableText().toString();
                 String pwd2 = etPwd2.getEditableText().toString();
-                String rphone=etPhoneRecommend.getEditableText().toString();
+                String rphone = etPhoneRecommend.getEditableText().toString();
 
-                if (rcode.isEmpty()) {
+                if (StringTools.isEmpty(rcode)) {
                     Toast.makeText(this, "验证码不能为空", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (pwd1.isEmpty()) {
+                if (StringTools.isEmpty(pwd1)) {
                     Toast.makeText(this, "密码不能为空", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -160,7 +164,7 @@ public class RegisterActivity extends BackActivity {
                     Toast.makeText(this, "请认真阅读免责条款", Toast.LENGTH_LONG).show();
                     return;
                 }
-                register(rcode, pwd1,rphone);
+                register(rcode, pwd1, rphone);
                 break;
         }
     }
@@ -168,9 +172,10 @@ public class RegisterActivity extends BackActivity {
     /**
      * 注册
      */
-    private void register(String code, final String pwd,String rphone) {
+    private void register(String code, final String pwd, String rphone) {
+
         MyServiceClient.getService()
-                .post_Register(regPhone, code, pwd, sign,rphone)
+                .post_Register(regPhone, code, pwd, sign, rphone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Result>() {
@@ -212,12 +217,27 @@ public class RegisterActivity extends BackActivity {
                     @Override
                     public void onNext(Login login) {
                         if (login.getErr() == 0) {
+                            //储存店长管理村地址
+                            if (login.getShopowner().getIs_shopowner() == 1) {
+                                String manager_vid = login.getShopowner().getManager_vid();
+                                if (manager_vid != null && manager_vid.length() >= 12) {
+                                    String key_vid = manager_vid.substring(0, 12);//取出第一个店长vid
+                                    Login.VidInfoBean vidInfoBean = login.getVid_info().get(key_vid);
+                                    String vName = vidInfoBean.getProvince_name() +
+                                            vidInfoBean.getCity_name() +
+                                            vidInfoBean.getCounty_name() +
+                                            vidInfoBean.getTown_name() +
+                                            vidInfoBean.getVillage_name();//店长村详细地址
+                                    Hawk.put(APP.MANAGER_ADDRESS,vName);
+                                }
+                            }
+
                             Hawk.chain()
                                     .put(APP.USER_AUTH, login.getAuth())//保存认证信息
                                     .put(APP.ME_UID, login.getInfo().getUid())
-                                    .put(APP.IS_SHOP_OWNER,login.getShopowner().getIs_shopowner())
+                                    .put(APP.IS_SHOP_OWNER, login.getShopowner().getIs_shopowner())
                                     // .put(APP.LOGIN_NAME, regPhone)
-                                   // .put(APP.LOGIN_PASSWORD, pwd)
+                                    // .put(APP.LOGIN_PASSWORD, pwd)
                                     .commit();
                             Hawk.remove(APP.IS_FIRST_RUN);//用于显示添加村圈的引导
                             Intent intent = new Intent();

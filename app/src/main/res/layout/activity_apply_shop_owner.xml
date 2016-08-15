@@ -84,6 +84,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:padding="@dimen/padding_6">
 
                     <TextView
@@ -109,6 +110,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:padding="@dimen/padding_6">
 
                     <TextView
@@ -119,11 +121,30 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <Spinner
-                        android:id="@+id/sp_sex"
+                    <com.bilibili.magicasakura.widgets.TintLinearLayout
+                        android:id="@+id/sp_sex_all"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:background="@drawable/spinner_background"
+                        android:gravity="center_vertical"
+                        android:padding="13dp">
+
+                        <Spinner
+                            android:id="@+id/sp_sex"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@mipmap/spinner_down" />
+                    </com.bilibili.magicasakura.widgets.TintLinearLayout>
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -131,6 +152,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:padding="@dimen/padding_6">
 
                     <TextView
@@ -141,13 +163,33 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <com.bilibili.magicasakura.widgets.TintEditText
-                        android:id="@+id/et_data"
-                        style="@style/EditTextStyle_common"
+                    <com.bilibili.magicasakura.widgets.TintLinearLayout
+                        android:id="@+id/et_date"
                         android:layout_width="0dp"
-                        android:layout_marginTop="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        tools:text="一二三四五六七八九十" />
+                        android:background="@drawable/spinner_background"
+                        android:gravity="center_vertical"
+                        android:padding="13dp">
+
+                        <TextView
+                            android:id="@+id/tv_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="@dimen/textsize_normal"
+                            android:hint="选择生日" />
+
+                        <com.bilibili.magicasakura.widgets.TintImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/list_item_selector"
+                            android:src="@drawable/ic_apply_et_village"
+                            app:imageTint="@color/theme_color_primary" />
+                    </com.bilibili.magicasakura.widgets.TintLinearLayout>
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -155,6 +197,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:padding="@dimen/padding_6">
 
                     <TextView
@@ -179,6 +222,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:padding="@dimen/padding_6">
 
                     <TextView
@@ -189,11 +233,31 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <Spinner
-                        android:id="@+id/sp_education"
+                    <com.bilibili.magicasakura.widgets.TintLinearLayout
+                        android:id="@+id/sp_edu_all"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:background="@drawable/spinner_background"
+                        android:gravity="center_vertical"
+                        android:padding="13dp">
+
+                        <Spinner
+                            android:id="@+id/sp_education"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@mipmap/spinner_down" />
+                    </com.bilibili.magicasakura.widgets.TintLinearLayout>
+
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -201,6 +265,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:padding="@dimen/padding_6">
 
                     <TextView
@@ -211,23 +276,33 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/tv_title"
+                    <com.bilibili.magicasakura.widgets.TintLinearLayout
+                        android:id="@+id/et_village"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/font_black_2"
-                        android:textSize="16sp"
-                        tools:text="一二三四五六七八九十" />
+                        android:background="@drawable/spinner_background"
+                        android:gravity="center_vertical"
+                        android:padding="13dp">
 
-                    <com.bilibili.magicasakura.widgets.TintImageView
-                        android:id="@+id/et_village"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_marginRight="6dp"
-                        android:background="@drawable/list_item_selector"
-                        android:src="@drawable/ic_apply_et_village"
-                        app:imageTint="@color/theme_color_primary" />
+                        <TextView
+                            android:id="@+id/tv_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_black_2"
+                            android:textSize="@dimen/textsize_normal"
+                            android:hint="选择管理的店所在的村" />
+
+                        <com.bilibili.magicasakura.widgets.TintImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/list_item_selector"
+                            android:src="@drawable/ic_apply_et_village"
+                            app:imageTint="@color/theme_color_primary" />
+                    </com.bilibili.magicasakura.widgets.TintLinearLayout>
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -235,6 +310,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:minHeight="48dp"
                     android:padding="@dimen/padding_6">
 
@@ -273,6 +349,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:minHeight="48dp"
                     android:padding="@dimen/padding_6">
 

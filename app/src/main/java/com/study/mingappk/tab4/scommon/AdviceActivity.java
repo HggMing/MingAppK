@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.common.views.dialog.MyDialog;
@@ -19,6 +21,9 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class AdviceActivity extends BackActivity {
 
@@ -50,6 +55,10 @@ public class AdviceActivity extends BackActivity {
         if (id == R.id.action_submit2) {
             content = etContent.getText().toString();
             contact = etContact.getText().toString();
+            if(StringTools.isEmpty(content)){
+                Toast.makeText(AdviceActivity.this, "请输入您的建议再提交！", Toast.LENGTH_SHORT).show();
+                return true;
+            }
             mSubmit();//提交
             return true;
         }
@@ -58,36 +67,34 @@ public class AdviceActivity extends BackActivity {
 
     private void mSubmit() {
         String auth = Hawk.get(APP.USER_AUTH);
-        Call<Result> call = MyServiceClient.getService().getCall_Advice(auth, content, contact);
-        call.enqueue(new Callback<Result>() {
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-                if (response.isSuccessful()) {
-                    Result adviceResult = response.body();
-                    if (adviceResult != null) {
-                        MyDialog.Builder builder = new MyDialog.Builder(AdviceActivity.this);
-                        builder.setTitle("提示")
-                                .setCannel(false)
-                                .setMessage(adviceResult.getMsg())
-                                .setNegativeButton("确定",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog,
-                                                                int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                        if (!isFinishing()) {
-                            builder.create().show();
-                        }
+        MyServiceClient.getService()
+                .get_Advice(auth, content, contact)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onCompleted() {
+
                     }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Result> call, Throwable t) {
+                    @Override
+                    public void onError(Throwable e) {
 
-            }
-        });
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        MyDialog.Builder builder = new MyDialog.Builder(AdviceActivity.this);
+                        builder.setCannel(false)
+                                .setMessage(result.getMsg())
+                                .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .create().show();
+                    }
+                });
     }
 }

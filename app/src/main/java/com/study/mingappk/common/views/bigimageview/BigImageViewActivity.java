@@ -129,7 +129,7 @@ public class BigImageViewActivity extends AppCompatActivity {
                     MyDialog.Builder builder = new MyDialog.Builder(container.getContext());
                     builder.setTitle("提示")
                             .setMessage("下载图片" + "?")
-                            .setNegativeButton("确定",
+                            .setPositiveButton("确定",
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -150,7 +150,7 @@ public class BigImageViewActivity extends AppCompatActivity {
                                             dialog.dismiss();
                                         }
                                     })
-                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
@@ -280,15 +280,15 @@ public class BigImageViewActivity extends AppCompatActivity {
 //                    })
 //                    .show();
             //如果用户之前拒绝过此权限，再提示一次准备授权相关权限
-            new AlertDialog.Builder(this)
+            new MyDialog.Builder(this)
                     .setTitle("提示")
                     .setMessage(permissionDes)
-                    .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(BigImageViewActivity.this, permissions, requestCode);
                         }
-                    }).show();
+                    }).create().show();
 
         } else {
             // Contact permissions have not been granted yet. Request them directly.

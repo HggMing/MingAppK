@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4.safesetting;
+package com.study.mingappk.common.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,26 +16,26 @@ import com.study.mingappk.R;
 /**
  * listview item，带一个 icon 和一行文字
  */
-public class ListItem1 extends FrameLayout {
+public class CustomItem extends FrameLayout {
 
     private View mIcon;
     private TextView mText;
 
-    public ListItem1(Context context, AttributeSet attrs) {
+    public CustomItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        View.inflate(context, R.layout.item_tab4_list, this);
+        View.inflate(context, R.layout.view_custom_item, this);
         mIcon = findViewById(R.id.icon);
         mText = (TextView) findViewById(R.id.title);
 
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ListItem1);
-        String title = array.getString(R.styleable.ListItem1_itemTitle);
-        int icon = array.getResourceId(R.styleable.ListItem1_itemIcon, R.mipmap.user_home_project);
-        boolean center = array.getBoolean(R.styleable.ListItem1_itemCenter, false);
-        boolean showArrow=array.getBoolean(R.styleable.ListItem1_showArrow,true);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomItem);
+        String title = array.getString(R.styleable.CustomItem_itemTitle);
+        int icon = array.getResourceId(R.styleable.CustomItem_itemIcon, R.mipmap.user_home_project);
+        boolean center = array.getBoolean(R.styleable.CustomItem_itemCenter, false);
+        boolean showArrow=array.getBoolean(R.styleable.CustomItem_showArrow,true);
         array.recycle();
 
         if (title == null) title = "";

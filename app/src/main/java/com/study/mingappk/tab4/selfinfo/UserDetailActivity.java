@@ -200,55 +200,73 @@ public class UserDetailActivity extends BackActivity {
      */
     private void updateSex() {
         final Dialog_UpdateSex.Builder sexDialog = new Dialog_UpdateSex.Builder(UserDetailActivity.this);
-        sexDialog.setTitle("修改性别");
         userInfo = getIntent().getParcelableExtra(USER_INFO);
-        sexDialog.setMysex(userInfo.getSex());//显示当前性别
-        final Dialog_UpdateSex dialog = sexDialog.create();
+        final Dialog_UpdateSex dialog = sexDialog.setTitle("修改性别")
+                .setMysex(userInfo.getSex())//显示当前性别
+                .create();
         dialog.show();
-        sexDialog.sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                String checkSex = "";
-                if (checkedId == R.id.male) {
-                    checkSex = "男";
-                } else if (checkedId == R.id.female) {
-                    checkSex = "女";
-                }
-                getSex.setText(checkSex); //修改本页性别显示
-                //将修改post到服务器
-                String sexNo;
-                if (checkSex.equals("男")) {
-                    sexNo = "0";
-                } else {
-                    sexNo = "1";
-                }
-                MyServiceClient.getService().postCall_UpdateInfo(auth, null, sexNo, null, null)
-                        .enqueue(new Callback<Result>() {
-                            @Override
-                            public void onResponse(Call<Result> call, Response<Result> response) {
-                                if (response.isSuccessful()) {
-                                    Result result = response.body();
-                                    if (result != null) {
-                                        Hawk.put(APP.IS_UPDATA_MY_INFO, false);
-                                        Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
-                                        dialog.dismiss();
-                                    }
-                                }
-                            }
 
-                            @Override
-                            public void onFailure(Call<Result> call, Throwable t) {
-                                Log.i("mm:UserDetailActivity", t.getMessage());
-                            }
-                        });
+        sexDialog.maleAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!sexDialog.male.isChecked()) {
+                    sexDialog.male.setChecked(true);
+                    sexDialog.female.setChecked(false);
+                    userInfo.setSex("0");
+                    getSex.setText("男"); //修改本页性别显示
+                    updateSexToServer("0", dialog);
+                } else {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        sexDialog.femaleAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!sexDialog.female.isChecked()) {
+                    sexDialog.female.setChecked(true);
+                    sexDialog.male.setChecked(false);
+                    userInfo.setSex("1");
+                    getSex.setText("女"); //修改本页性别显示
+                    updateSexToServer("1", dialog);
+                } else {
+                    dialog.dismiss();
+                }
             }
         });
     }
 
+    /**
+     * 更新性别到服务器
+     *
+     * @param sexNo 男：“0”，女：“1”
+     */
+    private void updateSexToServer(String sexNo, final Dialog_UpdateSex dialog) {
+        MyServiceClient.getService().postCall_UpdateInfo(auth, null, sexNo, null, null)
+                .enqueue(new Callback<Result>() {
+                    @Override
+                    public void onResponse(Call<Result> call, Response<Result> response) {
+                        if (response.isSuccessful()) {
+                            Result result = response.body();
+                            if (result != null) {
+                                Hawk.put(APP.IS_UPDATA_MY_INFO, false);
+                                Toast.makeText(UserDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Result> call, Throwable t) {
+                    }
+                });
+    }
+
+
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
+        setResult(RESULT_OK);
         super.onBackPressed();
     }
 

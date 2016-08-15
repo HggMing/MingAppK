@@ -17,6 +17,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyItemDecoration2;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.BackActivity;
@@ -143,16 +144,16 @@ public class FriendMoreActivity extends BackActivity {
                                    String aliasName = userinfoBean.getAlias_name();//备注名
                                    String iphone = userinfoBean.getPhone();
                                    String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
-                                   if (!aliasName.isEmpty()) {
+                                   if (!StringTools.isEmpty(aliasName)) {
                                        name.setText(aliasName);
-                                       if (!uName.isEmpty()) {
+                                       if (!StringTools.isEmpty(uName)) {
                                            name2.setText("昵称：" + uName);
                                        } else {
                                            name2.setText("账号：" + showName);
                                        }
                                    } else {
                                        name2.setVisibility(View.INVISIBLE);
-                                       if (!uName.isEmpty()) {
+                                       if (!StringTools.isEmpty(uName)) {
                                            name.setText(uName);
                                        } else {
                                            name.setText(showName);

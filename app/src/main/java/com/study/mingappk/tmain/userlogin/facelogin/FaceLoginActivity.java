@@ -25,10 +25,12 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.PhotoOperate;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
+import com.study.mingappk.common.views.gallertools.ShellUtils;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -103,7 +105,7 @@ public class FaceLoginActivity extends BackActivity {
                 break;
             case R.id.btn_ok:
                 String phone = etPhone.getText().toString().trim();
-                if (phone.isEmpty()) {
+                if (StringTools.isEmpty(phone)) {
                     Toast.makeText(this, "请输入认证的手机号码", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -258,6 +260,21 @@ public class FaceLoginActivity extends BackActivity {
 
                     @Override
                     public void onNext(Login login) {
+                        //储存店长管理村地址
+                        if (login.getShopowner().getIs_shopowner() == 1) {
+                            String manager_vid = login.getShopowner().getManager_vid();
+                            if (manager_vid != null && manager_vid.length() >= 12) {
+                                String key_vid = manager_vid.substring(0, 12);//取出第一个店长vid
+                                Login.VidInfoBean vidInfoBean = login.getVid_info().get(key_vid);
+                                String vName = vidInfoBean.getProvince_name() +
+                                        vidInfoBean.getCity_name() +
+                                        vidInfoBean.getCounty_name() +
+                                        vidInfoBean.getTown_name() +
+                                        vidInfoBean.getVillage_name();//店长村详细地址
+                                Hawk.put(APP.MANAGER_ADDRESS,vName);
+                            }
+                        }
+
                         Hawk.chain()
                                 .put(APP.USER_AUTH, login.getAuth())//保存认证信息
                                 .put(APP.ME_UID, login.getInfo().getUid())
@@ -336,15 +353,15 @@ public class FaceLoginActivity extends BackActivity {
 //                    })
 //                    .show();
             //如果用户之前拒绝过此权限，再提示一次准备授权相关权限
-            new AlertDialog.Builder(this)
+            new MyDialog.Builder(this)
                     .setTitle("提示")
                     .setMessage(permissionDes)
-                    .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(FaceLoginActivity.this, permissions, requestCode);
-                        }
-                    }).show();
+                            ActivityCompat.requestPermissions(FaceLoginActivity.this, permissions, requestCode);}
+                    })
+                    .create().show();
 
         } else {
             // Contact permissions have not been granted yet. Request them directly.

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.MyItemDecoration2;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.database.InstantMsgModel;
 import com.study.mingappk.model.database.MyDB;
@@ -65,7 +66,7 @@ public class Tab1Fragment extends Fragment implements Tab1Adapter.OnItemClickLis
 
     private void initDatas() {
         mList = MyDB.getQueryAll(InstantMsgModel.class);
-        if (mList.isEmpty()) {
+        if (mList.isEmpty()||mList==null) {
             contentEmpty.setVisibility(View.VISIBLE);
         } else {
             contentEmpty.setVisibility(View.GONE);
@@ -86,7 +87,7 @@ public class Tab1Fragment extends Fragment implements Tab1Adapter.OnItemClickLis
         }
         mAdapter.clear();
         mList = MyDB.getQueryAll(InstantMsgModel.class);
-        if (mList.isEmpty()) {
+        if (mList.isEmpty()||mList==null) {
             contentEmpty.setVisibility(View.VISIBLE);
         } else {
             contentEmpty.setVisibility(View.GONE);
@@ -131,7 +132,7 @@ public class Tab1Fragment extends Fragment implements Tab1Adapter.OnItemClickLis
         MyDialog.Builder builder = new MyDialog.Builder(mActivity);
         builder.setTitle("提示")
                 .setMessage("删除该聊天？")
-                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //数据库中删除此条动态
@@ -143,7 +144,7 @@ public class Tab1Fragment extends Fragment implements Tab1Adapter.OnItemClickLis
                         dialog.dismiss();
                     }
                 })
-                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
