@@ -81,7 +81,7 @@
 
     <!--tab4文字-->
     <color name="font_black_comment">#ff666666</color>
-    <color name="font_black_content">#ff222222</color>
+    <color name="font_black_content">#ff444444</color>
     <color name="divide_line">#ffdddddd</color>
     <color name="font_green">#ff3bbd79</color>
     <color name="font_green2">#309b63</color>
@@ -102,6 +102,7 @@
     <color name="white_pressed1">#ffdfdfdf</color>
     <color name="darker_gray">#7a7a7a</color>
     <color name="swipe_back">#777777</color>
+    <color name="golden">#bbaa15</color>
     <!--滑动返回背景颜色-->
 
 </resources>

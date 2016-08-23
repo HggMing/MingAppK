@@ -128,7 +128,10 @@ public class LoginActivity extends Activity {
                                             vidInfoBean.getCounty_name() +
                                             vidInfoBean.getTown_name() +
                                             vidInfoBean.getVillage_name();//店长村详细地址
-                                    Hawk.put(APP.MANAGER_ADDRESS,vName);
+                                    Hawk.chain()
+                                            .put(APP.MANAGER_ADDRESS, vName)
+                                            .put(APP.MANAGER_VID,key_vid)
+                                            .commit();
                                 }
                             }
                             Hawk.chain()

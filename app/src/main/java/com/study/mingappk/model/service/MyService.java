@@ -10,6 +10,8 @@ import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.CheckPhone;
+import com.study.mingappk.model.bean.ExpressFirm;
+import com.study.mingappk.model.bean.ExpressList;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.FriendList;
@@ -891,6 +893,7 @@ public interface MyService {
 
     /**
      * 获取收货地址列表
+     *
      * @param auth 认证信息
      * @return 列表
      */
@@ -900,11 +903,12 @@ public interface MyService {
 
     /**
      * 添加收货地址列表
-     * @param auth 认证信息
-     * @param uname 收货人姓名
-     * @param addr 收货地址
-     * @param tel 手机
-     * @param is_def 是否默认
+     *
+     * @param auth    认证信息
+     * @param uname   收货人姓名
+     * @param addr    收货地址
+     * @param tel     手机
+     * @param is_def  是否默认
      * @param zipcode 邮政编码
      * @return 结果msg
      */
@@ -917,6 +921,7 @@ public interface MyService {
             @Field("tel") String tel,
             @Field("is_def") String is_def,
             @Field("zipcode") String zipcode);
+
     //修改收货地址
     @FormUrlEncoded
     @POST("orders/editaddr")
@@ -928,12 +933,75 @@ public interface MyService {
             @Field("tel") String tel,
             @Field("is_def") String is_def,
             @Field("zipcode") String zipcode);
+
     //删除地址
     @FormUrlEncoded
     @POST("orders/deladdr")
     Observable<Result> post_DelShoppingAddress(
             @Field("auth") String auth,
             @Field("id") String id);
+
+    /**
+     * 获取快递列表接口
+     *
+     * @param vid    村id
+     * @param status 2：收件列表；5：寄件列表
+     * @return 快递列表
+     */
+    @GET("express/list")
+    Observable<ExpressList> get_ExpressList(
+            @Query("vid") String vid,
+            @Query("status") String status);
+
+    //获取可选快递公司列表
+    @GET("express/ship")
+    Observable<ExpressFirm> get_ExpressFirm(
+            @Query("auth") String auth);
+
+    /**
+     * 添加可收取快递
+     *
+     * @param auth      认证信息
+     * @param vid       店长村id
+     * @param number    单号
+     * @param status    2：取件
+     * @param ship      快递公司
+     * @param qujianren 取件人
+     * @param qphone    取件人号码
+     * @return insert_id
+     */
+    @FormUrlEncoded
+    @POST("express/add")
+    Observable<ResultOther> post_EditExpressTake(
+            @Field("auth") String auth,
+            @Field("vid") String vid,
+            @Field("number") String number,
+            @Field("status") String status,
+            @Field("ship") String ship,
+            @Field("qujianren") String qujianren,
+            @Field("qphone") String qphone);
+
+    /**
+     * 添加新的寄件及编辑
+     * @param id 寄件身份信息id
+     * @param number 寄件单号
+     * @param ship 快递公司
+     * @param ship_fee 快递费
+     * @param jijianren 寄件人
+     * @param jphone 寄件人手机
+     * @param addr 寄件地址
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("express/addinfo")
+    Observable<Result> post_EditExpressSend(
+            @Field("id") String id,
+            @Field("number") String number,
+            @Field("ship") String ship,
+            @Field("ship_fee") String ship_fee,
+            @Field("jijianren") String jijianren,
+            @Field("jphone") String jphone,
+            @Field("addr") String addr);
 
 
 }

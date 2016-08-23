@@ -24,13 +24,10 @@ import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.model.database.FriendsModel;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

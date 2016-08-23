@@ -149,7 +149,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/gf_title_bar_height"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <ListView
             android:id="@+id/lv_folder_list"
@@ -159,7 +159,6 @@
             android:backgroundTint="@android:color/white"
             android:cacheColorHint="@android:color/transparent"
             android:divider="#d2d2d7"
-            android:visibility="gone"
             android:dividerHeight="0.5dp" />
     </LinearLayout>
 

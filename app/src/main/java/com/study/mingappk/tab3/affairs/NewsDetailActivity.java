@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 
 import com.study.mingappk.R;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

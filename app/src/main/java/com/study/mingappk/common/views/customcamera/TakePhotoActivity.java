@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
+import com.study.mingappk.common.utils.BaseTools;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,6 +45,7 @@ public class TakePhotoActivity extends Activity implements CameraInterface.CamOp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        BaseTools.colorStatusBar(this);//设置状态栏颜色
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_photo);
         ButterKnife.bind(this);

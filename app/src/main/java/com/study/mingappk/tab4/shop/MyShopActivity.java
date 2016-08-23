@@ -20,8 +20,8 @@ import com.bumptech.glide.Glide;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.tab1.Tab1Fragment;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tab4.shop.shoptab1.ShopTab1Fragment;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 import com.study.mingappk.tmain.MainViewPager;
 
 import java.util.ArrayList;
@@ -93,10 +93,10 @@ public class MyShopActivity extends BackActivity {
         shopAddress.setText(address);
 
         //fragment设置
-        fragments.add(new Tab1Fragment());
-        fragments.add(new Tab1Fragment());
-        fragments.add(new Tab1Fragment());
-        fragments.add(new Tab1Fragment());
+        fragments.add(new ShopTab1Fragment());
+        fragments.add(new ShopTab1Fragment());
+        fragments.add(new ShopTab1Fragment());
+        fragments.add(new ShopTab1Fragment());
 
         fragmentManager = this.getSupportFragmentManager();
 

@@ -10,7 +10,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.VillageInfo;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -22,16 +22,14 @@ import com.study.mingappk.common.views.sms_autofill.SmsResponseCallback;
 import com.study.mingappk.common.views.sms_autofill.VerificationCodeSmsFilter;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.service.MyService;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 import com.study.mingappk.tmain.MainActivity;
-import com.study.mingappk.tmain.WebViewActivity;
+import com.study.mingappk.tmain.baseactivity.WebViewActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -145,23 +143,23 @@ public class RegisterActivity extends BackActivity {
                 String rphone = etPhoneRecommend.getEditableText().toString();
 
                 if (StringTools.isEmpty(rcode)) {
-                    Toast.makeText(this, "验证码不能为空", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "验证码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (StringTools.isEmpty(pwd1)) {
-                    Toast.makeText(this, "密码不能为空", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!pwd1.equals(pwd2)) {
-                    Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (pwd1.length() < 6 || pwd1.length() > 16) {
-                    Toast.makeText(this, "密码必须在6-16位", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "密码必须在6-16位", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!checkBox.isChecked()) {
-                    Toast.makeText(this, "请认真阅读免责条款", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "请认真阅读免责条款", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 register(rcode, pwd1, rphone);
@@ -228,7 +226,10 @@ public class RegisterActivity extends BackActivity {
                                             vidInfoBean.getCounty_name() +
                                             vidInfoBean.getTown_name() +
                                             vidInfoBean.getVillage_name();//店长村详细地址
-                                    Hawk.put(APP.MANAGER_ADDRESS,vName);
+                                    Hawk.chain()
+                                            .put(APP.MANAGER_ADDRESS, vName)
+                                            .put(APP.MANAGER_VID,key_vid)
+                                            .commit();
                                 }
                             }
 

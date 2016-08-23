@@ -26,7 +26,7 @@ import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 import com.study.mingappk.common.views.gallerfinal.FunctionConfig;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 

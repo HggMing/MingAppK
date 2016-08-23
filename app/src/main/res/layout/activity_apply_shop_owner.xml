@@ -121,30 +121,11 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <com.bilibili.magicasakura.widgets.TintLinearLayout
-                        android:id="@+id/sp_sex_all"
+                    <com.study.mingappk.common.views.MySpinner
+                        android:id="@+id/my_sp_sex"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/spinner_background"
-                        android:gravity="center_vertical"
-                        android:padding="13dp">
-
-                        <Spinner
-                            android:id="@+id/sp_sex"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@null" />
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="2dp"
-                            android:src="@mipmap/spinner_down" />
-                    </com.bilibili.magicasakura.widgets.TintLinearLayout>
+                        android:layout_weight="1" />
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -177,9 +158,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:hint="选择生日"
                             android:textColor="@color/font_black_2"
-                            android:textSize="@dimen/textsize_normal"
-                            android:hint="选择生日" />
+                            android:textSize="@dimen/textsize_normal" />
 
                         <com.bilibili.magicasakura.widgets.TintImageView
                             android:layout_width="25dp"
@@ -233,31 +214,11 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <com.bilibili.magicasakura.widgets.TintLinearLayout
-                        android:id="@+id/sp_edu_all"
+                    <com.study.mingappk.common.views.MySpinner
+                        android:id="@+id/my_sp_edu"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/spinner_background"
-                        android:gravity="center_vertical"
-                        android:padding="13dp">
-
-                        <Spinner
-                            android:id="@+id/sp_education"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@null" />
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="2dp"
-                            android:src="@mipmap/spinner_down" />
-                    </com.bilibili.magicasakura.widgets.TintLinearLayout>
-
+                        android:layout_weight="1" />
                 </LinearLayout>
 
                 <include layout="@layout/divide_1_12" />
@@ -290,9 +251,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:hint="选择管理的店所在的村"
                             android:textColor="@color/font_black_2"
-                            android:textSize="@dimen/textsize_normal"
-                            android:hint="选择管理的店所在的村" />
+                            android:textSize="@dimen/textsize_normal" />
 
                         <com.bilibili.magicasakura.widgets.TintImageView
                             android:layout_width="25dp"

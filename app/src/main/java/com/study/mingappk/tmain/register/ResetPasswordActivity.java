@@ -19,7 +19,7 @@ import com.study.mingappk.common.views.sms_autofill.SmsResponseCallback;
 import com.study.mingappk.common.views.sms_autofill.VerificationCodeSmsFilter;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 import com.study.mingappk.tmain.userlogin.LoginActivity;
 
 import butterknife.Bind;
@@ -125,19 +125,19 @@ public class ResetPasswordActivity extends BackActivity {
                 String pwd2 = etPwd2.getEditableText().toString();
 
                 if (StringTools.isEmpty(rcode)) {
-                    Toast.makeText(this, "验证码不能为空", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "验证码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (StringTools.isEmpty(pwd1)) {
-                    Toast.makeText(this, "密码不能为空", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!pwd1.equals(pwd2)) {
-                    Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (pwd1.length() < 6 || pwd1.length() > 16) {
-                    Toast.makeText(this, "密码必须在6-16位", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "密码必须在6-16位", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 resetPassword(rcode, pwd1);

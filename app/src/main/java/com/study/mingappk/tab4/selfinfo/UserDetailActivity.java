@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +22,10 @@ import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 import com.study.mingappk.common.views.gallerfinal.FunctionConfig;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

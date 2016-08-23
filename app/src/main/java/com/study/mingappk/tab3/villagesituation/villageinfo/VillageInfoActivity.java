@@ -2,7 +2,6 @@ package com.study.mingappk.tab3.villagesituation.villageinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -14,9 +13,8 @@ import com.study.mingappk.R;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.model.bean.VillageInfo;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tab3.villagelist.VillageListAdapter;
-import com.study.mingappk.tmain.BackActivity;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class VillageInfoActivity extends BackActivity implements BaseRecyclerViewAdapter.OnItemClickListener {

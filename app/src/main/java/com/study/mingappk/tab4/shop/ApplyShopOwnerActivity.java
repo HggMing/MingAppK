@@ -23,9 +23,9 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.common.utils.PhotoOperate;
 import com.study.mingappk.common.utils.StringTools;
+import com.study.mingappk.common.views.MySpinner;
 import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
 import com.study.mingappk.common.views.dialog.Dialog_Select_Date;
-import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.model.bean.ApplyInfo2;
 import com.study.mingappk.model.bean.Result;
@@ -33,11 +33,12 @@ import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.selfinfo.UpdateAdressActivity;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 import com.study.mingappk.common.views.gallerfinal.FunctionConfig;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -48,7 +49,6 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class ApplyShopOwnerActivity extends BackActivity {
@@ -76,18 +76,10 @@ public class ApplyShopOwnerActivity extends BackActivity {
     RelativeLayout clickUser;
     @Bind(R.id.et_name)
     EditText etName;
-    @Bind(R.id.sp_sex)
-    Spinner spSex;
-    @Bind(R.id.sp_sex_all)
-    LinearLayout spSexAll;
     @Bind(R.id.tv_date)
     TextView tvDate;
     @Bind(R.id.et_phone)
     EditText etPhone;
-    @Bind(R.id.sp_education)
-    Spinner spEducation;
-    @Bind(R.id.sp_edu_all)
-    LinearLayout spEduAll;
     @Bind(R.id.tv_title)
     TextView tvVillageName;
     @Bind(R.id.img_photo0)
@@ -104,6 +96,10 @@ public class ApplyShopOwnerActivity extends BackActivity {
     RelativeLayout fdSend;
     @Bind(R.id.rootLayout)
     LinearLayout rootLayout;
+    @Bind(R.id.my_sp_sex)
+    MySpinner mySpSex;
+    @Bind(R.id.my_sp_edu)
+    MySpinner mySpEdu;
 
     private String auth;
     private RequestBody authBody;
@@ -140,39 +136,23 @@ public class ApplyShopOwnerActivity extends BackActivity {
 
     private void settingEducation() {
         //将可选内容与ArrayAdapter连接起来
-        final ArrayAdapter listAdapter = ArrayAdapter.createFromResource(this, R.array.educations, android.R.layout.simple_spinner_item);
-        //设置下拉列表的风格
-        listAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//      Adapter与Spinner控件绑定
-        spEducation.setAdapter(listAdapter);
-        spEducation.setSelection(0, true);//默认：初中
-        spEducation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final ArrayAdapter mAdapter = mySpEdu.getAdapter(this, R.array.educations);
+        mySpEdu.getSpinner().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                edu = (String) listAdapter.getItem(position);
+                edu = (String) mAdapter.getItem(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        spEduAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spEducation.performClick();
-            }
-        });
     }
 
     private void settingSex() {
         //将可选内容与ArrayAdapter连接起来
-        ArrayAdapter listAdapter = ArrayAdapter.createFromResource(this, R.array.sexs, android.R.layout.simple_spinner_item);
-        //设置下拉列表的风格
-        listAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Adapter与Spinner控件绑定
-        spSex.setAdapter(listAdapter);
-        spSex.setSelection(0, true);//默认：男
-        spSex.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mySpSex.getAdapter(this, R.array.sexs);
+        mySpSex.getSpinner().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
@@ -184,12 +164,6 @@ public class ApplyShopOwnerActivity extends BackActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        spSexAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spSex.performClick();
             }
         });
     }
@@ -369,27 +343,27 @@ public class ApplyShopOwnerActivity extends BackActivity {
                 String conts = "申请理由";
 
                 if (StringTools.isEmpty(uname)) {
-                    Toast.makeText(this, "请填写申请人真实姓名。", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "请填写申请人真实姓名。", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (StringTools.isEmpty(brithday)) {
-                    Toast.makeText(this, "请填写申请人生日。", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "请填写申请人生日。", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (StringTools.isEmpty(contact)) {
-                    Toast.makeText(this, "请填写申请人手机号。", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "请填写申请人手机号。", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (StringTools.isEmpty(vid)) {
-                    Toast.makeText(this, "请选择要申请店长的村。", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "请选择要申请店长的村。", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (cid_img1 == 0) {
-                    Toast.makeText(this, "请添加身份证正面照片！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "请添加身份证正面照片！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (cid_img2 == 0) {
-                    Toast.makeText(this, "请添加身份证背面照片！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "请添加身份证背面照片！", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

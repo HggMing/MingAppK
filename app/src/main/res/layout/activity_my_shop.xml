@@ -32,8 +32,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_toRightOf="@id/icon_head"
-                android:textSize="@dimen/textsize_normal"
-                tools:text="我的兴农易站" />
+                android:textColor="@color/golden"
+                android:text="我的兴农易站"
+                android:textSize="@dimen/textsize_normal" />
 
             <TextView
                 android:id="@+id/shop_address"
@@ -85,7 +86,7 @@
                 <com.bilibili.magicasakura.widgets.TintView
                     android:id="@+id/view_tab1"
                     android:layout_width="match_parent"
-                    android:layout_height="5dp"
+                    android:layout_height="3dp"
                     android:layout_below="@id/text_tab1"
                     android:layout_marginTop="5dp"
                     android:background="@color/theme_color_primary" />
@@ -120,7 +121,7 @@
                 <com.bilibili.magicasakura.widgets.TintView
                     android:id="@+id/view_tab2"
                     android:layout_width="match_parent"
-                    android:layout_height="5dp"
+                    android:layout_height="3dp"
                     android:layout_below="@id/text_tab2"
                     android:layout_marginTop="5dp" />
             </RelativeLayout>
@@ -154,7 +155,7 @@
                 <com.bilibili.magicasakura.widgets.TintView
                     android:id="@+id/view_tab3"
                     android:layout_width="match_parent"
-                    android:layout_height="5dp"
+                    android:layout_height="3dp"
                     android:layout_below="@id/text_tab3"
                     android:layout_marginTop="5dp" />
             </RelativeLayout>
@@ -188,7 +189,7 @@
                 <com.bilibili.magicasakura.widgets.TintView
                     android:id="@+id/view_tab4"
                     android:layout_width="match_parent"
-                    android:layout_height="5dp"
+                    android:layout_height="3dp"
                     android:layout_below="@id/text_tab4"
                     android:layout_marginTop="5dp" />
             </RelativeLayout>

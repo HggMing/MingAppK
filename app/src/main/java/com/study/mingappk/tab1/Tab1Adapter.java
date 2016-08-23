@@ -10,14 +10,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.database.InstantMsgModel;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.model.event.RefreshTab1Event;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
-import java.util.Date;
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -63,8 +62,10 @@ public class Tab1Adapter extends BaseRecyclerViewAdapter<InstantMsgModel, Tab1Ad
         if (count > 0) {
             holder.badge.setVisibility(View.VISIBLE);
             holder.badge.setText(String.valueOf(count));
+            EventBus.getDefault().post(new RefreshTab1Event(count));
         } else {
             holder.badge.setVisibility(View.GONE);
+            EventBus.getDefault().post(new RefreshTab1Event(0));
         }
 
         //点击事件

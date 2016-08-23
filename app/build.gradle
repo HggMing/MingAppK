@@ -14,10 +14,10 @@ android {
 //                GETUI_APP_ID    : "JNsgkNDx3f9Kxlp0qGJxa9",
 //                GETUI_APP_KEY   : "y9e3zY48s06tsakhcpYz27",
 //                GETUI_APP_SECRET: "sEFajOmqenAO4avoCQoI62",
-                GETUI_APP_ID    : "o9Pxlf1lfH7yUHC8nGpDH8",
-                GETUI_APP_KEY   : "UyiZPy1YHX9Zop0KYP8EQ3",
-                GETUI_APP_SECRET: "eesppnBSrw5m6XSpB4UA35",
-                PACKAGE_NAME    : applicationId
+                  GETUI_APP_ID    : "o9Pxlf1lfH7yUHC8nGpDH8",
+                  GETUI_APP_KEY   : "UyiZPy1YHX9Zop0KYP8EQ3",
+                  GETUI_APP_SECRET: "eesppnBSrw5m6XSpB4UA35",
+                  PACKAGE_NAME    : applicationId
         ]
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "mips", "mips64", "x86", "x86_64"
@@ -25,7 +25,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -57,6 +57,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:gridlayout-v7:23.4.0'
+
     // 快速构造view插件依赖
     compile 'com.jakewharton:butterknife:7.0.1'
     // 自定义图库，带裁剪、编辑
@@ -67,13 +69,17 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     //表情键盘 maven { url "https://jitpack.io" }
     compile 'com.github.w446108264:XhsEmoticonsKeyboard:2.0.2'
+    compile 'com.github.w446108264:AndroidEmoji:1.0.0'
     //滑动返回
     compile 'com.jude:swipebackhelper:3.1.0'
     //数据储存
     compile files('libs/lite-orm-1.9.2.jar')
-    compile 'com.github.orhanobut:hawk:1.23'// maven { url "https://jitpack.io" }
+    compile 'com.github.orhanobut:hawk:1.23'
+    // maven { url "https://jitpack.io" }
     //个推
     compile 'com.getui:sdk:2.9.0.0'
     //实现SearchView的第三方库
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
+    //二维码扫描
+    compile 'me.dm7.barcodescanner:zxing:1.9'
 }

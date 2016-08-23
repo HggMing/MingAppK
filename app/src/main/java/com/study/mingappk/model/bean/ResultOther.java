@@ -5,14 +5,14 @@ package com.study.mingappk.model.bean;
  * Created by Ming on 2016/3/13.
  */
 public class ResultOther {
-
     //接口：amount/is_set_pwd
     private int is_pwd;//0未设置钱包密码，1、已设置
 
     //接口：amount/balance
     private String money;
     private int is_bind;//0未绑定银行卡，1、已绑定
-    //接口：amount/bind
+
+    //接口：amount/bind;express/add
     private String insert_id;
 
 

@@ -2,7 +2,6 @@ package com.study.mingappk.tab2.frienddetail;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,10 +18,9 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.database.FriendsModel;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.message.ChatActivity;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,6 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class FriendDetailActivity extends BackActivity {
@@ -250,7 +247,7 @@ public class FriendDetailActivity extends BackActivity {
 
                                 @Override
                                 public void onNext(Result result) {
-                                    Toast.makeText(FriendDetailActivity.this, result.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FriendDetailActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             });

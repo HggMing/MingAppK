@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -30,13 +29,11 @@ import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
-import com.study.mingappk.common.views.gallertools.ShellUtils;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 import com.study.mingappk.tmain.MainActivity;
-import com.study.mingappk.tmain.register.TestPhoneNumberActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -216,7 +213,7 @@ public class FaceLoginActivity extends BackActivity {
 
                         @Override
                         public void onError(Throwable e) {
-                            Toast.makeText(FaceLoginActivity.this, "验证超时，建议重新拍摄清晰正面免冠照片，再次尝试登陆。", Toast.LENGTH_LONG).show();
+                            Toast.makeText(FaceLoginActivity.this, "验证超时，建议重新拍摄清晰正面免冠照片，再次尝试登陆。", Toast.LENGTH_SHORT).show();
                             btnOk.setText("确定");
                         }
 
@@ -271,7 +268,10 @@ public class FaceLoginActivity extends BackActivity {
                                         vidInfoBean.getCounty_name() +
                                         vidInfoBean.getTown_name() +
                                         vidInfoBean.getVillage_name();//店长村详细地址
-                                Hawk.put(APP.MANAGER_ADDRESS,vName);
+                                Hawk.chain()
+                                        .put(APP.MANAGER_ADDRESS, vName)
+                                        .put(APP.MANAGER_VID,key_vid)
+                                        .commit();
                             }
                         }
 
@@ -279,7 +279,7 @@ public class FaceLoginActivity extends BackActivity {
                                 .put(APP.USER_AUTH, login.getAuth())//保存认证信息
                                 .put(APP.ME_UID, login.getInfo().getUid())
                                 .put(APP.IS_SHOP_OWNER, login.getShopowner().getIs_shopowner())
-                                .put(APP.LOGIN_NAME,etPhone.getText().toString().trim())
+                                .put(APP.LOGIN_NAME, etPhone.getText().toString().trim())
                                 .commit();
                         Intent intent = new Intent();
                         intent.setClass(FaceLoginActivity.this, MainActivity.class);
@@ -359,7 +359,8 @@ public class FaceLoginActivity extends BackActivity {
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(FaceLoginActivity.this, permissions, requestCode);}
+                            ActivityCompat.requestPermissions(FaceLoginActivity.this, permissions, requestCode);
+                        }
                     })
                     .create().show();
 

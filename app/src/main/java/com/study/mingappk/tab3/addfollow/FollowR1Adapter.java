@@ -19,7 +19,7 @@ import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.databean.FollowTreeData;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

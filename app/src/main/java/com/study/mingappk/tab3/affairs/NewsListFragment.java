@@ -35,10 +35,10 @@ import rx.schedulers.Schedulers;
 public class NewsListFragment extends Fragment implements NewsListAdapter.OnItemClickListener {
     @Bind(R.id.g_affairs_list)
     XRecyclerView mXRecyclerView;
-
-    AppCompatActivity mActivity;
     @Bind(R.id.content_empty)
     TextView contentEmpty;
+
+    AppCompatActivity mActivity;
 
     private NewsListAdapter mAdapter = new NewsListAdapter();
     private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);

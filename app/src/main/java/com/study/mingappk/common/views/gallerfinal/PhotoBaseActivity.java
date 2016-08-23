@@ -37,7 +37,7 @@ import com.study.mingappk.common.views.gallerfinal.permission.EasyPermissions;
 import com.study.mingappk.common.views.gallerfinal.utils.ILogger;
 import com.study.mingappk.common.views.gallerfinal.utils.MediaScanner;
 import com.study.mingappk.common.views.gallerfinal.utils.Utils;
-import com.study.mingappk.tmain.BaseActivity;
+import com.study.mingappk.tmain.baseactivity.BaseActivity;
 
 import java.io.File;
 import java.util.ArrayList;

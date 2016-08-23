@@ -15,7 +15,7 @@
     <!-- 拦截android实时短信,自动填写短信验证码 -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <!-- 调用自定义相机 -->
+    <!-- 调用自定义相机；二维码扫描 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -192,7 +192,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".tmain.WebViewActivity"
+            android:name=".tmain.baseactivity.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".tmain.register.ResetPasswordActivity"
@@ -264,7 +264,29 @@
             android:name=".tab4.mysetting.shoppingaddress.EditShoppingAdressActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".tab4.shop.MyShopActivity"></activity>
+        <activity
+            android:name=".tab4.shop.MyShopActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.shoptab1.express.ExpressTakeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tmain.baseactivity.AddListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.shoptab1.express.EditExpressTakeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".common.views.scanner.MyScannerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.shoptab1.express.ExpressSendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.shoptab1.express.EditExpressSendActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

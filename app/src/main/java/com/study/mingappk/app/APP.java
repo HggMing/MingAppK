@@ -35,6 +35,7 @@ public class APP extends Application implements ThemeUtils.switchColor {
 
     public static final String SELECTED_CARD = "selected_card";//存储用户的默认提现银行卡，注销登录时须清空。
     public static final String MANAGER_ADDRESS = "village_manager_address";//存储店长用户的村店地址，注销登录时须清空。
+    public static final String MANAGER_VID="manager_village_id";//存储店长用户的村店地址，注销登录时须清空。
 
 
 

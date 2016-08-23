@@ -2,20 +2,18 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/id_coordinatorlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tab3.affairs.GovernmentAffairsActivity">
 
     <com.bilibili.magicasakura.widgets.TintAppBarLayout
-        android:id="@+id/id_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/theme_color_primary"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.bilibili.magicasakura.widgets.TintToolbar
-            android:id="@+id/id_toolbar"
+            android:id="@+id/m_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/theme_color_primary"
@@ -39,7 +37,7 @@
                 app:tabIndicatorColor：Tab指示器下标的颜色；
         -->
         <android.support.design.widget.TabLayout
-            android:id="@+id/id_tablayout"
+            android:id="@+id/m_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="fill"
@@ -50,7 +48,7 @@
     </com.bilibili.magicasakura.widgets.TintAppBarLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/id_viewpager"
+        android:id="@+id/m_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

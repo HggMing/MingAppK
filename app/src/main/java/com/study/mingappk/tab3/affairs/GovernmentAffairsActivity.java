@@ -1,8 +1,6 @@
 package com.study.mingappk.tab3.affairs;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +13,7 @@ import android.widget.TextView;
 import com.study.mingappk.R;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.tab3.addfollow.FollowVillageAdapter;
-import com.study.mingappk.tmain.BaseActivity;
+import com.study.mingappk.tmain.baseactivity.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +26,12 @@ import butterknife.ButterKnife;
  */
 public class GovernmentAffairsActivity extends BaseActivity {
 
-    @Bind(R.id.id_toolbar)
+    @Bind(R.id.m_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.id_tablayout)
+    @Bind(R.id.m_tablayout)
     TabLayout mTabLayout;
-    @Bind(R.id.id_appbarlayout)
-    AppBarLayout mAppbarLayout;
-    @Bind(R.id.id_viewpager)
+    @Bind(R.id.m_viewpager)
     ViewPager mViewPager;
-    @Bind(R.id.id_coordinatorlayout)
-    CoordinatorLayout mCoordinatorLayout;
     @Bind(R.id.toolbar_title2)
     TextView toolbarTitle;
 
@@ -50,9 +44,6 @@ public class GovernmentAffairsActivity extends BaseActivity {
     private List<Fragment> mFragments;
     // ViewPager的数据适配器
     private MyViewPagerAdapter mViewPagerAdapter;
-
-    private FollowVillageAdapter mAdapter = new FollowVillageAdapter();
-    List<QueryVillageList.DataBean> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

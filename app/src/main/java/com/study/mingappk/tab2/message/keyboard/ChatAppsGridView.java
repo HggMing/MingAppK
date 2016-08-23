@@ -24,7 +24,7 @@ public class ChatAppsGridView extends RelativeLayout {
     public ChatAppsGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.view_apps, this);
+        view = inflater.inflate(R.layout.view_keyboard_apps, this);
         init();
     }
 

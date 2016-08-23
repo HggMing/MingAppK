@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.bilibili.magicasakura.widgets.TintLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sp_sex_all"
+    android:id="@+id/sp_all"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -8,15 +8,15 @@
     android:padding="13dp">
 
     <Spinner
-        android:id="@+id/sp_sex"
+        android:id="@+id/sp_in"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@null" />
 
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="2dp"

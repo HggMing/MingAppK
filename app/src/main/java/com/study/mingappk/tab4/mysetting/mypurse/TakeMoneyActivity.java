@@ -20,14 +20,13 @@ import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ResultOther;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class TakeMoneyActivity extends BackActivity {
@@ -89,7 +88,7 @@ public class TakeMoneyActivity extends BackActivity {
 
                     @Override
                     public void onNext(CardList cardList) {
-                        if (!cardList.getData().isEmpty()||cardList.getData()!=null) {
+                        if (!cardList.getData().isEmpty()&&cardList.getData()!=null) {
                             CardList.DataBean dataBean = cardList.getData().get(mSelectedCard);
                             //显示开户行
                             bank_name = dataBean.getBank_name();
@@ -167,26 +166,26 @@ public class TakeMoneyActivity extends BackActivity {
                 break;
             case R.id.btn_ok:
 //                Toast.makeText(TakeMoneyActivity.this, "确定提现", Toast.LENGTH_SHORT).show();
-                if ("".equals(bank_name)) {
-                    Toast.makeText(TakeMoneyActivity.this, "请添加并选择要提现到的银行卡", Toast.LENGTH_LONG).show();
+                if (StringTools.isEmpty(bank_name)) {
+                    Toast.makeText(TakeMoneyActivity.this, "请添加并选择要提现到的银行卡", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 final String money = etMoney.getEditableText().toString();
                 double a = Double.valueOf(money);
                 if (a <= 0) {
-                    Toast.makeText(TakeMoneyActivity.this, "提现金额须大于0元", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TakeMoneyActivity.this, "提现金额须大于0元", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 double b = Double.valueOf(total_money);//剩余总金额
                 if (b <= 1000) {
                     if (a > b) {
-                        Toast.makeText(TakeMoneyActivity.this, "提现金额不能大于余额" + total_money + "元", Toast.LENGTH_LONG).show();
+                        Toast.makeText(TakeMoneyActivity.this, "提现金额不能大于余额" + total_money + "元", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 } else {
                     if (a > 1000) {
-                        Toast.makeText(TakeMoneyActivity.this, "提现金额不能大于单次最大限额1000元", Toast.LENGTH_LONG).show();
+                        Toast.makeText(TakeMoneyActivity.this, "提现金额不能大于单次最大限额1000元", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
@@ -204,7 +203,7 @@ public class TakeMoneyActivity extends BackActivity {
                                 pwd = pwdDialog.et_pwd.getEditableText().toString();
 
                                 if (StringTools.isEmpty(pwd)) {
-                                    Toast.makeText(TakeMoneyActivity.this, "钱包密码不能为空", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(TakeMoneyActivity.this, "钱包密码不能为空", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 

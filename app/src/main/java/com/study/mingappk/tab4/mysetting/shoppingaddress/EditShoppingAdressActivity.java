@@ -11,16 +11,16 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ShoppingAddress;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class EditShoppingAdressActivity extends BackActivity {
@@ -89,15 +89,15 @@ public class EditShoppingAdressActivity extends BackActivity {
                 sd_is_def = "0";
             }
             //数据的验证
-            if ("".equals(sd_name)) {
+            if (StringTools.isEmpty(sd_name)) {
                 Toast.makeText(this, "请输入收件人姓名!", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            if ("".equals(sd_addr)) {
+            if (StringTools.isEmpty(sd_addr)) {
                 Toast.makeText(this, "请输入收货地址！", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            if ("".equals(sd_phone)) {
+            if (StringTools.isEmpty(sd_phone)) {
                 Toast.makeText(this, "请输入收件人手机号码！", Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -105,7 +105,7 @@ public class EditShoppingAdressActivity extends BackActivity {
                 Toast.makeText(this, "请输入正确的手机号码！", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            if ("".equals(sd_code)) {
+            if (StringTools.isEmpty(sd_code)) {
                 Toast.makeText(this, "请输入邮政编码！", Toast.LENGTH_SHORT).show();
                 return true;
             }

@@ -26,8 +26,8 @@ import com.study.mingappk.model.event.NewFriendEvent;
 import com.study.mingappk.model.event.RefreshFriendList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
-import com.study.mingappk.tmain.BackActivity;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

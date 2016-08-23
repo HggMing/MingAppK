@@ -9,9 +9,10 @@ import com.bilibili.magicasakura.widgets.TintEditText;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.ResultOther;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,16 +55,16 @@ public class AddCardsActivity extends BackActivity {
             String bank_no = etNumber.getEditableText().toString();
             String bank_name = etBank.getEditableText().toString();
 
-            if (bank_true_name.equals("")) {
-                Toast.makeText(this, "请输入开户人姓名!", Toast.LENGTH_LONG).show();
+            if (StringTools.isEmpty(bank_true_name)) {
+                Toast.makeText(this, "请输入开户人姓名!", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            if (bank_no.equals("")) {
-                Toast.makeText(this, "请输入银行卡号", Toast.LENGTH_LONG).show();
+            if (StringTools.isEmpty(bank_no)) {
+                Toast.makeText(this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            if (bank_name.equals("")) {
-                Toast.makeText(this, "请输入开户银行名称！", Toast.LENGTH_LONG).show();
+            if (StringTools.isEmpty(bank_name)) {
+                Toast.makeText(this, "请输入开户银行名称！", Toast.LENGTH_SHORT).show();
                 return true;
             }
 

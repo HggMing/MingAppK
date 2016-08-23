@@ -19,8 +19,8 @@ import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.model.bean.MoneyDetail;
 import com.study.mingappk.model.bean.ResultOther;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class MyPurseActivity extends BackActivity {

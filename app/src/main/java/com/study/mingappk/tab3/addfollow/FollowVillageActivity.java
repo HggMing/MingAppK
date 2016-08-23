@@ -2,8 +2,6 @@ package com.study.mingappk.tab3.addfollow;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,8 +29,7 @@ import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BaseActivity;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.tmain.baseactivity.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,16 +46,12 @@ import rx.schedulers.Schedulers;
 
 public class FollowVillageActivity extends BaseActivity implements FollowVillageAdapter.OnItemClickListener {
 
-    @Bind(R.id.id_toolbar)
+    @Bind(R.id.m_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.id_tablayout)
+    @Bind(R.id.m_tablayout)
     TabLayout mTabLayout;
-    @Bind(R.id.id_appbarlayout)
-    AppBarLayout mAppbarLayout;
-    @Bind(R.id.id_viewpager)
+    @Bind(R.id.m_viewpager)
     ViewPager mViewPager;
-    @Bind(R.id.id_coordinatorlayout)
-    CoordinatorLayout mCoordinatorLayout;
     @Bind(R.id.toolbar_title2)
     TextView toolbarTitle;
     @Bind(R.id.search_view)

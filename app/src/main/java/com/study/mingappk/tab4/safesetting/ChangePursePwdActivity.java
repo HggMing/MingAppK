@@ -10,10 +10,11 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,24 +56,24 @@ public class ChangePursePwdActivity extends BackActivity {
             String newpwd1 = etNewpwd1.getEditableText().toString();
             String newpwd2 = etNewpwd2.getEditableText().toString();
 
-            if (oldpwd.equals("")) {
-                Toast.makeText(this, "旧密码不能为空", Toast.LENGTH_LONG).show();
+            if (StringTools.isEmpty(oldpwd)) {
+                Toast.makeText(this, "旧密码不能为空", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            if (newpwd1.equals("")) {
-                Toast.makeText(this, "新密码不能为空", Toast.LENGTH_LONG).show();
+            if (StringTools.isEmpty(newpwd1)) {
+                Toast.makeText(this, "新密码不能为空", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            if (newpwd2.equals("")) {
-                Toast.makeText(this, "确认密码不能为空", Toast.LENGTH_LONG).show();
+            if (StringTools.isEmpty(newpwd2)) {
+                Toast.makeText(this, "确认密码不能为空", Toast.LENGTH_SHORT).show();
                 return true;
             }
             if (!newpwd1.equals(newpwd2)) {
-                Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
                 return true;
             }
             if (newpwd1.length() < 6 ) {
-                Toast.makeText(this, "密码必须在6位", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "密码必须在6位", Toast.LENGTH_SHORT).show();
                 return true;
             }
             String auth = Hawk.get(APP.USER_AUTH);

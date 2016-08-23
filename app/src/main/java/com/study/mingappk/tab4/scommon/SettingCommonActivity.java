@@ -15,8 +15,7 @@ import com.study.mingappk.app.ThemeHelper;
 import com.study.mingappk.common.views.dialog.CardPickerDialog;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
-import com.study.mingappk.tmain.BackActivity;
-import com.study.mingappk.tmain.MainActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import org.greenrobot.eventbus.EventBus;
 

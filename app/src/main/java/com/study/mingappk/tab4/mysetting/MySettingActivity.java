@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.study.mingappk.R;
 import com.study.mingappk.tab4.mysetting.mypurse.MyPurseActivity;
 import com.study.mingappk.tab4.mysetting.shoppingaddress.ShoppingAddressActivity;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -46,6 +46,7 @@ import com.study.mingappk.model.database.NewFriendModel;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.model.event.NewFriendEvent;
+import com.study.mingappk.model.event.RefreshTab1Event;
 import com.study.mingappk.model.event.ShowSideBarEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab1.Tab1Fragment;
@@ -351,12 +352,8 @@ public class MainActivity extends AppCompatActivity {
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void showCount(InstantMsgEvent event) {
-        List<InstantMsgModel> iMsgs = MyDB.getQueryAll(InstantMsgModel.class);
-        int count = 0;
-        for (InstantMsgModel iMsg : iMsgs) {
-            count += iMsg.getCount();
-        }
+    public void showCount(RefreshTab1Event event) {
+        int count=event.getCount();
         if (count > 0) {
             badge.setVisibility(View.VISIBLE);
             badge.setText(String.valueOf(count));

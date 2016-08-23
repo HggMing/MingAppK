@@ -241,7 +241,7 @@ public class VillageBbsAdapter extends RecyclerView.Adapter<VillageBbsAdapter.Vi
             @Override
             protected void onItemImageClick(Context context, int index, List<BBSList.DataEntity.ListEntity.FilesEntity> list) {
                 super.onItemImageClick(context, index, list);
-                // Toast.makeText(context, "点击第" + index+"个图片", Toast.LENGTH_LONG).show();
+                // 点击第" + index+"个图片"
                 Intent intent = new Intent(mContext, BigImageViewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList(BigImageViewActivity.IMAGE_LIST, (ArrayList<? extends Parcelable>) list);

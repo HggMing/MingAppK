@@ -10,15 +10,15 @@ import com.bilibili.magicasakura.widgets.TintEditText;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class SetPursePwdActivity extends BackActivity {
@@ -52,20 +52,20 @@ public class SetPursePwdActivity extends BackActivity {
             String pwd1 = etNewpwd1.getEditableText().toString();
             String pwd2 = etNewpwd2.getEditableText().toString();
 
-            if (pwd1.equals("")) {
-                Toast.makeText(this, "密码不能为空", Toast.LENGTH_LONG).show();
+            if (StringTools.isEmpty(pwd1)) {
+                Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            if (pwd2.equals("")) {
-                Toast.makeText(this, "确认密码不能为空", Toast.LENGTH_LONG).show();
+            if (StringTools.isEmpty(pwd2)) {
+                Toast.makeText(this, "确认密码不能为空", Toast.LENGTH_SHORT).show();
                 return true;
             }
             if (!pwd1.equals(pwd2)) {
-                Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
                 return true;
             }
             if (pwd1.length() < 6) {
-                Toast.makeText(this, "密码必须在6位", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "密码必须在6位", Toast.LENGTH_SHORT).show();
                 return true;
             }
             String auth = Hawk.get(APP.USER_AUTH);

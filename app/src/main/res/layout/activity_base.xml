@@ -33,10 +33,6 @@
                     android:textSize="20sp"
                     tools:text="爱简单" />
             </com.bilibili.magicasakura.widgets.TintToolbar>
-
-
         </android.support.design.widget.AppBarLayout>
     </android.support.v7.widget.LinearLayoutCompat>
-
-
 </android.support.design.widget.CoordinatorLayout>

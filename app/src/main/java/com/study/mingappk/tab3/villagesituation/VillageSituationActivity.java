@@ -10,11 +10,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
-import com.study.mingappk.model.bean.VillageMaster;
 import com.study.mingappk.tab3.villagesituation.villageinfo.VillageInfoActivity;
 import com.study.mingappk.tab3.villagesituation.villagemaster.VillageMasterActivity;
-import com.study.mingappk.tmain.BackActivity;
-import com.study.mingappk.tmain.WebViewActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.tmain.baseactivity.WebViewActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

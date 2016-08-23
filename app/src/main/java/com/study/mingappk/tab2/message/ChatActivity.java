@@ -10,12 +10,13 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.view.View;
 
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.orhanobut.hawk.Hawk;
+import com.sj.emoji.EmojiBean;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
@@ -30,9 +31,11 @@ import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.model.event.NewMsgEvent;
 import com.study.mingappk.model.event.SendImageEvent;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab2.message.emoji.Constants;
+import com.study.mingappk.tab2.message.emoji.SimpleCommonUtils;
 import com.study.mingappk.tab2.message.keyboard.ChatAppsGridView;
 import com.study.mingappk.tab2.message.keyboard.ChatKeyBoard;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,6 +50,8 @@ import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import sj.keyboard.data.EmoticonEntity;
+import sj.keyboard.interfaces.EmoticonClickListener;
 import sj.keyboard.widget.EmoticonsEditText;
 import sj.keyboard.widget.FuncLayout;
 
@@ -180,8 +185,8 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
 
     //配置表情键盘
     private void initEmoticonsKeyBoardBar() {
-//        SimpleCommonUtils.initEmoticonsEditText(ekBar.getEtChat());
-//        ekBar.setAdapter(SimpleCommonUtils.getCommonAdapter(this, emoticonClickListener));
+        SimpleCommonUtils.initEmoticonsEditText(ekBar.getEtChat());
+        ekBar.setAdapter(SimpleCommonUtils.getCommonAdapter(this, emoticonClickListener));
         ekBar.addOnFuncKeyBoardListener(this);
         mChatAppsGridView = new ChatAppsGridView(this);
         ekBar.addFuncView(mChatAppsGridView);
@@ -212,6 +217,38 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
             }
         });*/
     }
+    EmoticonClickListener emoticonClickListener = new EmoticonClickListener() {
+        @Override
+        public void onEmoticonClick(Object o, int actionType, boolean isDelBtn) {
+
+            if (isDelBtn) {
+                SimpleCommonUtils.delClick(ekBar.getEtChat());
+            } else {
+                if(o == null){
+                    return;
+                }
+                if(actionType == Constants.EMOTICON_CLICK_BIGIMAGE){
+                    if(o instanceof EmoticonEntity){
+                        OnSendImage(((EmoticonEntity)o).getIconUri());
+                    }
+                } else {
+                    String content = null;
+                    if(o instanceof EmojiBean){
+                        content = ((EmojiBean)o).emoji;
+                    } else if(o instanceof EmoticonEntity){
+                        content = ((EmoticonEntity)o).getContent();
+                    }
+
+                    if(TextUtils.isEmpty(content)){
+                        return;
+                    }
+                    int index = ekBar.getEtChat().getSelectionStart();
+                    Editable editable = ekBar.getEtChat().getText();
+                    editable.insert(index, content);
+                }
+            }
+        }
+    };
 
     //配置RecyclerView
     private void configXRecyclerView() {

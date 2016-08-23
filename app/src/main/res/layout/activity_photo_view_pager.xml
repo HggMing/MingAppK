@@ -25,11 +25,12 @@
         app:ci_margin="6dp"
         app:ci_width="10dp" />
 
-    <ProgressBar
+    <com.bilibili.magicasakura.widgets.TintProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:layout_gravity="center"
         android:max="100"
-        android:layout_gravity="center" />
+        android:visibility="gone"
+        app:progressIndeterminateTint="@color/theme_color_primary" />
 </FrameLayout>

@@ -12,7 +12,6 @@
     <!--Activity页面lable-->
 
 
-
     <!--galleryfinal相关-->
     <string name="all_photo">全部图片</string>
     <string name="crop_fail">裁剪失败</string>
@@ -75,6 +74,11 @@
     <string name="title_activity_apply_shop_owner">申请店长</string>
     <string name="title_activity_show_applying">申请结果</string>
     <string name="title_activity_my_shop">我的店</string>
+    <string name="title_activity_express_take">快递收件</string>
+    <string name="title_activity_edit_express_take">添加收件快递</string>
+    <string name="title_activity_express_send">快递寄件</string>
+    <string name="title_activity_edit_express_send">编辑寄件快递</string>
+
 
     <string name="title_activity_safe_setting">账号安全</string>
     <string name="title_activity_real_name_binging">实名认证</string>
@@ -84,5 +88,12 @@
     <string name="title_activity_setting_common">通用</string>
     <string name="title_activity_advice">意见反馈</string>
     <string name="title_activity_about">关于我们</string>
+
+
+    <!--list为空时，文字提示语句-->
+    <string name="empty_shopping_address">暂无收货地址，请点击右下角按钮添加！</string>
+    <string name="empty_express_take">暂无未领取快递，可点击右下角按钮添加！</string>
+    <string name="empty_express_send_0">该店暂没有待寄送快递。</string>
+    <string name="empty_express_send_1">该店还没有已寄送快递！</string>
 
 </resources>

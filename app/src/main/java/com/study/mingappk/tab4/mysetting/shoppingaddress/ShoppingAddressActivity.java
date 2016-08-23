@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.bilibili.magicasakura.utils.ThemeUtils;
-import com.melnykov.fab.FloatingActionButton;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -23,29 +19,19 @@ import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ShoppingAddress;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.tmain.baseactivity.AddListActivity;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class ShoppingAddressActivity extends BackActivity implements ShoppingAddressAdapter.OnItemClickListener {
-
-    @Bind(R.id.m_x_recyclerview)
-    RecyclerView mXRecyclerView;
-    @Bind(R.id.content_empty)
-    TextView contentEmpty;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-
+public class ShoppingAddressActivity extends AddListActivity implements ShoppingAddressAdapter.OnItemClickListener {
     private ShoppingAddressAdapter mAdapter;
     public static final int REFRESH = 1100;
     List<ShoppingAddress.DataBean> mList = new ArrayList<>();
@@ -53,31 +39,15 @@ public class ShoppingAddressActivity extends BackActivity implements ShoppingAdd
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shopping_address);
-        ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_shopping_address);
-
         config();
         initData();
     }
 
     private void config() {
-        //设置fab
-        fab.attachToRecyclerView(mXRecyclerView);//fab随recyclerView的滚动，隐藏和出现
-        int themeColor = ThemeUtils.getColorById(this, R.color.theme_color_primary);
-        int themeColor2 = ThemeUtils.getColorById(this, R.color.theme_color_primary_dark);
-        fab.setColorNormal(themeColor);//fab背景颜色
-        fab.setColorPressed(themeColor2);//fab点击后背景颜色
-        fab.setColorRipple(themeColor2);//fab点击后涟漪颜色
-        //设置recyclerview布局和adapter
-        mXRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        //设置adapter
         mAdapter = new ShoppingAddressAdapter(this);
         mXRecyclerView.setAdapter(mAdapter);
-//        mXRecyclerView.addItemDecoration(new MyItemDecoration(this));//添加分割线
-        mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
-        mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
-
         mAdapter.setOnItemClickListener(this);
     }
 
@@ -103,18 +73,20 @@ public class ShoppingAddressActivity extends BackActivity implements ShoppingAdd
                     public void onNext(ShoppingAddress shoppingAddress) {
                         mList.clear();
                         mList.addAll(shoppingAddress.getData());
-                        if (shoppingAddress.getData().isEmpty()||shoppingAddress.getData()==null) {
+                        if (mList.isEmpty()) {
                             contentEmpty.setVisibility(View.VISIBLE);
+                            contentEmpty.setText(R.string.empty_shopping_address);
                         } else {
                             contentEmpty.setVisibility(View.GONE);
                         }
-                        mAdapter.setItem(shoppingAddress.getData());
+                        mAdapter.setItem(mList);
                     }
                 });
     }
 
-    @OnClick(R.id.fab)
+    @Override
     public void onClick() {
+        super.onClick();
 //        Toast.makeText(ShoppingAddressActivity.this, "添加收货地址", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, EditShoppingAdressActivity.class);
         startActivityForResult(intent, REFRESH);

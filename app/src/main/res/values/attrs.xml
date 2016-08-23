@@ -8,6 +8,12 @@
         <attr name="showArrow" format="boolean" />
     </declare-styleable>
 
+    <!--自定义控件：店长界面的item-->
+    <declare-styleable name="MyShopItem">
+        <attr name="itemIconName" format="string" />
+        <attr name="itemFunTitle" format="string" />
+    </declare-styleable>
+
     <!--自定义控件：图片九宫格配置-->
     <declare-styleable name="NineGridImageView">
         <attr name="singleImgSize" format="dimension" />

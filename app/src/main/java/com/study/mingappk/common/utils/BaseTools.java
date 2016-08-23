@@ -273,6 +273,27 @@ public class BaseTools {
     }
 
     /**
+     * 功能描述：以指定的格式来格式化日期
+     * @param d 时间戳（10位或13位都可以）
+     * @param format String 格式
+     * @return String 日期字符串
+     */
+    public static String formatDateByFormat(String d, String format) {
+        if (d == null) {
+            return "";
+        }
+        Date date = null;
+        if (d.length() == 10) {
+            date = new Date(Long.valueOf(d + "000"));
+        }
+        if (d.length() == 13) {
+            date = new Date(Long.valueOf(d));
+        }
+        return formatDateByFormat(date, format);
+    }
+
+
+    /**
      * 获得口头时间字符串，如今天，昨天等
      *
      * @param d 时间戳（10位或13位都可以）
@@ -450,7 +471,7 @@ public class BaseTools {
                 .setTitle("调试信息")
                 .setCannel(false)
                 .setMessage(s)
-                .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

@@ -23,26 +23,17 @@ import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.tmain.baseactivity.AddListActivity;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class BindCardActivity extends BackActivity {
-
-    @Bind(R.id.m_x_recyclerview)
-    RecyclerView mXRecyclerView;
-    @Bind(R.id.content_empty)
-    TextView contentEmpty;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-
+public class BindCardActivity extends AddListActivity {
     private BindCardAdapter mAdapter;
     private static final int REFRESH = 1100;
     private int type;
@@ -50,8 +41,6 @@ public class BindCardActivity extends BackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bind_card);
-        ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_bind_card);
 
         config();
@@ -59,21 +48,9 @@ public class BindCardActivity extends BackActivity {
     }
 
     private void config() {
-        //设置fab
-        fab.attachToRecyclerView(mXRecyclerView);//fab随recyclerView的滚动，隐藏和出现
-        int themeColor = ThemeUtils.getColorById(this, R.color.theme_color_primary);
-        int themeColor2 = ThemeUtils.getColorById(this, R.color.theme_color_primary_dark);
-        fab.setColorNormal(themeColor);//fab背景颜色
-        fab.setColorPressed(themeColor2);//fab点击后背景颜色
-        fab.setColorRipple(themeColor2);//fab点击后涟漪颜色
-        //设置recyclerview布局和adapter
-        mXRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        //设置adapter
         mAdapter = new BindCardAdapter(this);
         mXRecyclerView.setAdapter(mAdapter);
-//        mXRecyclerView.addItemDecoration(new MyItemDecoration(this));//添加分割线
-        mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
-        mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
     }
 
     private void initData() {
@@ -96,7 +73,7 @@ public class BindCardActivity extends BackActivity {
 
                     @Override
                     public void onNext(CardList cardList) {
-                        if (cardList.getData().isEmpty()||cardList.getData()==null) {
+                        if (cardList.getData().isEmpty() || cardList.getData() == null) {
                             type = -1;
                             contentEmpty.setVisibility(View.VISIBLE);
                         } else {
@@ -108,8 +85,9 @@ public class BindCardActivity extends BackActivity {
                 });
     }
 
-    @OnClick(R.id.fab)
+    @Override
     public void onClick() {
+        super.onClick();
         Intent intent = new Intent(this, AddCardsActivity.class);
         intent.putExtra(AddCardsActivity.TYPE, type);
         startActivityForResult(intent, REFRESH);

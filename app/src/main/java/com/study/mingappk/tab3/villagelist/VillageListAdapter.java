@@ -14,9 +14,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
-
-import java.util.Date;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

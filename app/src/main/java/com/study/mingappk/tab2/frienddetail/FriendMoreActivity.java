@@ -20,8 +20,8 @@ import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
-import com.study.mingappk.tmain.BaseRecyclerViewAdapter;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.List;
 

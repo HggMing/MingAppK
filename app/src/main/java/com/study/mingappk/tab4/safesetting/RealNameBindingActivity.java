@@ -23,7 +23,7 @@ import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -184,7 +184,7 @@ public class RealNameBindingActivity extends BackActivity {
 
                         @Override
                         public void onError(Throwable e) {
-                            Toast.makeText(RealNameBindingActivity.this, "验证超时，建议重新拍摄照片，再次尝试。", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RealNameBindingActivity.this, "验证超时，建议重新拍摄照片，再次尝试。", Toast.LENGTH_SHORT).show();
                             btnOk.setText("确定");
                         }
 

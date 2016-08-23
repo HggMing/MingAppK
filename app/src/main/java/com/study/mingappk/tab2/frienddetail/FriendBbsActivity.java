@@ -18,7 +18,7 @@ import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
 import com.study.mingappk.tab3.villagebbs.VillageBbsAdapter;
 import com.study.mingappk.tab3.villagebbs.bbsdetail.BbsDetailActivity;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -191,6 +191,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                                 Hawk.remove(APP.ME_UID);
                                 Hawk.remove(APP.SELECTED_CARD);
                                 Hawk.remove(APP.MANAGER_ADDRESS);
+                                Hawk.remove(APP.MANAGER_VID);
                                 //停止个推SDK服务
                                 PushManager.getInstance().stopService(mActivity.getApplicationContext());
                                 //关闭数据库
@@ -401,6 +402,10 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                                 Intent intent = new Intent(mActivity, ShowApplyingActivity.class);
                                 intent.putExtra(ShowApplyingActivity.STATUS_APPLY, data.getStats());
                                 startActivityForResult(intent, REQUEST_APPLY_PASSED);
+                            }else{//已经选择申请的村（已实名通过），但没有申请就退出。点击申请后直接进入申请界面
+                                Intent intent4 = new Intent(mActivity, ApplyShopOwnerActivity.class);
+                                intent4.putExtra(ApplyShopOwnerActivity.USER_INFO, dataEntity);
+                                startActivity(intent4);
                             }
                         }
                     });

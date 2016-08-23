@@ -47,10 +47,9 @@ import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
 import com.study.mingappk.tab3.villagebbs.likeusers.LikeUsersArea;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -63,7 +62,6 @@ import retrofit2.Response;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.OnItemClickListener {
@@ -264,7 +262,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
             @Override
             protected void onItemImageClick(Context context, int index, List<BBSList.DataEntity.ListEntity.FilesEntity> list) {
                 super.onItemImageClick(context, index, list);
-                // Toast.makeText(context, "点击第" + index+"个图片", Toast.LENGTH_LONG).show();
+                // 点击第" + index+"个图片"
                 Intent intent = new Intent(BbsDetailActivity.this, BigImageViewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList(BigImageViewActivity.IMAGE_LIST, (ArrayList<? extends Parcelable>) list);

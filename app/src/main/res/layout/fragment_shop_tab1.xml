@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.study.mingappk.common.views.MyShopItem
+            android:id="@+id/item_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:itemFunTitle="快递寄件"
+            app:itemIconName="寄" />
+
+        <com.study.mingappk.common.views.MyShopItem
+            android:id="@+id/item_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:itemFunTitle="快递收件"
+            app:itemIconName="收" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.study.mingappk.common.views.MyShopItem
+            android:id="@+id/item_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:itemFunTitle="云想购"
+            app:itemIconName="购" />
+
+        <com.study.mingappk.common.views.MyShopItem
+            android:id="@+id/item_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:itemFunTitle="特产订单"
+            app:itemIconName="订" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.study.mingappk.common.views.MyShopItem
+            android:id="@+id/item_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:itemFunTitle="话费流量"
+            app:itemIconName="充" />
+
+        <com.study.mingappk.common.views.MyShopItem
+            android:id="@+id/item_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:itemFunTitle="图书租借"
+            app:itemIconName="书" />
+    </LinearLayout>
+</LinearLayout>

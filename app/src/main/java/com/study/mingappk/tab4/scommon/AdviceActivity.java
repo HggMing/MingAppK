@@ -14,13 +14,10 @@ import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.common.views.dialog.MyDialog;
-import com.study.mingappk.tmain.BackActivity;
+import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

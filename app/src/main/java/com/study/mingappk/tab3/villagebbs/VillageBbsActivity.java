@@ -28,7 +28,7 @@ import com.study.mingappk.tab3.affairs.GovernmentAffairsActivity;
 import com.study.mingappk.tab3.newpost.NewPostActivity;
 import com.study.mingappk.tab3.villagebbs.bbsdetail.BbsDetailActivity;
 import com.study.mingappk.tab3.villagesituation.VillageSituationActivity;
-import com.study.mingappk.tmain.BaseActivity;
+import com.study.mingappk.tmain.baseactivity.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +73,8 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
     private final int REQUEST_LIKE_COMMENT_NUMBER = 2000;
     private final int ReQUEST_AFTER_POST = 2001;
 
-    String mVid;//村id
+    private String mVid;//村id
+    private int themeColor;
 
 
     @Override
@@ -83,8 +84,8 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
         ButterKnife.bind(this);
         //设置fab
         fab.attachToRecyclerView(mXRecyclerView);//fab随recyclerView的滚动，隐藏和出现
-        int themeColor=   ThemeUtils.getColorById(this, R.color.theme_color_primary);
-        int themeColor2=   ThemeUtils.getColorById(this, R.color.theme_color_primary_dark);
+        themeColor = ThemeUtils.getColorById(this, R.color.theme_color_primary);
+        int themeColor2 = ThemeUtils.getColorById(this, R.color.theme_color_primary_dark);
         fab.setColorNormal(themeColor);//fab背景颜色
         fab.setColorPressed(themeColor2);//fab点击后背景颜色
         fab.setColorRipple(themeColor2);//fab点击后涟漪颜色
@@ -117,7 +118,6 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
         BaseTools.transparentStatusBar2(this);//透明状态栏
 
         //获取当前app主题的颜色,设置收缩后颜色
-        int themeColor=   ThemeUtils.getColorById(this, R.color.theme_color_primary);
         mCollapsingToolbarLayout.setContentScrimColor(themeColor);
         mCollapsingToolbarLayout.setStatusBarScrimColor(themeColor);
     }
@@ -230,7 +230,7 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
             case R.id.icon_village:
                 //点击村况
                 Intent intent = new Intent(this, VillageSituationActivity.class);
-                intent.putExtra(VillageSituationActivity.VILLAGE_ID,mVid);
+                intent.putExtra(VillageSituationActivity.VILLAGE_ID, mVid);
                 startActivity(intent);
                 break;
             case R.id.icon_specialty:

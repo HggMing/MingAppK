@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_selector"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/font_black_content"
+        android:textSize="@dimen/textsize_normal"
+        tools:text="圆通  单号：35223" />
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/font_black_comment"
+        android:textSize="@dimen/textsize_normal"
+        tools:text="圆通  单号：35223" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/ic_clock"
+        android:drawablePadding="5dp"
+        android:textColor="@color/font_black_9"
+        android:textSize="@dimen/textsize_small"
+        tools:text="2016-06-18 11:11" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/time"
+        android:layout_marginTop="6dp"
+        android:background="@mipmap/divide_shade_up"
+        android:visibility="invisible" />
+</LinearLayout>
+
