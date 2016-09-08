@@ -6,10 +6,10 @@
     <color name="colorAccent">#53ACE5</color>
     <color name="colorAccent2">#2075ab</color>
     <!--主题切换颜色-->
-    <color name="theme_color_primary">#53ACE5</color>
-    <color name="theme_color_primary_dark">#2075ab</color>
-    <color name="theme_color_primary_trans">#9953ACE5</color>
-    <color name="theme_color_secondary">#53ACE5</color>
+    <color name="theme_color_primary">#009688</color>
+    <color name="theme_color_primary_dark">#00796B</color>
+    <color name="theme_color_primary_trans">#99049184</color>
+    <color name="theme_color_secondary">#009688</color>
 
     <color name="text_primary_color">#2d2d2d</color>
     <color name="window_background">#eaeaea</color>
@@ -24,46 +24,47 @@
     <color name="gray_light">#dcdcdc</color>
 
     <!-- theme color -->
-
-    <color name="blue">#53ACE5</color>
-    <color name="blue_dark">#2075ab</color>
-    <color name="blue_trans">#9953ACE5</color>
-
-    <color name="blue2">#2196F3</color>
-    <color name="blue2_dark">#1565C0</color>
-    <color name="blue2_trans">#B41A78C3</color>
-
-    <color name="purple">#673AB7</color>
-    <color name="purple_dark">#311B92</color>
-    <color name="purple_trans">#99673AB7</color>
-
-    <color name="pink">#fb7299</color>
-    <color name="pink_dark">#b85671</color>
-    <color name="pink_trans">#99f0486c</color>
-
-    <color name="green">#009688</color>
-    <color name="green_dark">#00796B</color>
-    <color name="green_trans">#99049184</color>
-
+    <!--color01=green-->
+    <color name="color01">#009688</color>
+    <color name="color01_dark">#00796B</color>
+    <color name="color01_trans">#99049184</color>
+    <!--color02=green_light-->
+    <color name="color02">#8BC34A</color>
+    <color name="color02_dark">#558B2F</color>
+    <color name="color02_trans">#998BC34A</color>
+    <!--备用绿色-->
     <color name="green2">#4CAF50</color>
     <color name="green2_dark">#2E7D32</color>
     <color name="green2_trans">#994CAF50</color>
+    <!--color03=blue-->
+    <color name="color03">#53ACE5</color>
+    <color name="color03_dark">#2075ab</color>
+    <color name="color03_trans">#9953ACE5</color>
+    <!--备用蓝色-->
+    <color name="blue2">#2196F3</color>
+    <color name="blue2_dark">#1565C0</color>
+    <color name="blue2_trans">#B41A78C3</color>
+    <!--color04=pruple-->
+    <color name="color04">#673AB7</color>
+    <color name="color04_dark">#311B92</color>
+    <color name="color04_trans">#99673AB7</color>
+    <!--color05=yellow-->
+    <color name="color05">#FDD835</color>
+    <color name="color05_dark">#FBC02D</color>
+    <color name="color05_trans">#99FDD835</color>
+    <!--color06=orange-->
+    <color name="color06">#FF9800</color>
+    <color name="color06_dark">#EF6C00</color>
+    <color name="color06_trans">#99FF9800</color>
+    <!--color07=pink-->
+    <color name="color07">#fb7299</color>
+    <color name="color07_dark">#b85671</color>
+    <color name="color07_trans">#99f0486c</color>
+    <!--color08=red-->
+    <color name="color08">#F44336</color>
+    <color name="color08_dark">#C62828</color>
+    <color name="color08_trans">#99F44336</color>
 
-    <color name="green_light">#8BC34A</color>
-    <color name="green_light_dark">#558B2F</color>
-    <color name="green_light_trans">#998BC34A</color>
-
-    <color name="yellow">#FDD835</color>
-    <color name="yellow_dark">#FBC02D</color>
-    <color name="yellow_trans">#99FDD835</color>
-
-    <color name="orange">#FF9800</color>
-    <color name="orange_dark">#EF6C00</color>
-    <color name="orange_trans">#99FF9800</color>
-
-    <color name="red">#F44336</color>
-    <color name="red_dark">#C62828</color>
-    <color name="red_trans">#99F44336</color>
     <!--BaseActivity页面-->
     <color name="font_black_9">#999999</color>
     <!--首页tab按钮颜色-->

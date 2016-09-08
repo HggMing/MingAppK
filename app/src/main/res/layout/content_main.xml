@@ -163,14 +163,14 @@
                     android:id="@+id/badge"
                     android:layout_width="17dp"
                     android:layout_height="16dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="26dp"
+                    android:layout_alignRight="@id/img_tab1_main"
+                    android:layout_marginRight="-8dp"
                     android:background="@drawable/shape_red_circle"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="8sp"
                     android:visibility="gone"
-                    tools:text="999" />
+                    tools:text="1" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -216,14 +216,55 @@
                     android:id="@+id/badge2"
                     android:layout_width="17dp"
                     android:layout_height="16dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="26dp"
+                    android:layout_alignRight="@id/img_tab2_main"
+                    android:layout_marginRight="-8dp"
                     android:background="@drawable/shape_red_circle"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="8sp"
                     android:visibility="gone"
                     tools:text="99" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/tab5Layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <FrameLayout
+                    android:id="@+id/img_tab5_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true">
+
+                    <com.bilibili.magicasakura.widgets.TintImageView
+                        android:id="@+id/img_tab5_main_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/tab5_btn1"
+                        android:visibility="gone"
+                        app:imageTint="@color/theme_color_primary" />
+
+                    <ImageView
+                        android:id="@+id/img_tab5_main_0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/tab5_btn0" />
+                </FrameLayout>
+
+                <com.bilibili.magicasakura.widgets.TintTextView
+                    android:id="@+id/text_tab5_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_tab5_main"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/tab5_main"
+                    android:textColor="@color/selector_tab_text"
+                    android:textSize="@dimen/tab_text_size" />
             </RelativeLayout>
 
             <RelativeLayout

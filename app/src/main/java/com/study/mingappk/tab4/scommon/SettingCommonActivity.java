@@ -1,28 +1,29 @@
 package com.study.mingappk.tab4.scommon;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bilibili.magicasakura.utils.ThemeUtils;
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
-import com.study.mingappk.app.ThemeHelper;
-import com.study.mingappk.common.views.dialog.CardPickerDialog;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.common.views.dialog.MyDialog;
-import com.study.mingappk.model.event.ChangeThemeColorEvent;
+import com.study.mingappk.model.bean.EbankWifiConnect;
+import com.study.mingappk.model.bean.IpPort;
+import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.baseactivity.BackActivity;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
-public class SettingCommonActivity extends BackActivity implements CardPickerDialog.ClickListener {
+public class SettingCommonActivity extends BackActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +33,12 @@ public class SettingCommonActivity extends BackActivity implements CardPickerDia
         setToolbarTitle(R.string.title_activity_setting_common);
     }
 
-    @OnClick({R.id.click_change_theme, R.id.click_check_version, R.id.click_clear_cache, R.id.click_advice, R.id.click_about})
+    @OnClick({R.id.click_connect_wifi, R.id.click_check_version, R.id.click_clear_cache, R.id.click_advice, R.id.click_about})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.click_change_theme:
-//                Toast.makeText(SettingCommonActivity.this, "更换主题", Toast.LENGTH_SHORT).show();
-                CardPickerDialog dialog = new CardPickerDialog();
-                dialog.setClickListener(this);
-                dialog.show(getSupportFragmentManager(), CardPickerDialog.TAG);
+            case R.id.click_connect_wifi:
+//                Toast.makeText(SettingCommonActivity.this, "上网认证", Toast.LENGTH_SHORT).show();
+                connectWifi();
                 break;
             case R.id.click_check_version:
                 Toast.makeText(SettingCommonActivity.this, "检查新版本", Toast.LENGTH_SHORT).show();
@@ -88,31 +87,39 @@ public class SettingCommonActivity extends BackActivity implements CardPickerDia
         }
     }
 
-    @Override
-    public void onConfirm(int currentTheme) {
-        if (ThemeHelper.getTheme(this) != currentTheme) {
-            ThemeHelper.setTheme(this, currentTheme);
-            ThemeUtils.refreshUI(this, new ThemeUtils.ExtraRefreshable() {
-                @Override
-                public void refreshGlobal(Activity activity) {
-                    //for global setting, just do once
-                    if (Build.VERSION.SDK_INT >= 21) {
-                        ActivityManager.TaskDescription taskDescription = new ActivityManager
-                                .TaskDescription(null, null, ThemeUtils.getThemeAttrColor(SettingCommonActivity.this, android.R.attr.colorPrimary));
-                        setTaskDescription(taskDescription);
-//                        getWindow().setStatusBarColor(ThemeUtils.getColorById(SettingCommonActivity.this, R.color.theme_color_primary_dark));
-                        getWindow().setStatusBarColor(ThemeUtils.getColorById(SettingCommonActivity.this, R.color.theme_color_primary));
+    /**
+     * 若连接e-bank，则认证上网。
+     */
+    private void connectWifi() {
+        final String auth= Hawk.get(APP.USER_AUTH);
+        MyServiceClient.getService()
+                .get_IpPort()
+                .flatMap(new Func1<IpPort, Observable<EbankWifiConnect>>() {
+                    @Override
+                    public Observable<EbankWifiConnect> call(IpPort ipPort) {
+                        return  MyServiceClient.getService()
+                                .get_EbankWifiConnect(ipPort.getIp(),ipPort.getPort(),ipPort.getMac(),auth);
                     }
-                }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<EbankWifiConnect>() {
+                    @Override
+                    public void onCompleted() {
 
-                @Override
-                public void refreshSpecificView(View view) {
+                    }
 
-                }
-            });
-            //通知MainActivity更换主题
-            EventBus.getDefault().post(new ChangeThemeColorEvent(1));
-//            Toast.makeText(SettingCommonActivity.this, "主题切换成功！", Toast.LENGTH_SHORT).show();
-        }
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(SettingCommonActivity.this, "请连接兴农易站相关WiFi后，再点击此处认证上网。", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(EbankWifiConnect ebankWifiConnect) {
+                        if("1".equals(ebankWifiConnect.getStatus()))
+                            Toast.makeText(SettingCommonActivity.this, "恭喜你上网认证通过,获得两小时上网时间!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
 }

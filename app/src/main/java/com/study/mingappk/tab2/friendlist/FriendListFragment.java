@@ -82,8 +82,6 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     private CharacterParser characterParser;
     private PinyinComparator pinyinComparator;
 
-    private boolean k;//用于设置页面更换主题，循序切换
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,31 +105,6 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_search) {
-            //查找好友
-
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void changeThemeColor(ChangeThemeColorEvent event) {
-        //通用中，更换主题后，刷新字母快速选择背景颜色
-        if (event.getType() == 1) {
-            if (k) {
-                mUserDialog.setBackgroundResource(R.drawable.shape_circle);
-                k = false;
-            } else {
-                mUserDialog.setBackgroundResource(R.drawable.shape_circle2);
-                k = true;
-            }
-        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -192,50 +165,6 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
 
         mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
-//以下为XRecyclerView功能
-/*        mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mXRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
-//        mXRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);//自定义下拉刷新箭头图标
-        mXRecyclerView.setPullRefreshEnabled(false);//关闭刷新功能
-//        View header =   LayoutInflater.from(this).inflate(R.layout.recyclerview_header, (ViewGroup)findViewById(android.R.id.content),false);
-//        mRecyclerView.addHeaderView(header);
-
-        mXRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                refreshList();
-            }
-
-
-            @Override
-            public void onLoadMore() {
-                int pages = (int) (cnt / PAGE_SIZE + 1);
-                if (page <= pages) {
-                    MyServiceClient.getService().getCall_FriendList(auth, page, PAGE_SIZE).enqueue(new Callback<FriendList>() {
-                        @Override
-                        public void onResponse(Call<FriendList> call, Response<FriendList> response) {
-                            if (response.isSuccessful()) {
-                                FriendList friendList = response.body();
-                                if (friendList != null && friendList.getErr() == 0) {
-                                    mList.addAll(friendList.getData().getList());
-                                    mAdapter.notifyDataSetChanged();
-                                    mXRecyclerView.loadMoreComplete();
-                                    page++;
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<FriendList> call, Throwable t) {
-                            JUtils.Log("加载更多好友出错：" + t.getMessage());
-
-                        }
-                    });
-                } else {
-                    mXRecyclerView.loadMoreComplete();
-                }
-            }
-        });*/
     }
 
     private void getDataList() {

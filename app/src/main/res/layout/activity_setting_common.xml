@@ -15,17 +15,15 @@
             android:background="@color/stand_bg"
             android:orientation="vertical">
 
-
-            <!--<include layout="@layout/divide_15_top_bottom" />-->
+            <include layout="@layout/divide_15_top_bottom" />
 
             <com.study.mingappk.common.views.CustomItem
-                android:id="@+id/click_change_theme"
+                android:id="@+id/click_connect_wifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                android:visibility="gone"
                 listItem1:itemIcon="@mipmap/tab4_change_theme"
-                listItem1:itemTitle="更换主题"
+                listItem1:itemTitle="上网认证"
                 listItem1:showArrow="false" />
 
             <include layout="@layout/divide_15_top_bottom" />

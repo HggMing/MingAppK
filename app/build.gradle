@@ -14,10 +14,10 @@ android {
 //                GETUI_APP_ID    : "JNsgkNDx3f9Kxlp0qGJxa9",
 //                GETUI_APP_KEY   : "y9e3zY48s06tsakhcpYz27",
 //                GETUI_APP_SECRET: "sEFajOmqenAO4avoCQoI62",
-                  GETUI_APP_ID    : "o9Pxlf1lfH7yUHC8nGpDH8",
-                  GETUI_APP_KEY   : "UyiZPy1YHX9Zop0KYP8EQ3",
-                  GETUI_APP_SECRET: "eesppnBSrw5m6XSpB4UA35",
-                  PACKAGE_NAME    : applicationId
+                    GETUI_APP_ID    : "o9Pxlf1lfH7yUHC8nGpDH8",
+                    GETUI_APP_KEY   : "UyiZPy1YHX9Zop0KYP8EQ3",
+                    GETUI_APP_SECRET: "eesppnBSrw5m6XSpB4UA35",
+                    PACKAGE_NAME    : applicationId
         ]
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "mips", "mips64", "x86", "x86_64"
@@ -49,8 +49,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'jp.wasabeef:glide-transformations:2.0.0'
-    //Android viewpager指示器
     compile 'com.commit451:PhotoView:1.2.5'
+    //Android viewpager指示器
     compile 'me.relex:circleindicator:1.1.8@aar'
     // android官方兼容库
     compile 'com.android.support:support-v4:23.4.0'
@@ -58,7 +58,6 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:cardview-v7:23.4.0'
     compile 'com.android.support:gridlayout-v7:23.4.0'
-
     // 快速构造view插件依赖
     compile 'com.jakewharton:butterknife:7.0.1'
     // 自定义图库，带裁剪、编辑
@@ -73,9 +72,8 @@ dependencies {
     //滑动返回
     compile 'com.jude:swipebackhelper:3.1.0'
     //数据储存
-    compile files('libs/lite-orm-1.9.2.jar')
+    compile files('libs/lite-orm-1.9.2.jar')// maven { url "https://jitpack.io" }
     compile 'com.github.orhanobut:hawk:1.23'
-    // maven { url "https://jitpack.io" }
     //个推
     compile 'com.getui:sdk:2.9.0.0'
     //实现SearchView的第三方库

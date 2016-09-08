@@ -49,7 +49,6 @@ public class ExpressSendFragment extends Fragment implements BaseRecyclerViewAda
     TextView contentEmpty;
 
     private ExpressSendAdapter mAdapter = new ExpressSendAdapter();
-    private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
     private List<ExpressList.DataBean.ListBean> mList0 = new ArrayList<>();
     private List<ExpressList.DataBean.ListBean> mList1 = new ArrayList<>();
 
@@ -76,7 +75,7 @@ public class ExpressSendFragment extends Fragment implements BaseRecyclerViewAda
     private void configXRecyclerView() {
         mAdapter.setOnItemClickListener(ExpressSendFragment.this);
         mXRecyclerView.setAdapter(mAdapter);//设置adapter
-        mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
+        mXRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));//设置布局管理器
 
         mXRecyclerView.addItemDecoration(new MyItemDecoration2(mActivity));//添加分割线
         mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能

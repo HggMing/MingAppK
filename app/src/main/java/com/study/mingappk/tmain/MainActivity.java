@@ -3,7 +3,6 @@ package com.study.mingappk.tmain;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,10 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
+import com.bilibili.magicasakura.widgets.TintImageView;
 import com.bilibili.magicasakura.widgets.TintTextView;
 import com.google.gson.Gson;
 import com.igexin.sdk.PushManager;
@@ -36,6 +37,8 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.AddFriendRequest;
+import com.study.mingappk.model.bean.EbankWifiConnect;
+import com.study.mingappk.model.bean.IpPort;
 import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.bean.UserInfoByPhone;
 import com.study.mingappk.model.database.ChatMsgModel;
@@ -47,6 +50,7 @@ import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.model.event.NewFriendEvent;
 import com.study.mingappk.model.event.RefreshTab1Event;
+import com.study.mingappk.model.event.ShopApplyPassEvent;
 import com.study.mingappk.model.event.ShowSideBarEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab1.Tab1Fragment;
@@ -54,6 +58,7 @@ import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 import com.study.mingappk.tab2.friendlist.FriendListFragment;
 import com.study.mingappk.tab3.villagelist.VillageListFragment;
 import com.study.mingappk.tab4.SettingFragment;
+import com.study.mingappk.tab4.shop.MyShopFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -66,8 +71,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
@@ -116,14 +123,26 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout clickSearch;
     @Bind(R.id.search_page)
     LinearLayout searchPage;
+    @Bind(R.id.img_tab5_main_1)
+    TintImageView mTab51;
+    @Bind(R.id.img_tab5_main_0)
+    ImageView mTab50;
+    @Bind(R.id.text_tab5_main)
+    TintTextView tTab5;
+    @Bind(R.id.tab5Layout)
+    RelativeLayout tab5Layout;
 
     public List<Fragment> fragments = new ArrayList<>();
+    private MyOnPageChangeListener myOnPageChangeListener;
+
     private FragmentManager fragmentManager;
     private boolean isExit;//是否退出
     private int idToolbar = 1;//toolbar 功能按钮页
     private boolean isFirstRun;//是否初次运行
 
     private String searchText;
+    private String auth;
+    private int isShopOwner;//是否是店长,1是0不是
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,12 +151,46 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
+        EventBus.getDefault().register(this);
 
         initView();
         //设置搜索好友
         configSearch();
-        getMessageList(this);//登录后，向后台获取消息
-        EventBus.getDefault().register(this);
+        //登录后，向后台获取消息
+        getMessageList(this);
+        //WiFi连接到ebank网络的认证
+        autoConnect();
+    }
+
+    private void autoConnect() {
+        MyServiceClient.getService()
+                .get_IpPort()
+                .flatMap(new Func1<IpPort, Observable<EbankWifiConnect>>() {
+                    @Override
+                    public Observable<EbankWifiConnect> call(IpPort ipPort) {
+                        return MyServiceClient.getService()
+                                .get_EbankWifiConnect(ipPort.getIp(), ipPort.getPort(), ipPort.getMac(), auth);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<EbankWifiConnect>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+//                        Toast.makeText(MainActivity.this, "没有连接ebank", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(EbankWifiConnect ebankWifiConnect) {
+                        if ("1".equals(ebankWifiConnect.getStatus()))
+                            Toast.makeText(MainActivity.this, "恭喜你上网认证通过,获得两小时上网时间!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void configSearch() {
@@ -300,21 +353,23 @@ public class MainActivity extends AppCompatActivity {
     //主页为singletop模式，更换主题后手动刷新
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void changeThemeColor(ChangeThemeColorEvent event) {
+        //更改主题后，改变tab4文字颜色
         int themeColor = ThemeUtils.getColorById(this, R.color.theme_color_primary);
-        if (event.getType() == 1) {
-            //设置状态栏颜色
-            BaseTools.colorStatusBar(this);
-        }
-        //获取当前app主题的颜色,设置toolbar颜色
-        mToolBar.setBackgroundColor(themeColor);
-        //更改主题后，改变tab4图标颜色
-       /* mTab4.setImageResource(R.mipmap.tab4_btn1);
-        ColorStateList colorStateList = ThemeUtils.getThemeColorStateList(MainActivity.this, R.color.theme_color_primary);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mTab4.setImageTintList(colorStateList);
-        }*/
-        mTab41.refreshDrawableState();
         tTab4.setTextColor(themeColor);
+    }
+
+    //申请店长通过后，界面调整
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void ApplyPassed(ShopApplyPassEvent event) {
+        isShopOwner = 1;
+        tab5Layout.setVisibility(View.VISIBLE);
+
+        fragments.add(2, new MyShopFragment());
+        viewPager.setAdapter(new MyPagerAdapter());
+        viewPager.setCurrentItem(4, true);
+
+        viewPager.removeOnPageChangeListener(myOnPageChangeListener);
+        viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
     }
 
     private void initView() {
@@ -323,27 +378,43 @@ public class MainActivity extends AppCompatActivity {
         //个推,初始化SDK
         PushManager.getInstance().initialize(this.getApplicationContext());
 
+        isShopOwner = Hawk.get(APP.IS_SHOP_OWNER);
+
+
         fragments.add(new Tab1Fragment());
         fragments.add(new FriendListFragment());
+        if (isShopOwner == 1) {
+            fragments.add(new MyShopFragment());
+            tab5Layout.setVisibility(View.VISIBLE);
+        } else {
+            tab5Layout.setVisibility(View.GONE);
+        }
         fragments.add(new VillageListFragment());
         fragments.add(new SettingFragment());
 
         fragmentManager = this.getSupportFragmentManager();
 
         viewPager.setSlipping(true);//设置ViewPager是否可以滑动
-        viewPager.setOffscreenPageLimit(4);
-        viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
+        viewPager.setOffscreenPageLimit(fragments.size());
+
+        myOnPageChangeListener=new MyOnPageChangeListener();
+        viewPager.addOnPageChangeListener( myOnPageChangeListener);
         viewPager.setAdapter(new MyPagerAdapter());
 
+        //初次运行软件，指导添加村
         isFirstRun = Hawk.get(APP.IS_FIRST_RUN, true);
-        if (isFirstRun) {
-            viewPager.setCurrentItem(2, true);
-            toolbarTitle.setText(getResources().getText(R.string.tab3_main));
-            tab3Guide.setVisibility(View.VISIBLE);
-            Hawk.put(APP.IS_FIRST_RUN, false);
-        } else {
-            toolbarTitle.setText(getResources().getText(R.string.tab1_main));
+        if (isShopOwner == 0) {
+            if (isFirstRun) {
+                viewPager.setCurrentItem(2, true);
+                toolbarTitle.setText(getResources().getText(R.string.tab3_main));
+                tab3Guide.setVisibility(View.VISIBLE);
+                Hawk.put(APP.IS_FIRST_RUN, false);
+            } else {
+                toolbarTitle.setText(getResources().getText(R.string.tab1_main));
+            }
         }
+
+        auth = Hawk.get(APP.USER_AUTH);
     }
 
     /**
@@ -353,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showCount(RefreshTab1Event event) {
-        int count=event.getCount();
+        int count = event.getCount();
         if (count > 0) {
             badge.setVisibility(View.VISIBLE);
             badge.setText(String.valueOf(count));
@@ -382,7 +453,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.tab3_guide, R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout, R.id.click_search})
+    @OnClick({R.id.tab3_guide, R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout, R.id.tab5Layout, R.id.click_search})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tab3_guide://点击新用户引导
@@ -402,10 +473,21 @@ public class MainActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.tab3Layout:
-                viewPager.setCurrentItem(2);
+                if (isShopOwner == 0) {
+                    viewPager.setCurrentItem(2);
+                } else {
+                    viewPager.setCurrentItem(3);
+                }
                 break;
             case R.id.tab4Layout:
-                viewPager.setCurrentItem(3);
+                if (isShopOwner == 0) {
+                    viewPager.setCurrentItem(3);
+                } else {
+                    viewPager.setCurrentItem(4);
+                }
+                break;
+            case R.id.tab5Layout:
+                viewPager.setCurrentItem(2);
                 break;
         }
     }
@@ -417,7 +499,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void searchFriend(String searchText) {
 //        Toast.makeText(MainActivity.this, "搜索："+searchText, Toast.LENGTH_SHORT).show();
-        String auth = Hawk.get(APP.USER_AUTH);
         MyServiceClient.getService()
                 .get_UserInfoByPhone(auth, searchText)
                 .subscribeOn(Schedulers.io())
@@ -457,73 +538,91 @@ public class MainActivity extends AppCompatActivity {
             int themeColor = ThemeUtils.getColorById(MainActivity.this, R.color.theme_color_primary);
             ColorStateList colorStateList = ThemeUtils.getThemeColorStateList(MainActivity.this, R.color.theme_color_primary);
             switch (arg0) {
-                case 0:
+                case 0://动态
                     toolbarTitle.setText(R.string.tab1_main);
                     idToolbar = 1;
-                   /* mTab1.setImageResource(R.mipmap.tab1_btn1);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        mTab1.setImageTintList(colorStateList);
-                        mTab2.setImageTintList(null);
-                        mTab3.setImageTintList(null);
-                        mTab4.setImageTintList(null);
-                    }*/
+
                     tTab1.setTextColor(themeColor);   //选中时的字体颜色
                     mTab11.setVisibility(View.VISIBLE);
                     mTab10.setVisibility(View.GONE);
                     setTab2ToB();
                     setTab3ToB();
                     setTab4ToB();
+                    setTab5ToB();
                     break;
-                case 1:
+                case 1://老乡
                     toolbarTitle.setText(R.string.tab2_main);
                     idToolbar = 2;
-                   /* mTab2.setImageResource(R.mipmap.tab2_btn1);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        mTab2.setImageTintList(colorStateList);
-                        mTab1.setImageTintList(null);
-                        mTab3.setImageTintList(null);
-                        mTab4.setImageTintList(null);
-                    }*/
+
                     tTab2.setTextColor(themeColor);
                     mTab21.setVisibility(View.VISIBLE);
                     mTab20.setVisibility(View.GONE);
                     setTab1ToB();
                     setTab3ToB();
                     setTab4ToB();
+                    setTab5ToB();
                     break;
-                case 2:
-                    toolbarTitle.setText(R.string.tab3_main);
-                    idToolbar = 3;
-                   /* mTab3.setImageResource(R.mipmap.tab3_btn1);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        mTab3.setImageTintList(colorStateList);
-                        mTab1.setImageTintList(null);
-                        mTab2.setImageTintList(null);
-                        mTab4.setImageTintList(null);
-                    }*/
-                    tTab3.setTextColor(themeColor);
-                    mTab31.setVisibility(View.VISIBLE);
-                    mTab30.setVisibility(View.GONE);
-                    setTab1ToB();
-                    setTab2ToB();
-                    setTab4ToB();
+                case 2://店长：我的店；普通：我的村
+                    if (isShopOwner == 0) {//普通：我的村
+                        toolbarTitle.setText(R.string.tab3_main);
+                        idToolbar = 3;
+
+                        tTab3.setTextColor(themeColor);
+                        mTab31.setVisibility(View.VISIBLE);
+                        mTab30.setVisibility(View.GONE);
+                        setTab1ToB();
+                        setTab2ToB();
+                        setTab4ToB();
+                        setTab5ToB();
+                    } else {//店长：我的店
+                        toolbarTitle.setText(R.string.tab5_main);
+                        idToolbar = 5;
+
+                        tTab5.setTextColor(themeColor);
+                        mTab51.setVisibility(View.VISIBLE);
+                        mTab50.setVisibility(View.GONE);
+                        setTab1ToB();
+                        setTab2ToB();
+                        setTab3ToB();
+                        setTab4ToB();
+                    }
                     break;
                 case 3:
+                    if (isShopOwner == 0) {//普通：设置
+                        toolbarTitle.setText(R.string.tab4_main);
+                        idToolbar = 4;
+
+                        tTab4.setTextColor(themeColor);
+                        mTab41.setVisibility(View.VISIBLE);
+                        mTab40.setVisibility(View.GONE);
+                        setTab1ToB();
+                        setTab2ToB();
+                        setTab3ToB();
+                        setTab5ToB();
+                    } else {//店长：我的村
+                        toolbarTitle.setText(R.string.tab3_main);
+                        idToolbar = 3;
+
+                        tTab3.setTextColor(themeColor);
+                        mTab31.setVisibility(View.VISIBLE);
+                        mTab30.setVisibility(View.GONE);
+                        setTab1ToB();
+                        setTab2ToB();
+                        setTab4ToB();
+                        setTab5ToB();
+                    }
+                    break;
+                case 4://仅店长：设置
                     toolbarTitle.setText(R.string.tab4_main);
                     idToolbar = 4;
-                   /* mTab4.setImageResource(R.mipmap.tab4_btn1);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        mTab4.setImageTintList(colorStateList);
-                        mTab1.setImageTintList(null);
-                        mTab2.setImageTintList(null);
-                        mTab3.setImageTintList(null);
-                    }*/
+
                     tTab4.setTextColor(themeColor);
                     mTab41.setVisibility(View.VISIBLE);
                     mTab40.setVisibility(View.GONE);
                     setTab1ToB();
                     setTab2ToB();
                     setTab3ToB();
+                    setTab5ToB();
                     break;
             }
             invalidateOptionsMenu();
@@ -531,31 +630,33 @@ public class MainActivity extends AppCompatActivity {
 
 
         private void setTab1ToB() {
-//            mTab1.setImageResource(R.mipmap.tab1_btn0);
             tTab1.setTextColor(getResources().getColor(R.color.tab_bnt0));
             mTab11.setVisibility(View.GONE);
             mTab10.setVisibility(View.VISIBLE);
         }
 
         private void setTab2ToB() {
-//            mTab2.setImageResource(R.mipmap.tab2_btn0);
             tTab2.setTextColor(getResources().getColor(R.color.tab_bnt0));
             mTab21.setVisibility(View.GONE);
             mTab20.setVisibility(View.VISIBLE);
         }
 
         private void setTab3ToB() {
-//            mTab3.setImageResource(R.mipmap.tab3_btn0);
             tTab3.setTextColor(getResources().getColor(R.color.tab_bnt0));
             mTab31.setVisibility(View.GONE);
             mTab30.setVisibility(View.VISIBLE);
         }
 
         private void setTab4ToB() {
-//            mTab4.setImageResource(R.mipmap.tab4_btn0);
             tTab4.setTextColor(getResources().getColor(R.color.tab_bnt0));
             mTab41.setVisibility(View.GONE);
             mTab40.setVisibility(View.VISIBLE);
+        }
+
+        private void setTab5ToB() {
+            tTab5.setTextColor(getResources().getColor(R.color.tab_bnt0));
+            mTab51.setVisibility(View.GONE);
+            mTab50.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -668,17 +769,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         switch (idToolbar) {
-            case 2:
+            case 2://添加好友
                 menu.findItem(R.id.action_search).setVisible(true);
                 menu.findItem(R.id.action_follow).setVisible(false);
                 menu.findItem(R.id.action_theme).setVisible(false);
                 break;
-            case 3:
+            case 3://关注村圈
                 menu.findItem(R.id.action_search).setVisible(false);
                 menu.findItem(R.id.action_follow).setVisible(true);
                 menu.findItem(R.id.action_theme).setVisible(false);
                 break;
-            case 4:
+            case 4://主题切换
                 menu.findItem(R.id.action_search).setVisible(false);
                 menu.findItem(R.id.action_follow).setVisible(false);
                 menu.findItem(R.id.action_theme).setVisible(true);

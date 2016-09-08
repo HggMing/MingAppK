@@ -12,7 +12,6 @@ import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
 import com.study.mingappk.R;
-import com.study.mingappk.model.database.MyDB;
 
 public class APP extends Application implements ThemeUtils.switchColor {
     //存储目录路径
@@ -78,19 +77,19 @@ public class APP extends Application implements ThemeUtils.switchColor {
 
     public String getTheme(Context context) {
         String[] themeColors=getResources().getStringArray(R.array.theme_colors);
-        if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_PURPLE) {
+        if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_02) {
             return themeColors[1];
-        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_PINK) {
+        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_03) {
             return themeColors[2];
-        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_GREEN) {
+        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_04) {
             return themeColors[3];
-        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_GREEN_LIGHT) {
+        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_05) {
             return themeColors[4];
-        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_YELLOW) {
+        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_06) {
             return themeColors[5];
-        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_ORANGE) {
+        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_07) {
             return themeColors[6];
-        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_RED) {
+        } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_08) {
             return themeColors[7];
         }
         return themeColors[0];

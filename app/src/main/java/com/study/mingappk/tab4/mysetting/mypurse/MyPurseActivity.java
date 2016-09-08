@@ -183,7 +183,7 @@ public class MyPurseActivity extends BackActivity {
             //显示收支
             if (type == 2 || type == 5) {
                 holder.pointsChange.setText("-" + data.getMoney());
-                holder.pointsChange.setTextColor(mContext.getResources().getColor(R.color.red));
+                holder.pointsChange.setTextColor(mContext.getResources().getColor(R.color.color08));
             } else {
                 holder.pointsChange.setText("+" + data.getMoney());
                 holder.pointsChange.setTextColor(mContext.getResources().getColor(R.color.font_green));

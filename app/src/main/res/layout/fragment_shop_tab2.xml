@@ -6,31 +6,13 @@
     android:layout_marginRight="12dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.study.mingappk.common.views.MyShopItem
+        android:id="@+id/item_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-        <com.study.mingappk.common.views.MyShopItem
-            android:id="@+id/item_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:itemFunTitle="快递寄件"
-            app:itemIconName="寄" />
-
-        <View
-            android:layout_width="8dp"
-            android:layout_height="match_parent" />
-
-        <com.study.mingappk.common.views.MyShopItem
-            android:id="@+id/item_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:itemFunTitle="快递收件"
-            app:itemIconName="收" />
-    </LinearLayout>
+        android:layout_marginTop="20dp"
+        app:itemFunTitle="特产"
+        app:itemIconName="特" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,8 +24,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:itemFunTitle="云想购"
-            app:itemIconName="购" />
+            app:itemFunTitle="美食"
+            app:itemIconName="食" />
 
         <View
             android:layout_width="8dp"
@@ -54,8 +36,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:itemFunTitle="特产订单"
-            app:itemIconName="订" />
+            app:itemFunTitle="活动"
+            app:itemIconName="活" />
 
     </LinearLayout>
 
@@ -69,8 +51,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:itemFunTitle="话费流量"
-            app:itemIconName="充" />
+            app:itemFunTitle="荣誉"
+            app:itemIconName="荣" />
 
         <View
             android:layout_width="8dp"
@@ -81,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:itemFunTitle="图书租借"
-            app:itemIconName="书" />
+            app:itemFunTitle="村委"
+            app:itemIconName="委" />
     </LinearLayout>
 </LinearLayout>

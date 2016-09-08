@@ -5,6 +5,8 @@
     <string name="tab2_main">老乡</string>
     <string name="tab3_main">我的村</string>
     <string name="tab4_main">设置</string>
+    <string name="tab5_main">我的店</string>
+
     <!--BackActivity-->
     <string name="btn_text_speak">按住 说话</string>
     <!--网络相关-->
@@ -95,5 +97,9 @@
     <string name="empty_express_take">暂无未领取快递，可点击右下角按钮添加！</string>
     <string name="empty_express_send_0">该店暂没有待寄送快递。</string>
     <string name="empty_express_send_1">该店还没有已寄送快递！</string>
+    <string name="empty_my_village_user">本村暂无用户，请推荐村民加入！</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

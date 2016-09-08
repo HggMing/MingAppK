@@ -375,7 +375,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                     sexText = "女";
                 }
                 ApplyInfo2 applyInfo2 = new ApplyInfo2(headUrl, showName, showName2,
-                        uname, sexText, brithday, contact, edu, villageName, file1, file2, photoPath3);
+                        uname, sexText, brithday, contact, edu, villageName,vid, file1, file2, photoPath3);
                 Hawk.put(APP.APPLY_INFO + Hawk.get(APP.ME_UID), applyInfo2);
 
                 //提交申请

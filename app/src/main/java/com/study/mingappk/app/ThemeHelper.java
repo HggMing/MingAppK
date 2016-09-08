@@ -25,14 +25,14 @@ import android.content.SharedPreferences;
 public class ThemeHelper {
     private static final String CURRENT_THEME = "theme_current";
 
-    public static final int CARD_BLUE = 0x1;//蓝色
-    public static final int CARD_PURPLE = 0x2;//紫色
-    public static final int CARD_PINK = 0x3;//樱花色
-    public static final int CARD_GREEN = 0x4;//绿色
-    public static final int CARD_GREEN_LIGHT = 0x5;//浅绿
-    public static final int CARD_YELLOW = 0x6;//黄色
-    public static final int CARD_ORANGE = 0x7;//橙色
-    public static final int CARD_RED = 0x8;//红色
+    public static final int CARD_01 = 0x1;//蓝色
+    public static final int CARD_02 = 0x2;//紫色
+    public static final int CARD_03 = 0x3;//樱花色
+    public static final int CARD_04 = 0x4;//绿色
+    public static final int CARD_05 = 0x5;//浅绿
+    public static final int CARD_06 = 0x6;//黄色
+    public static final int CARD_07 = 0x7;//橙色
+    public static final int CARD_08 = 0x8;//红色
 
     public static SharedPreferences getSharePreference(Context context) {
         return context.getSharedPreferences("multiple_theme", Context.MODE_PRIVATE);
@@ -45,32 +45,32 @@ public class ThemeHelper {
     }
 
     public static int getTheme(Context context) {
-        return getSharePreference(context).getInt(CURRENT_THEME, CARD_BLUE);
+        return getSharePreference(context).getInt(CURRENT_THEME, CARD_01);
     }
 
     public static boolean isDefaultTheme(Context context) {
-        return getTheme(context) == CARD_BLUE;
+        return getTheme(context) == CARD_01;
     }
 
     public static String getName(int currentTheme) {
         switch (currentTheme) {
-            case CARD_BLUE:
-                return "blue";
-            case CARD_PURPLE:
-                return "purple";
-            case CARD_PINK:
-                return "pink";
-            case CARD_GREEN:
-                return "green";
-            case CARD_GREEN_LIGHT:
-                return "green_light";
-            case CARD_YELLOW:
-                return "yellow";
-            case CARD_ORANGE:
-                return "orange";
-            case CARD_RED:
-                return "red";
+            case CARD_01:
+                return "color01";
+            case CARD_02:
+                return "color02";
+            case CARD_03:
+                return "color03";
+            case CARD_04:
+                return "color04";
+            case CARD_05:
+                return "color05";
+            case CARD_06:
+                return "color06";
+            case CARD_07:
+                return "color07";
+            case CARD_08:
+                return "color08";
         }
-        return "blue";
+        return "color01";
     }
 }

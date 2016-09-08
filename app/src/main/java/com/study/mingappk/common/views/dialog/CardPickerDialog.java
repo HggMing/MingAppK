@@ -83,35 +83,35 @@ public class CardPickerDialog extends DialogFragment implements View.OnClickList
                 dismiss();
                 break;
             case R.id.theme_blue:
-                mCurrentTheme = ThemeHelper.CARD_BLUE;
+                mCurrentTheme = ThemeHelper.CARD_01;
                 setImageButtons(mCurrentTheme);
                 break;
             case R.id.theme_purple:
-                mCurrentTheme = ThemeHelper.CARD_PURPLE;
+                mCurrentTheme = ThemeHelper.CARD_02;
                 setImageButtons(mCurrentTheme);
                 break;
             case R.id.theme_pink:
-                mCurrentTheme = ThemeHelper.CARD_PINK;
+                mCurrentTheme = ThemeHelper.CARD_03;
                 setImageButtons(mCurrentTheme);
                 break;
             case R.id.theme_green:
-                mCurrentTheme = ThemeHelper.CARD_GREEN;
+                mCurrentTheme = ThemeHelper.CARD_04;
                 setImageButtons(mCurrentTheme);
                 break;
             case R.id.theme_green_light:
-                mCurrentTheme = ThemeHelper.CARD_GREEN_LIGHT;
+                mCurrentTheme = ThemeHelper.CARD_05;
                 setImageButtons(mCurrentTheme);
                 break;
             case R.id.theme_yellow:
-                mCurrentTheme = ThemeHelper.CARD_YELLOW;
+                mCurrentTheme = ThemeHelper.CARD_06;
                 setImageButtons(mCurrentTheme);
                 break;
             case R.id.theme_orange:
-                mCurrentTheme = ThemeHelper.CARD_ORANGE;
+                mCurrentTheme = ThemeHelper.CARD_07;
                 setImageButtons(mCurrentTheme);
                 break;
             case R.id.theme_red:
-                mCurrentTheme = ThemeHelper.CARD_RED;
+                mCurrentTheme = ThemeHelper.CARD_08;
                 setImageButtons(mCurrentTheme);
                 break;
             default:
@@ -120,14 +120,14 @@ public class CardPickerDialog extends DialogFragment implements View.OnClickList
     }
 
     private void setImageButtons(int currentTheme) {
-        mCards[0].setSelected(currentTheme == ThemeHelper.CARD_BLUE);
-        mCards[1].setSelected(currentTheme == ThemeHelper.CARD_PURPLE);
-        mCards[2].setSelected(currentTheme == ThemeHelper.CARD_PINK);
-        mCards[3].setSelected(currentTheme == ThemeHelper.CARD_GREEN);
-        mCards[4].setSelected(currentTheme == ThemeHelper.CARD_GREEN_LIGHT);
-        mCards[5].setSelected(currentTheme == ThemeHelper.CARD_YELLOW);
-        mCards[6].setSelected(currentTheme == ThemeHelper.CARD_ORANGE);
-        mCards[7].setSelected(currentTheme == ThemeHelper.CARD_RED);
+        mCards[0].setSelected(currentTheme == ThemeHelper.CARD_01);
+        mCards[1].setSelected(currentTheme == ThemeHelper.CARD_02);
+        mCards[2].setSelected(currentTheme == ThemeHelper.CARD_03);
+        mCards[3].setSelected(currentTheme == ThemeHelper.CARD_04);
+        mCards[4].setSelected(currentTheme == ThemeHelper.CARD_05);
+        mCards[5].setSelected(currentTheme == ThemeHelper.CARD_06);
+        mCards[6].setSelected(currentTheme == ThemeHelper.CARD_07);
+        mCards[7].setSelected(currentTheme == ThemeHelper.CARD_08);
     }
 
     public void setClickListener(ClickListener clickListener) {

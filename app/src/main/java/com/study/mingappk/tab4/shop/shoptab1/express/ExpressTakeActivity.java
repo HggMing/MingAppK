@@ -14,6 +14,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyItemDecoration;
+import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.model.bean.ExpressList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.baseactivity.AddListActivity;
@@ -45,7 +46,7 @@ public class ExpressTakeActivity extends AddListActivity {
 
     private void config() {
         //设置adapter
-        mXRecyclerView.addItemDecoration(new MyItemDecoration(this));//添加分割线
+        mXRecyclerView.addItemDecoration(new MyItemDecoration2(this));//添加分割线
         mAdapter = new ExpressTakeAdapter();
         mXRecyclerView.setAdapter(mAdapter);
     }

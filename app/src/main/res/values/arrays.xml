@@ -2,13 +2,13 @@
 <resources>
     <string-array name="theme_colors">
         <item>theme_color_primary</item>
-        <item>purple</item>
-        <item>pink</item>
-        <item>green</item>
-        <item>green_light</item>
-        <item>yellow</item>
-        <item>orange</item>
-        <item>red</item>
+        <item>color02</item>
+        <item>color03</item>
+        <item>color04</item>
+        <item>color05</item>
+        <item>color06</item>
+        <item>color07</item>
+        <item>color08</item>
     </string-array>
 
     <string-array name="sexs">

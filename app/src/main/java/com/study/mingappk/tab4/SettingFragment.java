@@ -36,6 +36,7 @@ import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
+import com.study.mingappk.model.event.ShopApplyPassEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.mysetting.MySettingActivity;
 import com.study.mingappk.tab4.safesetting.RealNameBindingActivity;
@@ -169,6 +170,8 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                     clickShop.setText("我的店");
                     clickShop.setIcon(R.mipmap.tab4_mystore);
                     storeManager.setVisibility(View.VISIBLE);//店长图标
+                    //申请店长成功后，主页tab由4变5。一些店长相关细节处理
+                    EventBus.getDefault().post(new ShopApplyPassEvent());
                 }
         }
     }
@@ -268,9 +271,12 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
 
     }
 
-    @OnClick({R.id.click_user, R.id.click_safe_center, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
+    @OnClick({R.id.test,R.id.click_user, R.id.click_safe_center, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.test://测试按钮:
+
+                break;
             case R.id.click_user://点击编辑用户
                 Intent intent1 = new Intent(mActivity, UserDetailActivity.class);
                 Bundle bundle = new Bundle();
@@ -402,7 +408,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                                 Intent intent = new Intent(mActivity, ShowApplyingActivity.class);
                                 intent.putExtra(ShowApplyingActivity.STATUS_APPLY, data.getStats());
                                 startActivityForResult(intent, REQUEST_APPLY_PASSED);
-                            }else{//已经选择申请的村（已实名通过），但没有申请就退出。点击申请后直接进入申请界面
+                            } else {//已经选择申请的村（已实名通过），但没有申请就退出。点击申请后直接进入申请界面
                                 Intent intent4 = new Intent(mActivity, ApplyShopOwnerActivity.class);
                                 intent4.putExtra(ApplyShopOwnerActivity.USER_INFO, dataEntity);
                                 startActivity(intent4);
@@ -432,7 +438,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                 }
             });
             //通知MainActivity更换主题
-            EventBus.getDefault().post(new ChangeThemeColorEvent(0));
+            EventBus.getDefault().post(new ChangeThemeColorEvent());
         }
     }
 }

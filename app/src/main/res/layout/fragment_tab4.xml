@@ -141,6 +141,15 @@
                     listItem1:itemTitle="退出当前账号"
                     listItem1:showArrow="false" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:text="测试按钮"
+                android:visibility="gone" />
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

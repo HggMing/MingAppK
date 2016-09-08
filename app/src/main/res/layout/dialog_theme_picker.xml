@@ -35,7 +35,7 @@
             android:background="@drawable/ic_card_48dp"
             android:scaleType="centerInside"
             android:src="@drawable/selector_pick_item"
-            app:backgroundTint="@color/blue" />
+            app:backgroundTint="@color/color01" />
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
             android:background="@drawable/ic_card_48dp"
             android:scaleType="centerInside"
             android:src="@drawable/selector_pick_item"
-            app:backgroundTint="@color/purple" />
+            app:backgroundTint="@color/color02" />
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -65,7 +65,7 @@
             android:background="@drawable/ic_card_48dp"
             android:scaleType="centerInside"
             android:src="@drawable/selector_pick_item"
-            app:backgroundTint="@color/pink" />
+            app:backgroundTint="@color/color03" />
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -80,7 +80,7 @@
             android:background="@drawable/ic_card_48dp"
             android:scaleType="centerInside"
             android:src="@drawable/selector_pick_item"
-            app:backgroundTint="@color/green" />
+            app:backgroundTint="@color/color04" />
     </LinearLayout>
 
     <LinearLayout
@@ -98,7 +98,7 @@
             android:background="@drawable/ic_card_48dp"
             android:scaleType="centerInside"
             android:src="@drawable/selector_pick_item"
-            app:backgroundTint="@color/green_light" />
+            app:backgroundTint="@color/color05" />
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -113,7 +113,7 @@
             android:background="@drawable/ic_card_48dp"
             android:scaleType="centerInside"
             android:src="@drawable/selector_pick_item"
-            app:backgroundTint="@color/yellow" />
+            app:backgroundTint="@color/color06" />
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -128,7 +128,7 @@
             android:background="@drawable/ic_card_48dp"
             android:scaleType="centerInside"
             android:src="@drawable/selector_pick_item"
-            app:backgroundTint="@color/orange" />
+            app:backgroundTint="@color/color07" />
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -143,7 +143,7 @@
             android:background="@drawable/ic_card_48dp"
             android:scaleType="centerInside"
             android:src="@drawable/selector_pick_item"
-            app:backgroundTint="@color/red" />
+            app:backgroundTint="@color/color08" />
     </LinearLayout>
 
     <LinearLayout

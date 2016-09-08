@@ -54,6 +54,8 @@ public class ShowApplyingActivity extends BackActivity {
     LinearLayout rootLayout;
 
     public static String STATUS_APPLY="status_apply";
+    private String villageName;
+    private String villageId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,36 +68,11 @@ public class ShowApplyingActivity extends BackActivity {
     }
 
     private void initDatas() {
-        String status=getIntent().getStringExtra(STATUS_APPLY);
-        switch (status){
-            case "0"://申请中
-                name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_apply_ing,0);
-                applyStatus.setVisibility(View.GONE);
-                break;
-            case "1"://申请通过
-                applyStatus.setVisibility(View.VISIBLE);
-                Glide.with(this)
-                        .load(R.mipmap.ic_apply_passed)
-                        .into(applyStatus);
-                //申请通过
-                setResult(RESULT_OK );
-                Hawk.remove(APP.APPLY_INFO_VID+Hawk.get(APP.ME_UID));
-
-                break;
-            case "2"://申请未通过
-                applyStatus.setVisibility(View.VISIBLE);
-                Glide.with(this)
-                        .load(R.mipmap.ic_apply_not_passed)
-                        .into(applyStatus);
-                //清除申请村vid，以便重新申请
-                Hawk.remove(APP.APPLY_INFO_VID+Hawk.get(APP.ME_UID));
-                break;
-        }
-
-
-
+        //基本信息显示
         ApplyInfo2 data = Hawk.get(APP.APPLY_INFO+Hawk.get(APP.ME_UID));
         if (data != null) {
+            villageName=data.getVillageName();
+            villageId=data.getVillageId();
             //用户头部信息
             Glide.with(this)
                     .load(data.getHeadUrl())
@@ -121,6 +98,37 @@ public class ShowApplyingActivity extends BackActivity {
             Glide.with(this)
                     .load(data.getOtherImagePath())
                     .into(imgPhoto3);
+        }
+        //申请状态显示
+        String status=getIntent().getStringExtra(STATUS_APPLY);
+        switch (status){
+            case "0"://申请中
+                name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.mipmap.ic_apply_ing,0);
+                applyStatus.setVisibility(View.GONE);
+                break;
+            case "1"://申请通过
+                applyStatus.setVisibility(View.VISIBLE);
+                Glide.with(this)
+                        .load(R.mipmap.ic_apply_passed)
+                        .into(applyStatus);
+                //申请通过
+                setResult(RESULT_OK );
+                Hawk.remove(APP.APPLY_INFO_VID+Hawk.get(APP.ME_UID));
+                //申请通过后，储存信息。用于不重新登录，直接管理村
+                Hawk.chain()
+                        .put(APP.MANAGER_ADDRESS,villageName)
+                        .put(APP.MANAGER_VID,villageId)
+                        .commit();
+
+                break;
+            case "2"://申请未通过
+                applyStatus.setVisibility(View.VISIBLE);
+                Glide.with(this)
+                        .load(R.mipmap.ic_apply_not_passed)
+                        .into(applyStatus);
+                //清除申请村vid，以便重新申请
+                Hawk.remove(APP.APPLY_INFO_VID+Hawk.get(APP.ME_UID));
+                break;
         }
     }
 }

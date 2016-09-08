@@ -10,14 +10,17 @@ import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.CheckPhone;
+import com.study.mingappk.model.bean.EbankWifiConnect;
 import com.study.mingappk.model.bean.ExpressFirm;
 import com.study.mingappk.model.bean.ExpressList;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.FriendList;
+import com.study.mingappk.model.bean.IpPort;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.bean.MoneyDetail;
+import com.study.mingappk.model.bean.MyVillUsers;
 import com.study.mingappk.model.bean.NewsList;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.RecommendVillage;
@@ -40,6 +43,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -59,6 +63,29 @@ public interface MyService {
             @Query("logname") String logname,
             @Query("pwd") String pwd);
 
+    /**
+     * 连接ebank网络时，获取ip和端口
+     *
+     * @return IpPort
+     */
+    @GET("http://1.2.3.4/getip")
+    Observable<IpPort> get_IpPort();
+
+    /**
+     * 若连接ebank网络，则认证上网
+     *
+     * @param ip   get_IpPort 获取到的ip
+     * @param port get_IpPort 获取到的port
+     * @param mac  get_IpPort 获取到的mac
+     * @param auth 认证信息
+     * @return EbankWifiConnect
+     */
+    @GET("http://{ip}:{port}/check")
+    Observable<EbankWifiConnect> get_EbankWifiConnect(
+            @Path("ip") String ip,
+            @Path("port") String port,
+            @Query("mac") String mac,
+            @Query("auth") String auth);
 
     /**
      * 进行实名认证，注册接口
@@ -104,7 +131,7 @@ public interface MyService {
      * 该接口中如果该用户，未绑定就会直接绑定认证的时候提交的账号，如果绑定了 ，就会用绑定的账号登录
      *
      * @param sign 人脸认证标识，在进行人脸认证成功后，认证接口返回的sign
-     * @return
+     * @return Login
      */
     @FormUrlEncoded
     @POST("user/authlogin")
@@ -879,7 +906,7 @@ public interface MyService {
      * @param bank_name      开户行
      * @param bank_no        银行卡号
      * @param bank_true_name 开卡人姓名
-     * @return
+     * @return 结果msg
      */
     @FormUrlEncoded
     @POST("amount/gmoney")
@@ -983,13 +1010,14 @@ public interface MyService {
 
     /**
      * 添加新的寄件及编辑
-     * @param id 寄件身份信息id
-     * @param number 寄件单号
-     * @param ship 快递公司
-     * @param ship_fee 快递费
+     *
+     * @param id        寄件身份信息id
+     * @param number    寄件单号
+     * @param ship      快递公司
+     * @param ship_fee  快递费
      * @param jijianren 寄件人
-     * @param jphone 寄件人手机
-     * @param addr 寄件地址
+     * @param jphone    寄件人手机
+     * @param addr      寄件地址
      * @return 结果msg
      */
     @FormUrlEncoded
@@ -1002,6 +1030,20 @@ public interface MyService {
             @Field("jijianren") String jijianren,
             @Field("jphone") String jphone,
             @Field("addr") String addr);
+
+    /**
+     * 获取本村用户列表
+     *
+     * @param auth     认证信息
+     * @param page     页数
+     * @param pagesize 每页条数
+     * @return 用户信息
+     */
+    @GET("vill/get_my_vill_user")
+    Observable<MyVillUsers> get_MyVillUsers(
+            @Query("auth") String auth,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
 
 
 }

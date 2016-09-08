@@ -171,7 +171,7 @@ class ShoppingAddressAdapter extends BaseRecyclerViewAdapter<ShoppingAddress.Dat
             holder.phone.setTextColor(mActivity.getResources().getColor(R.color.font_black_comment));
         } else {
             holder.phone.setText("手机号有误，请修改");
-            holder.phone.setTextColor(mActivity.getResources().getColor(R.color.red));
+            holder.phone.setTextColor(mActivity.getResources().getColor(R.color.color08));
         }
         //显示收货地址
         String address = data.getAddr();

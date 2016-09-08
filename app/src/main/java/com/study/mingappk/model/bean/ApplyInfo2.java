@@ -17,6 +17,12 @@ public class ApplyInfo2 {
     private String phone;//手机号
     private String education;//学历
     private String villageName;//申请店长的村名
+
+    public String getVillageId() {
+        return villageId;
+    }
+
+    private String villageId;//申请店长的村id
     private File file1;//身份证正面照
     private File file2;//身份证反面照
     private String otherImagePath;//其他照片地址
@@ -120,7 +126,7 @@ public class ApplyInfo2 {
 
     public ApplyInfo2(String headUrl, String showName, String showName2,
                       String name, String sex, String brithday, String phone,
-                      String education, String villageName, File file1,
+                      String education, String villageName,String villageId, File file1,
                       File file2, String otherImagePath) {
         this.headUrl = headUrl;
         this.showName = showName;
@@ -131,6 +137,7 @@ public class ApplyInfo2 {
         this.phone = phone;
         this.education = education;
         this.villageName = villageName;
+        this.villageId = villageId;
         this.file1 = file1;
         this.file2 = file2;
         this.otherImagePath = otherImagePath;
