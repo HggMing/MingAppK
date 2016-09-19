@@ -23,11 +23,16 @@ import com.bumptech.glide.Glide;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.tab4.shop.shoptab1.ShopTab1Fragment;
 import com.study.mingappk.tab4.shop.shoptab2.ShopTab2Fragment;
 import com.study.mingappk.tab4.shop.shoptab3.ShopTab3Fragment;
 import com.study.mingappk.tab4.shop.shoptab4.ShopTab4Fragment;
 import com.study.mingappk.tmain.MainViewPager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,12 +93,14 @@ public class MyShopFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mActivity = (AppCompatActivity) getActivity();
         initData();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
     private void initData() {
@@ -120,6 +127,32 @@ public class MyShopFragment extends Fragment {
         viewPager.setOffscreenPageLimit(4);
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
         viewPager.setAdapter(new MyPagerAdapter());
+    }
+
+    //主页为singletop模式，更换主题后手动刷新
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeThemeColor(ChangeThemeColorEvent event) {
+        //更改主题后，我的店上方Tab页，文字颜色改变
+        int themeColor = ThemeUtils.getColorById(mActivity, R.color.theme_color_primary);
+        int arg0 = viewPager.getCurrentItem();
+        switch (arg0){
+            case 0:
+                tTab1.setTextColor(themeColor);   //选中时的字体颜色
+                vTab1.setBackgroundColor(themeColor);
+                break;
+            case 1:
+                tTab2.setTextColor(themeColor);
+                vTab2.setBackgroundColor(themeColor);
+                break;
+            case 2:
+                tTab3.setTextColor(themeColor);
+                vTab3.setBackgroundColor(themeColor);
+                break;
+            case 3:
+                tTab4.setTextColor(themeColor);
+                vTab4.setBackgroundColor(themeColor);
+                break;
+        }
     }
 
     /**

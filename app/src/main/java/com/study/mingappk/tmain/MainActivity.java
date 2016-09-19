@@ -397,8 +397,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setSlipping(true);//设置ViewPager是否可以滑动
         viewPager.setOffscreenPageLimit(fragments.size());
 
-        myOnPageChangeListener=new MyOnPageChangeListener();
-        viewPager.addOnPageChangeListener( myOnPageChangeListener);
+        myOnPageChangeListener = new MyOnPageChangeListener();
+        viewPager.addOnPageChangeListener(myOnPageChangeListener);
         viewPager.setAdapter(new MyPagerAdapter());
 
         //初次运行软件，指导添加村
@@ -412,6 +412,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 toolbarTitle.setText(getResources().getText(R.string.tab1_main));
             }
+        } else {
+            toolbarTitle.setText(getResources().getText(R.string.tab1_main));
         }
 
         auth = Hawk.get(APP.USER_AUTH);

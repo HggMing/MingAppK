@@ -13,7 +13,10 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.CheckPhone;
+import com.study.mingappk.model.bean.ResultOther;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab4.mysetting.mypurse.SetPursePwdActivity;
+import com.study.mingappk.tab4.mysetting.mypurse.TakeMoneyActivity;
 import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import java.io.IOException;
@@ -25,6 +28,7 @@ import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -129,9 +133,37 @@ public class SafeSettingActivity extends BackActivity {
                 startActivity(intent1);
                 break;
             case R.id.click_purse_psw:
-                //Toast.makeText(SettingCommonActivity.this, "修改钱包密码", Toast.LENGTH_SHORT).show();
-                Intent intent2 = new Intent(this, ChangePursePwdActivity.class);
-                startActivity(intent2);
+                //Toast.makeText(SettingCommonActivity.this, "新建or修改钱包密码", Toast.LENGTH_SHORT).show();
+                //检测是否设置钱包密码
+                String auth = Hawk.get(APP.USER_AUTH);
+                MyServiceClient.getService()
+                        .get_IsSetPWD(auth)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<ResultOther>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(ResultOther resultOther) {
+                                if (resultOther.getIs_pwd() == 1) {//已设置密码
+//                            Toast.makeText(MyPurseActivity.this, "修改钱包密码", Toast.LENGTH_SHORT).show();
+                                    Intent intent2 = new Intent(SafeSettingActivity.this, ChangePursePwdActivity.class);
+                                    startActivity(intent2);
+                                } else {
+                                    //设置钱包密码
+                                    Intent intent = new Intent(SafeSettingActivity.this, SetPursePwdActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
                 break;
         }
     }

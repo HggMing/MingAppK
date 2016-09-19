@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class LikeUsersArea {
     private Context mContext;

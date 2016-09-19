@@ -175,6 +175,10 @@ public class EditExpressSendActivity extends BackActivity {
                 Toast.makeText(this, "输入的手机号码格式不正确！", Toast.LENGTH_SHORT).show();
                 return true;
             }
+            if (StringTools.isEmpty(phone)) {
+                Toast.makeText(this, "请输入寄件人手机号码！", Toast.LENGTH_SHORT).show();
+                return true;
+            }
             String vid = Hawk.get(APP.MANAGER_VID);
             MyServiceClient.getService()
                     .post_EditExpressSend(id_express, number, expressFirm, money, name, phone, addr)

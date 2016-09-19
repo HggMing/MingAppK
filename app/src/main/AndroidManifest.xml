@@ -287,6 +287,8 @@
         <activity
             android:name=".tab4.shop.MyShopActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".tab4.shop.shoptab1.books.BooksActivity" />
+        <activity android:name=".tmain.baseactivity.TabsActivity"></activity>
     </application>
 
 </manifest>

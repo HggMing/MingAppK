@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
@@ -254,7 +255,12 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
             if (StringTools.isEmpty(tempMember.getName())) {
                 //若用户名为空，显示手机号，中间四位为*
                 String iphone = tempMember.getPhone();
-                String showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
+                String showName;
+                if (iphone != null) {
+                    showName = iphone.substring(0, 3) + "****" + iphone.substring(7, 11);
+                } else {
+                    showName = "测试用户";
+                }
                 tempMember.setName(showName);
             }
             String pinyin = characterParser.getSelling(friendList.getData().getList().get(i).getName());//用户名转拼音
@@ -313,6 +319,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
                 startActivity(intent0);
                 break;
             case 1://小苞谷
+                Toast.makeText(mActivity, "功能维护中...", Toast.LENGTH_SHORT).show();
                 break;
             case 2://客服
                 Intent intent2 = new Intent(mActivity, ChatActivity.class);
@@ -340,13 +347,13 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
                         @Override
                         public void onClick(final DialogInterface dialog, int which) {
                             //数据库中删除与此好友的动态
-                            InstantMsgModel iMsg=new InstantMsgModel();
-                            iMsg.setUid( mList.get(position).getUid());
+                            InstantMsgModel iMsg = new InstantMsgModel();
+                            iMsg.setUid(mList.get(position).getUid());
                             MyDB.delete(iMsg);
                             //刷新动态
                             EventBus.getDefault().post(new InstantMsgEvent());
                             //好友列表中删除与此好友的信息
-                            FriendsModel friend=new FriendsModel();
+                            FriendsModel friend = new FriendsModel();
                             friend.setUid(mList.get(position).getUid());
                             MyDB.delete(friend);
                             //删除好友

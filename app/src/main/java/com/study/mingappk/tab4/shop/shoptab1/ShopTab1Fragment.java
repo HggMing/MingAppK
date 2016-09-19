@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.study.mingappk.R;
+import com.study.mingappk.tab4.shop.shoptab1.books.BooksActivity;
 import com.study.mingappk.tab4.shop.shoptab1.express.ExpressSendActivity;
 import com.study.mingappk.tab4.shop.shoptab1.express.ExpressTakeActivity;
 
@@ -19,7 +20,7 @@ import butterknife.OnClick;
 
 
 /**
- * 村店维护
+ * 本村业务
  */
 public class ShopTab1Fragment extends Fragment {
     AppCompatActivity mActivity;
@@ -44,7 +45,7 @@ public class ShopTab1Fragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.item_1, R.id.item_2, R.id.item_3, R.id.item_4, R.id.item_5, R.id.item_6})
+    @OnClick({R.id.item_1, R.id.item_2, R.id.item_3})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.item_1://快递寄件
@@ -55,17 +56,9 @@ public class ShopTab1Fragment extends Fragment {
                 Intent intent2=new Intent(mActivity,ExpressTakeActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.item_3:
-                Toast.makeText(mActivity, "云想购", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.item_4:
-                Toast.makeText(mActivity, "特产订单", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.item_5:
-                Toast.makeText(mActivity, "话费流量", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.item_6:
-                Toast.makeText(mActivity, "图书租借", Toast.LENGTH_SHORT).show();
+            case R.id.item_3://图书租借
+                Intent intent3=new Intent(mActivity,BooksActivity.class);
+                startActivity(intent3);
                 break;
         }
     }

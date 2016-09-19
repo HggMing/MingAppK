@@ -16,7 +16,7 @@ import butterknife.OnClick;
 
 
 /**
- * 本村帖子
+ * 本村维护
  */
 public class ShopTab3Fragment extends Fragment {
     AppCompatActivity mActivity;
@@ -41,14 +41,26 @@ public class ShopTab3Fragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.item_1, R.id.item_2})
+    @OnClick({R.id.item_1, R.id.item_2, R.id.item_3, R.id.item_4, R.id.item_5, R.id.item_6})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.item_1:
-                Toast.makeText(mActivity, "帖子自审查", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "帖子审查", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_2:
-                Toast.makeText(mActivity, "违规帖处理", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "特产管理", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item_3:
+                Toast.makeText(mActivity, "美食", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item_4:
+                Toast.makeText(mActivity, "活动", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item_5:
+                Toast.makeText(mActivity, "荣誉", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item_6:
+                Toast.makeText(mActivity, "村委", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

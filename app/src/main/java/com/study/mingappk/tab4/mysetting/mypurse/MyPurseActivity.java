@@ -181,7 +181,7 @@ public class MyPurseActivity extends BackActivity {
             //显示获得方式备注
             holder.content.setText(data.getMemo());
             //显示收支
-            if (type == 2 || type == 5) {
+            if (type == 2 || type == 4||type == 5) {
                 holder.pointsChange.setText("-" + data.getMoney());
                 holder.pointsChange.setTextColor(mContext.getResources().getColor(R.color.color08));
             } else {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -47,6 +48,8 @@ public class ExpressSendFragment extends Fragment implements BaseRecyclerViewAda
     RecyclerView mXRecyclerView;
     @Bind(R.id.content_empty)
     TextView contentEmpty;
+    @Bind(R.id.m_refresh_layout)
+    SwipeRefreshLayout mRefreshLayout;
 
     private ExpressSendAdapter mAdapter = new ExpressSendAdapter();
     private List<ExpressList.DataBean.ListBean> mList0 = new ArrayList<>();
@@ -69,6 +72,17 @@ public class ExpressSendFragment extends Fragment implements BaseRecyclerViewAda
 
         configXRecyclerView();//XRecyclerView配置
         initData();//获取数据
+
+        // 刷新时，指示器旋转后变化的颜色
+        String theme = APP.getInstance().getTheme(mActivity);
+        int themeColorRes = getResources().getIdentifier(theme, "color", mActivity.getPackageName());
+        mRefreshLayout.setColorSchemeResources(themeColorRes);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData();
+            }
+        });
     }
 
     //配置RecyclerView
@@ -113,6 +127,7 @@ public class ExpressSendFragment extends Fragment implements BaseRecyclerViewAda
                                 contentEmpty.setVisibility(View.GONE);
                             }
                             mAdapter.setItem(mList0);
+                            mRefreshLayout.setRefreshing(false);
                         }
 
                         @Override
@@ -153,6 +168,7 @@ public class ExpressSendFragment extends Fragment implements BaseRecyclerViewAda
                                 contentEmpty.setVisibility(View.GONE);
                             }
                             mAdapter.setItem(mList1);
+                            mRefreshLayout.setRefreshing(false);
                         }
 
                         @Override

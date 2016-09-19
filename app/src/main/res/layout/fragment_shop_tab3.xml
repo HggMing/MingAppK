@@ -1,24 +1,83 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.study.mingappk.common.views.MyShopItem
-        android:id="@+id/item_1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:itemFunTitle="帖子自审查"
-        app:itemIconName="审" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
-    <com.study.mingappk.common.views.MyShopItem
-        android:id="@+id/item_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:itemFunTitle="违规帖处理"
-        app:itemIconName="违" />
-</LinearLayout>
+        <com.study.mingappk.common.views.MyShopItem
+            android:id="@+id/item_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:itemFunTitle="帖子审查"
+            app:itemIconName="贴" />
+
+        <com.study.mingappk.common.views.MyShopItem
+            android:id="@+id/item_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:itemFunTitle="特产管理"
+            app:itemIconName="特" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <com.study.mingappk.common.views.MyShopItem
+                android:id="@+id/item_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:itemFunTitle="美食"
+                app:itemIconName="食" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <com.study.mingappk.common.views.MyShopItem
+                android:id="@+id/item_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:itemFunTitle="活动"
+                app:itemIconName="活" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="8dp">
+
+            <com.study.mingappk.common.views.MyShopItem
+                android:id="@+id/item_5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:itemFunTitle="荣誉"
+                app:itemIconName="荣" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <com.study.mingappk.common.views.MyShopItem
+                android:id="@+id/item_6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:itemFunTitle="村委"
+                app:itemIconName="委" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

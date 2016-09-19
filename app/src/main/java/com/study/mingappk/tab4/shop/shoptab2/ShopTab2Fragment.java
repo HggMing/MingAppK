@@ -19,7 +19,7 @@ import butterknife.OnClick;
 
 
 /**
- * 村况维护
+ * 本村订单
  */
 public class ShopTab2Fragment extends Fragment {
     AppCompatActivity mActivity;
@@ -48,19 +48,19 @@ public class ShopTab2Fragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.item_1:
-                Toast.makeText(mActivity, "特产", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "特产订单", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_3:
-                Toast.makeText(mActivity, "美食", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "话费流量", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_4:
-                Toast.makeText(mActivity, "活动", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "汽车保险", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_5:
-                Toast.makeText(mActivity, "荣誉", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "村实惠", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_6:
-                Toast.makeText(mActivity, "村委", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "旅游", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
