@@ -75,12 +75,13 @@
 
     <string name="title_activity_apply_shop_owner">申请店长</string>
     <string name="title_activity_show_applying">申请结果</string>
+
     <string name="title_activity_my_shop">我的店</string>
     <string name="title_activity_express_take">快递收件</string>
     <string name="title_activity_edit_express_take">添加收件快递</string>
     <string name="title_activity_express_send">快递寄件</string>
     <string name="title_activity_edit_express_send">编辑寄件快递</string>
-
+    <string name="title_activity_books">图书租借</string>
 
     <string name="title_activity_safe_setting">账号安全</string>
     <string name="title_activity_real_name_binging">实名认证</string>
@@ -99,7 +100,7 @@
     <string name="empty_express_send_1">该店还没有已寄送快递！</string>
     <string name="empty_my_village_user">本村暂无用户，请推荐村民加入！</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_book_tab1">暂无书籍，请点击+按钮进行添加！</string>
+
 
 </resources>

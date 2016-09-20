@@ -37,14 +37,6 @@ public class TabsActivity extends BaseActivity {
     // ViewPager的数据适配器
     public MyViewPagerAdapter mAdapter;
 
-    public void setTabTitles(String[] mTitles) {
-        this.mTitles = mTitles;
-    }
-
-    public List<Fragment> getFragments() {
-        return mFragments;
-    }
-
     public void setToolbarTitle(@StringRes int resid) {
         toolbarTitle.setText(resid);
     }
@@ -86,7 +78,6 @@ public class TabsActivity extends BaseActivity {
         // 将TabLayout和ViewPager进行关联，让两者联动起来
         mTabLayout.setupWithViewPager(mViewpager);
     }
-
 
     public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 

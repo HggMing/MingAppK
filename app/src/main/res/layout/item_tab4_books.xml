@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/m_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_selector"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/img_book"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="12dp"
+        tools:background="@color/theme_color_primary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_toEndOf="@id/img_book"
+        android:layout_toRightOf="@id/img_book"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_normal"
+            tools:text="书号：  123123234" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_normal"
+            tools:text="书名：《成功的哲学》" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_normal"
+            android:visibility="invisible"
+            tools:text="借阅时间：xxxx-xx-xx xx:xx" />
+    </LinearLayout>
+</RelativeLayout>

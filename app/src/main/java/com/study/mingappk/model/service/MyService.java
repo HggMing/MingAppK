@@ -8,6 +8,8 @@ import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.ApplyInfo;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
+import com.study.mingappk.model.bean.Book2List;
+import com.study.mingappk.model.bean.BookList;
 import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.EbankWifiConnect;
@@ -1030,6 +1032,24 @@ public interface MyService {
             @Field("jijianren") String jijianren,
             @Field("jphone") String jphone,
             @Field("addr") String addr);
+
+    /**
+     * 未借图书列表
+     */
+    @GET("book/list")
+    Observable<BookList> get_BookListTab1(
+            @Query("vid") String vid,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 已借图书列表
+     */
+    @GET("book/booklogs")
+    Observable<Book2List> get_BookListTab2(
+            @Query("vid") String vid,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
 
     /**
      * 获取本村用户列表

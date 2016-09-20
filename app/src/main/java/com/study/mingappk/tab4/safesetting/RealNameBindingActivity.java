@@ -143,7 +143,7 @@ public class RealNameBindingActivity extends BackActivity {
         //1)、将除图片外的参数以及机构key组成一个字符串(注意顺序)
         String phone= Hawk.get(APP.LOGIN_NAME);
         int sex=1;
-        String uname=URLEncoder.encode("姓名");
+        String uname=URLEncoder.encode("简爱");
         int brithday=442741129;
         String addr=URLEncoder.encode("地址");
         int group=1;
