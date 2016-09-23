@@ -50,6 +50,13 @@ public class VillageInfoAdapter extends BaseRecyclerViewAdapter<VillageInfo.Data
                     mOnItemClickListener.onItemClick(holder.mItem, position);
                 }
             });
+            holder.mItem.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnItemClickListener.onItemLongClick(holder.mItem, position);
+                    return true;
+                }
+            });
         }
     }
 

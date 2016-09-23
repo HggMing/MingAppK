@@ -24,6 +24,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
+import com.study.mingappk.model.event.UpdataShopOwnerHeadEvent;
 import com.study.mingappk.tab4.shop.shoptab1.ShopTab1Fragment;
 import com.study.mingappk.tab4.shop.shoptab2.ShopTab2Fragment;
 import com.study.mingappk.tab4.shop.shoptab3.ShopTab3Fragment;
@@ -153,6 +154,18 @@ public class MyShopFragment extends Fragment {
                 vTab4.setBackgroundColor(themeColor);
                 break;
         }
+    }
+
+    //更新店长头像
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updataHead(UpdataShopOwnerHeadEvent event) {
+        //如果是店长，更新首页，店长头像。解决无APP.ME_HEAD时，头像显示问题
+        String headUrl =event.getHeadUrl();
+        Glide.with(this)
+                .load(headUrl)
+                .bitmapTransform(new CropCircleTransformation(mActivity))
+                .error(R.mipmap.defalt_user_circle)
+                .into(iconHead);
     }
 
     /**

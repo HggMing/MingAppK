@@ -106,4 +106,8 @@
     <color name="golden">#bbaa15</color>
     <!--滑动返回背景颜色-->
 
+    <color name="itemback">#efefef</color>
+
+
+
 </resources>

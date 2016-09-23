@@ -61,10 +61,10 @@ public class TestPhoneNumberActivity extends BackActivity {
         }
         int type = getIntent().getIntExtra(TYPE, 0);
         switch (type) {
-            case 1:
+            case 1://注册
                 checkPhone(phone);
                 break;
-            case 2:
+            case 2://忘记密码
                 checkPhonePSW(phone);
                 break;
             default:

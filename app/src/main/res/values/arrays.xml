@@ -25,6 +25,14 @@
         <item>博士</item>
     </string-array>
 
+    <string-array name="zzmm">
+        <item>普通居民</item>
+        <item>共青团员</item>
+        <item>中共预备党员</item>
+        <item>中共党员</item>
+        <item>其它</item>
+    </string-array>
+
     <string-array name="money_details">
         <item>其它</item>
         <item>奖励</item>

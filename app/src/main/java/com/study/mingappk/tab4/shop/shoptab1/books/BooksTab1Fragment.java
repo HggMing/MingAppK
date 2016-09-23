@@ -1,8 +1,9 @@
 package com.study.mingappk.tab4.shop.shoptab1.books;
 
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Canvas;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.bumptech.glide.Glide;
@@ -61,6 +61,8 @@ public class BooksTab1Fragment extends Fragment {
 
     final private static int PAGE_SIZE = 10;
     private int page = 1;
+    private final int REQUEST_CODE = 12331;
+
 
 
     @Override
@@ -167,14 +169,28 @@ public class BooksTab1Fragment extends Fragment {
 
     @OnClick(R.id.fab)
     public void onClick() {
-        Toast.makeText(mActivity, "添加图书", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mActivity, "添加图书", Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(mActivity,AddBookActivity.class);
+        startActivityForResult(intent,REQUEST_CODE);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                mAdapter.setItem(null);
+                mList.clear();
+                page = 1;
+                initData(page);
+            }
+        }
     }
 
     static class BooksAdapter extends BaseRecyclerViewAdapter<BookList.DataBean.ListBean, BooksAdapter.ViewHolder> {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tab4_books, parent, false);
+            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_tab1_books, parent, false);
             return new ViewHolder(mView);
         }
 

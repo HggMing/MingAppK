@@ -37,6 +37,7 @@ import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.event.ShopApplyPassEvent;
+import com.study.mingappk.model.event.UpdataShopOwnerHeadEvent;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.mysetting.MySettingActivity;
 import com.study.mingappk.tab4.safesetting.RealNameBindingActivity;
@@ -232,6 +233,12 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                         dataEntity = userInfo.getData();
                         String headUrl = MyServiceClient.getBaseUrl() + dataEntity.getHead();
                         Hawk.put(APP.ME_HEAD, headUrl);
+
+                        //如果是店长，更新首页，店长头像。解决无APP.ME_HEAD时，头像显示问题
+                        if (isShopOwner == 1) {
+                            EventBus.getDefault().post(new UpdataShopOwnerHeadEvent(headUrl));
+                        }
+
                         String uName = dataEntity.getUname();
                         String sexNumber = dataEntity.getSex();
                         String accountNo = dataEntity.getLogname();

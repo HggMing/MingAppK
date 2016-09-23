@@ -37,6 +37,7 @@ public class VillageMasterAdapter extends BaseRecyclerViewAdapter<VillageMaster.
         //图片加载
         String imageUrl = MyServiceClient.getBaseUrl() + data.getHead();
         Glide.with(mContext).load(imageUrl)
+                .centerCrop()
 //                .placeholder(R.mipmap.default_nine_picture)
                 .into(holder.imageView1);
         //内容显示
@@ -53,6 +54,17 @@ public class VillageMasterAdapter extends BaseRecyclerViewAdapter<VillageMaster.
         holder.tvPs.setText(ps);
         String phone="联系方式： "+data.getContact();
         holder.tvPhone.setText(phone);
+
+        //点击事件
+        if (mOnItemClickListener != null) {
+            holder.mItem.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnItemClickListener.onItemLongClick(holder.mItem, position);
+                    return true;
+                }
+            });
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

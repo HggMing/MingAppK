@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.model.bean.NewsList;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -37,11 +39,12 @@ public class NewsListFragment extends Fragment implements NewsListAdapter.OnItem
     XRecyclerView mXRecyclerView;
     @Bind(R.id.content_empty)
     TextView contentEmpty;
+    @Bind(R.id.m_refresh_layout)
+    SwipeRefreshLayout mRefreshLayout;
 
     AppCompatActivity mActivity;
 
     private NewsListAdapter mAdapter = new NewsListAdapter();
-    private XRecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
     List<NewsList.DataBean.ListBean> mList = new ArrayList<>();
 
     final private static int PAGE_SIZE = 20;
@@ -63,18 +66,33 @@ public class NewsListFragment extends Fragment implements NewsListAdapter.OnItem
 
         configXRecyclerView();//XRecyclerView配置
         getDataList(page);//获取followList数据和cnt值
+
+        // 刷新时，指示器旋转后变化的颜色
+        String theme = APP.getInstance().getTheme(mActivity);
+        int themeColorRes = getResources().getIdentifier(theme, "color", mActivity.getPackageName());
+        mRefreshLayout.setColorSchemeResources(themeColorRes);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mAdapter.setItem(null);
+                mList.clear();
+                page = 1;
+                getDataList(page);
+            }
+        });
     }
 
     //配置RecyclerView
     private void configXRecyclerView() {
-        mAdapter.setOnItemClickListener(NewsListFragment.this);
-        mXRecyclerView.setAdapter(mAdapter);//设置adapter
-        mXRecyclerView.setLayoutManager(mLayoutManager);//设置布局管理器
-
+        mXRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));//设置布局管理器
         mXRecyclerView.addItemDecoration(new MyItemDecoration(mActivity));//添加分割线
 //        mXRecyclerView.setHasFixedSize(true);//保持固定的大小,这样会提高RecyclerView的性能
         mXRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置Item增加、移除动画
 
+        mXRecyclerView.setAdapter(mAdapter);//设置adapter
+        mAdapter.setOnItemClickListener(NewsListFragment.this);
+
+        mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
 
@@ -106,7 +124,7 @@ public class NewsListFragment extends Fragment implements NewsListAdapter.OnItem
                 .subscribe(new Subscriber<NewsList>() {
                     @Override
                     public void onCompleted() {
-
+                        mRefreshLayout.setRefreshing(false);
                     }
 
                     @Override

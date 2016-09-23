@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -221,7 +220,7 @@ public class ExpressSendFragment extends Fragment implements BaseRecyclerViewAda
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shoptab1_express_send, parent, false);
+            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_tab1_express_send, parent, false);
             return new ViewHolder(mView);
         }
 

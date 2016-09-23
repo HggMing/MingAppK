@@ -1,4 +1,4 @@
-package com.study.mingappk.tab4.mysetting.mypurse;
+package com.study.mingappk.tab4.safesetting;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab4.mysetting.mypurse.TakeMoneyActivity;
 import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
@@ -27,6 +28,8 @@ public class SetPursePwdActivity extends BackActivity {
     TintEditText etNewpwd1;
     @Bind(R.id.et_newpwd2)
     TintEditText etNewpwd2;
+    public static String TYPE = "set_pruse_type";
+    private int type = 0;//type=1为点击提现时进入此页面
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,8 @@ public class SetPursePwdActivity extends BackActivity {
         setContentView(R.layout.activity_set_purse_pwd);
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_set_purse_pwd);
+
+        type = getIntent().getIntExtra(TYPE, 0);
     }
 
     @Override
@@ -70,7 +75,7 @@ public class SetPursePwdActivity extends BackActivity {
             }
             String auth = Hawk.get(APP.USER_AUTH);
             MyServiceClient.getService()
-            .post_SetPursePWD(auth,pwd1)
+                    .post_SetPursePWD(auth, pwd1)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<Result>() {
@@ -86,12 +91,16 @@ public class SetPursePwdActivity extends BackActivity {
 
                         @Override
                         public void onNext(Result result) {
-                            if(result.getErr()==0){
+                            if (result.getErr() == 0) {
                                 Toast.makeText(SetPursePwdActivity.this, "钱包密码设置成功！", Toast.LENGTH_SHORT).show();
-                                //进入提现页面
-                                Intent intent=new Intent(SetPursePwdActivity.this,TakeMoneyActivity.class);
-                                startActivity(intent);
-                                finish();
+                                //点击提现后，设置完密码，直接进入提现页面
+                                if (type == 1) {
+                                    Intent intent = new Intent(SetPursePwdActivity.this, TakeMoneyActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }else{
+                                    finish();
+                                }
                             }
                         }
                     });

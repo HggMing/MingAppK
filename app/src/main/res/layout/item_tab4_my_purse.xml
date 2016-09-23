@@ -57,6 +57,13 @@
             android:textColor="@color/font_green"
             android:textSize="16sp"
             tools:text="+0.06" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="元"
+            android:textColor="@color/font_black_9"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <include layout="@layout/divide_1" />

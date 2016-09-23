@@ -15,8 +15,6 @@ import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.ResultOther;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tab4.mysetting.mypurse.SetPursePwdActivity;
-import com.study.mingappk.tab4.mysetting.mypurse.TakeMoneyActivity;
 import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import java.io.IOException;

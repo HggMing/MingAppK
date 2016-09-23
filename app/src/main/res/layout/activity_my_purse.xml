@@ -59,7 +59,7 @@
         android:paddingRight="10dp"
         android:paddingTop="3dp"
         android:text="收支明细"
-        android:textSize="16sp" />
+        android:textSize="@dimen/textsize_small" />
 
     <FrameLayout
         android:layout_width="match_parent"

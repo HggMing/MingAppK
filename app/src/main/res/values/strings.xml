@@ -68,6 +68,7 @@
     <string name="title_activity_mysetting">我的</string>
     <string name="title_activity_my_purse">我的钱包</string>
     <string name="title_activity_set_purse_pwd">设置钱包密码</string>
+    <string name="title_activity_reset_purse_pwd">找回钱包密码</string>
     <string name="title_activity_take_money">余额提现</string>
     <string name="title_activity_bind_card">我的银行卡</string>
     <string name="title_activity_add_cards">添加银行卡</string>
@@ -82,6 +83,11 @@
     <string name="title_activity_express_send">快递寄件</string>
     <string name="title_activity_edit_express_send">编辑寄件快递</string>
     <string name="title_activity_books">图书租借</string>
+    <string name="title_activity_add_book">添加图书</string>
+    <string name="title_activity_phone_recharge_order">话费流量订单</string>
+    <string name="title_activity_sales_order">村实惠订单</string>
+    <string name="title_activity_insurance_order">汽车保险订单</string>
+    <string name="title_activity_travel_order">旅游业务订单</string>
 
     <string name="title_activity_safe_setting">账号安全</string>
     <string name="title_activity_real_name_binging">实名认证</string>
@@ -99,8 +105,9 @@
     <string name="empty_express_send_0">该店暂没有待寄送快递。</string>
     <string name="empty_express_send_1">该店还没有已寄送快递！</string>
     <string name="empty_my_village_user">本村暂无用户，请推荐村民加入！</string>
-
     <string name="empty_book_tab1">暂无书籍，请点击+按钮进行添加！</string>
+    <string name="empty_orders">订单列表为空</string>
+    <string name="empty_village_info">暂无相关信息！</string>
 
 
 </resources>

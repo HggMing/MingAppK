@@ -13,7 +13,6 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.model.bean.ExpressList;
 import com.study.mingappk.model.service.MyServiceClient;
@@ -104,7 +103,7 @@ public class ExpressTakeActivity extends AddListActivity {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shoptab1_express_take, parent, false);
+            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_tab1_express_take, parent, false);
             return new ViewHolder(mView);
         }
 

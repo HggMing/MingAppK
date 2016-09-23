@@ -5,10 +5,16 @@
     android:background="@color/white"
     tools:context=".tab3.affairs.GovernmentAffairsActivity">
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/g_affairs_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/m_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/g_affairs_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/content_empty"

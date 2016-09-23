@@ -1,12 +1,14 @@
 package com.study.mingappk.tab4.safesetting;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bilibili.magicasakura.widgets.TintButton;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -18,6 +20,7 @@ import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -30,6 +33,10 @@ public class ChangePursePwdActivity extends BackActivity {
     EditText etNewpwd1;
     @Bind(R.id.et_newpwd2)
     EditText etNewpwd2;
+    @Bind(R.id.btn_get_rcode)
+    TintButton btnGetRcode;
+
+    private String auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,8 @@ public class ChangePursePwdActivity extends BackActivity {
         setContentView(R.layout.activity_change_purse_pwd);
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_change_purse_pwd);
+
+        auth = Hawk.get(APP.USER_AUTH);
     }
 
     @Override
@@ -72,13 +81,12 @@ public class ChangePursePwdActivity extends BackActivity {
                 Toast.makeText(this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            if (newpwd1.length() < 6 ) {
+            if (newpwd1.length() < 6) {
                 Toast.makeText(this, "密码必须在6位", Toast.LENGTH_SHORT).show();
                 return true;
             }
-            String auth = Hawk.get(APP.USER_AUTH);
             MyServiceClient.getService()
-                    .post_ResetPursePWD(auth, oldpwd, newpwd1)
+                    .post_EditPursePWD(auth, oldpwd, newpwd1)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Result>() {
@@ -94,8 +102,8 @@ public class ChangePursePwdActivity extends BackActivity {
 
                         @Override
                         public void onNext(final Result result) {
-                            if(result.getErr()==90003){
-                                result.setMsg("原始交易密码错误，请重新输入");
+                            if (result.getErr() == 90003) {
+                                result.setMsg("原始钱包密码错误，请重新输入");
                             }
                             MyDialog.Builder builder = new MyDialog.Builder(ChangePursePwdActivity.this);
                             builder.setTitle("提示")
@@ -121,5 +129,13 @@ public class ChangePursePwdActivity extends BackActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //点击忘记钱包密码，进入重置钱包密码页面
+    @OnClick(R.id.btn_get_rcode)
+    public void onClick() {
+        Intent intent = new Intent(this, ResetPursePwdActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

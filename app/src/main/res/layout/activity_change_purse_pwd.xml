@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".tab4.safesetting.ChangePwdActivity">
+    android:background="@color/white">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -23,12 +22,32 @@
                 android:layout_marginTop="25dp"
                 android:text="旧密码" />
 
-            <com.bilibili.magicasakura.widgets.TintEditText
-                android:id="@+id/et_oldpwd"
-                style="@style/EditTextStyle_psw"
-                android:hint="请输入旧密码"
-                android:inputType="numberPassword"
-                android:maxLength="6" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.bilibili.magicasakura.widgets.TintEditText
+                    android:id="@+id/et_oldpwd"
+                    style="@style/EditTextStyle_psw"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="请输入旧密码"
+                    android:inputType="numberPassword"
+                    android:maxLength="6" />
+
+                <com.bilibili.magicasakura.widgets.TintButton
+                    android:id="@+id/btn_get_rcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/button_theme"
+                    android:text="忘记密码"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_normal" />
+            </LinearLayout>
 
             <com.bilibili.magicasakura.widgets.TintTextView
                 style="@style/TextViewStyle_hint"
@@ -48,8 +67,8 @@
             <com.bilibili.magicasakura.widgets.TintEditText
                 android:id="@+id/et_newpwd2"
                 style="@style/EditTextStyle_psw"
-                android:hint="请再次输入以上密码"
                 android:layout_marginBottom="20dp"
+                android:hint="请再次输入以上密码"
                 android:inputType="numberPassword"
                 android:maxLength="6" />
         </LinearLayout>

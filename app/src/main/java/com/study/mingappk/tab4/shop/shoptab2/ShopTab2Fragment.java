@@ -51,16 +51,24 @@ public class ShopTab2Fragment extends Fragment {
                 Toast.makeText(mActivity, "特产订单", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_3:
-                Toast.makeText(mActivity, "话费流量", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, "话费流量", Toast.LENGTH_SHORT).show();
+                Intent intent3=new Intent(mActivity,PhoneRechargeOrderActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.item_4:
-                Toast.makeText(mActivity, "汽车保险", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, "汽车保险", Toast.LENGTH_SHORT).show();
+                Intent intent4=new Intent(mActivity,InsuranceOrderActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.item_5:
-                Toast.makeText(mActivity, "村实惠", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, "村实惠", Toast.LENGTH_SHORT).show();
+                Intent intent5=new Intent(mActivity,SalesOrderActivity.class);
+                startActivity(intent5);
                 break;
             case R.id.item_6:
-                Toast.makeText(mActivity, "旅游", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, "旅游", Toast.LENGTH_SHORT).show();
+                Intent intent6=new Intent(mActivity,TravelOrderActivity.class);
+                startActivity(intent6);
                 break;
         }
     }

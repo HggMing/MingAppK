@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
+            android:orientation="vertical">
+
+            <com.bilibili.magicasakura.widgets.TintTextView
+                style="@style/TextViewStyle_hint"
+                android:layout_marginTop="25dp"
+                android:text="书号" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <com.bilibili.magicasakura.widgets.TintEditText
+                    android:id="@+id/et_num"
+                    style="@style/EditTextStyle_common"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="1"
+                    android:hint="请输入图书书号"
+                    android:inputType="number" />
+
+                <com.bilibili.magicasakura.widgets.TintImageView
+                    android:id="@+id/scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:src="@mipmap/scan"
+                    app:imageTint="@color/theme_color_primary" />
+            </LinearLayout>
+
+            <com.bilibili.magicasakura.widgets.TintTextView
+                style="@style/TextViewStyle_hint"
+                android:text="书名" />
+
+            <com.bilibili.magicasakura.widgets.TintEditText
+                android:id="@+id/et_name"
+                style="@style/EditTextStyle_common"
+                android:hint=" 请输入图书书名" />
+
+            <com.bilibili.magicasakura.widgets.TintTextView
+                style="@style/TextViewStyle_hint"
+                android:text="封面图片" />
+
+            <FrameLayout
+                android:id="@+id/add_book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_book"
+                    android:layout_width="120dp"
+                    android:layout_height="160dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/white_pressed1"
+                    android:scaleType="centerCrop" />
+                <ImageView
+                    android:id="@+id/img_add"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/fab_add" />
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

@@ -73,7 +73,7 @@ public class MyScannerActivity extends BackActivity implements ZXingScannerView.
 
     //自定义外观
     private static class CustomViewFinderView extends ViewFinderView {
-        public static final String TRADE_MARK_TEXT = "将快递条形码放置框内，即开始扫描";
+        public static final String TRADE_MARK_TEXT = "将条形码/二维码放置框内，即开始扫描";
         public static final int TRADE_MARK_TEXT_SIZE_SP = 14;
         public final Paint PAINT = new Paint();
 

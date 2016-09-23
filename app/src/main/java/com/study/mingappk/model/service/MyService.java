@@ -18,6 +18,7 @@ import com.study.mingappk.model.bean.ExpressList;
 import com.study.mingappk.model.bean.FollowVillageList;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.FriendList;
+import com.study.mingappk.model.bean.InsuranceOrderList;
 import com.study.mingappk.model.bean.IpPort;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.MessageList;
@@ -25,10 +26,14 @@ import com.study.mingappk.model.bean.MoneyDetail;
 import com.study.mingappk.model.bean.MyVillUsers;
 import com.study.mingappk.model.bean.NewsList;
 import com.study.mingappk.model.bean.QueryVillageList;
+import com.study.mingappk.model.bean.RechargeOrderList;
+import com.study.mingappk.model.bean.RecommendList;
 import com.study.mingappk.model.bean.RecommendVillage;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ResultOther;
+import com.study.mingappk.model.bean.SalesOrderList;
 import com.study.mingappk.model.bean.ShoppingAddress;
+import com.study.mingappk.model.bean.TravelOrderList;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.bean.UserInfoByPhone;
@@ -403,16 +408,72 @@ public interface MyService {
             @Query("pagesize") int pagesize);
 
     /**
-     * 村况里，村官列表
+     * 村况里，荣誉室，活动，美食的添加
+     * @param type 1、荣誉室2、活动3、村委（Item不同，单独写）4、美食
+     */
+    @Multipart
+    @POST("tool/add")
+    Observable<Result> post_AddVillageInfo(
+            @Part("auth") RequestBody auth,
+            @Part("title") RequestBody title,
+            @Part("content") RequestBody content,
+            @Part("type") RequestBody type,
+            @Part("files\"; filename=\"jpg") RequestBody file);
+
+    /**
+     * 村况里，荣誉室，活动，美食的删除
+     * @param id  item id
+     */
+    @FormUrlEncoded
+    @POST("tool/del")
+    Observable<Result> post_DelVillageInfo(
+            @Field("auth") String auth,
+            @Field("id") String id);
+
+    /**
+     * 村况里，村委列表
      *
      * @param auth 验证参数
      * @param vid  村id
-     * @return 村官列表
+     * @return 村委列表
      */
     @GET("cg/list")
     Observable<VillageMaster> get_VillageMasterList(
             @Query("auth") String auth,
             @Query("vid") String vid);
+
+    /**
+     * 新增村委信息
+     * @param contact 电话
+     * @param job 职务
+     * @param sex 0男1女
+     * @param uname 姓名
+     * @param vid 村id
+     * @param zzmm 政治面貌
+     * @param file 头像
+     * @return data-id
+     */
+    @Multipart
+    @POST("cg/add")
+    Observable<Result> post_AddVillageMaster(
+            @Part("auth") RequestBody auth,
+            @Part("contact") RequestBody contact,
+            @Part("job") RequestBody job,
+            @Part("sex") RequestBody sex,
+            @Part("uname") RequestBody uname,
+            @Part("vid") RequestBody vid,
+            @Part("zzmm") RequestBody zzmm,
+            @Part("head\"; filename=\"jpg") RequestBody file);
+
+    /**
+     * 删除村委信息
+     * @param id item id
+     */
+    @FormUrlEncoded
+    @POST("cg/del")
+    Observable<Result> post_DelVillageMaster(
+            @Field("auth") String auth,
+            @Field("id") String id);
 
     /**
      * 该接口用户帖子的附件上传，包括图片其他压缩包等
@@ -802,7 +863,7 @@ public interface MyService {
             @Query("vid") String vid);
 
     /**
-     * 是否设置了交易密码
+     * 是否设置了钱包密码
      *
      * @param auth 认证信息
      * @return is_pwd
@@ -812,10 +873,10 @@ public interface MyService {
             @Query("auth") String auth);
 
     /**
-     * 设置交易密码
+     * 设置钱包密码
      *
      * @param auth 认证信息
-     * @param pwd  交易密码
+     * @param pwd  钱包密码
      * @return 结果msg
      */
     @FormUrlEncoded
@@ -825,19 +886,44 @@ public interface MyService {
             @Field("pwd") String pwd);
 
     /**
-     * 重置交易密码
+     * 修改钱包密码
      *
      * @param auth    认证信息
-     * @param old_pwd 原始交易密码
-     * @param new_pwd 新交易密码
+     * @param old_pwd 原始钱包密码
+     * @param new_pwd 新钱包密码
      * @return 结果msg
      */
     @FormUrlEncoded
     @POST("amount/reset_pwd")
-    Observable<Result> post_ResetPursePWD(
+    Observable<Result> post_EditPursePWD(
             @Field("auth") String auth,
             @Field("old_pwd") String old_pwd,
             @Field("new_pwd") String new_pwd);
+
+    /**
+     * 获取重置钱包密码的验证码
+     *
+     * @param auth 认证信息
+     * @return 结果msg
+     */
+    @GET("user/get_trade_code")
+    Observable<Result> get_TradeCode(
+            @Query("auth") String auth);
+
+    /**
+     * 重置钱包密码接口
+     *
+     * @param auth 认证信息
+     * @param code 验证码
+     * @param pwd  密码
+     * @return 结果msg
+     */
+    @FormUrlEncoded
+    @POST("user/edit_trade_pwd")
+    Observable<Result> post_ResetPursePwd(
+            @Field("auth") String auth,
+            @Field("code") String code,
+            @Field("pwd") String pwd);
 
     /**
      * 查询余额，及是否绑定银行卡
@@ -1052,6 +1138,20 @@ public interface MyService {
             @Query("pagesize") int pagesize);
 
     /**
+     * 添加图书
+     *
+     * @return data-id
+     */
+    @Multipart
+    @POST("book/addbook")
+    Observable<Result> post_AddBook(
+            @Part("auth") RequestBody auth,
+            @Part("vid") RequestBody vid,
+            @Part("bname") RequestBody bname,
+            @Part("bnum") RequestBody bnum,
+            @Part("files\"; filename=\"jpg") RequestBody file);
+
+    /**
      * 获取本村用户列表
      *
      * @param auth     认证信息
@@ -1065,5 +1165,60 @@ public interface MyService {
             @Query("page") int page,
             @Query("pagesize") int pagesize);
 
+    /**
+     * 动态页面，获取推荐村特产
+     *
+     * @return RecommendList
+     */
+    @GET("product/tlist")
+    Observable<RecommendList> get_RecommendList(
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
 
+    /**
+     * 获取话费充值订单列表
+     *
+     * @param vid    村id
+     * @param status 状态 0：未付款 1：已付款 2：充值成功 3：充值失败 7:删除 9:全部(不含删除)
+     * @param page   页数
+     * @return RechargeOrderList
+     */
+    @GET("recharge/list")
+    Observable<RechargeOrderList> get_RechargeList(
+            @Query("vid") String vid,
+            @Query("status") int status,
+            @Query("page") int page);
+
+    /**
+     * 获取村实惠订单列表
+     *
+     * @return SalesOrderList
+     */
+    @GET("sale/list")
+    Observable<SalesOrderList> get_SalesOrderList(
+            @Query("auth") String auth,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 获取汽车保险订单列表
+     *
+     * @return InsuranceOrderList
+     */
+    @GET("baoxian/list")
+    Observable<InsuranceOrderList> get_InsuranceOrderList(
+            @Query("auth") String auth,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 获取旅游业务订单列表
+     *
+     * @return TravelOrderList
+     */
+    @GET("travel/list")
+    Observable<TravelOrderList> get_TravelOrderList(
+            @Query("auth") String auth,
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
 }

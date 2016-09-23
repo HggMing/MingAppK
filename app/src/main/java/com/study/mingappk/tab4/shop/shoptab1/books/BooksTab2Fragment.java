@@ -170,7 +170,7 @@ public class BooksTab2Fragment extends Fragment {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tab4_books2, parent, false);
+            View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_tab1_books2, parent, false);
             return new ViewHolder(mView);
         }
 

@@ -19,6 +19,7 @@ import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.model.bean.MoneyDetail;
 import com.study.mingappk.model.bean.ResultOther;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab4.safesetting.SetPursePwdActivity;
 import com.study.mingappk.tmain.baseactivity.BackActivity;
 import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
@@ -149,6 +150,7 @@ public class MyPurseActivity extends BackActivity {
                         } else {
                             //设置钱包密码
                             Intent intent = new Intent(MyPurseActivity.this, SetPursePwdActivity.class);
+                            intent.putExtra(SetPursePwdActivity.TYPE,1);
                             startActivity(intent);
                         }
                     }

@@ -244,7 +244,7 @@
             android:name=".tab4.mysetting.mypurse.MyPurseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.mysetting.mypurse.SetPursePwdActivity"
+            android:name=".tab4.safesetting.SetPursePwdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -287,8 +287,40 @@
         <activity
             android:name=".tab4.shop.MyShopActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".tab4.shop.shoptab1.books.BooksActivity" />
-        <activity android:name=".tmain.baseactivity.TabsActivity"></activity>
+        <activity
+            android:name=".tab4.shop.shoptab1.books.BooksActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tmain.baseactivity.TabsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.shoptab1.books.AddBookActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".tab4.safesetting.ResetPursePwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".tab4.shop.shoptab2.PhoneRechargeOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.shoptab2.SalesOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.shoptab2.InsuranceOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.shoptab2.TravelOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.shop.shoptab3.AddVillageInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".tab4.shop.shoptab3.AddVillageMasterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

@@ -1,58 +1,54 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".tab1.Tab1Fragment">
+    android:background="@color/white">
 
-    <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/systemLayout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/white"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/system"
-                android:layout_width="47dp"
-                android:layout_height="47dp"
-                android:layout_margin="10dp"
-                android:src="@mipmap/ic_message_notification"
-                tools:ignore="ContentDescription" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/m_x_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/tv_recommend"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="系统通知"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/font_black" />
+                android:layout_gravity="center"
+                android:background="@color/divide"
+                android:gravity="center"
+                android:paddingBottom="6dp"
+                android:paddingTop="20dp"
+                android:text="推荐产品"
+                android:textSize="@dimen/textsize_normal"
+                android:visibility="gone" />
+
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                android:id="@+id/m_x_recyclerview2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/divide"
+                android:visibility="gone" />
         </LinearLayout>
 
-        <include layout="@layout/divide_1" />
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/m_x_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <TextView
-        android:id="@+id/content_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:paddingTop="140dp"
-        android:text="暂无聊天信息"
-        android:textSize="16sp"
-        android:textColor="@color/font_black_9"
-        android:visibility="gone" />
-
-</android.support.design.widget.CoordinatorLayout>
+        <TextView
+            android:id="@+id/content_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:paddingTop="140dp"
+            android:text="暂无动态信息"
+            android:textColor="@color/font_black_9"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.NestedScrollView>
