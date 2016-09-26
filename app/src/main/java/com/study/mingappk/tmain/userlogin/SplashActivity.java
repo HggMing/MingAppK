@@ -20,12 +20,6 @@ import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.tmain.MainActivity;
 
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.Observer;
-import rx.functions.Action1;
-
 public class SplashActivity extends AppCompatActivity {
 
     public static final int MAX_WAITING_TIME = 200;
@@ -48,7 +42,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation arg0) {
                 //android6.0 获取运行时权限
-                RequestPermission();
+                requestPermission();
             }
 
             @Override
@@ -62,7 +56,7 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    private void RequestPermission() {
+    private void requestPermission() {
         performCodeWithPermission("为了你能正常体验软件，请进行必要的授权！", new PermissionCallback() {
             @Override
             public void hasPermission() {
@@ -78,7 +72,7 @@ public class SplashActivity extends AppCompatActivity {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                RequestPermission();
+                                requestPermission();
                                 dialog.dismiss();
                             }
                         })
@@ -98,11 +92,11 @@ public class SplashActivity extends AppCompatActivity {
 
     private void init() {
 
-        final String loginname = Hawk.get(APP.LOGIN_NAME, "");
-        final String loginpwd = Hawk.get(APP.LOGIN_PASSWORD, "");
+        final String loginName = Hawk.get(APP.LOGIN_NAME, "");
+        final String loginPwd = Hawk.get(APP.LOGIN_PASSWORD, "");
 
-        if (!loginname.equals("") && !loginpwd.equals("")) {
-            goLoginAuto();
+        if (!loginName.equals("") && !loginPwd.equals("")) {
+            goHome();
         } else {
             goLogin();
         }
@@ -121,7 +115,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Long aLong) {
-                        if (!loginname.equals("") && !loginpwd.equals("")) {
+                        if (!loginName.equals("") && !loginPwd.equals("")) {
                             goLoginAuto();
                         } else {
                             goLogin();
@@ -132,7 +126,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void goHome() {
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);

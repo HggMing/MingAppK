@@ -26,7 +26,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -612,7 +611,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                     @Override
                     public void onCompleted() {
                         //关闭输入法
-                        JUtils.closeInputMethod(BbsDetailActivity.this);
+                        BaseTools.closeInputMethod(BbsDetailActivity.this);
                         //添加评论并刷新
                         MyServiceClient.getService().get_BbsCommentList(auth, pid, 1, 3)
                                 .subscribeOn(Schedulers.newThread())

@@ -6,6 +6,7 @@ import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.ApplyInfo;
+import com.study.mingappk.model.bean.BBSDetail;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.Book2List;
@@ -567,6 +568,14 @@ public interface MyService {
             @Query("vid") String vid,
             @Query("page") int page,
             @Query("pagesize") int pagesize);
+
+    /**
+     * 获取帖子详细内容
+     */
+    @GET("bbs/getinfo")
+    Observable<BBSDetail> get_BBSDetail(
+            @Query("auth") String auth,
+            @Query("id") String id);
 
     /**
      * 获取评论列表接口

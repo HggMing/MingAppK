@@ -88,6 +88,7 @@
     <string name="title_activity_sales_order">村实惠订单</string>
     <string name="title_activity_insurance_order">汽车保险订单</string>
     <string name="title_activity_travel_order">旅游业务订单</string>
+    <string name="title_activity_villager_info">用户档案管理</string>
 
     <string name="title_activity_safe_setting">账号安全</string>
     <string name="title_activity_real_name_binging">实名认证</string>

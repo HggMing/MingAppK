@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/shop_tab3" />
+                    android:src="@mipmap/shop_tab2" />
 
                 <com.bilibili.magicasakura.widgets.TintTextView
                     android:id="@+id/text_tab2"
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/shop_tab2" />
+                    android:src="@mipmap/shop_tab3" />
 
                 <com.bilibili.magicasakura.widgets.TintTextView
                     android:id="@+id/text_tab3"

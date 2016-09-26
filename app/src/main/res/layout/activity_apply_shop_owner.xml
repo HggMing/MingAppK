@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.study.mingappk.tab4.shop.ApplyShopOwnerActivity">
+    tools:context=".tab4.applyshoper.ApplyShopOwnerActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

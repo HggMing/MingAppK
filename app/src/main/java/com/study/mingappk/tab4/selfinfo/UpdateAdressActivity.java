@@ -26,7 +26,7 @@ import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
+import com.study.mingappk.tab4.applyshoper.ApplyShopOwnerActivity;
 import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import java.util.ArrayList;

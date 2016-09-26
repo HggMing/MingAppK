@@ -1,5 +1,8 @@
 package com.study.mingappk.model.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -76,7 +79,7 @@ public class MyVillUsers {
             this.list = list;
         }
 
-        public static class ListBean {
+        public static class ListBean implements Parcelable {
             private String uid;
             private String phone;
             private String sex;
@@ -149,6 +152,49 @@ public class MyVillUsers {
             public void setCid(String cid) {
                 this.cid = cid;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.uid);
+                dest.writeString(this.phone);
+                dest.writeString(this.sex);
+                dest.writeString(this.uname);
+                dest.writeString(this.head);
+                dest.writeString(this.rank);
+                dest.writeString(this.loc);
+                dest.writeString(this.cid);
+            }
+
+            public ListBean() {
+            }
+
+            protected ListBean(Parcel in) {
+                this.uid = in.readString();
+                this.phone = in.readString();
+                this.sex = in.readString();
+                this.uname = in.readString();
+                this.head = in.readString();
+                this.rank = in.readString();
+                this.loc = in.readString();
+                this.cid = in.readString();
+            }
+
+            public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+                @Override
+                public ListBean createFromParcel(Parcel source) {
+                    return new ListBean(source);
+                }
+
+                @Override
+                public ListBean[] newArray(int size) {
+                    return new ListBean[size];
+                }
+            };
         }
     }
 }

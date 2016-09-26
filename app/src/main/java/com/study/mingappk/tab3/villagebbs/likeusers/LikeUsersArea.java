@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jude.utils.JUtils;
 import com.study.mingappk.R;
+import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.ZanList;
 import com.study.mingappk.model.service.MyServiceClient;
 
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class LikeUsersArea {
     private Context mContext;
@@ -62,8 +61,8 @@ public class LikeUsersArea {
 
             width -= (layout.getPaddingLeft() + layout.getPaddingRight());
 
-            int imageWidth = JUtils.dip2px(30);
-            int imageMargin = JUtils.dip2px(12);
+            int imageWidth = BaseTools.dip2px(mContext,30);
+            int imageMargin = BaseTools.dip2px(mContext,12);
 
             int shenxia = width % (imageWidth + imageMargin);
             int count = width / (imageWidth + imageMargin);

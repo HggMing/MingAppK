@@ -16,6 +16,7 @@ import com.study.mingappk.common.utils.NotifyUtil;
 import com.study.mingappk.model.bean.AddFriendRequest;
 import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.bean.Result;
+import com.study.mingappk.model.bean.ShareMsg;
 import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.model.database.FriendsModel;
 import com.study.mingappk.model.database.InstantMsgModel;
@@ -171,6 +172,15 @@ public class PushReceiver extends BroadcastReceiver {
                         break;
                     case "2":
                         chatMsg.setTxt("[语音]");
+                        break;
+                    case "100":
+                        String jsonString = lBean.getTxt();
+                        Gson gson = new Gson();
+                        ShareMsg shareMsg = gson.fromJson(jsonString, ShareMsg.class);
+
+                        chatMsg.setTxt("[分享]:\""+shareMsg.getTitle()+"\"的帖子");
+
+                        chatMsg.setShareMsg(shareMsg.getTitle(),shareMsg.getDetail(),shareMsg.getImage(),shareMsg.getLink());
                         break;
                     default:
                         chatMsg.setTxt(lBean.getTxt());//类型：文字

@@ -1,0 +1,99 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tab4.SettingFragment">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divide">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include layout="@layout/divide_15_top_bottom" />
+
+            <RelativeLayout
+                android:id="@+id/click_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/list_item_selector"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/icon_head"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@mipmap/user_detail_sharow"
+                    tools:src="@mipmap/icon" />
+
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/icon_head"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/font_black_content"
+                    android:textSize="18sp"
+                    tools:drawableRight="@mipmap/ic_sex_boy"
+                    tools:text="备注名" />
+            </RelativeLayout>
+
+            <include layout="@layout/divide_15_top_bottom" />
+
+            <LinearLayout xmlns:listItem1="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/stand_bg"
+                android:orientation="vertical">
+
+                <com.study.mingappk.common.views.CustomItem
+                    android:id="@+id/click_cj"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/ic_villager_cj"
+                    listItem1:itemTitle="成绩" />
+
+                <include layout="@layout/divide_1_12" />
+
+                <com.study.mingappk.common.views.CustomItem
+                    android:id="@+id/click_jk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/ic_villager_jk"
+                    listItem1:itemTitle="健康" />
+
+                <include layout="@layout/divide_1_12" />
+
+                <com.study.mingappk.common.views.CustomItem
+                    android:id="@+id/click_xy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/ic_villager_xy"
+                    listItem1:itemTitle="血压" />
+
+                <include layout="@layout/divide_1_12" />
+
+                <com.study.mingappk.common.views.CustomItem
+                    android:id="@+id/click_xt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    listItem1:itemIcon="@mipmap/ic_villager_xt"
+                    listItem1:itemTitle="学糖" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

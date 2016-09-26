@@ -9,17 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -164,7 +160,6 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
 
                     @Override
                     public void onFailure(Call<FollowVillageList> call, Throwable t) {
-                        JUtils.Log("初始化村圈数据出错：" + t.getMessage());
                     }
                 });
     }
@@ -235,7 +230,6 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
 
                              @Override
                              public void onFailure(Call<Result> call, Throwable t) {
-                                 JUtils.Log("取消关注村圈出错：" + t.getMessage());
                              }
                          }
 

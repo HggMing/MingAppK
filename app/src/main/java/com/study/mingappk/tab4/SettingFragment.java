@@ -21,7 +21,6 @@ import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.igexin.sdk.PushManager;
-import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -39,14 +38,14 @@ import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.event.ShopApplyPassEvent;
 import com.study.mingappk.model.event.UpdataShopOwnerHeadEvent;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab4.applyshoper.ApplyShopOwnerActivity;
+import com.study.mingappk.tab4.applyshoper.MyShopActivity;
+import com.study.mingappk.tab4.applyshoper.ShowApplyingActivity;
 import com.study.mingappk.tab4.mysetting.MySettingActivity;
 import com.study.mingappk.tab4.safesetting.RealNameBindingActivity;
 import com.study.mingappk.tab4.safesetting.SafeSettingActivity;
 import com.study.mingappk.tab4.scommon.SettingCommonActivity;
 import com.study.mingappk.tab4.selfinfo.UserDetailActivity;
-import com.study.mingappk.tab4.shop.ApplyShopOwnerActivity;
-import com.study.mingappk.tab4.shop.MyShopActivity;
-import com.study.mingappk.tab4.shop.ShowApplyingActivity;
 import com.study.mingappk.tmain.userlogin.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -272,7 +271,6 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
 
             @Override
             public void onFailure(Call<UserInfo> call, Throwable t) {
-                JUtils.Log("获取用户信息失败：" + t.getMessage());
             }
         });
 

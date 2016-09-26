@@ -19,11 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bilibili.magicasakura.widgets.TintTextView;
-import com.jude.utils.JUtils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.QueryVillageList;
@@ -150,7 +150,7 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
         if (!StringTools.isEmpty(searchText)) {
             searchVillage(searchText);
             //关闭输入法
-            JUtils.closeInputMethod(this);
+            BaseTools.closeInputMethod(this);
         }
     }
 

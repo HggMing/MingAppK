@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.study.mingappk.R;
@@ -149,6 +150,18 @@ public class BaseTools {
     }
 
     /**
+     * 关闭输入法
+     * @param act
+     */
+    public static void closeInputMethod(Activity act){
+        View view = act.getCurrentFocus();
+        if(view!=null){
+            ((InputMethodManager)act.getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    /**
      * 使用MD5算法加密字符串
      *
      * @param string 字符串
@@ -251,6 +264,23 @@ public class BaseTools {
         return result;
     }
 
+    /**
+     * dp转px
+     *
+     */
+    public static int dip2px(Context context,float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+
+    /**
+     *	px转dp
+     */
+    public static int px2dip(Context context,float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
 
     /**
      * 功能描述：以指定的格式来格式化日期

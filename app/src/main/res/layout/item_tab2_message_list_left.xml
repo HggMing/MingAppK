@@ -38,59 +38,111 @@
         android:layout_marginRight="57dp"
         android:layout_toRightOf="@+id/icon"
         android:background="@drawable/message_left"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:visibility="visible">
 
-        <LinearLayout
-            android:id="@+id/voiceLayout"
+        <TextView
+            android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
-            android:orientation="horizontal">
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/content_pressed_selector"
+            android:textColor="@color/font_black_content"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:text="内容显示在这里。" />
+
+        <ImageView
+            android:id="@+id/voice_play"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/msg_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            tools:ignore="ContentDescription"
+            tools:src="@mipmap/default_village" />
+
+        <RelativeLayout
+            android:id="@+id/layout_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/share_img"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:scaleType="centerCrop"
+                tools:src="@color/theme_color_primary" />
 
             <TextView
-                android:id="@+id/content"
+                android:id="@+id/share_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="9dp"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:layout_marginTop="9dp"
-                android:background="@drawable/content_pressed_selector"
+                android:layout_toRightOf="@id/share_img"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/font_black_content"
-                android:textSize="16sp"
-                android:visibility="gone"
-                tools:text="内容显示在这里。" />
+                android:textSize="@dimen/textsize_normal"
+                tools:text="分享内容的标题，分享内容的标题，分享内容的标题" />
 
-            <ImageView
-                android:id="@+id/voice_play"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="80dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/msg_image"
+            <TextView
+                android:id="@+id/share_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                tools:ignore="ContentDescription"
-                android:scaleType="centerCrop"
-                tools:src="@mipmap/default_village" />
-        </LinearLayout>
+                android:layout_below="@id/share_title"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="2dp"
+                android:layout_toRightOf="@id/share_img"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/font_black_comment"
+                android:textSize="@dimen/textsize_small"
+                tools:text="分享内容显示在这里，分享内容显示在这里，分享内容显示在这里" />
+
+            <View
+                android:id="@+id/line_s"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/share_img"
+                android:layout_marginTop="6dp"
+                android:background="@color/divide_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line_s"
+                android:layout_marginTop="6dp"
+                android:text="来自我们村的分享，点击查看"
+                android:textColor="@color/font_black_comment"
+                android:textSize="12sp" />
+        </RelativeLayout>
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignBottom="@id/linearLayout"
-        android:layout_marginLeft="-46dp"
         android:layout_alignTop="@id/linearLayout"
+        android:layout_marginLeft="-46dp"
         android:layout_toRightOf="@id/linearLayout">
         <!--小红点与气泡的间距是15dp,理论上marginLeft应该是-42dp才对？-->
         <TextView
@@ -100,7 +152,7 @@
             android:layout_gravity="center"
             android:background="@drawable/shape_red_circle"
             android:gravity="center"
-            android:visibility="gone"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone" />
     </FrameLayout>
 </RelativeLayout>

@@ -29,7 +29,6 @@ import com.bilibili.magicasakura.widgets.TintImageView;
 import com.bilibili.magicasakura.widgets.TintTextView;
 import com.google.gson.Gson;
 import com.igexin.sdk.PushManager;
-import com.jude.utils.JUtils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -40,6 +39,7 @@ import com.study.mingappk.model.bean.AddFriendRequest;
 import com.study.mingappk.model.bean.EbankWifiConnect;
 import com.study.mingappk.model.bean.IpPort;
 import com.study.mingappk.model.bean.MessageList;
+import com.study.mingappk.model.bean.ShareMsg;
 import com.study.mingappk.model.bean.UserInfoByPhone;
 import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.model.database.FriendsModel;
@@ -53,12 +53,12 @@ import com.study.mingappk.model.event.RefreshTab1Event;
 import com.study.mingappk.model.event.ShopApplyPassEvent;
 import com.study.mingappk.model.event.ShowSideBarEvent;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.shop.MyShopFragment;
 import com.study.mingappk.tab1.Tab1Fragment;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 import com.study.mingappk.tab2.friendlist.FriendListFragment;
 import com.study.mingappk.tab3.villagelist.VillageListFragment;
 import com.study.mingappk.tab4.SettingFragment;
-import com.study.mingappk.tab4.shop.MyShopFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -295,6 +295,15 @@ public class MainActivity extends AppCompatActivity {
                                     case "2":
                                         chatMsg.setTxt("[语音]");
                                         break;
+                                    case "100":
+                                        String jsonString = lBean.getTxt();
+                                        Gson gson = new Gson();
+                                        ShareMsg shareMsg = gson.fromJson(jsonString, ShareMsg.class);
+
+                                        chatMsg.setTxt("[分享]:\""+shareMsg.getTitle()+"\"的帖子");
+
+                                        chatMsg.setShareMsg(shareMsg.getTitle(),shareMsg.getDetail(),shareMsg.getImage(),shareMsg.getLink());
+                                        break;
                                     default:
                                         chatMsg.setTxt(lBean.getTxt());//类型：文字
                                         break;
@@ -465,7 +474,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!StringTools.isEmpty(searchText)) {
                     searchFriend(searchText);
                     //关闭输入法
-                    JUtils.closeInputMethod(this);
+                    BaseTools.closeInputMethod(this);
                 }
                 break;
             case R.id.tab1Layout:

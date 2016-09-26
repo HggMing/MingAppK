@@ -7,7 +7,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
-import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
@@ -51,8 +50,6 @@ public class APP extends Application implements ThemeUtils.switchColor {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        JUtils.initialize(this);
-        JUtils.setDebug(true, "mm");
         //
         ThemeUtils.setSwitchColor(this);
         //用于存储
@@ -127,11 +124,11 @@ public class APP extends Application implements ThemeUtils.switchColor {
     @ColorRes
     int getThemeColor(Context context, int color, String theme) {
         switch (color) {
-            case 0xff53ACE5:
+            case 0xff009688:
                 return context.getResources().getIdentifier(theme, "color", getPackageName());
-            case 0xff2075ab:
+            case 0x00796B:
                 return context.getResources().getIdentifier(theme + "_dark", "color", getPackageName());
-            case 0x9953ACE5:
+            case 0x99049184:
                 return context.getResources().getIdentifier(theme + "_trans", "color", getPackageName());
         }
         return -1;

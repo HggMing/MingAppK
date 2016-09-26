@@ -10,13 +10,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jude.utils.JUtils;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -33,7 +31,6 @@ import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.model.database.FriendsModel;
 import com.study.mingappk.model.database.InstantMsgModel;
 import com.study.mingappk.model.database.MyDB;
-import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.model.event.NewFriendEvent;
 import com.study.mingappk.model.event.RefreshFriendList;
@@ -213,7 +210,6 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
 
             @Override
             public void onFailure(Call<FriendList> call, Throwable t) {
-                JUtils.Log("初始化村圈数据出错：" + t.getMessage());
 
             }
         });

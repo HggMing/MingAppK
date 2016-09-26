@@ -2,8 +2,8 @@ package com.study.mingappk.model.service;
 
 import android.content.Context;
 
-import com.jude.utils.JUtils;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.utils.BaseTools;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,15 +53,16 @@ public class MyServiceClient {
         Interceptor interceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
+                Context mContext=APP.getInstance().getApplicationContext();
                 Request request = chain.request();//拦截reqeust
-                if (!JUtils.isNetWorkAvilable()) {//判断网络连接状况
+                if (!BaseTools.checkNetWorkStatus(mContext)) {//判断网络连接状况
                     request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)//无网络时只从缓存中读取
                             .build();
                 }
 
                 Response response = chain.proceed(request);
-                if (JUtils.isNetWorkAvilable()) {
+                if (BaseTools.checkNetWorkStatus(mContext)) {
                     int maxAge = 60 * 60;// 有网络时 设置缓存超时时间1个小时
                     response.newBuilder()
                             .removeHeader("Pragma")//清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效

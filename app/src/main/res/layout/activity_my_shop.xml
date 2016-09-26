@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tab4.shop.MyShopActivity">
+    tools:context=".tab4.applyshoper.MyShopActivity">
 
     <fragment
         android:id="@+id/my_shop"
-        android:name="com.study.mingappk.tab4.shop.MyShopFragment"
+        android:name="com.study.mingappk.shop.MyShopFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_my_shop" />

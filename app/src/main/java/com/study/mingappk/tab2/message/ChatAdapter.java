@@ -20,10 +20,14 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.model.bean.BBSDetail;
+import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.model.database.FriendsModel;
 import com.study.mingappk.model.database.MyDB;
+import com.study.mingappk.model.service.MyService;
 import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab3.villagebbs.bbsdetail.BbsDetailActivity;
 import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -33,6 +37,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import rx.Observable;
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -117,7 +122,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<ChatMsgModel, RecyclerV
         if (holder instanceof LeftViewHolder) {//接收消息布局
 
             //消息时间
-            String date = data.getSt();
+            final String date = data.getSt();
             String timeFormat = BaseTools.getTimeFormat(date);
             ((LeftViewHolder) holder).time.setText(timeFormat);
             //头像
@@ -135,6 +140,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<ChatMsgModel, RecyclerV
                     ((LeftViewHolder) holder).content.setVisibility(View.VISIBLE);
                     ((LeftViewHolder) holder).msgImage.setVisibility(View.GONE);
                     ((LeftViewHolder) holder).voicePlay.setVisibility(View.GONE);
+                    ((LeftViewHolder) holder).shareLayout.setVisibility(View.GONE);
                     String content = data.getTxt();
                     ((LeftViewHolder) holder).content.setText(content);
                     break;
@@ -143,6 +149,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<ChatMsgModel, RecyclerV
                     ((LeftViewHolder) holder).content.setVisibility(View.GONE);
                     ((LeftViewHolder) holder).msgImage.setVisibility(View.VISIBLE);
                     ((LeftViewHolder) holder).voicePlay.setVisibility(View.GONE);
+                    ((LeftViewHolder) holder).shareLayout.setVisibility(View.GONE);
                     String imageUrl = MyServiceClient.getChatBaseUrl() + data.getLink();
                     Glide.with(mContext)
                             .load(imageUrl)
@@ -169,6 +176,21 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<ChatMsgModel, RecyclerV
                     ((LeftViewHolder) holder).content.setVisibility(View.GONE);
                     ((LeftViewHolder) holder).msgImage.setVisibility(View.GONE);
                     ((LeftViewHolder) holder).voicePlay.setVisibility(View.VISIBLE);
+                    ((LeftViewHolder) holder).shareLayout.setVisibility(View.GONE);
+                    break;
+                case "100"://来自我们村的分享消息
+                    ((LeftViewHolder) holder).resend.setVisibility(View.GONE);//其他消息，不显示红点
+                    ((LeftViewHolder) holder).content.setVisibility(View.GONE);
+                    ((LeftViewHolder) holder).msgImage.setVisibility(View.GONE);
+                    ((LeftViewHolder) holder).voicePlay.setVisibility(View.GONE);
+                    ((LeftViewHolder) holder).shareLayout.setVisibility(View.VISIBLE);
+
+                    Glide.with(mContext)
+                            .load(data.getShare_image())
+                            .error(R.mipmap.default_nine_picture)
+                            .into(((LeftViewHolder) holder).shareImg);
+                    ((LeftViewHolder) holder).shareTitle.setText(data.getShare_title());
+                    ((LeftViewHolder) holder).shareDetail.setText(data.getShare_detail());
                     break;
                 case "3"://html
                     break;
@@ -243,6 +265,42 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<ChatMsgModel, RecyclerV
                             break;
                         case "2"://声音消息
 
+                            break;
+                        case "100"://点击分享的消息
+                            String s=data.getShare_link();
+                            if (s != null) {
+                                int begin=s.indexOf("id=");
+                                String share_id=s.substring(begin+3,s.length());
+                                String auth=Hawk.get(APP.USER_AUTH);
+                                MyServiceClient.getService()
+                                        .get_BBSDetail(auth,share_id)
+                                       .map(new Func1<BBSDetail, BBSList.DataEntity.ListEntity>() {
+                                           @Override
+                                           public BBSList.DataEntity.ListEntity call(BBSDetail bbsDetail) {
+                                               return bbsDetail.getData();
+                                           }
+                                       })
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Observer<BBSList.DataEntity.ListEntity>() {
+                                            @Override
+                                            public void onCompleted() {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Throwable e) {
+
+                                            }
+
+                                            @Override
+                                            public void onNext(BBSList.DataEntity.ListEntity listEntity) {
+                                                Intent intent = new Intent(mContext, BbsDetailActivity.class);
+                                                intent.putExtra(BbsDetailActivity.BBS_DETAIL, listEntity);
+                                                mContext.startActivity(intent);
+                                            }
+                                        });
+                            }
                             break;
                     }
                 }
@@ -389,14 +447,19 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<ChatMsgModel, RecyclerV
         ImageView voicePlay;
         @Bind(R.id.msg_image)
         ImageView msgImage;
-        @Bind(R.id.voiceLayout)
-        LinearLayout voiceLayout;
         @Bind(R.id.resend)
         TextView resend;
         @Bind(R.id.linearLayout)
         LinearLayout item;
-        @Bind(R.id.message_list_list_item_left)
-        RelativeLayout messageListListItemLeft;
+        @Bind(R.id.layout_share)
+        RelativeLayout shareLayout;
+        @Bind(R.id.share_img)
+        ImageView shareImg;
+        @Bind(R.id.share_title)
+        TextView shareTitle;
+        @Bind(R.id.share_detail)
+        TextView shareDetail;
+
 
         LeftViewHolder(View view) {
             super(view);

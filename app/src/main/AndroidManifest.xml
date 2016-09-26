@@ -202,7 +202,7 @@
             android:name=".tmain.userlogin.facelogin.FaceLoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.ApplyShopOwnerActivity"
+            android:name=".tab4.applyshoper.ApplyShopOwnerActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -223,7 +223,7 @@
             android:name=".tab3.affairs.NewsDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.ShowApplyingActivity"
+            android:name=".tab4.applyshoper.ShowApplyingActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".tab3.villagesituation.villageinfo.VillageInfoActivity"
@@ -265,36 +265,36 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".tab4.shop.shoptab1.express.ExpressTakeActivity"
+            android:name=".shop.shoptab1.express.ExpressTakeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".tmain.baseactivity.AddListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.shoptab1.express.EditExpressTakeActivity"
+            android:name=".shop.shoptab1.express.EditExpressTakeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".common.views.scanner.MyScannerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.shoptab1.express.ExpressSendActivity"
+            android:name=".shop.shoptab1.express.ExpressSendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.shoptab1.express.EditExpressSendActivity"
+            android:name=".shop.shoptab1.express.EditExpressSendActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".tab4.shop.MyShopActivity"
+            android:name=".tab4.applyshoper.MyShopActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.shoptab1.books.BooksActivity"
+            android:name=".shop.shoptab1.books.BooksActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".tmain.baseactivity.TabsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.shoptab1.books.AddBookActivity"
+            android:name=".shop.shoptab1.books.AddBookActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
@@ -302,25 +302,26 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".tab4.shop.shoptab2.PhoneRechargeOrderActivity"
+            android:name=".shop.shoptab2.PhoneRechargeOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.shoptab2.SalesOrderActivity"
+            android:name=".shop.shoptab2.SalesOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.shoptab2.InsuranceOrderActivity"
+            android:name=".shop.shoptab2.InsuranceOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.shoptab2.TravelOrderActivity"
+            android:name=".shop.shoptab2.TravelOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab4.shop.shoptab3.AddVillageInfoActivity"
+            android:name=".shop.shoptab3.AddVillageInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".tab4.shop.shoptab3.AddVillageMasterActivity"
+            android:name=".shop.shoptab3.AddVillageMasterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".shop.shoptab4.VillagerInfoActivity"></activity>
     </application>
 
 </manifest>

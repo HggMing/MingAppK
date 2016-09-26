@@ -21,7 +21,7 @@ import com.study.mingappk.common.views.dialog.MyDialog;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.VillageInfo;
 import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tab4.shop.shoptab3.AddVillageInfoActivity;
+import com.study.mingappk.shop.shoptab3.AddVillageInfoActivity;
 import com.study.mingappk.tmain.baseactivity.BackActivity;
 import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 

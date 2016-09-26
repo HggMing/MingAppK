@@ -54,6 +54,20 @@ public class ChatMsgModel extends BaseModel {
     @Column("_type")
     private int type;//0:发送消息1：接收消息
 
+    //当ct=100，来自分享的消息
+    private String share_title;//分享内容的标题
+    private String share_detail;//分享内容详情
+    private String share_image;//分享内容的图片地址
+    private String share_link;//分享内容的链接，例：http://121.40.105.149:9901/bbs/bbsinfo?id=4174
+
+    public void setShareMsg(String share_title,String share_detail,String share_image,String share_link){
+        this.share_title=share_title;
+        this.share_detail=share_detail;
+        this.share_image=share_image;
+        this.share_link=share_link;
+    }
+
+
     public ChatMsgModel() {
         this.isShowPro = 0;
         this.mt = 1;//即时消息
@@ -167,5 +181,38 @@ public class ChatMsgModel extends BaseModel {
     public void setXt(String xt) {
         this.xt = xt;
     }
+
+    public String getShare_title() {
+        return share_title;
+    }
+
+    public void setShare_title(String share_title) {
+        this.share_title = share_title;
+    }
+
+    public String getShare_detail() {
+        return share_detail;
+    }
+
+    public void setShare_detail(String share_detail) {
+        this.share_detail = share_detail;
+    }
+
+    public String getShare_image() {
+        return share_image;
+    }
+
+    public void setShare_image(String share_image) {
+        this.share_image = share_image;
+    }
+
+    public String getShare_link() {
+        return share_link;
+    }
+
+    public void setShare_link(String share_link) {
+        this.share_link = share_link;
+    }
+
 
 }
