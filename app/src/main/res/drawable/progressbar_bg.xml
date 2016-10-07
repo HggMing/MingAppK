@@ -4,8 +4,8 @@
     <item android:id="@android:id/background">
         <shape>
             <gradient
-                android:startColor="@color/theme_color_primary"
-                android:endColor="@color/theme_color_primary" />
+                android:startColor="@color/font_black_9"
+                android:endColor="@color/font_black_9" />
         </shape>
     </item>
 

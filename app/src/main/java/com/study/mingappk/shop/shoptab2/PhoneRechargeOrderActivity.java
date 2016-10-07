@@ -1,6 +1,7 @@
 package com.study.mingappk.shop.shoptab2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,6 +20,8 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.views.alipay.PayUtils;
+import com.study.mingappk.model.bean.InsuranceOrderList;
 import com.study.mingappk.model.bean.RechargeOrderList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.shop.shoptab1.books.NoDecoration;
@@ -51,6 +54,8 @@ public class PhoneRechargeOrderActivity extends BackActivity {
 
     private int page = 1;
 
+    private String notify_url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +78,16 @@ public class PhoneRechargeOrderActivity extends BackActivity {
                 initData(page);
             }
         });
+    }
+
+    //支付宝调用后刷新订单界面
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mAdapter.setItem(null);
+        mList.clear();
+        page = 1;
+        initData(page);
     }
 
     private void config() {
@@ -99,12 +114,36 @@ public class PhoneRechargeOrderActivity extends BackActivity {
                 mXRecyclerView.loadMoreComplete();
             }
         });
+
+        //点击事件，支付
+        mAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                RechargeOrderList.DataBean.ListBean data = mList.get(position);
+                //图标及文字
+                String goods_name = null;
+                if ("0".equals(data.getRtype())) {//话费充值
+                    goods_name = "话费充值：￥" + data.getAmount();
+                } else {//流量充值
+                    goods_name = "流量充值：" + data.getAmount();
+                }
+
+                PayUtils payUtils = new PayUtils(PhoneRechargeOrderActivity.this, 1);
+                payUtils.pay(goods_name, "话费流量",
+                        data.getMoney(), data.getId(), notify_url);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
 
     private void initData(final int page) {
         String vid = Hawk.get(APP.MANAGER_VID);
         MyServiceClient.getService()
-                .get_RechargeList(vid,9,page)
+                .get_RechargeList(vid, 9, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RechargeOrderList>() {
@@ -120,6 +159,7 @@ public class PhoneRechargeOrderActivity extends BackActivity {
 
                     @Override
                     public void onNext(RechargeOrderList rechargeOrderList) {
+                        notify_url=rechargeOrderList.getData().getUrl();
                         mList.addAll(rechargeOrderList.getData().getList());
                         if (mList.isEmpty()) {
                             contentEmpty.setVisibility(View.VISIBLE);
@@ -141,31 +181,54 @@ public class PhoneRechargeOrderActivity extends BackActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             Context mContext = holder.itemView.getContext();
             RechargeOrderList.DataBean.ListBean data = mList.get(position);
             //购买人
             holder.tvBuyer.setText(data.getPhone());
-            //付款状态
-            String payStatus="未付款";
-            if("1".equals(data.getPay_status())){
-                payStatus="已付款";
-                holder.layoutButton.setVisibility(View.GONE);
-            }else{
-                holder.layoutButton.setVisibility(View.VISIBLE);
+            //付款状态：0：未付款 1：已付款 2：充值成功 3：充值失败 7:删除 9:全部(不含删除)
+            String payStatus = "未付款";
+            switch(data.getPay_status()){
+                case "0":
+                    payStatus="未付款";
+                    holder.layoutButton.setVisibility(View.VISIBLE);
+                    break;
+                case "1":
+                    payStatus="已付款";
+                    holder.layoutButton.setVisibility(View.GONE);
+                    break;
+                case "2":
+                    payStatus="充值成功";
+                    holder.layoutButton.setVisibility(View.GONE);
+                    break;
+                case "3":
+                    payStatus="充值失败";
+                    holder.layoutButton.setVisibility(View.GONE);
+                    break;
+                case "7":
+                    payStatus="删除";
+                    holder.layoutButton.setVisibility(View.GONE);
+                    break;
             }
             holder.tvStatus.setText(payStatus);
             //图标及文字
-            if("0".equals(data.getRtype())){//话费充值
+            if ("0".equals(data.getRtype())) {//话费充值
                 holder.img.setImageResource(R.mipmap.ic_telephone);
-                holder.tvContent.setText("话费充值：￥"+data.getAmount());
-            }else{//流量充值
+                holder.tvContent.setText("话费充值：￥" + data.getAmount());
+            } else {//流量充值
                 holder.img.setImageResource(R.mipmap.ic_wifi);
-                holder.tvContent.setText("流量充值："+data.getAmount());
+                holder.tvContent.setText("流量充值：" + data.getAmount());
             }
             //价格显示
-            holder.tvPrice.setText("￥"+data.getMoney());
-            holder.tvTotalNumCost.setText("共1件商品，合计:￥"+data.getMoney());
+            holder.tvPrice.setText("￥" + data.getMoney());
+            holder.tvTotalNumCost.setText("共1件商品，合计:￥" + data.getMoney());
+            //支付点击
+            holder.btnOrderSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(holder.btnOrderSend, position);
+                }
+            });
         }
 
         static class ViewHolder extends RecyclerView.ViewHolder {

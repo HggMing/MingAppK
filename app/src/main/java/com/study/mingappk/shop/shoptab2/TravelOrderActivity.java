@@ -1,6 +1,7 @@
 package com.study.mingappk.shop.shoptab2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,6 +19,8 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.common.views.alipay.PayUtils;
+import com.study.mingappk.model.bean.InsuranceOrderList;
 import com.study.mingappk.model.bean.TravelOrderList;
 import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.shop.shoptab1.books.NoDecoration;
@@ -51,6 +54,9 @@ public class TravelOrderActivity extends BackActivity {
     private int page = 1;
     final private static int PAGE_SIZE = 10;
 
+    private String notify_url;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +80,16 @@ public class TravelOrderActivity extends BackActivity {
                 initData(page);
             }
         });
+    }
+
+    //支付宝调用后刷新订单界面
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mAdapter.setItem(null);
+        mList.clear();
+        page = 1;
+        initData(page);
     }
 
     private void config() {
@@ -100,6 +116,22 @@ public class TravelOrderActivity extends BackActivity {
                 mXRecyclerView.loadMoreComplete();
             }
         });
+
+        //点击事件，支付
+        mAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                TravelOrderList.ListBean data = mList.get(position);
+                PayUtils payUtils=new PayUtils(TravelOrderActivity.this,4);
+                payUtils.pay(data.getTravel_product_main().getTitle(), "旅游业务",
+                        data.getPrice(), data.getOrder_sn(), notify_url);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
 
     private void initData(final int page) {
@@ -121,6 +153,7 @@ public class TravelOrderActivity extends BackActivity {
 
                     @Override
                     public void onNext(TravelOrderList travelOrderList) {
+                        notify_url=travelOrderList.getUrl();
                         mList.addAll(travelOrderList.getList());
                         if (mList.isEmpty()) {
                             contentEmpty.setVisibility(View.VISIBLE);
@@ -142,20 +175,32 @@ public class TravelOrderActivity extends BackActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             Context mContext = holder.itemView.getContext();
             TravelOrderList.ListBean data = mList.get(position);
             TravelOrderList.ListBean.TravelProductMainBean pMain=data.getTravel_product_main();
             TravelOrderList.ListBean.TravelProductDetailBean pDetail=data.getTravel_product_detail();
             //购买人
             holder.tvBuyer.setText(data.getOrder_sn());
-            //付款状态
+            //付款状态：1：未付款 2：已付款 3：退款申请中4：退款成功
             String payStatus = "未付款";
-            if ("2".equals(data.getPay_status())) {
-                payStatus = "已付款";
-                holder.layoutButton.setVisibility(View.GONE);
-            } else {
-                holder.layoutButton.setVisibility(View.VISIBLE);
+            switch(data.getPay_status()){
+                case "1":
+                    payStatus="未付款";
+                    holder.layoutButton.setVisibility(View.VISIBLE);
+                    break;
+                case "2":
+                    payStatus="已付款";
+                    holder.layoutButton.setVisibility(View.GONE);
+                    break;
+                case "3":
+                    payStatus="退款申请中";
+                    holder.layoutButton.setVisibility(View.GONE);
+                    break;
+                case "4":
+                    payStatus="退款成功";
+                    holder.layoutButton.setVisibility(View.GONE);
+                    break;
             }
             holder.tvStatus.setText(payStatus);
             //购买人信息
@@ -167,6 +212,13 @@ public class TravelOrderActivity extends BackActivity {
             String date = data.getCreate_time();
             String timeFormat = date.substring(0,16);
             holder.tvTime.setText("时间：" + timeFormat);
+            //支付点击
+            holder.btnOrderSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(holder.btnOrderSend,position);
+                }
+            });
         }
 
         static class ViewHolder extends RecyclerView.ViewHolder {

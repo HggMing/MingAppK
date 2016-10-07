@@ -281,9 +281,14 @@
 }
 
 #支付宝
-#-libraryjars libs/alipaysdk.jar
-#-dontwarn com.alipay.android.app.**
-#-keep public class com.alipay.**  { *; }
+-libraryjars libs/alipaySDK-20150602.jar
+
+-keep class com.alipay.android.app.IAlixPay{*;}
+-keep class com.alipay.android.app.IAlixPay$Stub{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
+-keep class com.alipay.sdk.app.PayTask{ public *;}
+-keep class com.alipay.sdk.app.AuthTask{ public *;}
 
 #EventBus
 -keepattributes *Annotation*

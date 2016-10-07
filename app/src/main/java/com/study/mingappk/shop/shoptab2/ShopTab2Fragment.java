@@ -22,7 +22,6 @@ import butterknife.OnClick;
 public class ShopTab2Fragment extends Fragment {
     AppCompatActivity mActivity;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shop_tab2, container, false);

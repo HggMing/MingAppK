@@ -20,7 +20,7 @@
             android:layout_height="170dp"
             android:background="@null"
             android:gravity="top|left"
-            android:hint="写点什么吧~"
+            android:hint="写点什么吧~(暂不支持表情)"
             android:maxLength="490"
             android:paddingBottom="14dp"
             android:paddingLeft="12dp"
