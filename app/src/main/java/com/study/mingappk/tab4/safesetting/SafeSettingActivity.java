@@ -37,13 +37,12 @@ public class SafeSettingActivity extends BackActivity {
     TextView tvIsBinging;
     @Bind(R.id.arrow_binding)
     View arrowBinging;
-    @BindColor(android.R.color.holo_red_light)
-    int red;
-    @BindColor(android.R.color.holo_blue_light)
-    int blue;
+
+    private int red;
+    private int blue;
 
     private final int REQUEST_IS_REAL_NAME_BINGING = 123;//请求实名认证
-    public static String IS_BINDING="is_binding";
+    public static String IS_BINDING = "is_binding";
     private boolean isBinding;//是否实名认证
     private boolean isBindingChecked;//是否检查完实名认证状态
 
@@ -55,6 +54,9 @@ public class SafeSettingActivity extends BackActivity {
         ButterKnife.bind(this);
 
         setToolbarTitle(R.string.title_activity_safe_setting);
+
+        red = getResources().getColor(android.R.color.holo_red_light);
+        blue = getResources().getColor(android.R.color.holo_blue_light);
 
         //是否实名认证显示
         getIsBinding();
@@ -80,7 +82,7 @@ public class SafeSettingActivity extends BackActivity {
                 .subscribe(new Subscriber<ResponseBody>() {
                     @Override
                     public void onCompleted() {
-                        isBindingChecked=true;
+                        isBindingChecked = true;
                     }
 
                     @Override
@@ -102,12 +104,12 @@ public class SafeSettingActivity extends BackActivity {
                             tvIsBinging.setText("已认证");
                             tvIsBinging.setTextColor(blue);
                             arrowBinging.setVisibility(View.INVISIBLE);
-                            isBinding=true;
+                            isBinding = true;
                         }
                         if (result.getErr() == 1002) {//还没有实名认证
                             tvIsBinging.setText("未认证");
                             tvIsBinging.setTextColor(red);
-                            isBinding=false;
+                            isBinding = false;
                         }
                     }
                 });
@@ -120,7 +122,7 @@ public class SafeSettingActivity extends BackActivity {
                 //Toast.makeText(mActivity, "实名认证", Toast.LENGTH_SHORT).show();
                 if (isBinding) {
                     Toast.makeText(SafeSettingActivity.this, "已完成实名认证", Toast.LENGTH_SHORT).show();
-                } else if(isBindingChecked) {
+                } else if (isBindingChecked) {
                     Intent intent = new Intent(this, RealNameBindingActivity.class);
                     startActivityForResult(intent, REQUEST_IS_REAL_NAME_BINGING);
                 }
@@ -173,7 +175,7 @@ public class SafeSettingActivity extends BackActivity {
             case REQUEST_IS_REAL_NAME_BINGING:
                 if (resultCode == RESULT_OK) {
                     //是否实名认证显示
-                    isBinding = data.getBooleanExtra(IS_BINDING,false);
+                    isBinding = data.getBooleanExtra(IS_BINDING, false);
                     if (isBinding) {
                         tvIsBinging.setText("已认证");
                         tvIsBinging.setTextColor(blue);

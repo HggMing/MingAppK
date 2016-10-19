@@ -33,7 +33,7 @@ public class APP extends Application implements ThemeUtils.switchColor {
 
     public static final String SELECTED_CARD = "selected_card";//存储用户的默认提现银行卡，注销登录时须清空。
     public static final String MANAGER_ADDRESS = "village_manager_address";//存储店长用户的村店地址，注销登录时须清空。
-    public static final String MANAGER_VID="manager_village_id";//存储店长用户的村店地址，注销登录时须清空。
+    public static final String MANAGER_VID = "manager_village_id";//存储店长用户的村店地址，注销登录时须清空。
 
 
 
@@ -60,6 +60,7 @@ public class APP extends Application implements ThemeUtils.switchColor {
                 .build();
     }
 
+    //*******************************************主题相关配置
     @Override
     public int replaceColorById(Context context, @ColorRes int colorId) {
         if (ThemeHelper.isDefaultTheme(context)) {
@@ -73,7 +74,7 @@ public class APP extends Application implements ThemeUtils.switchColor {
     }
 
     public String getTheme(Context context) {
-        String[] themeColors=getResources().getStringArray(R.array.theme_colors);
+        String[] themeColors = getResources().getStringArray(R.array.theme_colors);
         if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_02) {
             return themeColors[1];
         } else if (ThemeHelper.getTheme(context) == ThemeHelper.CARD_03) {
