@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".common.views.bigimageview.BigImageViewActivity">
+    tools:context=".common.widgets.bigimageview.BigImageViewActivity">
 
-    <com.study.mingappk.common.views.bigimageview.MViewPager
+    <com.study.mingappk.common.widgets.bigimageview.MViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -18,10 +18,9 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.BbsCommentList;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;

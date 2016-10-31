@@ -16,16 +16,17 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.LoginApi;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.common.views.sms_autofill.SmsObserver;
-import com.study.mingappk.common.views.sms_autofill.SmsResponseCallback;
-import com.study.mingappk.common.views.sms_autofill.VerificationCodeSmsFilter;
+import com.study.mingappk.common.widgets.sms_autofill.SmsObserver;
+import com.study.mingappk.common.widgets.sms_autofill.SmsResponseCallback;
+import com.study.mingappk.common.widgets.sms_autofill.VerificationCodeSmsFilter;
 import com.study.mingappk.model.bean.Login;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
 import com.study.mingappk.tmain.MainActivity;
-import com.study.mingappk.tmain.baseactivity.WebViewActivity;
+import com.study.mingappk.common.base.WebViewActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -199,9 +200,7 @@ public class RegisterActivity extends BackActivity {
     }
 
     private void login(final String pwd) {
-        MyServiceClient.getService().get_Login(regPhone, pwd)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        LoginApi.login(regPhone, pwd)
                 .subscribe(new Subscriber<Login>() {
                     @Override
                     public void onCompleted() {
@@ -228,7 +227,7 @@ public class RegisterActivity extends BackActivity {
                                             vidInfoBean.getVillage_name();//店长村详细地址
                                     Hawk.chain()
                                             .put(APP.MANAGER_ADDRESS, vName)
-                                            .put(APP.MANAGER_VID,key_vid)
+                                            .put(APP.MANAGER_VID, key_vid)
                                             .commit();
                                 }
                             }

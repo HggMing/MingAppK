@@ -17,13 +17,13 @@ import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.LoginApi;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.PhotoOperate;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
+import com.study.mingappk.common.widgets.customcamera.TakePhotoActivity;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.common.base.BackActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,12 +32,8 @@ import java.net.URLEncoder;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class RealNameBindingActivity extends BackActivity {
     @Bind(R.id.tv_notice1)
@@ -141,12 +137,12 @@ public class RealNameBindingActivity extends BackActivity {
          sign	参数和机构KEY组合字符串的加密串
          */
         //1)、将除图片外的参数以及机构key组成一个字符串(注意顺序)
-        String phone= Hawk.get(APP.LOGIN_NAME);
-        int sex=1;
-        String uname=URLEncoder.encode("简爱");
-        int brithday=442741129;
-        String addr=URLEncoder.encode("地址");
-        int group=1;
+        String phone = Hawk.get(APP.LOGIN_NAME);
+        int sex = 1;
+        String uname = URLEncoder.encode("简爱");
+        int brithday = 442741129;
+        String addr = URLEncoder.encode("地址");
+        int group = 1;
 
         String other = "compid=9&did=123456&phone=" + phone +
                 "&cardid=" + cardid + "&sex=" + sex + "&uname=" + uname +
@@ -169,13 +165,7 @@ public class RealNameBindingActivity extends BackActivity {
             e.printStackTrace();
         }
         if (file_facepic != null && file_pic1 != null) {
-            RequestBody data = RequestBody.create(MediaType.parse("text/plain"), paraString);
-            final RequestBody rb_facepic = RequestBody.create(MediaType.parse("image/*"), file_facepic);
-            final RequestBody rb_pic1 = RequestBody.create(MediaType.parse("image/*"), file_pic1);
-            MyServiceClient.getService()
-                    .post_FaceRealBinding(data, rb_facepic, rb_pic1)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            LoginApi.faceRealBinding(paraString, file_facepic, file_pic1)
                     .subscribe(new Subscriber<ResponseBody>() {
                         @Override
                         public void onCompleted() {
@@ -200,9 +190,9 @@ public class RealNameBindingActivity extends BackActivity {
                             Result result = gson.fromJson(new String(Base64.decode(s, Base64.DEFAULT)), Result.class);
                             if (result.getErr() == 0) {
                                 Toast.makeText(RealNameBindingActivity.this, "实名认证成功", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent();
-                                intent.putExtra(SafeSettingActivity.IS_BINDING,true);
-                                setResult(RESULT_OK,intent);
+                                Intent intent = new Intent();
+                                intent.putExtra(SafeSettingActivity.IS_BINDING, true);
+                                setResult(RESULT_OK, intent);
                                 finish();
                             } else {
                                 Toast.makeText(RealNameBindingActivity.this, result.getErr() + "：" + result.getMsg(), Toast.LENGTH_SHORT).show();

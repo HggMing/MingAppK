@@ -17,14 +17,13 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.study.mingappk.R;
-import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

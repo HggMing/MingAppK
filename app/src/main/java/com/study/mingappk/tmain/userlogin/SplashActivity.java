@@ -17,7 +17,7 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.tmain.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -58,36 +58,39 @@ public class SplashActivity extends AppCompatActivity {
 
     private void requestPermission() {
         performCodeWithPermission("为了你能正常体验软件，请进行必要的授权！", new PermissionCallback() {
-            @Override
-            public void hasPermission() {
-                //执行获得权限后相关代码
-                init();
-            }
+                    @Override
+                    public void hasPermission() {
+                        //执行获得权限后相关代码
+                        init();
+                    }
 
-            @Override
-            public void noPermission() {
-                MyDialog.Builder builder = new MyDialog.Builder(SplashActivity.this);
-                builder.setTitle("提示")
-                        .setMessage("我们需要获得储存空间，为你储存个人信息；否则，你将无法正常使用本软件。")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                requestPermission();
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                                dialog.dismiss();
-                            }
-                        });
-                if (!isFinishing()) {
-                    builder.create().show();
-                }
-            }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_SMS, Manifest.permission.CAMERA);
+                    @Override
+                    public void noPermission() {
+                        MyDialog.Builder builder = new MyDialog.Builder(SplashActivity.this);
+                        builder.setTitle("提示")
+                                .setMessage("我们需要获得储存空间，为你储存个人信息；否则，你将无法正常使用本软件。")
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        requestPermission();
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                        dialog.dismiss();
+                                    }
+                                });
+                        if (!isFinishing()) {
+                            builder.create().show();
+                        }
+                    }
+                }, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_SMS,
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_PHONE_STATE);
     }
 
     private void init() {
@@ -102,7 +105,7 @@ public class SplashActivity extends AppCompatActivity {
         }
         //延迟4s后执行
         /*Observable.timer(4, TimeUnit.SECONDS)
-                .subscribe(new Observer<Long>() {
+                .subscribe(new Subscriber<Long>() {
                     @Override
                     public void onCompleted() {
 

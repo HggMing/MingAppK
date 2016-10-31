@@ -1,5 +1,4 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +17,7 @@
 
             <include layout="@layout/divide_15_top_bottom" />
 
-            <com.study.mingappk.common.views.CustomItem
+            <com.study.mingappk.common.widgets.CustomItem
                 android:id="@+id/click_my_purse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +27,7 @@
 
             <include layout="@layout/divide_15_top_bottom" />
 
-            <com.study.mingappk.common.views.CustomItem
+            <com.study.mingappk.common.widgets.CustomItem
                 android:id="@+id/click_my_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,7 +37,7 @@
 
             <include layout="@layout/divide_1_12" />
 
-            <com.study.mingappk.common.views.CustomItem
+            <com.study.mingappk.common.widgets.CustomItem
                 android:id="@+id/click_shopping_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

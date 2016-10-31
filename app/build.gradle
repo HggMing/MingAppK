@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
-
+// Dagger2添加应用插件
+apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion 23
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "com.study.mingappk"
@@ -11,13 +12,10 @@ android {
         versionCode 1
         versionName "1.6.3"
         manifestPlaceholders = [
-//                GETUI_APP_ID    : "JNsgkNDx3f9Kxlp0qGJxa9",
-//                GETUI_APP_KEY   : "y9e3zY48s06tsakhcpYz27",
-//                GETUI_APP_SECRET: "sEFajOmqenAO4avoCQoI62",
-GETUI_APP_ID    : "o9Pxlf1lfH7yUHC8nGpDH8",
-GETUI_APP_KEY   : "UyiZPy1YHX9Zop0KYP8EQ3",
-GETUI_APP_SECRET: "eesppnBSrw5m6XSpB4UA35",
-PACKAGE_NAME    : applicationId
+                GETUI_APP_ID    : "o9Pxlf1lfH7yUHC8nGpDH8",
+                GETUI_APP_KEY   : "UyiZPy1YHX9Zop0KYP8EQ3",
+                GETUI_APP_SECRET: "eesppnBSrw5m6XSpB4UA35",
+                PACKAGE_NAME    : applicationId
         ]
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "mips", "mips64", "x86", "x86_64"
@@ -33,6 +31,9 @@ PACKAGE_NAME    : applicationId
             testCompile 'junit:junit:4.12'
             //主题选择
             compile 'com.bilibili:magicasakura:0.1.1@aar'
+            //Dagger2
+            compile 'com.google.dagger:dagger:2.7'
+            apt 'com.google.dagger:dagger-compiler:2.7'
             // 网络请求，采用retrofit+okhttp+RxAndroid
             compile 'com.squareup.retrofit2:retrofit:2.0.1'
             compile 'com.squareup.retrofit2:converter-gson:2.0.1'
@@ -83,3 +84,6 @@ PACKAGE_NAME    : applicationId
     }
 }
 
+dependencies {
+    compile files('libs/tbs_sdk_thirdapp_v2.4.0.1073_36840_sharewithdownload_obfs_20161011_194834.jar')
+}

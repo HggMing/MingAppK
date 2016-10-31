@@ -10,16 +10,16 @@ import com.bilibili.magicasakura.widgets.TintEditText;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ShoppingAddress;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -117,7 +117,7 @@ public class EditShoppingAdressActivity extends BackActivity {
                         .post_EditShoppingAddress(auth, sd_id, sd_name, sd_addr, sd_phone, sd_is_def, sd_code)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<Result>() {
+                        .subscribe(new Subscriber<Result>() {
                             @Override
                             public void onCompleted() {
 
@@ -139,7 +139,7 @@ public class EditShoppingAdressActivity extends BackActivity {
                         .post_AddShoppingAddress(auth, sd_name, sd_addr, sd_phone, sd_is_def, sd_code)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<Result>() {
+                        .subscribe(new Subscriber<Result>() {
                             @Override
                             public void onCompleted() {
 

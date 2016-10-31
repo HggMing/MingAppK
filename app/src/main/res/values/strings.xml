@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">爱简单</string>
     <string name="action_settings">设置</string>
-    <string name="tab1_main">动态</string>
-    <string name="tab2_main">老乡</string>
+    <string name="tab1_main">主页</string>
+    <string name="tab1_main_1">我们村</string>
+    <string name="tab2_main">消息</string>
     <string name="tab3_main">我的村</string>
     <string name="tab4_main">设置</string>
     <string name="tab5_main">我的店</string>
@@ -51,6 +52,7 @@
     <string name="title_activity_friend_detail">详细资料</string>
     <string name="title_activity_remark_name">备注信息</string>
     <string name="title_activity_friend_more">更多</string>
+    <string name="title_activity_friend_list">老乡</string>
 
     <string name="title_activity_follow_village">村圈设置</string>
     <string name="title_activity_village_bbs">村圈帖子</string>

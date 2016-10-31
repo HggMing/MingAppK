@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.model.bean.ZanList;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.common.base.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;

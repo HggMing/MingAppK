@@ -17,7 +17,7 @@
 
             <include layout="@layout/divide_15_top_bottom" />
 
-            <com.study.mingappk.common.views.CustomItem
+            <com.study.mingappk.common.widgets.CustomItem
                 android:id="@+id/click_connect_wifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
 
             <include layout="@layout/divide_15_top_bottom" />
 
-            <com.study.mingappk.common.views.CustomItem
+            <com.study.mingappk.common.widgets.CustomItem
                 android:id="@+id/click_check_version"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
 
             <include layout="@layout/divide_1_12" />
 
-            <com.study.mingappk.common.views.CustomItem
+            <com.study.mingappk.common.widgets.CustomItem
                 android:id="@+id/click_clear_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
 
             <include layout="@layout/divide_1_12" />
 
-            <com.study.mingappk.common.views.CustomItem
+            <com.study.mingappk.common.widgets.CustomItem
                 android:id="@+id/click_advice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 
             <include layout="@layout/divide_15_top_bottom" />
 
-            <com.study.mingappk.common.views.CustomItem
+            <com.study.mingappk.common.widgets.CustomItem
                 android:id="@+id/click_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,6 +1,5 @@
 package com.study.mingappk.tab4.safesetting;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -12,19 +11,17 @@ import com.bilibili.magicasakura.widgets.TintEditText;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.common.views.sms_autofill.SmsObserver;
-import com.study.mingappk.common.views.sms_autofill.SmsResponseCallback;
-import com.study.mingappk.common.views.sms_autofill.VerificationCodeSmsFilter;
+import com.study.mingappk.common.widgets.sms_autofill.SmsObserver;
+import com.study.mingappk.common.widgets.sms_autofill.SmsResponseCallback;
+import com.study.mingappk.common.widgets.sms_autofill.VerificationCodeSmsFilter;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
-import com.study.mingappk.tmain.userlogin.LoginActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -84,7 +81,7 @@ public class ResetPursePwdActivity extends BackActivity {
                 .get_TradeCode(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Subscriber<Result>() {
                     @Override
                     public void onCompleted() {
 
@@ -147,7 +144,7 @@ public class ResetPursePwdActivity extends BackActivity {
                 .post_ResetPursePwd(auth,code,pwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Subscriber<Result>() {
                     @Override
                     public void onCompleted() {
 

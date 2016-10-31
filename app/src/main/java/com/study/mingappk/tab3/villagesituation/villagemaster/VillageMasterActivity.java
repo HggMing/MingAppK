@@ -16,14 +16,14 @@ import com.melnykov.fab.FloatingActionButton;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
 import com.study.mingappk.common.utils.MyItemDecoration;
-import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.VillageMaster;
-import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.shop.shoptab3.AddVillageMasterActivity;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -130,7 +130,7 @@ public class VillageMasterActivity extends BackActivity implements BaseRecyclerV
                 .get_VillageMasterList(auth, vid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<VillageMaster>() {
+                .subscribe(new Subscriber<VillageMaster>() {
                     @Override
                     public void onCompleted() {
                         mRefreshLayout.setRefreshing(false);
@@ -210,7 +210,7 @@ public class VillageMasterActivity extends BackActivity implements BaseRecyclerV
                 .post_DelVillageMaster(auth,id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Subscriber<Result>() {
                     @Override
                     public void onCompleted() {
 

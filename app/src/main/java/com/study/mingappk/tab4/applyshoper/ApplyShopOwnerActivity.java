@@ -19,22 +19,22 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
 import com.study.mingappk.common.utils.MyGallerFinal;
 import com.study.mingappk.common.utils.PhotoOperate;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.common.views.MySpinner;
-import com.study.mingappk.common.views.customcamera.TakePhotoActivity;
-import com.study.mingappk.common.views.dialog.Dialog_Select_Date;
-import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
+import com.study.mingappk.common.widgets.MySpinner;
+import com.study.mingappk.common.widgets.customcamera.TakePhotoActivity;
+import com.study.mingappk.common.widgets.dialog.Dialog_Select_Date;
+import com.study.mingappk.common.widgets.gallerfinal.FunctionConfig;
+import com.study.mingappk.common.widgets.gallerfinal.GalleryFinal;
+import com.study.mingappk.common.widgets.gallerfinal.model.PhotoInfo;
 import com.study.mingappk.model.bean.ApplyInfo2;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
-import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab4.selfinfo.UpdateAdressActivity;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
-import com.study.mingappk.common.views.gallerfinal.FunctionConfig;
-import com.study.mingappk.common.views.gallerfinal.GalleryFinal;
 
 import java.io.File;
 import java.util.List;
@@ -45,7 +45,7 @@ import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -202,7 +202,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                             .post_UploadImage(authBody, requestBody)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Observer<UploadFiles>() {
+                            .subscribe(new Subscriber<UploadFiles>() {
                                 @Override
                                 public void onCompleted() {
 
@@ -243,7 +243,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                             .post_UploadImage(authBody, requestBody)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Observer<UploadFiles>() {
+                            .subscribe(new Subscriber<UploadFiles>() {
                                 @Override
                                 public void onCompleted() {
 
@@ -381,7 +381,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                         .post_ApplyMaster(auth, vid, uname, contact, conts, sex, edu, cid_img1, cid_img2, q_img, brithday)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<Result>() {
+                        .subscribe(new Subscriber<Result>() {
                             @Override
                             public void onCompleted() {
 
@@ -456,7 +456,7 @@ public class ApplyShopOwnerActivity extends BackActivity {
                         .post_UploadImage(authBody, requestBody)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<UploadFiles>() {
+                        .subscribe(new Subscriber<UploadFiles>() {
                             @Override
                             public void onCompleted() {
 

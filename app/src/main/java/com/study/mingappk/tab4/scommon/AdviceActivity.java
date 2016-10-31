@@ -10,15 +10,15 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.common.views.dialog.MyDialog;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -68,7 +68,7 @@ public class AdviceActivity extends BackActivity {
                 .get_Advice(auth, content, contact)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Subscriber<Result>() {
                     @Override
                     public void onCompleted() {
 

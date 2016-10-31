@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <com.study.mingappk.common.views.mydatepicker.NumberPicker
+    <com.study.mingappk.common.widgets.mydatepicker.NumberPicker
         android:id="@+id/month_picker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:textSize="22sp"
         app:verticalSpacing="36dp" />
 
-    <com.study.mingappk.common.views.mydatepicker.NumberPicker
+    <com.study.mingappk.common.widgets.mydatepicker.NumberPicker
         android:id="@+id/day_picker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         app:textSize="22sp"
         app:verticalSpacing="36dp" />
 
-    <com.study.mingappk.common.views.mydatepicker.NumberPicker
+    <com.study.mingappk.common.widgets.mydatepicker.NumberPicker
         android:id="@+id/year_picker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

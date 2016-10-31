@@ -20,13 +20,11 @@ import com.bumptech.glide.Glide;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
 import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.model.bean.InsuranceOrderList;
 import com.study.mingappk.model.bean.MyVillUsers;
-import com.study.mingappk.model.bean.VillageInfo;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -87,7 +85,7 @@ public class ShopTab4Fragment extends Fragment {
                 .get_MyVillUsers(auth, 1, 20)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MyVillUsers>() {
+                .subscribe(new Subscriber<MyVillUsers>() {
                     @Override
                     public void onCompleted() {
 

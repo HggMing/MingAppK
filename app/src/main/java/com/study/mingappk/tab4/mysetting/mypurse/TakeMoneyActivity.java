@@ -14,18 +14,18 @@ import com.bilibili.magicasakura.widgets.TintEditText;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.common.views.dialog.Dialog_InputPwd;
+import com.study.mingappk.common.widgets.dialog.Dialog_InputPwd;
 import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ResultOther;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -75,7 +75,7 @@ public class TakeMoneyActivity extends BackActivity {
                 .get_CardList(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CardList>() {
+                .subscribe(new Subscriber<CardList>() {
                     @Override
                     public void onCompleted() {
 
@@ -116,7 +116,7 @@ public class TakeMoneyActivity extends BackActivity {
                 .get_Money(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResultOther>() {
+                .subscribe(new Subscriber<ResultOther>() {
                     @Override
                     public void onCompleted() {
 
@@ -211,7 +211,7 @@ public class TakeMoneyActivity extends BackActivity {
                                         .post_TakeMoney(auth, money, pwd, bank_name, bank_no, bank_user_name)
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Observer<Result>() {
+                                        .subscribe(new Subscriber<Result>() {
                                             @Override
                                             public void onCompleted() {
 

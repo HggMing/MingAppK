@@ -32,21 +32,21 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.common.views.bigimageview.BigImageViewActivity;
-import com.study.mingappk.common.views.dialog.MyDialog;
-import com.study.mingappk.common.views.nineimage.NineGridImageView;
-import com.study.mingappk.common.views.nineimage.NineGridImageViewAdapter;
+import com.study.mingappk.common.widgets.bigimageview.BigImageViewActivity;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
+import com.study.mingappk.common.widgets.nineimage.NineGridImageView;
+import com.study.mingappk.common.widgets.nineimage.NineGridImageViewAdapter;
 import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.model.bean.BbsCommentList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ZanList;
 import com.study.mingappk.model.database.BbsDetailModel;
 import com.study.mingappk.model.database.MyDB;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
 import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
 import com.study.mingappk.tab3.villagebbs.likeusers.LikeUsersArea;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.common.base.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -616,7 +616,7 @@ public class BbsDetailActivity extends BackActivity implements BbsDetailAdapter.
                         MyServiceClient.getService().get_BbsCommentList(auth, pid, 1, 3)
                                 .subscribeOn(Schedulers.newThread())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<BbsCommentList>() {
+                                .subscribe(new Subscriber<BbsCommentList>() {
                                     @Override
                                     public void onCompleted() {
 

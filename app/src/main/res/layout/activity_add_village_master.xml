@@ -30,7 +30,7 @@
                 style="@style/TextViewStyle_hint"
                 android:text="性别" />
 
-            <com.study.mingappk.common.views.MySpinner
+            <com.study.mingappk.common.widgets.MySpinner
                 android:id="@+id/my_sp_sex"
                 android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 style="@style/TextViewStyle_hint"
                 android:text="政治面貌" />
 
-            <com.study.mingappk.common.views.MySpinner
+            <com.study.mingappk.common.widgets.MySpinner
                 android:id="@+id/my_sp_zzmm"
                 android:layout_width="match_parent"
                 android:layout_marginTop="12dp"

@@ -48,7 +48,7 @@
             android:paddingRight="20dp"
             android:paddingTop="20dp">
 
-            <com.study.mingappk.common.views.mydatepicker.DatePicker
+            <com.study.mingappk.common.widgets.mydatepicker.DatePicker
                 android:id="@+id/date_picker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

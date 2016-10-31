@@ -18,16 +18,16 @@ import com.bumptech.glide.Glide;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
 import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.database.NewFriendModel;
 import com.study.mingappk.model.event.NewFriend2Event;
 import com.study.mingappk.model.event.NewFriendEvent;
 import com.study.mingappk.model.event.RefreshFriendList;
-import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,7 +42,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -174,7 +174,7 @@ class NewFriendAdapter extends BaseRecyclerViewAdapter<NewFriendModel, NewFriend
                         .post_AddAgree(authBody, uidBody)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<ResponseBody>() {
+                        .subscribe(new Subscriber<ResponseBody>() {
                             @Override
                             public void onCompleted() {
 
@@ -211,7 +211,7 @@ class NewFriendAdapter extends BaseRecyclerViewAdapter<NewFriendModel, NewFriend
                         .post_AddUnagree(authBody, uidBody)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<ResponseBody>() {
+                        .subscribe(new Subscriber<ResponseBody>() {
                             @Override
                             public void onCompleted() {
 

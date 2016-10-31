@@ -20,7 +20,7 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.MyItemDecoration;
 import com.study.mingappk.model.bean.NewsList;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,6 +12,7 @@ import com.igexin.sdk.PushConsts;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.utils.NotifyUtil;
 import com.study.mingappk.model.bean.AddFriendRequest;
 import com.study.mingappk.model.bean.MessageList;
@@ -27,9 +28,7 @@ import com.study.mingappk.model.event.NewFriend2Event;
 import com.study.mingappk.model.event.NewFriendEvent;
 import com.study.mingappk.model.event.NewMsgEvent;
 import com.study.mingappk.model.event.RefreshFriendList;
-import com.study.mingappk.model.service.MyService;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tab2.message.ChatActivity;
+import com.study.mingappk.tab2.chat.ChatActivity;
 import com.study.mingappk.tmain.userlogin.SplashActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -37,9 +36,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Collections;
 import java.util.List;
 
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class PushReceiver extends BroadcastReceiver {
@@ -75,7 +73,7 @@ public class PushReceiver extends BroadcastReceiver {
                         getObservable_RegisterChat(me, 1, "yxj", cid)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<Result>() {
+                        .subscribe(new Subscriber<Result>() {
                             @Override
                             public void onCompleted() {
 
@@ -110,7 +108,7 @@ public class PushReceiver extends BroadcastReceiver {
                 .get_MessageList(me_uid, "yxj", 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MessageList>() {
+                .subscribe(new Subscriber<MessageList>() {
                     @Override
                     public void onCompleted() {
 
@@ -178,9 +176,9 @@ public class PushReceiver extends BroadcastReceiver {
                         Gson gson = new Gson();
                         ShareMsg shareMsg = gson.fromJson(jsonString, ShareMsg.class);
 
-                        chatMsg.setTxt("[分享]:\""+shareMsg.getTitle()+"\"的帖子");
+                        chatMsg.setTxt("[分享]:\"" + shareMsg.getTitle() + "\"的帖子");
 
-                        chatMsg.setShareMsg(shareMsg.getTitle(),shareMsg.getDetail(),shareMsg.getImage(),shareMsg.getLink());
+                        chatMsg.setShareMsg(shareMsg.getTitle(), shareMsg.getDetail(), shareMsg.getImage(), shareMsg.getLink());
                         break;
                     default:
                         chatMsg.setTxt(lBean.getTxt());//类型：文字
@@ -191,7 +189,7 @@ public class PushReceiver extends BroadcastReceiver {
 
 
                 String t = lBean.getTxt();
-                if ("1".equals(lBean.getFrom())&t.length() > 10) {
+                if ("1".equals(lBean.getFrom()) & t.length() > 10) {
                     if ("已经同意添加您为好友".equals(t.substring(t.length() - 10, t.length()))) {
                         //对方同意添加好友后，刷新好友列表
                         EventBus.getDefault().post(new RefreshFriendList());
@@ -219,8 +217,8 @@ public class PushReceiver extends BroadcastReceiver {
                     PendingIntent pIntent = PendingIntent.getActivity(context, requestCode, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
 
                     //构建通知
-                    int largeIcon = R.mipmap.ic_launcher;
-                    int smallIcon = R.mipmap.tab1_btn1;
+                    int largeIcon = R.mipmap.ic_message_notification;
+                    int smallIcon = R.mipmap.tab2_btn1;
                     String title = friend.getUname();
                     String ticker = title + ": " + chatMsg.getTxt();
                     //新消息条数，读取及更新

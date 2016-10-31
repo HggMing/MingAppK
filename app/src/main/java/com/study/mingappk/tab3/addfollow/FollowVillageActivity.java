@@ -25,11 +25,11 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BaseActivity;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +88,7 @@ public class FollowVillageActivity extends BaseActivity implements FollowVillage
             //设置toolbar后,开启返回图标
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //设备返回图标样式
-            getSupportActionBar().setHomeAsUpIndicator(R.mipmap.app_back);
+            getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_toolbar_back);
         }
         // 初始化mTitles、mFragments等ViewPager需要的数据
         initData();

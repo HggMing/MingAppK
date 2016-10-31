@@ -6,24 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
-import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.app.api.OtherApi;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.EbankWifiConnect;
-import com.study.mingappk.model.bean.IpPort;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.common.base.BackActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import rx.Subscriber;
 
-public class SettingCommonActivity extends BackActivity{
+public class SettingCommonActivity extends BackActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,19 +85,8 @@ public class SettingCommonActivity extends BackActivity{
      * 若连接e-bank，则认证上网。
      */
     private void connectWifi() {
-        final String auth= Hawk.get(APP.USER_AUTH);
-        MyServiceClient.getService()
-                .get_IpPort()
-                .flatMap(new Func1<IpPort, Observable<EbankWifiConnect>>() {
-                    @Override
-                    public Observable<EbankWifiConnect> call(IpPort ipPort) {
-                        return  MyServiceClient.getService()
-                                .get_EbankWifiConnect(ipPort.getIp(),ipPort.getPort(),ipPort.getMac(),auth);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<EbankWifiConnect>() {
+        OtherApi.ebankWifiConnect()
+                .subscribe(new Subscriber<EbankWifiConnect>() {
                     @Override
                     public void onCompleted() {
 
@@ -116,7 +99,7 @@ public class SettingCommonActivity extends BackActivity{
 
                     @Override
                     public void onNext(EbankWifiConnect ebankWifiConnect) {
-                        if("1".equals(ebankWifiConnect.getStatus()))
+                        if ("1".equals(ebankWifiConnect.getStatus()))
                             Toast.makeText(SettingCommonActivity.this, "恭喜你上网认证通过,获得两小时上网时间!", Toast.LENGTH_SHORT).show();
                     }
                 });

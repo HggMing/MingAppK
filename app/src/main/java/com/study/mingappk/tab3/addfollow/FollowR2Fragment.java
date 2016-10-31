@@ -27,7 +27,7 @@ import com.study.mingappk.model.bean.A3County;
 import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 
 import java.util.ArrayList;
 import java.util.List;

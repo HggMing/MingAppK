@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.study.mingappk.R;
-import com.study.mingappk.tmain.baseactivity.TabsActivity;
+import com.study.mingappk.common.base.TabsActivity;
 
 public class ExpressSendActivity extends TabsActivity {
     public static String EXPRESS_STATUS = "express_status";//0为待寄快递；1为已寄快递

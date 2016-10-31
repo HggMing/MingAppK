@@ -9,10 +9,10 @@
         android:visible="false"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_search"
-        android:icon="@mipmap/main_action_search"
+        android:id="@+id/action_friendlist"
+        android:icon="@drawable/main_action_friendlist"
         android:orderInCategory="1"
-        android:title="搜索联系人"
+        android:title="好友列表"
         android:visible="false"
         app:showAsAction="always" />
 

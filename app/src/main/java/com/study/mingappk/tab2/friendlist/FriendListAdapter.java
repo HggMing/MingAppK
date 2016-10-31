@@ -11,12 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
-import com.study.mingappk.common.views.stickyrecyclerheaders.StickyRecyclerHeadersAdapter;
+import com.study.mingappk.common.widgets.stickyrecyclerheaders.StickyRecyclerHeadersAdapter;
 import com.study.mingappk.model.bean.FriendList;
-import com.study.mingappk.model.database.InstantMsgModel;
 import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.database.NewFriendModel;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 
 import java.util.List;
 

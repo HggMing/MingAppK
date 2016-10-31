@@ -15,19 +15,19 @@ import android.widget.TextView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.AddListActivity;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ShoppingAddress;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.AddListActivity;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -58,7 +58,7 @@ public class ShoppingAddressActivity extends AddListActivity implements Shopping
                 .get_ShoppingAddress(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ShoppingAddress>() {
+                .subscribe(new Subscriber<ShoppingAddress>() {
                     @Override
                     public void onCompleted() {
 
@@ -118,7 +118,7 @@ public class ShoppingAddressActivity extends AddListActivity implements Shopping
                 .post_EditShoppingAddress(auth, data.getId(), data.getUname(), data.getAddr(), data.getTel(), sd_is_def, data.getZipcode())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Subscriber<Result>() {
                     @Override
                     public void onCompleted() {
 
@@ -218,7 +218,7 @@ class ShoppingAddressAdapter extends BaseRecyclerViewAdapter<ShoppingAddress.Dat
                                         .post_DelShoppingAddress(auth, data.getId())
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Observer<Result>() {
+                                        .subscribe(new Subscriber<Result>() {
                                             @Override
                                             public void onCompleted() {
 

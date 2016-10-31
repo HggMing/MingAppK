@@ -91,7 +91,7 @@
         <!-- 清空文字图标 -->
         <item name="searchCloseIcon">@drawable/ic_action_navigation_close_inverted</item>
         <!-- 返回图标 -->
-        <item name="searchBackIcon">@mipmap/app_back</item>
+        <item name="searchBackIcon">@mipmap/ic_toolbar_back</item>
         <!-- 提供建议，图标 -->
         <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
         <!-- 建议列表背景色-->

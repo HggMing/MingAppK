@@ -76,7 +76,7 @@
             android:textSize="15sp"
             tools:text="这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容,这是帖子的主要内容," />
 
-        <com.study.mingappk.common.views.nineimage.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.study.mingappk.common.widgets.nineimage.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/nine_grid_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

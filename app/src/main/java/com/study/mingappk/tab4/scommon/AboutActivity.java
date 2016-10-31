@@ -6,7 +6,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.study.mingappk.R;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.common.base.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

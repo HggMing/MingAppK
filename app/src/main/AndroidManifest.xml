@@ -6,6 +6,7 @@
     <!-- 网络需要权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- GalleryFinal自定义相册 -->
@@ -22,12 +23,18 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <!-- 获取当前Activity名称 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <!--支付宝支付权限-->
+    <!-- 支付宝支付权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--腾讯TBS浏览器集成-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".app.APP"
@@ -65,30 +72,35 @@
 
         <!-- gallerfinal相关页面 -->
         <activity
-            android:name=".common.views.gallerfinal.PhotoSelectActivity"
+            android:name=".common.widgets.gallerfinal.PhotoSelectActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".common.views.gallerfinal.PhotoEditActivity"
+            android:name=".common.widgets.gallerfinal.PhotoEditActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".common.views.gallerfinal.PhotoPreviewActivity"
+            android:name=".common.widgets.gallerfinal.PhotoPreviewActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <!--支付宝相关网页-->
+        <!-- 支付宝相关网页 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
+            android:screenOrientation="behind" />
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
+            android:screenOrientation="behind" />
+        <!--qq浏览器集成相关-->
+        <activity
+            android:name=".tab1.BrowserActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".tab1.webutils.RefreshActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <!-- 主程序相关 -->
         <activity
             android:name=".tmain.userlogin.SplashActivity"
@@ -155,7 +167,7 @@
             android:label="@string/title_activity_village_bbs"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".common.views.bigimageview.BigImageViewActivity"
+            android:name=".common.widgets.bigimageview.BigImageViewActivity"
             android:label="@string/title_activity_big_imageview"
             android:screenOrientation="portrait" />
         <activity
@@ -197,10 +209,10 @@
             android:name=".tab2.frienddetail.FriendBbsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab2.message.ChatActivity"
+            android:name=".tab2.chat.ChatActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tab2.message.BigImageActivity"
+            android:name=".tab2.chat.BigImageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".tmain.register.TestPhoneNumberActivity"
@@ -211,7 +223,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".tmain.baseactivity.WebViewActivity"
+            android:name=".common.base.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".tmain.register.ResetPasswordActivity"
@@ -235,7 +247,7 @@
             android:name=".tab4.safesetting.SafeSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".common.views.customcamera.TakePhotoActivity"
+            android:name=".common.widgets.customcamera.TakePhotoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/OpaqueTheme" />
         <activity
@@ -287,14 +299,14 @@
             android:name=".shop.shoptab1.express.ExpressTakeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tmain.baseactivity.AddListActivity"
+            android:name=".common.base.AddListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".shop.shoptab1.express.EditExpressTakeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".common.views.scanner.MyScannerActivity"
+            android:name=".common.widgets.scanner.MyScannerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".shop.shoptab1.express.ExpressSendActivity"
@@ -310,7 +322,7 @@
             android:name=".shop.shoptab1.books.BooksActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tmain.baseactivity.TabsActivity"
+            android:name=".common.base.TabsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".shop.shoptab1.books.AddBookActivity"
@@ -340,7 +352,12 @@
             android:name=".shop.shoptab3.AddVillageMasterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".shop.shoptab4.VillagerInfoActivity"></activity>
+        <activity
+            android:name=".shop.shoptab4.VillagerInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab2.friendlist.FriendListActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

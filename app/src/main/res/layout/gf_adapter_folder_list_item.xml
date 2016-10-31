@@ -6,7 +6,7 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <com.study.mingappk.common.views.gallerfinal.widget.GFImageView
+    <com.study.mingappk.common.widgets.gallerfinal.widget.GFImageView
         android:id="@+id/iv_cover"
         android:layout_width="68dp"
         android:layout_height="68dp"

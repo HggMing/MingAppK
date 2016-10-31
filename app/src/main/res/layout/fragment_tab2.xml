@@ -27,7 +27,7 @@
             android:textSize="30sp"
             android:visibility="invisible" />
 
-        <com.study.mingappk.common.views.SideBar
+        <com.study.mingappk.common.widgets.SideBar
             android:id="@+id/contact_sidebar"
             android:layout_width="15dp"
             android:layout_height="match_parent"

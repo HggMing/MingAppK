@@ -23,12 +23,12 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.BBSList;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.tab3.affairs.GovernmentAffairsActivity;
 import com.study.mingappk.tab3.newpost.NewPostActivity;
 import com.study.mingappk.tab3.villagebbs.bbsdetail.BbsDetailActivity;
 import com.study.mingappk.tab3.villagesituation.VillageSituationActivity;
-import com.study.mingappk.tmain.baseactivity.BaseActivity;
+import com.study.mingappk.common.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +95,7 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
             //设置toolbar后,开启返回图标
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //设备返回图标样式
-            getSupportActionBar().setHomeAsUpIndicator(R.mipmap.app_back);
+            getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_toolbar_back);
         }
 
         //顶部村名和村图片的加载

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.study.mingappk.common.views.gallerfinal.widget.GFImageView
+    <com.study.mingappk.common.widgets.gallerfinal.widget.GFImageView
         android:id="@+id/iv_thumb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

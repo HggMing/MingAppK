@@ -121,7 +121,7 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <com.study.mingappk.common.views.MySpinner
+                    <com.study.mingappk.common.widgets.MySpinner
                         android:id="@+id/my_sp_sex"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
                         android:textColor="@color/font_black_2"
                         android:textSize="16sp" />
 
-                    <com.study.mingappk.common.views.MySpinner
+                    <com.study.mingappk.common.widgets.MySpinner
                         android:id="@+id/my_sp_edu"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

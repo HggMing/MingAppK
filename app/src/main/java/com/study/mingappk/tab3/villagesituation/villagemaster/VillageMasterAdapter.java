@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 import com.study.mingappk.model.bean.VillageMaster;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

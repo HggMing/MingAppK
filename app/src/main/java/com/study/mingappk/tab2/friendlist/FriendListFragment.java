@@ -18,13 +18,14 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.common.views.SideBar;
-import com.study.mingappk.common.views.dialog.MyDialog;
-import com.study.mingappk.common.views.pinyin.CharacterParser;
-import com.study.mingappk.common.views.pinyin.PinyinComparator;
-import com.study.mingappk.common.views.stickyrecyclerheaders.StickyRecyclerHeadersDecoration;
+import com.study.mingappk.common.widgets.SideBar;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
+import com.study.mingappk.common.widgets.pinyin.CharacterParser;
+import com.study.mingappk.common.widgets.pinyin.PinyinComparator;
+import com.study.mingappk.common.widgets.stickyrecyclerheaders.StickyRecyclerHeadersDecoration;
 import com.study.mingappk.model.bean.FriendList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.database.ChatMsgModel;
@@ -35,9 +36,8 @@ import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.model.event.NewFriendEvent;
 import com.study.mingappk.model.event.RefreshFriendList;
 import com.study.mingappk.model.event.ShowSideBarEvent;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.tab2.chat.ChatActivity;
 import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
-import com.study.mingappk.tab2.message.ChatActivity;
 import com.study.mingappk.tab2.newfriend.NewFriendActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,7 +53,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -107,7 +107,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showSideBar(ShowSideBarEvent event) {
-        //通用中，更换主题后，刷新字母快速选择背景颜色
+        //是否显示好友列表，右边导航栏
         if (event.isShow()) {
             mSideBar.setVisibility(View.VISIBLE);
             mSideBar.setBackgroundDrawable(new ColorDrawable(0x00000000));
@@ -357,7 +357,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
                                     .post_DelFriend(auth, mList.get(position).getUid())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Observer<Result>() {
+                                    .subscribe(new Subscriber<Result>() {
                                         @Override
                                         public void onCompleted() {
 

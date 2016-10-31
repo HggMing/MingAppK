@@ -16,10 +16,11 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.LoginApi;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.Login;
-import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.tmain.MainActivity;
 import com.study.mingappk.tmain.register.TestPhoneNumberActivity;
 import com.study.mingappk.tmain.userlogin.facelogin.FaceLoginActivity;
@@ -99,9 +100,7 @@ public class LoginActivity extends Activity {
             loginFailure(point);
             return;
         }
-        MyServiceClient.getService().get_Login(loginname, loginpwd)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        LoginApi.login(loginname, loginpwd)
                 .subscribe(new Subscriber<Login>() {
                     @Override
                     public void onCompleted() {
@@ -130,7 +129,7 @@ public class LoginActivity extends Activity {
                                             vidInfoBean.getVillage_name();//店长村详细地址
                                     Hawk.chain()
                                             .put(APP.MANAGER_ADDRESS, vName)
-                                            .put(APP.MANAGER_VID,key_vid)
+                                            .put(APP.MANAGER_VID, key_vid)
                                             .commit();
                                 }
                             }

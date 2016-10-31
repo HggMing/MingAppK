@@ -27,9 +27,9 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.app.ThemeHelper;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.StringTools;
-import com.study.mingappk.common.views.CustomItem;
-import com.study.mingappk.common.views.dialog.CardPickerDialog;
-import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.common.widgets.CustomItem;
+import com.study.mingappk.common.widgets.dialog.CardPickerDialog;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.ApplyInfo;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.UserInfo;
@@ -37,7 +37,7 @@ import com.study.mingappk.model.database.MyDB;
 import com.study.mingappk.model.event.ChangeThemeColorEvent;
 import com.study.mingappk.model.event.ShopApplyPassEvent;
 import com.study.mingappk.model.event.UpdataShopOwnerHeadEvent;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.tab4.applyshoper.ApplyShopOwnerActivity;
 import com.study.mingappk.tab4.applyshoper.MyShopActivity;
 import com.study.mingappk.tab4.applyshoper.ShowApplyingActivity;
@@ -395,7 +395,7 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
                     .get_IsApply(auth, vid)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<ApplyInfo>() {
+                    .subscribe(new Subscriber<ApplyInfo>() {
                         @Override
                         public void onCompleted() {
 

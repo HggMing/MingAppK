@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
-import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
+import com.study.mingappk.common.widgets.gallerfinal.model.PhotoInfo;
 
 import java.util.List;
 

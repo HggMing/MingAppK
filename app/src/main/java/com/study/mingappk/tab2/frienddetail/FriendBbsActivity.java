@@ -14,11 +14,11 @@ import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.model.bean.BBSList;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.tab3.villagebbs.VillageBbsActivity;
 import com.study.mingappk.tab3.villagebbs.VillageBbsAdapter;
 import com.study.mingappk.tab3.villagebbs.bbsdetail.BbsDetailActivity;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.common.base.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;

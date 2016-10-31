@@ -40,7 +40,7 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <com.study.mingappk.common.views.gallerfinal.widget.GFViewPager
+    <com.study.mingappk.common.widgets.gallerfinal.widget.GFViewPager
         android:id="@+id/vp_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -14,13 +14,12 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.CheckPhone;
 import com.study.mingappk.model.bean.ResultOther;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
 
 import java.io.IOException;
 
 import butterknife.Bind;
-import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
@@ -140,7 +139,7 @@ public class SafeSettingActivity extends BackActivity {
                         .get_IsSetPWD(auth)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<ResultOther>() {
+                        .subscribe(new Subscriber<ResultOther>() {
                             @Override
                             public void onCompleted() {
 

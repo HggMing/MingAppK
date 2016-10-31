@@ -18,9 +18,9 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tab2.message.ChatActivity;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.tab2.chat.ChatActivity;
+import com.study.mingappk.common.base.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,7 +234,7 @@ public class FriendDetailActivity extends BackActivity {
                             .get_AddFriendRequest(auth, phone)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Observer<Result>() {
+                            .subscribe(new Subscriber<Result>() {
                                 @Override
                                 public void onCompleted() {
 

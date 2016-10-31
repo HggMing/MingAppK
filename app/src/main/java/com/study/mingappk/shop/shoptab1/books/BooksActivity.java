@@ -3,7 +3,7 @@ package com.study.mingappk.shop.shoptab1.books;
 import android.os.Bundle;
 
 import com.study.mingappk.R;
-import com.study.mingappk.tmain.baseactivity.TabsActivity;
+import com.study.mingappk.common.base.TabsActivity;
 
 public class BooksActivity extends TabsActivity {
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.study.mingappk.R;
 import com.study.mingappk.model.bean.QueryVillageList;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

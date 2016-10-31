@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.model.bean.ZanList;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -132,7 +132,7 @@
             android:textSize="16sp" />
     </FrameLayout>
 
-    <com.study.mingappk.common.views.gallerfinal.widget.FloatingActionButton
+    <com.study.mingappk.common.widgets.gallerfinal.widget.FloatingActionButton
         android:id="@+id/fab_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -3,7 +3,7 @@ package com.study.mingappk.tab4.applyshoper;
 import android.os.Bundle;
 
 import com.study.mingappk.R;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.common.base.BackActivity;
 
 public class MyShopActivity extends BackActivity {
 

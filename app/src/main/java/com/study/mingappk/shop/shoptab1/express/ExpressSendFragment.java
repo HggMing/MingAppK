@@ -20,12 +20,12 @@ import android.widget.TextView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.MyItemDecoration2;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.ExpressList;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -116,7 +116,7 @@ public class ExpressSendFragment extends Fragment implements BaseRecyclerViewAda
                         }
                     })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<ExpressList.DataBean.ListBean>() {
+                    .subscribe(new Subscriber<ExpressList.DataBean.ListBean>() {
                         @Override
                         public void onCompleted() {
                             if (mList0.isEmpty()) {
@@ -157,7 +157,7 @@ public class ExpressSendFragment extends Fragment implements BaseRecyclerViewAda
                         }
                     })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<ExpressList.DataBean.ListBean>() {
+                    .subscribe(new Subscriber<ExpressList.DataBean.ListBean>() {
                         @Override
                         public void onCompleted() {
                             if (mList1.isEmpty()) {

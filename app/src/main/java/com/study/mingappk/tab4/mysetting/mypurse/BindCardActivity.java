@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,22 +12,19 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.bilibili.magicasakura.utils.ThemeUtils;
-import com.melnykov.fab.FloatingActionButton;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.dialog.MyDialog;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.AddListActivity;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.CardList;
 import com.study.mingappk.model.bean.Result;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.AddListActivity;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -60,7 +55,7 @@ public class BindCardActivity extends AddListActivity {
                 .get_CardList(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CardList>() {
+                .subscribe(new Subscriber<CardList>() {
                     @Override
                     public void onCompleted() {
 
@@ -160,7 +155,7 @@ public class BindCardActivity extends AddListActivity {
                                             .post_DelCard(auth, data.getId())
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(new Observer<Result>() {
+                                            .subscribe(new Subscriber<Result>() {
                                                 @Override
                                                 public void onCompleted() {
 

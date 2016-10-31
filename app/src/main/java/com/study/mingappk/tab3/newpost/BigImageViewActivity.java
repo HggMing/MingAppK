@@ -14,7 +14,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.views.gallerfinal.model.PhotoInfo;
+import com.study.mingappk.common.widgets.gallerfinal.model.PhotoInfo;
 
 import java.util.List;
 

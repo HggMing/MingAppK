@@ -21,20 +21,19 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.alipay.PayUtils;
-import com.study.mingappk.model.bean.InsuranceOrderList;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
+import com.study.mingappk.common.widgets.alipay.PayUtils;
 import com.study.mingappk.model.bean.SalesOrderList;
-import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.shop.shoptab1.books.NoDecoration;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -141,7 +140,7 @@ public class SalesOrderActivity extends BackActivity {
                 .get_SalesOrderList(auth, page, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<SalesOrderList>() {
+                .subscribe(new Subscriber<SalesOrderList>() {
                     @Override
                     public void onCompleted() {
                         mRefreshLayout.setRefreshing(false);

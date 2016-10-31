@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.study.mingappk.R;
 import com.study.mingappk.model.bean.NewsList;
-import com.study.mingappk.tmain.baseactivity.BaseRecyclerViewAdapter;
+import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

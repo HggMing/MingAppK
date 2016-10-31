@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,18 +28,16 @@ import com.bilibili.magicasakura.widgets.TintImageView;
 import com.bilibili.magicasakura.widgets.TintTextView;
 import com.google.gson.Gson;
 import com.igexin.sdk.PushManager;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.OtherApi;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.utils.BaseTools;
-import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.AddFriendRequest;
 import com.study.mingappk.model.bean.EbankWifiConnect;
-import com.study.mingappk.model.bean.IpPort;
 import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.bean.ShareMsg;
-import com.study.mingappk.model.bean.UserInfoByPhone;
 import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.model.database.FriendsModel;
 import com.study.mingappk.model.database.InstantMsgModel;
@@ -51,12 +48,10 @@ import com.study.mingappk.model.event.InstantMsgEvent;
 import com.study.mingappk.model.event.NewFriendEvent;
 import com.study.mingappk.model.event.RefreshTab1Event;
 import com.study.mingappk.model.event.ShopApplyPassEvent;
-import com.study.mingappk.model.event.ShowSideBarEvent;
-import com.study.mingappk.model.service.MyServiceClient;
 import com.study.mingappk.shop.MyShopFragment;
-import com.study.mingappk.tab1.Tab1Fragment;
-import com.study.mingappk.tab2.frienddetail.FriendDetailActivity;
-import com.study.mingappk.tab2.friendlist.FriendListFragment;
+import com.study.mingappk.tab1.WebFragment;
+import com.study.mingappk.tab2.friendlist.FriendListActivity;
+import com.study.mingappk.tab2.message.MessageFragment;
 import com.study.mingappk.tab3.villagelist.VillageListFragment;
 import com.study.mingappk.tab4.SettingFragment;
 
@@ -71,10 +66,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
@@ -113,16 +106,6 @@ public class MainActivity extends AppCompatActivity {
     TextView toolbarTitle;
     @Bind(R.id.badge)
     TextView badge;
-    @Bind(R.id.badge2)
-    TextView badge2;
-    @Bind(R.id.search_view)
-    MaterialSearchView searchView;
-    @Bind(R.id.text_search)
-    TintTextView textSearch;
-    @Bind(R.id.click_search)
-    LinearLayout clickSearch;
-    @Bind(R.id.search_page)
-    LinearLayout searchPage;
     @Bind(R.id.img_tab5_main_1)
     TintImageView mTab51;
     @Bind(R.id.img_tab5_main_0)
@@ -140,8 +123,6 @@ public class MainActivity extends AppCompatActivity {
     private int idToolbar = 1;//toolbar 功能按钮页
     private boolean isFirstRun;//是否初次运行
 
-    private String searchText;
-    private String auth;
     private int isShopOwner;//是否是店长,1是0不是
 
     @Override
@@ -154,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
 
         initView();
-        //设置搜索好友
-        configSearch();
         //登录后，向后台获取消息
         getMessageList(this);
         //WiFi连接到ebank网络的认证
@@ -163,18 +142,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void autoConnect() {
-        MyServiceClient.getService()
-                .get_IpPort()
-                .flatMap(new Func1<IpPort, Observable<EbankWifiConnect>>() {
-                    @Override
-                    public Observable<EbankWifiConnect> call(IpPort ipPort) {
-                        return MyServiceClient.getService()
-                                .get_EbankWifiConnect(ipPort.getIp(), ipPort.getPort(), ipPort.getMac(), auth);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<EbankWifiConnect>() {
+        OtherApi.ebankWifiConnect()
+                .subscribe(new Subscriber<EbankWifiConnect>() {
                     @Override
                     public void onCompleted() {
 
@@ -193,44 +162,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void configSearch() {
-        //是否使用语音搜索
-        searchView.setVoiceSearch(false);
-        //自定义光标
-        searchView.setCursorDrawable(R.drawable.custom_cursor);
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-//                Toast.makeText(FollowVillageActivity.this, "搜索提交", Toast.LENGTH_SHORT).show();
-                searchFriend(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-//                Toast.makeText(MainActivity.this, "搜索文字改变", Toast.LENGTH_SHORT).show();
-                textSearch.setText(newText);
-                searchText = newText;
-                return false;
-            }
-        });
-
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-//                Toast.makeText(MainActivity.this, "搜索打开", Toast.LENGTH_SHORT).show();
-                viewPager.setVisibility(View.GONE);
-                searchPage.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onSearchViewClosed() {
-//                Toast.makeText(MainActivity.this, "搜索关闭", Toast.LENGTH_SHORT).show();
-                viewPager.setVisibility(View.VISIBLE);
-                searchPage.setVisibility(View.GONE);
-            }
-        });
-    }
 
     /**
      * 获取消息，并本地保存，发出通知
@@ -244,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 .get_MessageList(me_uid, "yxj", 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MessageList>() {
+                .subscribe(new Subscriber<MessageList>() {
                     @Override
                     public void onCompleted() {
 
@@ -300,9 +231,9 @@ public class MainActivity extends AppCompatActivity {
                                         Gson gson = new Gson();
                                         ShareMsg shareMsg = gson.fromJson(jsonString, ShareMsg.class);
 
-                                        chatMsg.setTxt("[分享]:\""+shareMsg.getTitle()+"\"的帖子");
+                                        chatMsg.setTxt("[分享]:\"" + shareMsg.getTitle() + "\"的帖子");
 
-                                        chatMsg.setShareMsg(shareMsg.getTitle(),shareMsg.getDetail(),shareMsg.getImage(),shareMsg.getLink());
+                                        chatMsg.setShareMsg(shareMsg.getTitle(), shareMsg.getDetail(), shareMsg.getImage(), shareMsg.getLink());
                                         break;
                                     default:
                                         chatMsg.setTxt(lBean.getTxt());//类型：文字
@@ -373,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
         isShopOwner = 1;
         tab5Layout.setVisibility(View.VISIBLE);
 
-        fragments.add(2, new MyShopFragment());
+        fragments.add(3, new MyShopFragment());
         viewPager.setAdapter(new MyPagerAdapter());
         viewPager.setCurrentItem(4, true);
 
@@ -390,15 +321,15 @@ public class MainActivity extends AppCompatActivity {
         isShopOwner = Hawk.get(APP.IS_SHOP_OWNER);
 
 
-        fragments.add(new Tab1Fragment());
-        fragments.add(new FriendListFragment());
+        fragments.add(new WebFragment());
+        fragments.add(new MessageFragment());
+        fragments.add(new VillageListFragment());
         if (isShopOwner == 1) {
             fragments.add(new MyShopFragment());
             tab5Layout.setVisibility(View.VISIBLE);
         } else {
             tab5Layout.setVisibility(View.GONE);
         }
-        fragments.add(new VillageListFragment());
         fragments.add(new SettingFragment());
 
         fragmentManager = this.getSupportFragmentManager();
@@ -419,17 +350,15 @@ public class MainActivity extends AppCompatActivity {
                 tab3Guide.setVisibility(View.VISIBLE);
                 Hawk.put(APP.IS_FIRST_RUN, false);
             } else {
-                toolbarTitle.setText(getResources().getText(R.string.tab1_main));
+                toolbarTitle.setText(getResources().getText(R.string.tab1_main_1));
             }
         } else {
-            toolbarTitle.setText(getResources().getText(R.string.tab1_main));
+            toolbarTitle.setText(getResources().getText(R.string.tab1_main_1));
         }
-
-        auth = Hawk.get(APP.USER_AUTH);
     }
 
     /**
-     * 接收到消息，更新tab1处消息徽章计数
+     * 接收到消息，更新tab2处消息徽章计数
      *
      * @param event
      */
@@ -444,38 +373,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 接收到新的朋友请求消息，更新tab2处消息徽章计数
-     *
-     * @param event
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void showCount2(NewFriendEvent event) {
-        List<NewFriendModel> nFriends = MyDB.getQueryAll(NewFriendModel.class);
-        int count = 0;
-        for (NewFriendModel nFriend : nFriends) {
-            count += nFriend.getCount();
-        }
-        if (count > 0) {
-            badge2.setVisibility(View.VISIBLE);
-            badge2.setText(String.valueOf(count));
-        } else {
-            badge2.setVisibility(View.GONE);
-        }
-    }
-
-    @OnClick({R.id.tab3_guide, R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout, R.id.tab5Layout, R.id.click_search})
+    //    /**
+//     * 接收到新的朋友请求消息，更新tab2处消息徽章计数
+//     *
+//     * @param event 3
+//     */
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void showCount2(NewFriendEvent event) {
+//        List<NewFriendModel> nFriends = MyDB.getQueryAll(NewFriendModel.class);
+//        int count = 0;
+//        for (NewFriendModel nFriend : nFriends) {
+//            count += nFriend.getCount();
+//        }
+//        if (count > 0) {
+//            badge2.setVisibility(View.VISIBLE);
+//            badge2.setText(String.valueOf(count));
+//        } else {
+//            badge2.setVisibility(View.GONE);
+//        }
+//    }
+    @OnClick({R.id.tab3_guide, R.id.tab1Layout, R.id.tab2Layout, R.id.tab3Layout, R.id.tab4Layout, R.id.tab5Layout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tab3_guide://点击新用户引导
                 tab3Guide.setVisibility(View.GONE);
-                break;
-            case R.id.click_search://点击搜索好友
-                if (!StringTools.isEmpty(searchText)) {
-                    searchFriend(searchText);
-                    //关闭输入法
-                    BaseTools.closeInputMethod(this);
-                }
                 break;
             case R.id.tab1Layout:
                 viewPager.setCurrentItem(0);//选中index页
@@ -484,11 +405,7 @@ public class MainActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.tab3Layout:
-                if (isShopOwner == 0) {
-                    viewPager.setCurrentItem(2);
-                } else {
-                    viewPager.setCurrentItem(3);
-                }
+                viewPager.setCurrentItem(2);
                 break;
             case R.id.tab4Layout:
                 if (isShopOwner == 0) {
@@ -497,48 +414,12 @@ public class MainActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(4);
                 }
                 break;
-            case R.id.tab5Layout:
-                viewPager.setCurrentItem(2);
+            case R.id.tab5Layout://我的店
+                viewPager.setCurrentItem(3);
                 break;
         }
     }
 
-    /**
-     * 查询用户（输入手机号），以便添加为好友
-     *
-     * @param searchText
-     */
-    private void searchFriend(String searchText) {
-//        Toast.makeText(MainActivity.this, "搜索："+searchText, Toast.LENGTH_SHORT).show();
-        MyServiceClient.getService()
-                .get_UserInfoByPhone(auth, searchText)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<UserInfoByPhone>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(UserInfoByPhone userInfoByPhone) {
-                        if (userInfoByPhone.getErr() == 0) {
-                            String uid = userInfoByPhone.getData().getUid();
-                            Intent intent = new Intent(MainActivity.this, FriendDetailActivity.class);
-                            intent.putExtra(FriendDetailActivity.FRIEND_UID, uid);
-                            startActivity(intent);
-                            searchView.closeSearch();
-                        } else {//没有查找到
-                            Toast.makeText(MainActivity.this, userInfoByPhone.getMsg(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
 
     /**
      * 页卡切换监听,点击改变图标外观
@@ -549,8 +430,8 @@ public class MainActivity extends AppCompatActivity {
             int themeColor = ThemeUtils.getColorById(MainActivity.this, R.color.theme_color_primary);
             ColorStateList colorStateList = ThemeUtils.getThemeColorStateList(MainActivity.this, R.color.theme_color_primary);
             switch (arg0) {
-                case 0://动态
-                    toolbarTitle.setText(R.string.tab1_main);
+                case 0://首页
+                    toolbarTitle.setText(R.string.tab1_main_1);
                     idToolbar = 1;
 
                     tTab1.setTextColor(themeColor);   //选中时的字体颜色
@@ -561,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     setTab5ToB();
                     break;
-                case 1://老乡
+                case 1://消息
                     toolbarTitle.setText(R.string.tab2_main);
                     idToolbar = 2;
 
@@ -573,17 +454,29 @@ public class MainActivity extends AppCompatActivity {
                     setTab4ToB();
                     setTab5ToB();
                     break;
-                case 2://店长：我的店；普通：我的村
-                    if (isShopOwner == 0) {//普通：我的村
-                        toolbarTitle.setText(R.string.tab3_main);
-                        idToolbar = 3;
+                case 2://我的村
+                    toolbarTitle.setText(R.string.tab3_main);
+                    idToolbar = 3;
 
-                        tTab3.setTextColor(themeColor);
-                        mTab31.setVisibility(View.VISIBLE);
-                        mTab30.setVisibility(View.GONE);
+                    tTab3.setTextColor(themeColor);
+                    mTab31.setVisibility(View.VISIBLE);
+                    mTab30.setVisibility(View.GONE);
+                    setTab1ToB();
+                    setTab2ToB();
+                    setTab4ToB();
+                    setTab5ToB();
+                    break;
+                case 3://店长：我的店；普通：设置
+                    if (isShopOwner == 0) {//普通：设置
+                        toolbarTitle.setText(R.string.tab4_main);
+                        idToolbar = 4;
+
+                        tTab4.setTextColor(themeColor);
+                        mTab41.setVisibility(View.VISIBLE);
+                        mTab40.setVisibility(View.GONE);
                         setTab1ToB();
                         setTab2ToB();
-                        setTab4ToB();
+                        setTab3ToB();
                         setTab5ToB();
                     } else {//店长：我的店
                         toolbarTitle.setText(R.string.tab5_main);
@@ -596,31 +489,6 @@ public class MainActivity extends AppCompatActivity {
                         setTab2ToB();
                         setTab3ToB();
                         setTab4ToB();
-                    }
-                    break;
-                case 3:
-                    if (isShopOwner == 0) {//普通：设置
-                        toolbarTitle.setText(R.string.tab4_main);
-                        idToolbar = 4;
-
-                        tTab4.setTextColor(themeColor);
-                        mTab41.setVisibility(View.VISIBLE);
-                        mTab40.setVisibility(View.GONE);
-                        setTab1ToB();
-                        setTab2ToB();
-                        setTab3ToB();
-                        setTab5ToB();
-                    } else {//店长：我的村
-                        toolbarTitle.setText(R.string.tab3_main);
-                        idToolbar = 3;
-
-                        tTab3.setTextColor(themeColor);
-                        mTab31.setVisibility(View.VISIBLE);
-                        mTab30.setVisibility(View.GONE);
-                        setTab1ToB();
-                        setTab2ToB();
-                        setTab4ToB();
-                        setTab5ToB();
                     }
                     break;
                 case 4://仅店长：设置
@@ -680,10 +548,10 @@ public class MainActivity extends AppCompatActivity {
                 case 0://什么都没做
                     break;
                 case 1://正在滑动
-                    EventBus.getDefault().post(new ShowSideBarEvent(false));
+//                    EventBus.getDefault().post(new ShowSideBarEvent(false));
                     break;
                 case 2://滑动完毕了
-                    EventBus.getDefault().post(new ShowSideBarEvent(true));
+//                    EventBus.getDefault().post(new ShowSideBarEvent(true));
                     break;
             }
         }
@@ -761,42 +629,41 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
         return true;
     }
 
-    /* @Override
-   public boolean onOptionsItemSelected(MenuItem item) {
-       int id = item.getItemId();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
-       if (id == R.id.action_follow) {
-           Intent intent = new Intent(this, FollowVillageActivity.class);
-           startActivityForResult(intent,0);
-           return true;
-       }
-       return super.onOptionsItemSelected(item);
-   }*/
+        if (id == R.id.action_friendlist) {
+            Intent intent = new Intent(this, FriendListActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         switch (idToolbar) {
-            case 2://添加好友
-                menu.findItem(R.id.action_search).setVisible(true);
+            case 2://消息页面，进入好友列表
+                menu.findItem(R.id.action_friendlist).setVisible(true);
                 menu.findItem(R.id.action_follow).setVisible(false);
                 menu.findItem(R.id.action_theme).setVisible(false);
                 break;
-            case 3://关注村圈
-                menu.findItem(R.id.action_search).setVisible(false);
+            case 3://村圈页面，进入关注村圈
+                menu.findItem(R.id.action_friendlist).setVisible(false);
                 menu.findItem(R.id.action_follow).setVisible(true);
                 menu.findItem(R.id.action_theme).setVisible(false);
                 break;
-            case 4://主题切换
-                menu.findItem(R.id.action_search).setVisible(false);
+            case 4://设置页面，进入主题切换
+                menu.findItem(R.id.action_friendlist).setVisible(false);
                 menu.findItem(R.id.action_follow).setVisible(false);
                 menu.findItem(R.id.action_theme).setVisible(true);
                 break;
-            default:
-                menu.findItem(R.id.action_search).setVisible(false);
+            default://其他页面，无快捷按钮
+                menu.findItem(R.id.action_friendlist).setVisible(false);
                 menu.findItem(R.id.action_follow).setVisible(false);
                 menu.findItem(R.id.action_theme).setVisible(false);
                 break;
@@ -806,9 +673,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (searchView.isSearchOpen()) {
-            searchView.closeSearch();
-        } else if (!isExit) {
+        if (!isExit) {
             isExit = true;
             Toast.makeText(getApplicationContext(), "再按一次退出程序",
                     Toast.LENGTH_SHORT).show();

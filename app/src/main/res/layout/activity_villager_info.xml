@@ -56,7 +56,7 @@
                 android:background="@color/stand_bg"
                 android:orientation="vertical">
 
-                <com.study.mingappk.common.views.CustomItem
+                <com.study.mingappk.common.widgets.CustomItem
                     android:id="@+id/click_cj"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
 
                 <include layout="@layout/divide_1_12" />
 
-                <com.study.mingappk.common.views.CustomItem
+                <com.study.mingappk.common.widgets.CustomItem
                     android:id="@+id/click_jk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
 
                 <include layout="@layout/divide_1_12" />
 
-                <com.study.mingappk.common.views.CustomItem
+                <com.study.mingappk.common.widgets.CustomItem
                     android:id="@+id/click_xy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
 
                 <include layout="@layout/divide_1_12" />
 
-                <com.study.mingappk.common.views.CustomItem
+                <com.study.mingappk.common.widgets.CustomItem
                     android:id="@+id/click_xt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide;
 import com.study.mingappk.R;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.MyVillUsers;
-import com.study.mingappk.model.service.MyServiceClient;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.app.api.service.MyServiceClient;
+import com.study.mingappk.common.base.BackActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

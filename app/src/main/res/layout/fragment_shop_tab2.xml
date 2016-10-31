@@ -10,7 +10,7 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp">
 
-        <com.study.mingappk.common.views.MyShopItem
+        <com.study.mingappk.common.widgets.MyShopItem
             android:id="@+id/item_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
 
-            <com.study.mingappk.common.views.MyShopItem
+            <com.study.mingappk.common.widgets.MyShopItem
                 android:id="@+id/item_3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:layout_width="8dp"
                 android:layout_height="match_parent" />
 
-            <com.study.mingappk.common.views.MyShopItem
+            <com.study.mingappk.common.widgets.MyShopItem
                 android:id="@+id/item_4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="8dp">
 
-            <com.study.mingappk.common.views.MyShopItem
+            <com.study.mingappk.common.widgets.MyShopItem
                 android:id="@+id/item_5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                 android:layout_width="8dp"
                 android:layout_height="match_parent" />
 
-            <com.study.mingappk.common.views.MyShopItem
+            <com.study.mingappk.common.widgets.MyShopItem
                 android:id="@+id/item_6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

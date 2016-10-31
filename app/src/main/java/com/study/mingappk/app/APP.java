@@ -5,12 +5,15 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.util.Log;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
 import com.study.mingappk.R;
+import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.TbsListener;
 
 public class APP extends Application implements ThemeUtils.switchColor {
     //存储目录路径
@@ -36,7 +39,6 @@ public class APP extends Application implements ThemeUtils.switchColor {
     public static final String MANAGER_VID = "manager_village_id";//存储店长用户的村店地址，注销登录时须清空。
 
 
-
     /**
      * 单例模式中获取唯一的Application实例
      */
@@ -50,7 +52,7 @@ public class APP extends Application implements ThemeUtils.switchColor {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        //
+        //主题切换初始化
         ThemeUtils.setSwitchColor(this);
         //用于存储
         Hawk.init(this)
@@ -58,6 +60,42 @@ public class APP extends Application implements ThemeUtils.switchColor {
                 .setStorage(HawkBuilder.newSharedPrefStorage(this))//储存方式，sp或sqlite，这里设置sp
                 .setLogLevel(LogLevel.FULL)//设置日志
                 .build();
+        //集成腾讯TBS浏览器SDK，初始化
+        settingTBS();
+    }
+
+    private void settingTBS() {
+        //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
+        //TbsDownloader.needDownload(getApplicationContext(), false);
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                // TODO Auto-generated method stub
+                Log.e("apptbs", " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+                // TODO Auto-generated method stub
+            }
+        };
+        QbSdk.setTbsListener(new TbsListener() {
+            @Override
+            public void onDownloadFinish(int i) {
+                Log.d("apptbs", "onDownloadFinish");
+            }
+
+            @Override
+            public void onInstallFinish(int i) {
+                Log.d("apptbs", "onInstallFinish");
+            }
+
+            @Override
+            public void onDownloadProgress(int i) {
+                Log.d("apptbs", "onDownloadProgress:" + i);
+            }
+        });
+        QbSdk.initX5Environment(getApplicationContext(), cb);
     }
 
     //*******************************************主题相关配置

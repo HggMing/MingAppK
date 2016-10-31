@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.model.service.MyServiceClient;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.model.bean.A1Provice;
 import com.study.mingappk.model.bean.A2City;
 import com.study.mingappk.model.bean.A3County;
@@ -27,7 +27,7 @@ import com.study.mingappk.model.bean.A4Town;
 import com.study.mingappk.model.bean.A5Village;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.tab4.applyshoper.ApplyShopOwnerActivity;
-import com.study.mingappk.tmain.baseactivity.BackActivity;
+import com.study.mingappk.common.base.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -13,12 +13,12 @@ import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
-import com.study.mingappk.common.views.gallerfinal.CoreConfig;
-import com.study.mingappk.common.views.gallerfinal.FunctionConfig;
-import com.study.mingappk.common.views.gallerfinal.ImageLoader;
-import com.study.mingappk.common.views.gallerfinal.PauseOnScrollListener;
-import com.study.mingappk.common.views.gallerfinal.ThemeConfig;
-import com.study.mingappk.common.views.gallerfinal.widget.GFImageView;
+import com.study.mingappk.common.widgets.gallerfinal.CoreConfig;
+import com.study.mingappk.common.widgets.gallerfinal.FunctionConfig;
+import com.study.mingappk.common.widgets.gallerfinal.ImageLoader;
+import com.study.mingappk.common.widgets.gallerfinal.PauseOnScrollListener;
+import com.study.mingappk.common.widgets.gallerfinal.ThemeConfig;
+import com.study.mingappk.common.widgets.gallerfinal.widget.GFImageView;
 
 import java.io.File;
 
@@ -28,6 +28,7 @@ import java.io.File;
  * Created by Ming on 2016/3/22.
  */
 public class MyGallerFinal {
+
     //设置主题
 
     //获取当前app主题的颜色
@@ -43,7 +44,7 @@ public class MyGallerFinal {
             .setFabPressedColor(themeColor2)//设置Floating按钮Pressed状态颜色
 //            .setCheckNornalColor(Color.WHITE)//选择框未选颜色
             .setTitleBarTextColor(Color.WHITE)//标题栏文本字体颜色
-            .setIconBack(R.mipmap.app_back)//设置返回按钮icon
+            .setIconBack(R.mipmap.ic_toolbar_back)//设置返回按钮icon
             .setIconRotate(R.mipmap.ic_action_repeat)//设置旋转icon
             .setIconCrop(R.mipmap.ic_action_crop)//设置裁剪icon
             .setIconCamera(R.mipmap.ic_action_camera)//设置相机icon
