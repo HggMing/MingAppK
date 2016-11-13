@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
@@ -34,6 +35,7 @@ public class AddListActivity extends BackActivity {
 
     private void config() {
         //设置fab
+        fab.setVisibility(View.VISIBLE);
         fab.attachToRecyclerView(mXRecyclerView);//fab随recyclerView的滚动，隐藏和出现
         int themeColor = ThemeUtils.getColorById(this, R.color.theme_color_primary);
         int themeColor2 = ThemeUtils.getColorById(this, R.color.theme_color_primary_dark);

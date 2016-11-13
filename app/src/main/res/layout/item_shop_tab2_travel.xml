@@ -70,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="信息："
-                        android:textColor="@color/font_black_comment"
+                        android:textColor="@color/font_black_6"
                         android:textSize="@dimen/textsize_normal" />
 
                     <TextView
@@ -80,7 +80,7 @@
                         android:layout_marginRight="10dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:textColor="@color/font_black_comment"
+                        android:textColor="@color/font_black_6"
                         android:textSize="@dimen/textsize_normal"
                         tools:text="大家富士康对焦对焦方康对焦对焦方康对焦对焦方康对焦方康对焦方康对焦方康对焦方康对焦方式" />
                 </LinearLayout>
@@ -93,7 +93,7 @@
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="姓名：旋风哥" />
 
@@ -105,7 +105,7 @@
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="电话：199xxxxxxxx" />
 
@@ -117,7 +117,7 @@
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="费用：￥199.99" />
 
@@ -129,7 +129,7 @@
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="时间：xxxx-xx-xx" />
             </LinearLayout>

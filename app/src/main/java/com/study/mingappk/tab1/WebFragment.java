@@ -1,23 +1,26 @@
 package com.study.mingappk.tab1;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.webkit.JavascriptInterface;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.bilibili.magicasakura.widgets.TintProgressBar;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.app.api.service.MyServiceClient;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
@@ -27,6 +30,7 @@ import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 主页
@@ -36,9 +40,12 @@ public class WebFragment extends Fragment {
     WebView webView;
     @Bind(R.id.progressBar)
     TintProgressBar progressBar;
+    @Bind(R.id.content_empty)
+    TextView contentEmpty;
 
-    AppCompatActivity mActivity;
     private String auth;
+    AppCompatActivity mActivity;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +69,7 @@ public class WebFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initData() {
         //添加进度条
         webView.setWebChromeClient(new MyWebChromeClient());
@@ -79,21 +87,36 @@ public class WebFragment extends Fragment {
         webView.addJavascriptInterface(new Object() {
             @JavascriptInterface
             public void closetouch() {
-                Toast.makeText(mActivity, "关闭", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, "关闭滑动", Toast.LENGTH_SHORT).show();
+                webView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        return false;
+                    }
+                });
             }
 
+            @JavascriptInterface
             public void opentouch() {
-                Toast.makeText(mActivity, "打开", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, "打开滑动", Toast.LENGTH_SHORT).show();
+                webView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        return false;
+                    }
+                });
             }
-        }, "android");
+        }, "mingapk");
 
 //        webView.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
 //                switch (event.getAction()) {
 //                    case MotionEvent.ACTION_MOVE:
-//                        v.getParent().requestDisallowInterceptTouchEvent(true);
-//                        break;
+//                            v.getParent().requestDisallowInterceptTouchEvent(true);
+//                            break;
 //                    case MotionEvent.ACTION_UP:
 //                    case MotionEvent.ACTION_CANCEL:
 //                        v.getParent().requestDisallowInterceptTouchEvent(false);
@@ -112,19 +135,34 @@ public class WebFragment extends Fragment {
         webView.loadUrl("javascript:(function(){"
                 + "var objs = $('.lunboBox'); " //轮播图片的div容器，
                 + "for(var i=0;i<objs.length;i++)  " + "{"
-                + "    objs[i].ontouchmove=function()  " + "    {  "
-                + "        window.android.closetouch();  "
-                + "   return false; }  "
+                + "    objs[i].ontouchstart=function()  " + "    {  "
+                + "        window.mingapk.opentouch();  "
+                + "   return true; }  "
                 + "}"
 
-                + "var objs = $('body'); "  //点击任何地方 ， 系统开始可以接受滚动
+                + "var objs = $('.lunboBox'); " //轮播图片的div容器，
                 + "for(var i=0;i<objs.length;i++)  " + "{"
-                + "    objs[i].ontouchstart=function()  " + "    {  "
-                + "        window.android.opentouch();  "
-                + "   return false; }  "
+                + "    objs[i].ontouchend=function()  " + "    {  "
+                + "        window.mingapk.closetouch();  "
+                + "   return true; }  "
                 + "}"
+
+//                + "var objs = $('body'); "  //点击任何地方 ， 系统开始可以接受滚动
+//                + "for(var i=0;i<objs.length;i++)  " + "{"
+//                + "    objs[i].ontouchstart=function()  " + "    {  "
+//                + "        window.mingapk.opentouch();  "
+//                + "   return false; }  "
+//                + "}"
 
                 + "})()");
+    }
+
+
+    @OnClick(R.id.content_empty)
+    public void onClick() {
+        webView.reload();//刷新网页
+        contentEmpty.setVisibility(View.GONE);
+        webView.setVisibility(View.VISIBLE);
     }
 
     class MyWebChromeClient extends WebChromeClient {
@@ -168,12 +206,19 @@ public class WebFragment extends Fragment {
             //如果不需要其他对点击链接事件的处理返回true，否则返回false
             return true;
         }
+
         @Override
         public void onPageFinished(WebView view, String url) {
-            view.getSettings().setJavaScriptEnabled(true);
             super.onPageFinished(view, url);
             // html加载完成之后，添加监听图片的点击js函数
             addImageClickListner();
+        }
+
+        @Override
+        public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebViewClient.a a) {
+            super.onReceivedError(webView, webResourceRequest, a);
+            contentEmpty.setVisibility(View.VISIBLE);
+            webView.setVisibility(View.GONE);
         }
     }
 

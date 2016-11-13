@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -20,6 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/theme_color_primary"
+                app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:title="">
 
@@ -35,196 +36,25 @@
             </com.bilibili.magicasakura.widgets.TintToolbar>
         </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="3dp" />
 
-            <LinearLayout
-                android:id="@+id/navigation1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ECF0F2"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:orientation="horizontal"
-                android:visibility="gone">
+        <FrameLayout
+            android:id="@+id/webView1"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <com.study.mingappk.tab1.webutils.X5WebView
+            android:id="@+id/m_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-                <EditText
-                    android:id="@+id/editUrl1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="请输入网址..."
-                    android:maxLines="1"
-                    android:textSize="35px" />
-
-                <Button
-                    android:id="@+id/btnGo1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="3dp"
-                    android:background="#ECF0F2"
-                    android:linksClickable="false"
-                    android:text="GO"
-                    android:textSize="35px"
-                    android:visibility="gone" />
-
-                <ImageButton
-                    android:id="@+id/btnRefresh1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2.5dp"
-                    android:background="#ECF0F2"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:src="@drawable/theme_adrbar_btn_refresh_normal0"
-                    android:visibility="visible" />
-
-            </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/progressBar1"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="3dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:id="@+id/webView1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <RelativeLayout
-                    android:id="@+id/menuMore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="#ECF0FF"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageButton
-                        android:id="@+id/btnClearData"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginTop="2.5dp"
-                        android:background="#ECF0FF"
-                        android:padding="30dp"
-                        android:src="@drawable/theme_toolbar_btn_cleardata_normal0" />
-
-                    <ImageButton
-                        android:id="@+id/btnTestProcesses1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_toRightOf="@+id/btnClearData"
-                        android:background="#ECF0FF"
-                        android:padding="30dp"
-                        android:src="@drawable/theme_toolbar_btn_testprocesses_fg_normal0" />
-
-                    <ImageButton
-                        android:id="@+id/btnTestWebviews1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_toRightOf="@+id/btnTestProcesses1"
-                        android:background="#ECF0FF"
-                        android:padding="30dp"
-                        android:src="@drawable/theme_toolbar_btn_testwebviews_fg_normal0" />
-
-                    <ImageButton
-                        android:id="@+id/btnOpenFile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_toRightOf="@+id/btnTestWebviews1"
-                        android:background="#ECF0FF"
-                        android:padding="30dp"
-                        android:src="@drawable/theme_toolbar_btn_openfile_normal0" />
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/toolbar1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ECF0F2"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <ImageButton
-                    android:id="@+id/btnBack1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2.5dp"
-                    android:layout_weight="1"
-                    android:background="#ECF0F2"
-                    android:padding="10dp"
-                    android:src="@drawable/theme_toolbar_btn_back_fg_normal0" />
-
-                <ImageButton
-                    android:id="@+id/btnForward1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2.5dp"
-                    android:layout_weight="1"
-                    android:background="#ECF0F2"
-                    android:padding="10dp"
-                    android:src="@drawable/theme_toolbar_btn_forward_fg_normal0" />
-
-                <ImageButton
-                    android:id="@+id/btnMore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2.0dp"
-                    android:layout_weight="1"
-                    android:background="#ECF0F2"
-                    android:padding="10dp"
-                    android:src="@drawable/theme_toolbar_btn_menu_fg_normal" />
-
-                <ImageButton
-                    android:id="@+id/btnHome1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2.5dp"
-                    android:layout_weight="1"
-                    android:background="#ECF0F2"
-                    android:padding="10dp"
-                    android:src="@drawable/theme_toolbar_btn_home_fg_normal2" />
-
-                <ImageButton
-                    android:id="@+id/btnExit1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2.5dp"
-                    android:layout_weight="1"
-                    android:background="#ECF0F2"
-                    android:padding="10dp"
-                    android:src="@drawable/theme_menu_btn_quit_fg_normal0" />
-            </LinearLayout>
-
-        </LinearLayout>
-    </android.support.v7.widget.LinearLayoutCompat>
-
-
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
 
 

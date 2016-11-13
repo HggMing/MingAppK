@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/font_black_8"
         android:textSize="16sp"
         android:visibility="gone"
         tools:text="列表无内容时的提示信息" />
@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
         android:src="@mipmap/fab_add"
         app:fab_type="normal" />
 </FrameLayout>

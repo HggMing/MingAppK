@@ -90,7 +90,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="20dp"
                 android:text="温馨提示：\n       钱包密码用于提现和余额支付时使用，请采用与登录密码不同的6位数字。务必牢记此密码。"
-                android:textColor="@color/font_black_9"
+                android:textColor="@color/font_black_8"
                 android:textSize="16sp" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

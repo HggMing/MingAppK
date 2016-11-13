@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/font_black_8"
                     android:textSize="14sp"
                     tools:text="尾号8888" />
             </LinearLayout>
@@ -73,7 +73,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="8dp"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/font_black_8"
             android:textSize="16sp"
             tools:text="当前余额88元" />
 
@@ -112,7 +112,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="15dp"
             android:text="三个工作日内到帐"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/font_black_8"
             android:textSize="16sp" />
 
         <com.bilibili.magicasakura.widgets.TintButton

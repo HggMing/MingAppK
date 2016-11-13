@@ -65,8 +65,6 @@
     <color name="color08_dark">#C62828</color>
     <color name="color08_trans">#99F44336</color>
 
-    <!--BaseActivity页面-->
-    <color name="font_black_9">#999999</color>
     <!--首页tab按钮颜色-->
     <color name="tab_bnt0">#676767</color>
     <!--tab分割线颜色-->
@@ -81,19 +79,20 @@
     <color name="card">#d2ba04</color>
 
     <!--tab4文字-->
-    <color name="font_black_comment">#ff666666</color>
-    <color name="font_black_content">#ff444444</color>
+    <color name="font_black_2">#ff222222</color>
+    <color name="font_black_4">#ff444444</color>
+    <color name="font_black_6">#ff666666</color>
+    <color name="font_black_8">#ff888888</color>
+
     <color name="divide_line">#ffdddddd</color>
     <color name="font_green">#ff3bbd79</color>
     <color name="font_green2">#309b63</color>
     <color name="white_pressed">#ffd5d5d5</color>
-    <color name="font_black_2">#ff222222</color>
     <!--发布消息界面颜色-->
     <color name="input_background">#ffe8e8e8</color>
     <!--about界面-->
     <color name="task_list_head">#ffe4e4e4</color>
     <!--动态页面-->
-    <color name="font_black">#010101</color>
 
     <color name="alpha_village">#46000000</color>
     <!--tab2-->

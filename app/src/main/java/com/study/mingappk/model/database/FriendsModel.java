@@ -7,7 +7,7 @@ import com.litesuits.orm.db.annotation.Unique;
 import com.litesuits.orm.db.enums.AssignType;
 
 /**
- * 好友列表
+ * 好友列表(修改为聊天人员列表包含陌生人，有isFriend区分)
  * Created by Ming on 2016/7/15.
  */
 @Table("friend_list")
@@ -21,14 +21,18 @@ public class FriendsModel extends BaseModel {
     private String uicon;
     @Column("_msg_count")
     private int count;//新消息条数
+    @Column("_is_friend")
+    private boolean isFriend;//新消息条数
+
 
     public FriendsModel() {
     }
 
-    public FriendsModel(String uid, String uname, String uicon) {
+    public FriendsModel(String uid, String uname, String uicon,boolean friend) {
         this.uid = uid;
         this.uicon = uicon;
         this.uname = uname;
+        isFriend = friend;
     }
 
     public String getUid() {
@@ -60,5 +64,13 @@ public class FriendsModel extends BaseModel {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public boolean isFriend() {
+        return isFriend;
+    }
+
+    public void setFriend(boolean friend) {
+        isFriend = friend;
     }
 }

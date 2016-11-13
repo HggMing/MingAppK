@@ -17,7 +17,7 @@
         android:gravity="center_horizontal"
         android:paddingTop="140dp"
         android:text="列表为空，请关注您感兴趣的村！"
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/font_black_8"
         android:textSize="16sp"
         android:visibility="gone" />
 

@@ -1,0 +1,239 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/img_choose_add"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp"
+            android:background="@mipmap/ic_addchoose" />
+
+        <ImageView
+            android:id="@+id/img_edit_add"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp"
+            android:background="@mipmap/ic_addedit" />
+
+        <TextView
+            android:id="@+id/tv_phone_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/img_edit_add"
+            android:layout_toRightOf="@id/img_choose_add"
+            android:textColor="@color/font_black_4"
+            tools:text="1234567890 权柄" />
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_phone_name"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_toLeftOf="@id/img_edit_add"
+            android:layout_toRightOf="@id/img_choose_add"
+            android:textColor="@color/font_black_4"
+            tools:text="大鼎广场" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@mipmap/ic_add_bg" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="#e2e0db" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/m_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ly_pay_yu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackground"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="余额支付"
+                    android:textColor="@color/font_black_4"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_yu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:textColor="@color/font_black_4"
+                        android:textSize="@dimen/textsize_small"
+                        tools:text="账户余额：￥123.45" />
+
+                    <TextView
+                        android:id="@+id/tv_yu_less"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:text="（当前余额不足）"
+                        android:textColor="@color/color08"
+                        android:textSize="@dimen/textsize_small"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <com.bilibili.magicasakura.widgets.TintRadioButton
+                    android:id="@+id/rb_pay_yu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:clickable="false"
+                    app:compoundButtonTint="@color/theme_color_primary"
+                    tools:checked="true" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/divide_line" />
+
+            <LinearLayout
+                android:id="@+id/ly_pay_online"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackground"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="在线支付"
+                    android:textColor="@color/font_black_4"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <com.bilibili.magicasakura.widgets.TintRadioButton
+                    android:id="@+id/rb_pay_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:clickable="false"
+                    app:compoundButtonTint="@color/theme_color_primary"
+                    tools:checked="true" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divide_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="订单详情"
+                android:textColor="@color/font_black_4"
+                android:textSize="@dimen/textsize_normal" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/m_x_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="订单备注"
+                android:textColor="@color/font_black_4"
+                android:textSize="@dimen/textsize_normal" />
+
+            <com.bilibili.magicasakura.widgets.TintEditText
+                android:id="@+id/et_beizhu"
+                style="@style/EditTextStyle_common"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:hint="点击此处给卖家留言"
+                android:minLines="2" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#2e2e2e">
+
+        <TextView
+            android:id="@+id/tv_orderprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_large"
+            tools:text="总价￥0.05" />
+
+        <Button
+            android:id="@+id/btn_commit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="#1e8bc5"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="确认下单"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_large" />
+    </RelativeLayout>
+</LinearLayout>

@@ -134,7 +134,8 @@ public class RegisterActivity extends BackActivity {
                 break;
             case R.id.read:
                 Intent intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra(WebViewActivity.TAG, WebViewActivity.TITLE_NAME1);
+                intent.putExtra(WebViewActivity.KEY_TITLE, WebViewActivity.TITLE_NAME1);
+                intent.putExtra(WebViewActivity.KEY_URL, WebViewActivity.URL_REG1);
                 startActivity(intent);
                 break;
             case R.id.btn_register:

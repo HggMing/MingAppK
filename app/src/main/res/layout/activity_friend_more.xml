@@ -43,7 +43,7 @@
                     android:layout_toRightOf="@id/icon_head"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:textColor="@color/font_black_content"
+                    android:textColor="@color/font_black_4"
                     android:textSize="18sp"
                     tools:drawableRight="@mipmap/ic_sex_boy"
                     tools:text="备注名" />
@@ -144,7 +144,7 @@
                     android:paddingBottom="280dp"
                     android:paddingTop="140dp"
                     android:text="暂无更多信息"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/font_black_8"
                     android:textSize="16sp"
                     android:visibility="gone" />
             </FrameLayout>

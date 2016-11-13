@@ -28,7 +28,7 @@
         android:layout_toRightOf="@id/user_head"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/font_black_content"
+        android:textColor="@color/font_black_4"
         tools:text="昨日像那东流水" />
 
     <TextView

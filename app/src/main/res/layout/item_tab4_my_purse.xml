@@ -28,7 +28,7 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/font_black_8"
             android:textSize="12sp"
             tools:text="07月07日 13:14" />
     </LinearLayout>
@@ -46,7 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/font_black_8"
             android:textSize="14sp"
             tools:text="手机充值奖励" />
 
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="元"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/font_black_8"
             android:textSize="14sp" />
     </LinearLayout>
 

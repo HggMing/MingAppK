@@ -1,42 +1,39 @@
 package com.study.mingappk.tab1;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Process;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
+import android.view.WindowManager;
+import android.webkit.JavascriptInterface;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
+import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.base.BaseActivity;
+import com.study.mingappk.common.widgets.alipay.PayUtils;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
+import com.study.mingappk.model.bean.OrderInfo;
 import com.study.mingappk.tab1.webutils.X5WebView;
+import com.study.mingappk.tab2.chat.ChatActivity;
+import com.study.mingappk.tab3.product.ProductListActivity;
+import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.DownloadListener;
-import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
@@ -46,43 +43,26 @@ import com.tencent.smtt.sdk.WebViewClient;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-//import android.util.Log;
-//import com.tencent.smtt.utils.TbsLog;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 
 public class BrowserActivity extends BaseActivity {
     public static String KEY_URL = "key_url";
     TextView toolbarTitle;
     Toolbar toolbar;
-    /**
-     * 作为一个浏览器的示例展示出来，采用android+web的模式
-     */
-    private X5WebView mWebView;
-    private ViewGroup mViewParent;
-    private ImageButton mBack;
-    private ImageButton mForward;
-    private ImageButton mRefresh;
-    private ImageButton mExit;
-    private ImageButton mHome;
-    private ImageButton mMore;
-    private ImageButton mClearData;
-    private ImageButton mOpenFile;
-    private Button mGo;
-    private EditText mUrl;
+    @Bind(R.id.m_webview)
+    X5WebView mWebView;
 
-    private RelativeLayout mMenu;
-
-    private static final String mHomeUrl = "http://app.html5.qq.com/navi/index";
+//    private X5WebView mWebView;
+//    private ViewGroup mViewParent;
     private static final int MAX_LENGTH = 14;
-    private boolean mNeedTestPage = false;
-
-    private final int disable = 120;
-    private final int enable = 255;
-
     private ProgressBar mPageLoadingProgressBar = null;
-
-    private ValueCallback<Uri> uploadFile;
-
     private URL mIntentUrl;
+    WebSettings webSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,20 +81,19 @@ public class BrowserActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-        //
+
         try {
             if (Build.VERSION.SDK_INT >= 11) {
-                getWindow().setFlags(android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                        android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                        WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-		/*getWindow().addFlags(
-                android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
         setContentView(R.layout.activity_browser);
-        mViewParent = (ViewGroup) findViewById(R.id.webView1);
+        ButterKnife.bind(this);
+//        mViewParent = (ViewGroup) findViewById(R.id.webView1);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_activity_base);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
@@ -129,113 +108,122 @@ public class BrowserActivity extends BaseActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_toolbar_back);
         }
 
-        initBtnListenser();
-
         this.webViewTransportTest();
 
-        mTestHandler.sendEmptyMessageDelayed(MSG_INIT_UI, 10);
+        init();
+
+//        Observable.timer(10, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<Long>() {
+//                    @Override
+//                    public void call(Long aLong) {
+//                        init();
+//                    }
+//                });
     }
 
     private void webViewTransportTest() {
         X5WebView.setSmallWebViewEnabled(true);
     }
 
-    private void changGoForwardButton(WebView view) {
-        if (view.canGoBack())
-            mBack.setImageAlpha(enable);
-        else
-            mBack.setImageAlpha(disable);
-        if (view.canGoForward())
-            mForward.setImageAlpha(enable);
-        else
-            mForward.setImageAlpha(disable);
-        if (view.getUrl() != null && view.getUrl().equalsIgnoreCase(mHomeUrl)) {
-            mHome.setImageAlpha(disable);
-            mHome.setEnabled(false);
-        } else {
-            mHome.setImageAlpha(enable);
-            mHome.setEnabled(true);
-        }
-    }
 
     private void initProgressBar() {
         mPageLoadingProgressBar = (ProgressBar) findViewById(R.id.progressBar1);// new
-        // ProgressBar(getApplicationContext(),
-        // null,
-        // android.R.attr.progressBarStyleHorizontal);
         mPageLoadingProgressBar.setMax(100);
         mPageLoadingProgressBar.setProgressDrawable(this.getResources().getDrawable(R.drawable.color_progressbar));
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void init() {
-        //mWebView = new DemoWebView(this);
-//        Log.e("0819", " before is " + System.currentTimeMillis());
-        mWebView = new X5WebView(this);
-//        Log.e("0819", " after is " + System.currentTimeMillis());
-
-//        Log.w("grass", "Current SDK_INT:" + Build.VERSION.SDK_INT);
-
-        mViewParent.addView(mWebView, new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT));
+//        mWebView = new X5WebView(this);
+//        mViewParent.addView(mWebView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
         initProgressBar();
-
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
                 //如果不需要其他对点击链接事件的处理返回true，否则返回false
                 return false;
             }
 
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                // TODO Auto-generated method stub
-
-//                Log.e("should", "request.getUrl().toString() is " + request.getUrl().toString());
-
                 return super.shouldInterceptRequest(view, request);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                moreMenuClose();
-                // mTestHandler.sendEmptyMessage(MSG_OPEN_TEST_URL);
-                mTestHandler.sendEmptyMessageDelayed(MSG_OPEN_TEST_URL, 5000);// 5s?
-                if (Build.VERSION.SDK_INT >= 16)
-                    changGoForwardButton(view);
-                /* mWebView.showLog("test Log"); */
-
             }
         });
 
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
-                if (mUrl == null)
-                    return;
-                if (!mWebView.getUrl().equalsIgnoreCase(mHomeUrl)) {
-                    if (title != null && title.length() > MAX_LENGTH) {
-                        title = title.subSequence(0, MAX_LENGTH) + "...";
-                    }
-                    mUrl.setText(title);
-                    toolbarTitle.setText(title);
-                } else {
-                    mUrl.setText("");
+                if (title != null && title.length() > MAX_LENGTH) {
+                    title = title.subSequence(0, MAX_LENGTH) + "...";
                 }
+                toolbarTitle.setText(title);
             }
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                // TODO Auto-generated method stub
                 mPageLoadingProgressBar.setProgress(newProgress);
                 if (mPageLoadingProgressBar != null && newProgress != 100) {
                     mPageLoadingProgressBar.setVisibility(View.VISIBLE);
                 } else if (mPageLoadingProgressBar != null) {
                     mPageLoadingProgressBar.setVisibility(View.GONE);
                 }
+            }
+
+            //处理javascript中的alert
+            @Override
+            public boolean onJsAlert(WebView webView, String s, String s1, final JsResult jsResult) {
+                MyDialog.Builder builder = new MyDialog.Builder(BrowserActivity.this);
+                builder.setTitle("提示")
+                        .setCannel(false)
+                        .setMessage(s1)
+                        .setPositiveButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,
+                                                        int which) {
+                                        //点击确定按钮之后，继续执行网页中的操作
+                                        jsResult.confirm();
+                                        dialog.dismiss();
+                                    }
+                                });
+                if (!isFinishing()) {
+                    builder.create().show();
+                }
+                return true;
+            }
+
+            //处理javascript中的confirm
+            @Override
+            public boolean onJsConfirm(WebView webView, String s, String s1, final JsResult jsResult) {
+                MyDialog.Builder builder = new MyDialog.Builder(BrowserActivity.this);
+                builder.setTitle("提示")
+                        .setMessage(s1)
+                        .setPositiveButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        jsResult.confirm();
+                                        dialog.dismiss();
+                                    }
+                                })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                jsResult.cancel();
+                                dialog.dismiss();
+                            }
+                        })
+                        .create().show();
+                return true;
             }
         });
 
@@ -246,7 +234,7 @@ public class BrowserActivity extends BaseActivity {
                                         String arg3, long arg4) {
                 new AlertDialog.Builder(BrowserActivity.this)
                         .setTitle("下载")
-                        .setPositiveButton("yes",
+                        .setPositiveButton("确定",
                                 new DialogInterface.OnClickListener() {
 
                                     @Override
@@ -255,13 +243,12 @@ public class BrowserActivity extends BaseActivity {
                                         Toast.makeText(BrowserActivity.this, "fake message: i'll download...", Toast.LENGTH_SHORT).show();
                                     }
                                 })
-                        .setNegativeButton("no",
+                        .setNegativeButton("取消",
                                 new DialogInterface.OnClickListener() {
 
                                     @Override
                                     public void onClick(DialogInterface dialog,
                                                         int which) {
-                                        // TODO Auto-generated method stub
                                         Toast.makeText(BrowserActivity.this, "fake message: refuse download...", Toast.LENGTH_SHORT).show();
                                     }
                                 })
@@ -270,15 +257,15 @@ public class BrowserActivity extends BaseActivity {
 
                                     @Override
                                     public void onCancel(DialogInterface dialog) {
-                                        // TODO Auto-generated method stub
                                         Toast.makeText(BrowserActivity.this, "fake message: refuse download...", Toast.LENGTH_SHORT).show();
                                     }
                                 }).show();
             }
         });
 
+        mWebView.addJavascriptInterface(new WebAppInterface(this), "village");
 
-        WebSettings webSetting = mWebView.getSettings();
+        webSetting = mWebView.getSettings();
         webSetting.setAllowFileAccess(true);
         webSetting.setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
         webSetting.setSupportZoom(true);
@@ -294,231 +281,89 @@ public class BrowserActivity extends BaseActivity {
         webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
         webSetting.setAppCachePath(this.getDir("appcache", 0).getPath());
         webSetting.setDatabasePath(this.getDir("databases", 0).getPath());
-        webSetting.setGeolocationDatabasePath(this.getDir("geolocation", 0)
-                .getPath());
+        webSetting.setGeolocationDatabasePath(this.getDir("geolocation", 0).getPath());
+
         // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
         //webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         // webSetting.setPreFectch(true);
         long time = System.currentTimeMillis();
         if (mIntentUrl == null) {
-            mWebView.loadUrl(mHomeUrl);
         } else {
             mWebView.loadUrl(mIntentUrl.toString());
         }
-//        TbsLog.d("time-cost", "cost time: " + (System.currentTimeMillis() - time));
         CookieSyncManager.createInstance(this);
         CookieSyncManager.getInstance().sync();
     }
 
-    private void moreMenuClose() {
-        if (mMenu != null && mMenu.getVisibility() == View.VISIBLE) {
-            mMenu.setVisibility(View.GONE);
-            mMore.setImageDrawable(getResources().getDrawable(R.drawable.theme_toolbar_btn_menu_fg_normal));
+    class WebAppInterface {
+        Context mContext;
+
+        WebAppInterface(Context context) {
+            mContext = context;
+        }
+
+        String auth = Hawk.get(APP.USER_AUTH);
+
+        @JavascriptInterface
+        public String setTitle(String title, String isHomepage) {
+            //修改标题
+            return "{\"err\":\"0\"}";
+        }
+
+        @JavascriptInterface
+        public String getAuth() {
+            return "{\"err\":\"0\",\"auth\":\"" + auth + "\"}";
+        }
+
+        @JavascriptInterface
+        public String Alipay(final String order_sn) {
+//            Toast.makeText(BrowserActivity.this, "order_sn:" + order_sn, Toast.LENGTH_SHORT).show();
+            MyServiceClient.getService()
+                    .get_OrderInfo(order_sn, auth)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<OrderInfo>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(OrderInfo orderInfo) {
+                            OrderInfo.DataBean data = orderInfo.getData();
+                            PayUtils payUtils = new PayUtils(BrowserActivity.this, -1);
+                            payUtils.pay(data.getOrder_title(), "村特产订单",
+                                    String.valueOf(data.getMoney()), data.getOrder_sn(), data.getUrl());
+                        }
+                    });
+            return "{\"err\":\"0\"}";
+        }
+
+        @JavascriptInterface
+        public String goInVill(String village_id) {
+//            Toast.makeText(BrowserActivity.this, "vid:" + village_id, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(mContext, ProductListActivity.class);
+            intent.putExtra(ProductListActivity.VILLAGE_ID, village_id);
+            startActivity(intent);
+            return "{\"err\":\"0\"}";
+        }
+
+        @JavascriptInterface
+        public String talk2Shopper(String shopper_id, String shopper_name, String shopper_head_url) {
+//            Toast.makeText(BrowserActivity.this, "s_id:"+shopper_id, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(mContext, ChatActivity.class);
+            intent.putExtra(ChatActivity.UID, shopper_id);
+            intent.putExtra(ChatActivity.USER_NAME, shopper_name);
+            startActivity(intent);
+            return "{\"err\":\"0\"}";
         }
     }
-
-    private void initBtnListenser() {
-        mBack = (ImageButton) findViewById(R.id.btnBack1);
-        mForward = (ImageButton) findViewById(R.id.btnForward1);
-        mRefresh = (ImageButton) findViewById(R.id.btnRefresh1);
-        mExit = (ImageButton) findViewById(R.id.btnExit1);
-        mHome = (ImageButton) findViewById(R.id.btnHome1);
-        mGo = (Button) findViewById(R.id.btnGo1);
-        mUrl = (EditText) findViewById(R.id.editUrl1);
-        mMore = (ImageButton) findViewById(R.id.btnMore);
-        mMenu = (RelativeLayout) findViewById(R.id.menuMore);
-        mClearData = (ImageButton) findViewById(R.id.btnClearData);
-        mOpenFile = (ImageButton) findViewById(R.id.btnOpenFile);
-
-        if (Build.VERSION.SDK_INT >= 16) {
-            mBack.setImageAlpha(disable);
-            mForward.setImageAlpha(disable);
-            mHome.setImageAlpha(disable);
-        }
-        mHome.setEnabled(false);
-
-
-        mBack.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                moreMenuClose();
-                if (mWebView != null && mWebView.canGoBack())
-                    mWebView.goBack();
-            }
-        });
-
-        mForward.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                moreMenuClose();
-                if (mWebView != null && mWebView.canGoForward())
-                    mWebView.goForward();
-            }
-        });
-
-        mRefresh.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                moreMenuClose();
-                if (mWebView != null)
-                    mWebView.reload();
-            }
-        });
-
-
-        mGo.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                moreMenuClose();
-                String url = mUrl.getText().toString();
-                mWebView.loadUrl(url);
-                mWebView.requestFocus();
-            }
-        });
-
-        mMore.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (mMenu.getVisibility() == View.GONE) {
-                    mMenu.setVisibility(View.VISIBLE);
-                    mMore.setImageDrawable(getResources().getDrawable(R.drawable.theme_toolbar_btn_menu_fg_pressed));
-                } else {
-                    mMenu.setVisibility(View.GONE);
-                    mMore.setImageDrawable(getResources().getDrawable(R.drawable.theme_toolbar_btn_menu_fg_normal));
-                }
-            }
-        });
-
-        mClearData.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                moreMenuClose();
-//				QbSdk.clearAllWebViewCache(getApplicationContext(),false);
-                //QbSdk.reset(getApplicationContext());
-            }
-        });
-
-        mOpenFile.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                try {
-                    BrowserActivity.this.startActivityForResult(Intent.createChooser(intent, "choose file"), 1);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(BrowserActivity.this, "完成", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        mUrl.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                moreMenuClose();
-                if (hasFocus) {
-                    mGo.setVisibility(View.VISIBLE);
-                    mRefresh.setVisibility(View.GONE);
-                    if (null == mWebView.getUrl()) return;
-                    if (mWebView.getUrl().equalsIgnoreCase(mHomeUrl)) {
-                        mUrl.setText("");
-                        mGo.setText("首页");
-                        mGo.setTextColor(0X6F0F0F0F);
-                    } else {
-                        mUrl.setText(mWebView.getUrl());
-                        mGo.setText("进入");
-                        mGo.setTextColor(0X6F0000CD);
-                    }
-                } else {
-                    mGo.setVisibility(View.GONE);
-                    mRefresh.setVisibility(View.VISIBLE);
-                    String title = mWebView.getTitle();
-                    if (title != null && title.length() > MAX_LENGTH)
-                        mUrl.setText(title.subSequence(0, MAX_LENGTH) + "...");
-                    else
-                        mUrl.setText(title);
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-
-        });
-
-        mUrl.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-
-                String url = null;
-                if (mUrl.getText() != null) {
-                    url = mUrl.getText().toString();
-                }
-
-                if (url == null
-                        || mUrl.getText().toString().equalsIgnoreCase("")) {
-                    mGo.setText("请输入网址");
-                    mGo.setTextColor(0X6F0F0F0F);
-                } else {
-                    mGo.setText("进入");
-                    mGo.setTextColor(0X6F0000CD);
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                // TODO Auto-generated method stub
-            }
-
-        });
-
-        mHome.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                moreMenuClose();
-                if (mWebView != null)
-                    mWebView.loadUrl(mHomeUrl);
-            }
-        });
-
-
-        mExit.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Process.killProcess(Process.myPid());
-            }
-
-        });
-    }
-
-    boolean[] m_selected = new boolean[]{true, true, true, true, false,
-            false, true};
-
-
-    private enum TEST_ENUM_FONTSIZE {
-        FONT_SIZE_SMALLEST, FONT_SIZE_SMALLER, FONT_SIZE_NORMAL, FONT_SIZE_LARGER, FONT_SIZE_LARGEST
-    }
-
-    ;
-
-    private TEST_ENUM_FONTSIZE m_font_index = TEST_ENUM_FONTSIZE.FONT_SIZE_NORMAL;
 
 
     @Override
@@ -534,45 +379,11 @@ public class BrowserActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (mWebView != null && mWebView.canGoBack()) {
+            webSetting.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             mWebView.goBack();
-            if (Build.VERSION.SDK_INT >= 16)
-                changGoForwardButton(mWebView);
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case 0:
-                    if (null != uploadFile) {
-                        Uri result = data == null || resultCode != RESULT_OK ? null
-                                : data.getData();
-                        uploadFile.onReceiveValue(result);
-                        uploadFile = null;
-                    }
-                    break;
-                case 1:
-
-                    Uri uri = data.getData();
-                    String path = uri.getPath();
-
-
-                    break;
-                default:
-                    break;
-            }
-        } else if (resultCode == RESULT_CANCELED) {
-            if (null != uploadFile) {
-                uploadFile.onReceiveValue(null);
-                uploadFile = null;
-            }
-
-        }
-
     }
 
     @Override
@@ -588,35 +399,4 @@ public class BrowserActivity extends BaseActivity {
             mWebView.destroy();
         super.onDestroy();
     }
-
-    public static final int MSG_OPEN_TEST_URL = 0;
-    public static final int MSG_INIT_UI = 1;
-    private final int mUrlStartNum = 0;
-    private int mCurrentUrl = mUrlStartNum;
-    private Handler mTestHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_OPEN_TEST_URL:
-                    if (!mNeedTestPage) {
-                        return;
-                    }
-
-                    String testUrl = "file:///sdcard/outputHtml/html/"
-                            + Integer.toString(mCurrentUrl) + ".html";
-                    if (mWebView != null) {
-                        mWebView.loadUrl(testUrl);
-                    }
-
-                    mCurrentUrl++;
-                    break;
-                case MSG_INIT_UI:
-                    init();
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
-
-
 }

@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textColor="@color/font_black_content"
+            android:textColor="@color/font_black_4"
             android:textSize="16sp"
             tools:text="昵称" />
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="对方请求添加你为朋友"
-            android:textColor="@color/font_black_9" />
+            android:textColor="@color/font_black_8" />
     </LinearLayout>
 
     <TextView

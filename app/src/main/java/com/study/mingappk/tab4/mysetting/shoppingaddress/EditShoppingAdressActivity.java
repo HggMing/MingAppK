@@ -1,5 +1,6 @@
 package com.study.mingappk.tab4.mysetting.shoppingaddress;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ShoppingAddress;
+import com.study.mingappk.tab3.product.ProductPayActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -78,9 +80,9 @@ public class EditShoppingAdressActivity extends BackActivity {
         if (id == R.id.action_submit) {
 
             //提交的数据
-            String sd_name = etName.getEditableText().toString();
-            String sd_addr = etAddress.getEditableText().toString();
-            String sd_phone = etPhone.getEditableText().toString();
+            final String sd_name = etName.getEditableText().toString();
+            final String sd_addr = etAddress.getEditableText().toString();
+            final String sd_phone = etPhone.getEditableText().toString();
             String sd_code = etCode.getEditableText().toString();
             String sd_is_def;
             if (checkDefault.isChecked()) {
@@ -152,7 +154,10 @@ public class EditShoppingAdressActivity extends BackActivity {
 
                             @Override
                             public void onNext(Result result) {
-                                setResult(RESULT_OK);
+                                Intent intent=new Intent();
+                                intent.putExtra(ProductPayActivity.KEY_PHONE_NAME,sd_phone+"  "+sd_name);
+                                intent.putExtra(ProductPayActivity.KEY_ADDRESS,sd_addr);
+                                setResult(RESULT_OK,intent);
                                 finish();
                             }
                         });

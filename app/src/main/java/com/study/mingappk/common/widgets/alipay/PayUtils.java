@@ -70,6 +70,7 @@ public class PayUtils {
                         Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
 
                         if(fromActivity==-1){
+                            mContext.finish();
                             break;
                         }
                         Intent intent=new Intent();

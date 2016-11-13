@@ -10,7 +10,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_friendlist"
-        android:icon="@drawable/main_action_friendlist"
+        android:icon="@mipmap/main_action_friendlist"
         android:orderInCategory="1"
         android:title="好友列表"
         android:visible="false"

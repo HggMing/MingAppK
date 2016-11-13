@@ -16,6 +16,16 @@
             android:layout_height="match_parent"
             android:background="@color/transparent" />
 
+        <TextView
+            android:id="@+id/content_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="无法加载页面，点击刷新"
+            android:textColor="@color/font_black_8"
+            android:textSize="@dimen/textsize_normal"
+            android:visibility="gone" />
+
         <com.bilibili.magicasakura.widgets.TintProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"

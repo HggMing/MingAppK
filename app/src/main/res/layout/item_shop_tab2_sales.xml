@@ -101,7 +101,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/tv_price"
                     android:layout_marginRight="10dp"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/font_black_8"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="x3" />
             </RelativeLayout>

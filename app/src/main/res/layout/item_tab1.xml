@@ -28,7 +28,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginTop="2dp"
         android:singleLine="true"
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/font_black_8"
         android:textSize="12sp"
         tools:text="2017-09-16" />
 
@@ -42,7 +42,7 @@
         android:layout_toStartOf="@id/time"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/font_black_content"
+        android:textColor="@color/font_black_4"
         android:textSize="@dimen/textsize_large"
         tools:text="昵称" />
 
@@ -66,7 +66,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:scrollHorizontally="true"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/font_black_8"
             tools:text="消息内容，消息内容，消息内容，消息内容，消息内容" />
 
         <TextView

@@ -8,16 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bilibili.magicasakura.widgets.TintCheckBox;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.app.api.LoginApi;
-import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.Login;
@@ -29,8 +30,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class LoginActivity extends Activity {
@@ -50,6 +49,8 @@ public class LoginActivity extends Activity {
     Button btn_facelogin;
     @Bind(R.id.tv_forgetpwd)
     TextView tv_forgetpwd;
+    @Bind(R.id.check_test)
+    TintCheckBox checkTest;
 
     private String loginname;
     private String loginpwd;
@@ -59,6 +60,11 @@ public class LoginActivity extends Activity {
     private String point;//弹出提示框内容
     private static final int REGISTERED_PHONE = 123;//请求返回已注册手机号
     public static final String REGISTERED_PHONE_NUMBER = "registered_phone_number";//返回已注册手机号
+
+    private static String baseUrl = "http://121.40.105.149:9901/";
+    private static String baseUrl_Test = "http://118.178.232.77:9901/";
+    private boolean isTest;//是否为测试服务器
+    private String KEY_IS_TEST = "key_is_test";
 
     public void onCreate(Bundle savedInstanceState) {
         BaseTools.setFullScreen(this);//隐藏状态栏
@@ -90,7 +96,26 @@ public class LoginActivity extends Activity {
         } else {
             img_jzmm.setBackgroundResource(R.mipmap.agree_no);
         }
+        //选择是否为测试服务器
+        isTest = Hawk.get(KEY_IS_TEST, true);
+        checkTest.setChecked(isTest);
 
+        checkTest.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Hawk.chain()
+                            .put(APP.KEY_BASE_URL, baseUrl_Test)
+                            .put(KEY_IS_TEST, true)
+                            .commit();
+                } else {
+                    Hawk.chain()
+                            .put(APP.KEY_BASE_URL, baseUrl)
+                            .put(KEY_IS_TEST, false)
+                            .commit();
+                }
+            }
+        });
     }
 
     private void loginByRx() {

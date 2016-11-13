@@ -42,7 +42,7 @@
                     android:layout_toRightOf="@id/icon_head"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:textColor="@color/font_black_content"
+                    android:textColor="@color/font_black_4"
                     android:textSize="18sp"
                     tools:drawableRight="@mipmap/ic_sex_boy"
                     tools:text="备注名" />

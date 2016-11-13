@@ -168,7 +168,7 @@ class ShoppingAddressAdapter extends BaseRecyclerViewAdapter<ShoppingAddress.Dat
         if (phone.length() == 11) {
             phone = phone.substring(0, 3) + "****" + phone.substring(7, 11);
             holder.phone.setText(phone);
-            holder.phone.setTextColor(mActivity.getResources().getColor(R.color.font_black_comment));
+            holder.phone.setTextColor(mActivity.getResources().getColor(R.color.font_black_4));
         } else {
             holder.phone.setText("手机号有误，请修改");
             holder.phone.setTextColor(mActivity.getResources().getColor(R.color.color08));
@@ -264,7 +264,6 @@ class ShoppingAddressAdapter extends BaseRecyclerViewAdapter<ShoppingAddress.Dat
         CardView item;
         @Bind(R.id.is_default)
         CheckBox isDefault;
-
 
         ViewHolder(View view) {
             super(view);

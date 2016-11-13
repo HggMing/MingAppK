@@ -154,4 +154,13 @@
         <item name="android:textColor">@color/theme_color_primary</item>
         <item name="android:textSize">@dimen/textsize_normal</item>
     </style>
+    <!--五星评价-->
+    <style name="roomRatingSmallBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:background">#00000000</item>
+        <item name="android:alwaysDrawnWithCache">false</item>
+        <item name="android:progressDrawable">@drawable/room_small_rating_bar</item>
+        <item name="android:minWidth">14.0dp</item>
+        <item name="android:minHeight">14.0dp</item>
+        <item name="android:stepSize">1</item>
+    </style>
 </resources>

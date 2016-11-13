@@ -48,7 +48,7 @@
                         android:drawablePadding="6dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:textColor="@color/font_black_content"
+                        android:textColor="@color/font_black_4"
                         android:textSize="18sp"
                         tools:drawableRight="@mipmap/ic_apply_ing"
                         tools:text="备注名" />

@@ -61,6 +61,7 @@
     <string name="title_activity_new_post">发布帖子</string>
     <string name="title_activity_government_affairs">政务</string>
     <string name="title_activity_village_situation">村况</string>
+    <string name="title_activity_product_list">乡村特产</string>
 
     <string name="title_activity_user_detail">个人信息</string>
     <string name="title_activity_update_uname">设置用户名</string>
@@ -101,6 +102,8 @@
     <string name="title_activity_advice">意见反馈</string>
     <string name="title_activity_about">关于我们</string>
 
+    <string name="title_activity_product_pay">购买商品</string>
+
 
     <!--list为空时，文字提示语句-->
     <string name="empty_shopping_address">暂无收货地址，请点击右下角按钮添加！</string>
@@ -111,6 +114,8 @@
     <string name="empty_book_tab1">暂无书籍，请点击+按钮进行添加！</string>
     <string name="empty_orders">订单列表为空</string>
     <string name="empty_village_info">暂无相关信息！</string>
+    <string name="empty_products">亲，目前该村还没有商品信息。</string>
+    <string name="empty_choose_address">暂无收货地址，请先添加！</string>
 
 
 </resources>

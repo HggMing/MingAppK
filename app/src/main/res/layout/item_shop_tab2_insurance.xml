@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="车主姓名：旋风哥" />
 
@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="车牌号码：川A123456" />
 
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="保险费用：￥2999.99" />
 
@@ -92,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="投保时间：xxxx-xx-xx" />
             </LinearLayout>

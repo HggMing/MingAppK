@@ -18,7 +18,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="8dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/font_black_content"
+            android:textColor="@color/font_black_4"
             android:textSize="18sp"
             tools:text="你绝对不会想吃的零食大盘点！我怎么好像看到了蟋蟀？！" />
 
@@ -29,7 +29,7 @@
             android:layout_below="@id/news_main_title"
             android:drawableLeft="@mipmap/ic_clock"
             android:drawablePadding="5dp"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/font_black_8"
             android:textSize="14sp"
             tools:text="2016-06-18 11:11" />
 

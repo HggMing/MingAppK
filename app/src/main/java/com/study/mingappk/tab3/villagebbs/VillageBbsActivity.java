@@ -26,6 +26,7 @@ import com.study.mingappk.model.bean.BBSList;
 import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.tab3.affairs.GovernmentAffairsActivity;
 import com.study.mingappk.tab3.newpost.NewPostActivity;
+import com.study.mingappk.tab3.product.ProductListActivity;
 import com.study.mingappk.tab3.villagebbs.bbsdetail.BbsDetailActivity;
 import com.study.mingappk.tab3.villagesituation.VillageSituationActivity;
 import com.study.mingappk.common.base.BaseActivity;
@@ -235,6 +236,9 @@ public class VillageBbsActivity extends BaseActivity implements VillageBbsAdapte
                 break;
             case R.id.icon_specialty:
                 //点击特产
+                Intent intent2 = new Intent(this, ProductListActivity.class);
+                intent2.putExtra(ProductListActivity.VILLAGE_ID, mVid);
+                startActivity(intent2);
                 break;
             case R.id.icon_ga:
                 //点击政务

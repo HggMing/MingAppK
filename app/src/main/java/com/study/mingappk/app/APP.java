@@ -39,6 +39,10 @@ public class APP extends Application implements ThemeUtils.switchColor {
     public static final String MANAGER_VID = "manager_village_id";//存储店长用户的村店地址，注销登录时须清空。
 
 
+    public static String BASE_URL;//API接口的主机地址
+    public static final String KEY_BASE_URL = "key_base_url";//正式服务器与测试服务器的切换，默认为正式
+
+
     /**
      * 单例模式中获取唯一的Application实例
      */
@@ -62,6 +66,7 @@ public class APP extends Application implements ThemeUtils.switchColor {
                 .build();
         //集成腾讯TBS浏览器SDK，初始化
         settingTBS();
+       BASE_URL= Hawk.get(KEY_BASE_URL,"http://118.178.232.77:9901/");
     }
 
     private void settingTBS() {
@@ -70,13 +75,11 @@ public class APP extends Application implements ThemeUtils.switchColor {
         QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
             @Override
             public void onViewInitFinished(boolean arg0) {
-                // TODO Auto-generated method stub
                 Log.e("apptbs", " onViewInitFinished is " + arg0);
             }
 
             @Override
             public void onCoreInitFinished() {
-                // TODO Auto-generated method stub
             }
         };
         QbSdk.setTbsListener(new TbsListener() {

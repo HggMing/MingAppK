@@ -19,19 +19,21 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.study.mingappk.app.APP.BASE_URL;
+
 /**
  * 服务器连接客服端
  */
 public class MyServiceClient {
 
-    private static final String BASE_URL = "http://121.40.105.149:9901/";//API接口的主机地址
-    private static final String BASE_URL2 = "http://121.40.105.149:9901";//API接口的主机地址
+//    private static final String BASE_URL = "http://121.40.105.149:9901/";//API接口的主机地址
+//    private static final String BASE_URL2 = "http://121.40.105.149:9901";//API接口的主机地址
     private static final String BASE_URL3 = "http://push.traimo.com/source/";//聊天资源文件base_url
-   public static final String DEFAULT_HEAD = "http://121.40.105.149:9901/Public/head/default.png";//服务器提供的默认头像，这里是为了方便替换为本地图片
+   public static final String DEFAULT_HEAD = BASE_URL+"Public/head/default.png";//服务器提供的默认头像，这里是为了方便替换为本地图片
 
 
     public static String getBaseUrl() {
-        return BASE_URL2;
+        return BASE_URL;
     }
     public static String getChatBaseUrl() {
         return BASE_URL3;

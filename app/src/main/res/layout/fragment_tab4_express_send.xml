@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/font_black_8"
         android:textSize="16sp"
         android:visibility="gone"
         tools:text="提示语句" />

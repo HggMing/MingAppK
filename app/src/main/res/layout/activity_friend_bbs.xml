@@ -21,7 +21,7 @@
             android:gravity="center"
             android:text="该用户还没有发布过帖子！"
             android:textSize="16sp"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/font_black_8"
             android:visibility="gone" />
     </FrameLayout>
 </RelativeLayout>

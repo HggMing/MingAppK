@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/font_black_8"
         android:textSize="12sp"
         tools:text="7月8日 15:33" />
 
@@ -61,7 +61,7 @@
             android:layout_marginRight="6dp"
             android:layout_marginTop="9dp"
             android:background="@drawable/content_pressed_selector"
-            android:textColor="@color/font_black_content"
+            android:textColor="@color/font_black_4"
             android:textSize="16sp"
             android:visibility="gone"
             tools:text="这是我自己说的话，啦啦" />

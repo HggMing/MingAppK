@@ -22,6 +22,8 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.utils.NotifyUtil;
 import com.study.mingappk.common.utils.PhotoOperate;
+import com.study.mingappk.common.utils.StringTools;
+import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.database.ChatMsgModel;
 import com.study.mingappk.model.database.FriendsModel;
@@ -72,12 +74,15 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
     private String me;//接收者uid
     private String other;//发送者uid
 
+    private String otherName;//聊天对象的昵称
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
-        setToolbarTitle(getIntent().getStringExtra(USER_NAME));
+        otherName = getIntent().getStringExtra(USER_NAME);
+        setToolbarTitle(otherName);
 
         configXRecyclerView();//XRecyclerView配置
         initEmoticonsKeyBoardBar();//自定义聊天键盘的配置
@@ -102,8 +107,10 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
 
         //进入聊天界面，清零当前好友的新消息计数
         FriendsModel friend = MyDB.createDb(this).queryById(other, FriendsModel.class);
-        friend.setCount(0);
-        MyDB.update(friend);
+        if (friend != null) {
+            friend.setCount(0);
+            MyDB.update(friend);
+        }
         //进入聊天界面，清零动态的新消息计数
         InstantMsgModel iMsg = MyDB.createDb(this).queryById(other, InstantMsgModel.class);
         if (iMsg != null) {
@@ -143,7 +150,7 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getNewMsg(NewMsgEvent event) {
-        ChatMsgModel chatMsg = event.getChatMsg();
+        final ChatMsgModel chatMsg = event.getChatMsg();
 
         if (me.equals(chatMsg.getTo()) && other.equals(chatMsg.getFrom())) {
             //当前聊天界面的好友发送来的消息直接显示
@@ -151,36 +158,73 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
             mXRecyclerView.smoothScrollToPosition(mAdapter.getItemCount());
         } else {
             //其他好友消息发送通知
-            String uid = chatMsg.getFrom();
+            final String uid = chatMsg.getFrom();
             FriendsModel friend = MyDB.createDb(this).queryById(uid, FriendsModel.class);
-            int requestCode = Integer.parseInt(uid);//唯一标识通知
+            if (friend == null) {//如果消息来自非好友（新增：客户联系店长）
+                String auth = Hawk.get(APP.USER_AUTH);
+                MyServiceClient.getService().get_FriendDetail(auth, uid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<FriendDetail>() {
+                            @Override
+                            public void onCompleted() {
 
-            //点击通知后操作
-            Intent intent2 = new Intent(this, ChatActivity.class);
-            intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent2.putExtra(ChatActivity.UID, uid);
-            intent2.putExtra(ChatActivity.USER_NAME, friend.getUname());
-            PendingIntent pIntent = PendingIntent.getActivity(this, requestCode, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+                            }
 
-            //构建通知
-            int largeIcon = R.mipmap.ic_launcher;
-            int smallIcon = R.mipmap.tab1_btn1;
-            String title = friend.getUname();
-            String ticker = title + ": " + chatMsg.getTxt();
-            //新消息条数，读取及更新
-            int count = friend.getCount() + 1;
-            friend.setCount(count);
-            MyDB.update(friend);
-            String content = "[" + count + "条]" + ": " + chatMsg.getTxt();
-            //实例化工具类，并且调用接口
-            NotifyUtil notify3 = new NotifyUtil(this, requestCode);
-            notify3.notify_msg(pIntent, smallIcon, largeIcon, ticker, title, content, true, true, false);
+                            @Override
+                            public void onError(Throwable e) {
 
-            //保存动态并刷新
-            InstantMsgModel msgModel = new InstantMsgModel(uid, friend.getUicon(), title, chatMsg.getSt(), chatMsg.getTxt(), count);
-            MyDB.insert(msgModel);
-            EventBus.getDefault().post(new InstantMsgEvent());
+                            }
+
+                            @Override
+                            public void onNext(FriendDetail friendDetail) {
+                                FriendDetail.DataBean.UserinfoBean userinfoBean = friendDetail.getData().getUserinfo();
+                                //存储陌生消息人信息到本地好友数据库，标识isFriend为false
+                                String save_uicon = MyServiceClient.getBaseUrl() + userinfoBean.getHead();
+                                String save_uname = userinfoBean.getUname();//昵称
+                                String iphone = userinfoBean.getPhone();
+                                if (StringTools.isEmpty(save_uname)) {
+                                    save_uname = iphone;//昵称为空，显示手机号
+                                }
+                                FriendsModel friendsModel = new FriendsModel(uid, save_uname, save_uicon, false);
+                                MyDB.insert(friendsModel);
+                                //处理后续消息
+                                makeMsg(chatMsg, uid, friendsModel);
+                            }
+                        });
+            } else {
+                makeMsg(chatMsg, uid, friend);
+            }
         }
+    }
+
+    private void makeMsg(ChatMsgModel chatMsg, String uid, FriendsModel friend) {
+        int requestCode = Integer.parseInt(uid);//唯一标识通知
+        //点击通知后操作
+        Intent intent2 = new Intent(this, ChatActivity.class);
+        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra(ChatActivity.UID, uid);
+        intent2.putExtra(ChatActivity.USER_NAME, friend.getUname());
+        PendingIntent pIntent = PendingIntent.getActivity(this, requestCode, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //构建通知
+        int largeIcon = R.mipmap.ic_message_notification;
+        int smallIcon = R.mipmap.tab2_btn1;
+        String title = friend.getUname();
+        String ticker = title + ": " + chatMsg.getTxt();
+        //新消息条数，读取及更新
+        int count = friend.getCount() + 1;
+        friend.setCount(count);
+        MyDB.update(friend);
+        String content = "[" + count + "条]" + ": " + chatMsg.getTxt();
+        //实例化工具类，并且调用接口
+        NotifyUtil notify3 = new NotifyUtil(this, requestCode);
+        notify3.notify_msg(pIntent, smallIcon, largeIcon, ticker, title, content, true, true, false);
+
+        //保存动态并刷新
+        InstantMsgModel msgModel = new InstantMsgModel(uid, friend.getUicon(), title, chatMsg.getSt(), chatMsg.getTxt(), count);
+        MyDB.insert(msgModel);
+        EventBus.getDefault().post(new InstantMsgEvent());
     }
 
     //配置表情键盘
@@ -217,6 +261,7 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
             }
         });*/
     }
+
     EmoticonClickListener emoticonClickListener = new EmoticonClickListener() {
         @Override
         public void onEmoticonClick(Object o, int actionType, boolean isDelBtn) {
@@ -224,22 +269,22 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
             if (isDelBtn) {
                 SimpleCommonUtils.delClick(ekBar.getEtChat());
             } else {
-                if(o == null){
+                if (o == null) {
                     return;
                 }
-                if(actionType == Constants.EMOTICON_CLICK_BIGIMAGE){
-                    if(o instanceof EmoticonEntity){
-                        OnSendImage(((EmoticonEntity)o).getIconUri());
+                if (actionType == Constants.EMOTICON_CLICK_BIGIMAGE) {
+                    if (o instanceof EmoticonEntity) {
+                        OnSendImage(((EmoticonEntity) o).getIconUri());
                     }
                 } else {
                     String content = null;
-                    if(o instanceof EmojiBean){
-                        content = ((EmojiBean)o).emoji;
-                    } else if(o instanceof EmoticonEntity){
-                        content = ((EmoticonEntity)o).getContent();
+                    if (o instanceof EmojiBean) {
+                        content = ((EmojiBean) o).emoji;
+                    } else if (o instanceof EmoticonEntity) {
+                        content = ((EmoticonEntity) o).getContent();
                     }
 
-                    if(TextUtils.isEmpty(content)){
+                    if (TextUtils.isEmpty(content)) {
                         return;
                     }
                     int index = ekBar.getEtChat().getSelectionStart();
@@ -281,18 +326,55 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
             //发送消息后，更新动态
             InstantMsgModel iMsg = MyDB.createDb(this).queryById(other, InstantMsgModel.class);
             if (iMsg != null) {//动态存在，即更新
-                iMsg.setTime(String.valueOf(System.currentTimeMillis()).substring(0,10));
+                iMsg.setTime(String.valueOf(System.currentTimeMillis()).substring(0, 10));
                 iMsg.setContent(msg);
                 MyDB.update(iMsg);
                 EventBus.getDefault().post(new InstantMsgEvent());
-            }else{//动态不存在就创建
+            } else {//动态不存在就创建
                 FriendsModel friend = MyDB.createDb(this).queryById(other, FriendsModel.class);
-                String uicon=friend.getUicon();
-                String uname=friend.getUname();
-                String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);//13位时间戳，截取前10位，主要统一
-                InstantMsgModel msgModel = new InstantMsgModel(other,uicon,uname,time,msg,0);
-                MyDB.insert(msgModel);
-                EventBus.getDefault().post(new InstantMsgEvent());
+                if (friend != null) {
+                    String uicon = friend.getUicon();
+                    String uname = friend.getUname();
+                    String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);//13位时间戳，截取前10位，主要统一
+                    InstantMsgModel msgModel = new InstantMsgModel(other, uicon, uname, time, msg, 0);
+                    MyDB.insert(msgModel);
+                    EventBus.getDefault().post(new InstantMsgEvent());
+                } else {//如果发消息给非好友（新增：客户联系店长）
+                    String auth = Hawk.get(APP.USER_AUTH);
+                    MyServiceClient.getService().get_FriendDetail(auth, other)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<FriendDetail>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onNext(FriendDetail friendDetail) {
+                                    FriendDetail.DataBean.UserinfoBean userinfoBean = friendDetail.getData().getUserinfo();
+                                    //存储陌生消息人信息到本地好友数据库，标识isFriend为false
+                                    String save_uicon = MyServiceClient.getBaseUrl() + userinfoBean.getHead();
+                                    String save_uname = userinfoBean.getUname();//昵称
+                                    String iphone = userinfoBean.getPhone();
+                                    if (StringTools.isEmpty(save_uname)) {
+                                        save_uname = iphone;//昵称为空，显示手机号
+                                    }
+                                    FriendsModel friendsModel = new FriendsModel(other, save_uname, save_uicon, false);
+                                    MyDB.insert(friendsModel);
+                                    //处理后续，新建动态
+                                    String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);//13位时间戳，截取前10位，主要统一
+                                    InstantMsgModel msgModel = new InstantMsgModel(other, save_uicon, save_uname, time, msg, 0);
+                                    MyDB.insert(msgModel);
+                                    EventBus.getDefault().post(new InstantMsgEvent());
+                                }
+                            });
+                }
             }
             //开始发送
             MyServiceClient.getService()
@@ -359,18 +441,55 @@ public class ChatActivity extends BackActivity implements FuncLayout.OnFuncKeyBo
         //发送消息后，更新动态
         InstantMsgModel iMsg = MyDB.createDb(this).queryById(other, InstantMsgModel.class);
         if (iMsg != null) {
-            iMsg.setTime(String.valueOf(System.currentTimeMillis()).substring(0,10));
+            iMsg.setTime(String.valueOf(System.currentTimeMillis()).substring(0, 10));
             iMsg.setContent("[图片]");
             MyDB.update(iMsg);
             EventBus.getDefault().post(new InstantMsgEvent());
-        }else{
+        } else {
             FriendsModel friend = MyDB.createDb(this).queryById(other, FriendsModel.class);
-            String uicon=friend.getUicon();
-            String uname=friend.getUname();
-            String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);//13位时间戳，截取前10位，主要统一
-            InstantMsgModel msgModel = new InstantMsgModel(other,uicon,uname,time,"[图片]",0);
-            MyDB.insert(msgModel);
-            EventBus.getDefault().post(new InstantMsgEvent());
+            if (friend != null) {
+                String uicon = friend.getUicon();
+                String uname = friend.getUname();
+                String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);//13位时间戳，截取前10位，主要统一
+                InstantMsgModel msgModel = new InstantMsgModel(other, uicon, uname, time, "[图片]", 0);
+                MyDB.insert(msgModel);
+                EventBus.getDefault().post(new InstantMsgEvent());
+            } else {//如果发消息给非好友（新增：客户联系店长）
+                String auth = Hawk.get(APP.USER_AUTH);
+                MyServiceClient.getService().get_FriendDetail(auth, other)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<FriendDetail>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(FriendDetail friendDetail) {
+                                FriendDetail.DataBean.UserinfoBean userinfoBean = friendDetail.getData().getUserinfo();
+                                //存储陌生消息人信息到本地好友数据库，标识isFriend为false
+                                String save_uicon = MyServiceClient.getBaseUrl() + userinfoBean.getHead();
+                                String save_uname = userinfoBean.getUname();//昵称
+                                String iphone = userinfoBean.getPhone();
+                                if (StringTools.isEmpty(save_uname)) {
+                                    save_uname = iphone;//昵称为空，显示手机号
+                                }
+                                FriendsModel friendsModel = new FriendsModel(other, save_uname, save_uicon, false);
+                                MyDB.insert(friendsModel);
+                                //处理后续，新建动态
+                                String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);//13位时间戳，截取前10位，主要统一
+                                InstantMsgModel msgModel = new InstantMsgModel(other, save_uicon, save_uname, time, "[图片]", 0);
+                                MyDB.insert(msgModel);
+                                EventBus.getDefault().post(new InstantMsgEvent());
+                            }
+                        });
+            }
         }
         //发送图片
         MyServiceClient.getService()

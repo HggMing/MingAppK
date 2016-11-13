@@ -52,7 +52,7 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="大哥大哥大哥大哥大哥大哥大哥大哥大哥" />
 
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="40dp"
-                    android:textColor="@color/font_black_comment"
+                    android:textColor="@color/font_black_6"
                     android:textSize="@dimen/textsize_normal"
                     tools:text="199****1000" />
             </LinearLayout>
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:textColor="@color/font_black_9"
+                android:textColor="@color/font_black_8"
                 android:textSize="@dimen/textsize_small"
                 tools:text="啊的积分可视对讲疯狂世界发生口角疯狂的福建省科技示范空间比哦ie日二哦" />
 
@@ -85,7 +85,7 @@
                 android:layout_marginTop="4dp"
                 android:checked="true"
                 tools:text="默认地址"
-                android:textColor="@color/font_black_comment"
+                android:textColor="@color/font_black_6"
                 android:visibility="visible"
                 app:compoundButtonTint="@color/selector_compound" />
         </LinearLayout>

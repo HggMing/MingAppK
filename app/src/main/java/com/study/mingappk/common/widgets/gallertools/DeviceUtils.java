@@ -459,7 +459,7 @@ public class DeviceUtils {
     /**
      *
      * @Title: startActivityForPackage
-     * @Description: TODO(通过)
+     * @Description: 通过
      * @param @param context
      * @param @param packageName   包名
      * @return void    返回类型

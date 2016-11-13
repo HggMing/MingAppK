@@ -18,6 +18,7 @@
             android:id="@+id/btn_voice_or_text"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:src="@mipmap/chatting_vodie" />
@@ -63,6 +64,7 @@
             android:id="@+id/btn_face"
             android:layout_width="26dp"
             android:layout_height="26dp"
+            android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/rl_multi_and_send"
             android:src="@mipmap/chatting_emoticons" />

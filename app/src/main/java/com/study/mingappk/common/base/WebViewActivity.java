@@ -5,15 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
 import android.widget.ProgressBar;
 
 import com.study.mingappk.R;
+import com.study.mingappk.app.APP;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static com.study.mingappk.app.APP.BASE_URL;
 
 public class WebViewActivity extends BackActivity {
     @Bind(R.id.webView)
@@ -21,12 +24,15 @@ public class WebViewActivity extends BackActivity {
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
 
-    public static String TAG = "the_title_name";
-    public static String VILLAGE_ID = "the_village_id";
+    public static String KEY_TITLE = "the_title_name";
+    public static String KEY_URL = "the_url";
+
     public final static String TITLE_NAME1 = "免责条款";
+    public static final String URL_REG1 = BASE_URL + "system/clause";//免责条款显示网址
+
     public final static String TITLE_NAME2 = "村况";
-    public static final String URL_REG1 = "http://121.40.105.149:9901/system/clause";//免责条款显示网址
-    public static final String URL_REG2 = "http://121.40.105.149:9901/vill/vill?k=1&v=";//村况显示网址
+    public static final String URL_REG2 = BASE_URL + "vill/vill?k=1&v=";//村况显示网址
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +45,8 @@ public class WebViewActivity extends BackActivity {
 
     private void initData() {
         //设置toolbar标题
-        String title = getIntent().getStringExtra(TAG);
-        setToolbarTitle(title);
+        String mTitle = getIntent().getStringExtra(KEY_TITLE);
+        setToolbarTitle(mTitle);
         //添加进度条
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -83,15 +89,7 @@ public class WebViewActivity extends BackActivity {
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);*/
         //加载页面
-        switch (title) {
-            case TITLE_NAME1:
-                webView.loadUrl(URL_REG1);
-                break;
-            case TITLE_NAME2:
-                String vid = getIntent().getStringExtra(VILLAGE_ID);
-                webView.loadUrl(URL_REG2 + vid);
-                break;
-        }
+        String mUrl = getIntent().getStringExtra(KEY_URL);
+        webView.loadUrl(mUrl);
     }
-
 }

@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:text="余额"
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/font_black_8"
         android:textSize="16sp" />
 
     <include layout="@layout/divide_1" />
@@ -77,7 +77,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="100dp"
             android:text="暂无收支明细！"
-            android:textColor="@color/font_black_9"
+            android:textColor="@color/font_black_8"
             android:textSize="16sp"
             android:visibility="gone" />
     </FrameLayout>

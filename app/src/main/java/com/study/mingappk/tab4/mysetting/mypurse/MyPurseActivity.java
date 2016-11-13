@@ -99,7 +99,7 @@ public class MyPurseActivity extends BackActivity {
                     @Override
                     public void onNext(MoneyDetail moneyDetail) {
                         mList.addAll(moneyDetail.getData().getList());
-                        if (mList.isEmpty()||mList==null) {
+                        if (mList.isEmpty() || mList == null) {
                             contentEmpty.setVisibility(View.VISIBLE);
                         } else {
                             contentEmpty.setVisibility(View.GONE);
@@ -150,7 +150,7 @@ public class MyPurseActivity extends BackActivity {
                         } else {
                             //设置钱包密码
                             Intent intent = new Intent(MyPurseActivity.this, SetPursePwdActivity.class);
-                            intent.putExtra(SetPursePwdActivity.TYPE,1);
+                            intent.putExtra(SetPursePwdActivity.TYPE, 1);
                             startActivity(intent);
                         }
                     }
@@ -173,7 +173,11 @@ public class MyPurseActivity extends BackActivity {
             //显示奖励类型
             int type = Integer.valueOf(data.getTypes());
             String[] titleName = mContext.getResources().getStringArray(R.array.money_details);
-            holder.title.setText(titleName[type]);
+            if (type < titleName.length) {
+                holder.title.setText(titleName[type]);
+            }else{
+                holder.title.setText("其它");
+            }
 
             //显示时间
             String date = data.getCtime();
@@ -183,7 +187,7 @@ public class MyPurseActivity extends BackActivity {
             //显示获得方式备注
             holder.content.setText(data.getMemo());
             //显示收支
-            if (type == 2 || type == 4||type == 5) {
+            if (type == 2 || type == 4 || type == 5) {
                 holder.pointsChange.setText("-" + data.getMoney());
                 holder.pointsChange.setTextColor(mContext.getResources().getColor(R.color.color08));
             } else {

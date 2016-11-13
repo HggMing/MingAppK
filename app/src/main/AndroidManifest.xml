@@ -29,7 +29,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--腾讯TBS浏览器集成-->
+    <!-- 腾讯TBS浏览器集成 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -94,7 +94,7 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-        <!--qq浏览器集成相关-->
+        <!-- qq浏览器集成相关 -->
         <activity
             android:name=".tab1.BrowserActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
@@ -357,6 +357,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tab2.friendlist.FriendListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab3.product.ProductListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab3.product.ProductPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab3.product.ChooseAddressActivity"
             android:screenOrientation="portrait" />
     </application>
 

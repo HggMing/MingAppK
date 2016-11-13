@@ -91,7 +91,7 @@
                     android:layout_toRightOf="@id/tv_name"
                     android:ellipsize="end"
                     android:gravity="right"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/font_black_8"
                     android:textSize="16sp"
                     tools:text="一二三四五六七八九十一二三四五六七八九十" />
             </RelativeLayout>
@@ -131,7 +131,7 @@
                     android:layout_toLeftOf="@id/arrow2"
                     android:ellipsize="end"
                     android:gravity="right"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/font_black_8"
                     android:textSize="16sp"
                     tools:text="未知" />
 
@@ -172,7 +172,7 @@
                     android:layout_toLeftOf="@id/arrow3"
                     android:ellipsize="end"
                     android:gravity="right"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/font_black_8"
                     android:textSize="16sp"
                     tools:text="1234567812345678" />
             </RelativeLayout>
@@ -215,7 +215,7 @@
                     android:layout_toRightOf="@id/tv_adress"
                     android:ellipsize="end"
                     android:gravity="right"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/font_black_8"
                     android:textSize="16sp"
                     tools:text="一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十" />
             </RelativeLayout>
@@ -251,7 +251,7 @@
                     android:layout_alignParentRight="true"
                     android:ellipsize="end"
                     android:gravity="right"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/font_black_8"
                     android:textSize="16sp"
                     tools:text="13800000000" />
             </RelativeLayout>
@@ -278,7 +278,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:ellipsize="end"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/font_black_8"
                     android:textSize="16sp"
                     tools:text="详情" />
             </RelativeLayout>

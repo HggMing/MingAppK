@@ -14,7 +14,9 @@ import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
 import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.utils.NotifyUtil;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.AddFriendRequest;
+import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ShareMsg;
@@ -129,7 +131,7 @@ public class PushReceiver extends BroadcastReceiver {
                 });
     }
 
-    private void showNotify(Context context, List<MessageList.LBean> lBeanList) {
+    private void showNotify(final Context context, List<MessageList.LBean> lBeanList) {
 
         //程序运行状态
         getStatus(context);
@@ -154,7 +156,7 @@ public class PushReceiver extends BroadcastReceiver {
                 }
             } else {
                 //获取消息保存到数据库
-                ChatMsgModel chatMsg = new ChatMsgModel();
+                final ChatMsgModel chatMsg = new ChatMsgModel();
                 chatMsg.setType(ChatMsgModel.ITEM_TYPE_LEFT);//接收消息
                 if ("1".equals(lBean.getFrom())) {
                     chatMsg.setFrom("10001");//系统消息由"我们村客服"发来
@@ -200,43 +202,81 @@ public class PushReceiver extends BroadcastReceiver {
                     //在聊天界面，不显示通知
                     EventBus.getDefault().post(new NewMsgEvent(chatMsg));
                 } else {
-                    String uid = chatMsg.getFrom();
-                    FriendsModel friend = MyDB.createDb(context).queryById(uid, FriendsModel.class);
-                    int requestCode = Integer.parseInt(uid);//唯一标识通知
+                    final String uid = chatMsg.getFrom();
+                    final FriendsModel friend = MyDB.createDb(context).queryById(uid, FriendsModel.class);
+                    if (friend == null) {//如果消息来自非好友（新增：客户联系店长）
+                        String auth = Hawk.get(APP.USER_AUTH);
+                        MyServiceClient.getService().get_FriendDetail(auth, uid)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Subscriber<FriendDetail>() {
+                                    @Override
+                                    public void onCompleted() {
 
-                    //点击通知后操作
-                    Intent intent2 = new Intent();
-                    if (isAppRunning) {
-                        intent2.setClass(context, ChatActivity.class);
-                        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent2.putExtra(ChatActivity.UID, uid);
-                        intent2.putExtra(ChatActivity.USER_NAME, friend.getUname());
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+
+                                    }
+
+                                    @Override
+                                    public void onNext(FriendDetail friendDetail) {
+                                        FriendDetail.DataBean.UserinfoBean userinfoBean = friendDetail.getData().getUserinfo();
+                                        //存储陌生消息人信息到本地好友数据库，标识isFriend为false
+                                        String save_uicon = MyServiceClient.getBaseUrl() + userinfoBean.getHead();
+                                        String save_uname = userinfoBean.getUname();//昵称
+                                        String iphone = userinfoBean.getPhone();
+                                        if (StringTools.isEmpty(save_uname)) {
+                                            save_uname = iphone;//昵称为空，显示手机号
+                                        }
+                                        FriendsModel friendsModel = new FriendsModel(uid, save_uname, save_uicon, false);
+                                        MyDB.insert(friendsModel);
+                                        //处理后续消息
+                                        makeMsg(context, chatMsg, uid, friendsModel);
+                                    }
+                                });
                     } else {
-                        intent2.setClass(context, SplashActivity.class);
+                        makeMsg(context, chatMsg, uid, friend);
                     }
-                    PendingIntent pIntent = PendingIntent.getActivity(context, requestCode, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                    //构建通知
-                    int largeIcon = R.mipmap.ic_message_notification;
-                    int smallIcon = R.mipmap.tab2_btn1;
-                    String title = friend.getUname();
-                    String ticker = title + ": " + chatMsg.getTxt();
-                    //新消息条数，读取及更新
-                    int count = friend.getCount() + 1;
-                    friend.setCount(count);
-                    MyDB.update(friend);
-                    String content = "[" + count + "条]" + ": " + chatMsg.getTxt();
-                    //实例化工具类，并且调用接口
-                    NotifyUtil notify3 = new NotifyUtil(context, requestCode);
-                    notify3.notify_msg(pIntent, smallIcon, largeIcon, ticker, title, content, true, true, false);
-
-                    //保存动态并刷新
-                    InstantMsgModel msgModel = new InstantMsgModel(uid, friend.getUicon(), title, chatMsg.getSt(), chatMsg.getTxt(), count);
-                    MyDB.insert(msgModel);
-                    EventBus.getDefault().post(new InstantMsgEvent());
                 }
             }
         }
+    }
+
+    //处理消息
+    private void makeMsg(Context context, ChatMsgModel chatMsg, String uid, FriendsModel friend) {
+        int requestCode = Integer.parseInt(uid);//唯一标识通知
+        //点击通知后操作
+        Intent intent2 = new Intent();
+        if (isAppRunning) {
+            intent2.setClass(context, ChatActivity.class);
+            intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent2.putExtra(ChatActivity.UID, uid);
+            intent2.putExtra(ChatActivity.USER_NAME, friend.getUname());
+        } else {
+            intent2.setClass(context, SplashActivity.class);
+        }
+        PendingIntent pIntent = PendingIntent.getActivity(context, requestCode, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //构建通知
+        int largeIcon = R.mipmap.ic_message_notification;
+        int smallIcon = R.mipmap.tab2_btn1;
+        String title = friend.getUname();
+        String ticker = title + ": " + chatMsg.getTxt();
+        //新消息条数，读取及更新
+        int count = friend.getCount() + 1;
+        friend.setCount(count);
+        MyDB.update(friend);
+        String content = "[" + count + "条]" + ": " + chatMsg.getTxt();
+        //实例化工具类，并且调用接口
+        NotifyUtil notify3 = new NotifyUtil(context, requestCode);
+        notify3.notify_msg(pIntent, smallIcon, largeIcon, ticker, title, content, true, true, false);
+
+        //保存动态并刷新
+        InstantMsgModel msgModel = new InstantMsgModel(uid, friend.getUicon(), title, chatMsg.getSt(), chatMsg.getTxt(), count);
+        MyDB.insert(msgModel);
+        EventBus.getDefault().post(new InstantMsgEvent());
     }
 
     /**
@@ -258,7 +298,7 @@ public class PushReceiver extends BroadcastReceiver {
         }
         //是否在聊天界面
         isChatting = false;
-        String activityName = "com.study.mingappk.tab2.message.ChatActivity";
+        String activityName = "com.study.mingappk.tab2.chat.ChatActivity";
         String runningActivityName = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
         if (activityName.equals(runningActivityName)) {
             isChatting = true;

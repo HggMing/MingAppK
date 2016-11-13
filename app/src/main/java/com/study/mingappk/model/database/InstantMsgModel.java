@@ -16,13 +16,13 @@ public class InstantMsgModel extends BaseModel {
     @Column("_user_id")
     private String uid;
     @Column("_user_uicon")
-    private String uicon;
+    private String uicon;//头像
     @Column("_user_name")
-    private String uname;
+    private String uname;//昵称
     @Column("_msg_time")
-    private String time;
+    private String time;//时间
     @Column("_msg_content")
-    private String content;
+    private String content;//内容
     @Column("_msg_count")
     private int count;//新消息条数
 

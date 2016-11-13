@@ -20,6 +20,15 @@
             android:paddingLeft="60dp"
             android:paddingRight="60dp">
 
+            <com.bilibili.magicasakura.widgets.TintCheckBox
+                android:id="@+id/check_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="170dp"
+                android:text="测试服务器"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_normal" />
+
             <EditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"

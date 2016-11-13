@@ -34,8 +34,10 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.app.api.OtherApi;
 import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.utils.BaseTools;
+import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.model.bean.AddFriendRequest;
 import com.study.mingappk.model.bean.EbankWifiConnect;
+import com.study.mingappk.model.bean.FriendDetail;
 import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.bean.ShareMsg;
 import com.study.mingappk.model.database.ChatMsgModel;
@@ -209,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             } else {
 
-                                ChatMsgModel chatMsg = new ChatMsgModel();
+                                final ChatMsgModel chatMsg = new ChatMsgModel();
                                 chatMsg.setType(ChatMsgModel.ITEM_TYPE_LEFT);//接收消息
                                 if ("1".equals(lBean.getFrom())) {
                                     chatMsg.setFrom("10001");//系统消息由"我们村客服"发来
@@ -242,35 +244,58 @@ public class MainActivity extends AppCompatActivity {
                                 chatMsg.setLink(lBean.getLink());//类型：图片or语音
                                 MyDB.insert(chatMsg);//保存到数据库
 
-                                String uid = chatMsg.getFrom();
-                                FriendsModel friend = MyDB.createDb(context).queryById(uid, FriendsModel.class);
+                                final String uid = chatMsg.getFrom();
+                                final FriendsModel friend = MyDB.createDb(context).queryById(uid, FriendsModel.class);
 
-                                //新消息条数，读取及更新
-                                int count = friend.getCount() + 1;
-                                friend.setCount(count);
-                                MyDB.update(friend);
-                                // 登录后发送通知
-                         /*   int requestCode = Integer.parseInt(uid);//唯一标识通知
-                            //点击通知后操作
-                            Intent intent2 = new Intent(context, ChatActivity.class);
-                            intent2.putExtra(ChatActivity.UID, uid);
-                            intent2.putExtra(ChatActivity.USER_NAME, friend.getUname());
-                            PendingIntent pIntent = PendingIntent.getActivity(context, requestCode, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+                                if (friend != null) {
+                                    //新消息条数，读取及更新
+                                    int count = friend.getCount() + 1;
+                                    friend.setCount(count);
+                                    MyDB.update(friend);
+                                    //保存动态并刷新
+                                    InstantMsgModel msgModel = new InstantMsgModel(uid, friend.getUicon(), friend.getUname(), chatMsg.getSt(), chatMsg.getTxt(), count);
+                                    MyDB.insert(msgModel);
+                                    EventBus.getDefault().post(new InstantMsgEvent());
+                                }else{//如果消息来自非好友（新增：客户联系店长）
+                                    String auth = Hawk.get(APP.USER_AUTH);
+                                    MyServiceClient.getService().get_FriendDetail(auth, uid)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Subscriber<FriendDetail>() {
+                                                @Override
+                                                public void onCompleted() {
 
-                            //构建通知
-                            int largeIcon = R.mipmap.ic_launcher;
-                            int smallIcon = R.mipmap.tab1_btn1;
-                            String title = friend.getUname();
-                            String ticker = title + ": " + chatMsg.getTxt();
-                            String content = "[" + count + "条]" + ": " + chatMsg.getTxt();
-                            //实例化工具类，并且调用接口
-                            NotifyUtil notify3 = new NotifyUtil(context, requestCode);
-                            notify3.notify_msg(pIntent, smallIcon, largeIcon, ticker, title, content, true, true, false);*/
+                                                }
 
-                                //保存动态并刷新
-                                InstantMsgModel msgModel = new InstantMsgModel(uid, friend.getUicon(), friend.getUname(), chatMsg.getSt(), chatMsg.getTxt(), count);
-                                MyDB.insert(msgModel);
-                                EventBus.getDefault().post(new InstantMsgEvent());
+                                                @Override
+                                                public void onError(Throwable e) {
+
+                                                }
+
+                                                @Override
+                                                public void onNext(FriendDetail friendDetail) {
+                                                    FriendDetail.DataBean.UserinfoBean userinfoBean = friendDetail.getData().getUserinfo();
+                                                    //存储陌生消息人信息到本地好友数据库，标识isFriend为false
+                                                    String save_uicon = MyServiceClient.getBaseUrl() + userinfoBean.getHead();
+                                                    String save_uname = userinfoBean.getUname();//昵称
+                                                    String iphone = userinfoBean.getPhone();
+                                                    if (StringTools.isEmpty(save_uname)) {
+                                                        save_uname = iphone;//昵称为空，显示手机号
+                                                    }
+                                                    FriendsModel friendsModel = new FriendsModel(uid, save_uname, save_uicon, false);
+                                                    MyDB.insert(friendsModel);
+                                                    //处理后续消息
+                                                    //新消息条数，读取及更新
+                                                    int count = friendsModel.getCount() + 1;
+                                                    friendsModel.setCount(count);
+                                                    MyDB.update(friendsModel);
+                                                    //保存动态并刷新
+                                                    InstantMsgModel msgModel = new InstantMsgModel(uid, friendsModel.getUicon(), friendsModel.getUname(), chatMsg.getSt(), chatMsg.getTxt(), count);
+                                                    MyDB.insert(msgModel);
+                                                    EventBus.getDefault().post(new InstantMsgEvent());
+                                                }
+                                            });
+                                }
                             }
                         }
                     }

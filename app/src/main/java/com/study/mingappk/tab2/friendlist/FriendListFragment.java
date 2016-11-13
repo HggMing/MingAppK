@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
@@ -227,11 +226,14 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
         tempMember.setUid("-9999");
         tempMember.setSortLetters("$");
         mList.add(tempMember);
-        for (int i = 0; i < 2; i++) {
-            tempMember = friendList.getData().getList().get(i);
-            tempMember.setSortLetters("$");
-            mList.add(tempMember);
-        }
+//        for (int i = 0; i < 2; i++) {
+//            tempMember = friendList.getData().getList().get(i);
+//            tempMember.setSortLetters("$");
+//            mList.add(tempMember);
+//        }
+        tempMember = friendList.getData().getList().get(1);
+        tempMember.setSortLetters("$");
+        mList.add(tempMember);
 
         //我
         tempMember = friendList.getData().getList().get(2);
@@ -278,17 +280,17 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
             String save_uid = user.getUid();
             String save_uicon = MyServiceClient.getBaseUrl() + user.getHead();
             String save_uname = user.getName();
-            FriendsModel friendsModel = new FriendsModel(save_uid, save_uname, save_uicon);
+            FriendsModel friendsModel = new FriendsModel(save_uid, save_uname, save_uicon,true);
             MyDB.insert(friendsModel);
         }
 
         //生成欢迎语动态
-        FriendList.DataBean.ListBean user2 = mList.get(2);//我们村客服
+        FriendList.DataBean.ListBean user2 = mList.get(1);//我们村客服
         InstantMsgModel user2_msg = MyDB.createDb(mActivity).queryById(user2.getUid(), InstantMsgModel.class);
         if (user2_msg == null) {//动态不存在才添加
             String user2_icon = MyServiceClient.getBaseUrl() + user2.getHead();
             String time = String.valueOf(System.currentTimeMillis()).substring(0, 10);//13位时间戳，截取前10位，主要统一
-            String content = "你好！" + mList.get(3).getName() + ",欢迎来到我们村！";
+            String content = "你好！" + mList.get(2).getName() + ",欢迎来到我们村！";
             InstantMsgModel msgModel = new InstantMsgModel(user2.getUid(), user2_icon, user2.getName(), time, content, 1);
             MyDB.insert(msgModel);
             EventBus.getDefault().post(new InstantMsgEvent());
@@ -314,10 +316,10 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
                 Intent intent0 = new Intent(mActivity, NewFriendActivity.class);
                 startActivity(intent0);
                 break;
-            case 1://小苞谷
-                Toast.makeText(mActivity, "功能维护中...", Toast.LENGTH_SHORT).show();
-                break;
-            case 2://客服
+//            case 1://小苞谷
+//                Toast.makeText(mActivity, "功能维护中...", Toast.LENGTH_SHORT).show();
+//                break;
+            case 1://客服
                 Intent intent2 = new Intent(mActivity, ChatActivity.class);
                 intent2.putExtra(ChatActivity.UID, mList.get(position).getUid());
                 intent2.putExtra(ChatActivity.USER_NAME, mList.get(position).getName());
@@ -335,7 +337,7 @@ public class FriendListFragment extends Fragment implements FriendListAdapter.On
     @Override
     public void onItemLongClick(View view, final int position) {
         //长按删除好友
-        if (position > 3) {
+        if (position > 2) {
             MyDialog.Builder builder = new MyDialog.Builder(mActivity);
             builder.setTitle("提示")
                     .setMessage("确定删除老乡“" + mList.get(position).getName() + "”？")

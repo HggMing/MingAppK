@@ -35,7 +35,7 @@
             android:maxLines="1"
             android:paddingLeft="0dp"
             android:paddingRight="10dp"
-            android:textColor="@color/font_black_content"
+            android:textColor="@color/font_black_4"
             android:textSize="@dimen/textsize_large"
             tools:text="上方村" />
 

@@ -81,8 +81,8 @@ public class VillageSituationActivity extends BackActivity implements VillageSit
         switch (position) {
             case 0://村况
                 Intent intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra(WebViewActivity.TAG, WebViewActivity.TITLE_NAME2);
-                intent.putExtra(WebViewActivity.VILLAGE_ID, vid);
+                intent.putExtra(WebViewActivity.KEY_TITLE, WebViewActivity.TITLE_NAME2);
+                intent.putExtra(WebViewActivity.KEY_URL, WebViewActivity.URL_REG2+vid);
                 startActivity(intent);
                 break;
             case 1://荣誉室

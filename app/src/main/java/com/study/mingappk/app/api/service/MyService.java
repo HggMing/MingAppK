@@ -26,6 +26,8 @@ import com.study.mingappk.model.bean.MessageList;
 import com.study.mingappk.model.bean.MoneyDetail;
 import com.study.mingappk.model.bean.MyVillUsers;
 import com.study.mingappk.model.bean.NewsList;
+import com.study.mingappk.model.bean.OrderInfo;
+import com.study.mingappk.model.bean.ProductList;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.RechargeOrderList;
 import com.study.mingappk.model.bean.RecommendList;
@@ -410,6 +412,7 @@ public interface MyService {
 
     /**
      * 村况里，荣誉室，活动，美食的添加
+     *
      * @param type 1、荣誉室2、活动3、村委（Item不同，单独写）4、美食
      */
     @Multipart
@@ -423,7 +426,8 @@ public interface MyService {
 
     /**
      * 村况里，荣誉室，活动，美食的删除
-     * @param id  item id
+     *
+     * @param id item id
      */
     @FormUrlEncoded
     @POST("tool/del")
@@ -445,13 +449,14 @@ public interface MyService {
 
     /**
      * 新增村委信息
+     *
      * @param contact 电话
-     * @param job 职务
-     * @param sex 0男1女
-     * @param uname 姓名
-     * @param vid 村id
-     * @param zzmm 政治面貌
-     * @param file 头像
+     * @param job     职务
+     * @param sex     0男1女
+     * @param uname   姓名
+     * @param vid     村id
+     * @param zzmm    政治面貌
+     * @param file    头像
      * @return data-id
      */
     @Multipart
@@ -468,6 +473,7 @@ public interface MyService {
 
     /**
      * 删除村委信息
+     *
      * @param id item id
      */
     @FormUrlEncoded
@@ -1066,6 +1072,53 @@ public interface MyService {
             @Field("id") String id);
 
     /**
+     * 根据订单号获取订单详情
+     *
+     * @param order_sn 订单号
+     * @param auth     认证信息
+     * @return OrderInfo
+     */
+    @GET("orders/orderinfo")
+    Observable<OrderInfo> get_OrderInfo(
+            @Query("order_sn") String order_sn,
+            @Query("auth") String auth);
+
+
+    /**
+     * 生成特产订单
+     * @param auth 认证信息
+     * @param buy_uname
+     * @param product
+     * @param province
+     * @param city
+     * @param district
+     * @param address
+     * @param zipcode
+     * @param tel
+     * @param postscript
+     * @param shipping_id
+     * @param shipping_name
+     * @param vid
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("orders/neworder")
+    Observable<ResultOther> post_NewOrder(
+            @Field("auth") String auth,
+            @Field("buy_uname") String buy_uname,
+            @Field("product") String product,
+            @Field("province") String province,
+            @Field("city") String city,
+            @Field("district") String district,
+            @Field("address") String address,
+            @Field("zipcode") String zipcode,
+            @Field("tel") String tel,
+            @Field("postscript") String postscript,
+            @Field("shipping_id") String shipping_id,
+            @Field("shipping_name") String shipping_name,
+            @Field("vid") String vid);
+
+    /**
      * 获取快递列表接口
      *
      * @param vid    村id
@@ -1181,6 +1234,22 @@ public interface MyService {
      */
     @GET("product/tlist")
     Observable<RecommendList> get_RecommendList(
+            @Query("page") int page,
+            @Query("pagesize") int pagesize);
+
+    /**
+     * 获取村特产列表
+     *
+     * @param auth     认证信息
+     * @param vid      村id
+     * @param page     页
+     * @param pagesize 每页条数
+     * @return ProductList
+     */
+    @GET("product/list")
+    Observable<ProductList> get_ProductList(
+            @Query("auth") String auth,
+            @Query("vid") String vid,
             @Query("page") int page,
             @Query("pagesize") int pagesize);
 

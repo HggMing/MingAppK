@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_all"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/m_refresh_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.jcodecraeer.xrecyclerview.XRecyclerView
+                    android:id="@+id/m_x_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <TextView
+                android:id="@+id/content_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/font_black_8"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tools:text="列表无内容时的提示信息" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal">
+
+            <com.bilibili.magicasakura.widgets.TintImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@mipmap/ic_shopping_cart"
+                app:imageTint="@color/theme_color_primary" />
+
+            <TextView
+                android:id="@+id/badge"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="6dp"
+                android:visibility="invisible"
+                android:background="@drawable/shape_red_circle" />
+            <TextView
+                android:id="@+id/tv_price_all"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/color08"
+                android:textSize="@dimen/textsize_large"
+                tools:text="￥22.22" />
+
+            <com.bilibili.magicasakura.widgets.TintButton
+                android:id="@+id/bt_pay"
+                android:layout_width="72dp"
+                android:layout_height="36dp"
+                android:background="@drawable/button_theme"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="去结算"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

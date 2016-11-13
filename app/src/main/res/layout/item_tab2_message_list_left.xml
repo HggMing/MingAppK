@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/content_pressed_selector"
         android:gravity="center"
-        android:textColor="@color/font_black_9"
+        android:textColor="@color/font_black_8"
         android:textSize="12sp"
         tools:text="7月8日 15:33" />
 
@@ -51,7 +51,7 @@
             android:layout_marginRight="6dp"
             android:layout_marginTop="9dp"
             android:background="@drawable/content_pressed_selector"
-            android:textColor="@color/font_black_content"
+            android:textColor="@color/font_black_4"
             android:textSize="16sp"
             android:visibility="gone"
             tools:text="内容显示在这里。" />
@@ -100,7 +100,7 @@
                 android:layout_toRightOf="@id/share_img"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/font_black_content"
+                android:textColor="@color/font_black_4"
                 android:textSize="@dimen/textsize_normal"
                 tools:text="分享内容的标题，分享内容的标题，分享内容的标题" />
 
@@ -114,7 +114,7 @@
                 android:layout_toRightOf="@id/share_img"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textColor="@color/font_black_comment"
+                android:textColor="@color/font_black_6"
                 android:textSize="@dimen/textsize_small"
                 tools:text="分享内容显示在这里，分享内容显示在这里，分享内容显示在这里" />
 
@@ -132,7 +132,7 @@
                 android:layout_below="@id/line_s"
                 android:layout_marginTop="6dp"
                 android:text="来自我们村的分享，点击查看"
-                android:textColor="@color/font_black_comment"
+                android:textColor="@color/font_black_6"
                 android:textSize="12sp" />
         </RelativeLayout>
     </LinearLayout>
