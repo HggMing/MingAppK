@@ -35,6 +35,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--下载文件RxDownload-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".app.APP"
@@ -52,6 +56,18 @@
             </intent-filter>
         </receiver>
 
+        <!--更新APP相关-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
+        <service android:name=".tmain.update.UpdateService"/>
         <!-- 配置第三方Receiver -->
         <!--
         根据业务需要，在AndroidManifest.xml添加用于接收透传消息的BroadcastReceiver，
@@ -366,6 +382,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tab3.product.ChooseAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tab4.mysetting.myorder.MyOrderListActivity"
             android:screenOrientation="portrait" />
     </application>
 

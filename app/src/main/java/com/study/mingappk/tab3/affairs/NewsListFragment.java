@@ -99,10 +99,6 @@ public class NewsListFragment extends Fragment implements NewsListAdapter.OnItem
         mXRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                mAdapter.setItem(null);
-                mList.clear();
-                page = 1;
-                getDataList(page);
                 mXRecyclerView.refreshComplete();
             }
 

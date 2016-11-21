@@ -11,10 +11,10 @@ import com.study.mingappk.app.api.OtherApi;
 import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.model.bean.EbankWifiConnect;
 import com.study.mingappk.common.base.BackActivity;
+import com.study.mingappk.tmain.update.UpdateApp;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observer;
 import rx.Subscriber;
 
 public class SettingCommonActivity extends BackActivity {
@@ -35,7 +35,8 @@ public class SettingCommonActivity extends BackActivity {
                 connectWifi();
                 break;
             case R.id.click_check_version:
-                Toast.makeText(SettingCommonActivity.this, "检查新版本", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SettingCommonActivity.this, "检查新版本", Toast.LENGTH_SHORT).show();
+                UpdateApp.updateCheck(this);
                 break;
             case R.id.click_clear_cache:
                 MyDialog.Builder builder = new MyDialog.Builder(this);

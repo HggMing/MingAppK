@@ -169,28 +169,30 @@ public class WebFragment extends Fragment {
         @Override
         public void onProgressChanged(WebView webView, int i) {
             super.onProgressChanged(webView, i);
-            progressBar.setProgress(i);
-            if (i == 100) {
-                progressBar.setVisibility(View.INVISIBLE);
-                AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
-                animation.setDuration(500);
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
+            if (progressBar != null) {
+                progressBar.setProgress(i);
+                if (i == 100) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
+                    animation.setDuration(500);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                        }
 
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
 
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-                });
-                progressBar.startAnimation(animation);
-            } else {
-                progressBar.setVisibility(View.VISIBLE);
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+                    });
+                    progressBar.startAnimation(animation);
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

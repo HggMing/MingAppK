@@ -11,7 +11,7 @@ public class InsuranceOrderList {
     /**
      * cnt : 26
      * list : [{"id":"65","vid":"510107007006","c_addr":"四川省井研县镇阳乡石龙村5组3号","c_cid":"511124199709246613","c_name":"张桂滔","c_phone":"1556","c_number":"川5","c_no":"555","money_paid":"0.01","price":"0.01","ctime":"1473839216","status":"0","pay_status":"2","ptime":"1473839332","stime":"0","htime":"0","phone":"18200390595","other_sn":"2016091421001004620248473875","order_sn":"s20160914485597574854"}]
-     * url : http://121.40.105.149:9901/alipay/n_url_baoxian
+     * url : http://product.yibanke.com/alipay/n_url_baoxian
      */
 
     private String cnt;

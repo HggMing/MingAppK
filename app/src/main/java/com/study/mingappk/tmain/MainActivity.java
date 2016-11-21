@@ -56,6 +56,7 @@ import com.study.mingappk.tab2.friendlist.FriendListActivity;
 import com.study.mingappk.tab2.message.MessageFragment;
 import com.study.mingappk.tab3.villagelist.VillageListFragment;
 import com.study.mingappk.tab4.SettingFragment;
+import com.study.mingappk.tmain.update.UpdateApp;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

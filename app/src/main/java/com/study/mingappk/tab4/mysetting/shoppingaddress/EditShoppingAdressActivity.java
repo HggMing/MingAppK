@@ -83,7 +83,7 @@ public class EditShoppingAdressActivity extends BackActivity {
             final String sd_name = etName.getEditableText().toString();
             final String sd_addr = etAddress.getEditableText().toString();
             final String sd_phone = etPhone.getEditableText().toString();
-            String sd_code = etCode.getEditableText().toString();
+            final String sd_code = etCode.getEditableText().toString();
             String sd_is_def;
             if (checkDefault.isChecked()) {
                 sd_is_def = "1";
@@ -154,10 +154,10 @@ public class EditShoppingAdressActivity extends BackActivity {
 
                             @Override
                             public void onNext(Result result) {
-                                Intent intent=new Intent();
-                                intent.putExtra(ProductPayActivity.KEY_PHONE_NAME,sd_phone+"  "+sd_name);
-                                intent.putExtra(ProductPayActivity.KEY_ADDRESS,sd_addr);
-                                setResult(RESULT_OK,intent);
+                                ShoppingAddress.DataBean data2 = new ShoppingAddress.DataBean(sd_name, sd_phone, sd_addr, sd_code);
+                                Intent intent = new Intent();
+                                intent.putExtra(ProductPayActivity.KEY_USER_ADDR_INFO,data2);
+                                setResult(RESULT_OK, intent);
                                 finish();
                             }
                         });

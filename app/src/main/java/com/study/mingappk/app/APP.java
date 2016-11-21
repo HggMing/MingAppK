@@ -66,7 +66,7 @@ public class APP extends Application implements ThemeUtils.switchColor {
                 .build();
         //集成腾讯TBS浏览器SDK，初始化
         settingTBS();
-       BASE_URL= Hawk.get(KEY_BASE_URL,"http://118.178.232.77:9901/");
+        BASE_URL = Hawk.get(KEY_BASE_URL, "http://product1.yibanke.com/");
     }
 
     private void settingTBS() {

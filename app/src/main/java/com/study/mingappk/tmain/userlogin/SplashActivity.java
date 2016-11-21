@@ -19,6 +19,7 @@ import com.study.mingappk.app.APP;
 import com.study.mingappk.common.utils.BaseTools;
 import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.tmain.MainActivity;
+import com.study.mingappk.tmain.update.UpdateApp;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -61,7 +62,14 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void hasPermission() {
                         //执行获得权限后相关代码
-                        init();
+                        //检测更新
+                        UpdateApp.updateAuto(SplashActivity.this, new UpdateApp.DoOnActivity() {
+                            @Override
+                            public void notNeedUpdate() {
+                                //如果没有检测到更新，继续加载程序
+                                init();
+                            }
+                        });
                     }
 
                     @Override
@@ -93,7 +101,7 @@ public class SplashActivity extends AppCompatActivity {
                 Manifest.permission.READ_PHONE_STATE);
     }
 
-    private void init() {
+    public void init() {
 
         final String loginName = Hawk.get(APP.LOGIN_NAME, "");
         final String loginPwd = Hawk.get(APP.LOGIN_PASSWORD, "");

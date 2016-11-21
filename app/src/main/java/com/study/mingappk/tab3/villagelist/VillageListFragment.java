@@ -148,10 +148,12 @@ public class VillageListFragment extends Fragment implements VillageListAdapter.
                             FollowVillageList followVillageListResult = response.body();
                             if (followVillageListResult != null && followVillageListResult.getErr() == 0) {
                                 mList.addAll(followVillageListResult.getData().getList());
-                                if (mList.isEmpty()||mList==null) {
-                                    contentEmpty.setVisibility(View.VISIBLE);
-                                } else {
-                                    contentEmpty.setVisibility(View.GONE);
+                                if (contentEmpty != null) {
+                                    if (mList.isEmpty() || mList == null) {
+                                        contentEmpty.setVisibility(View.VISIBLE);
+                                    } else {
+                                        contentEmpty.setVisibility(View.GONE);
+                                    }
                                 }
                                 mAdapter.setItem(mList);
                             }

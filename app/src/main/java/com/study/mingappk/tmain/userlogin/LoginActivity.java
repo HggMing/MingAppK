@@ -61,8 +61,8 @@ public class LoginActivity extends Activity {
     private static final int REGISTERED_PHONE = 123;//请求返回已注册手机号
     public static final String REGISTERED_PHONE_NUMBER = "registered_phone_number";//返回已注册手机号
 
-    private static String baseUrl = "http://121.40.105.149:9901/";
-    private static String baseUrl_Test = "http://118.178.232.77:9901/";
+    private static String baseUrl = "http://product.yibanke.com/";
+    private static String baseUrl_Test = "http://product1.yibanke.com/";
     private boolean isTest;//是否为测试服务器
     private String KEY_IS_TEST = "key_is_test";
 

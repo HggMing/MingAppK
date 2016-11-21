@@ -276,18 +276,20 @@ public class SettingFragment extends Fragment implements CardPickerDialog.ClickL
 
     }
 
-    @OnClick({R.id.test,R.id.click_user, R.id.click_safe_center, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
+    @OnClick({R.id.test, R.id.click_user, R.id.click_safe_center, R.id.click_my_setting, R.id.click_setting_common, R.id.click_store_manager, R.id.click_loyout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.test://测试按钮:
 
                 break;
             case R.id.click_user://点击编辑用户
-                Intent intent1 = new Intent(mActivity, UserDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(UserDetailActivity.USER_INFO, dataEntity);
-                intent1.putExtras(bundle);
-                startActivityForResult(intent1, REQUEST_USER_INFO);
+                if (dataEntity != null) {
+                    Intent intent1 = new Intent(mActivity, UserDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(UserDetailActivity.USER_INFO, dataEntity);
+                    intent1.putExtras(bundle);
+                    startActivityForResult(intent1, REQUEST_USER_INFO);
+                }
                 break;
             case R.id.click_my_setting://我的
                 Intent intent2 = new Intent(mActivity, MySettingActivity.class);

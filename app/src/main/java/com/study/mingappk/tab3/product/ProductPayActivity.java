@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bilibili.magicasakura.widgets.TintEditText;
 import com.bilibili.magicasakura.widgets.TintRadioButton;
 import com.bumptech.glide.Glide;
 import com.orhanobut.hawk.Hawk;
@@ -28,13 +29,16 @@ import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.base.BackActivity;
 import com.study.mingappk.common.base.BaseRecyclerViewAdapter;
 import com.study.mingappk.common.utils.StringTools;
+import com.study.mingappk.common.widgets.alipay.PayUtils;
 import com.study.mingappk.common.widgets.dialog.Dialog_InputPwd;
+import com.study.mingappk.model.bean.OrderInfo;
 import com.study.mingappk.model.bean.ProductList;
+import com.study.mingappk.model.bean.ProductNewOrder;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.ResultOther;
 import com.study.mingappk.model.bean.ShoppingAddress;
 import com.study.mingappk.model.event.ProductBuyEvent;
-import com.study.mingappk.tab4.mysetting.mypurse.TakeMoneyActivity;
+import com.study.mingappk.tab1.BrowserActivity;
 import com.study.mingappk.tab4.mysetting.shoppingaddress.EditShoppingAdressActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -83,19 +87,19 @@ public class ProductPayActivity extends BackActivity {
     LinearLayout lyPayOnline;
     @Bind(R.id.m_scroll)
     NestedScrollView mScroll;
+    @Bind(R.id.et_beizhu)
+    TintEditText etBeizhu;
 
     private static final int REQUEST_ADD = 123;
-    private static final int REQUEST_CHOOSE = 124;
 
-    private String phoneName;
-    private String address;
-    public static String KEY_PHONE_NAME = "key_phone_name";
-    public static String KEY_ADDRESS = "key_address";
+    private ShoppingAddress.DataBean userAddrInfo;//用户地址信息
+    public static String KEY_USER_ADDR_INFO = "key_user_addr_info";
 
     private SparseArray<ProductList.DataBean.ListBean> buyProductList;//已买商品列表
     private BigDecimal pricePay;//支付价格
 
     private ProductPayAdapter mAdapter;
+    private String product;
     ;
 
     @Override
@@ -163,9 +167,15 @@ public class ProductPayActivity extends BackActivity {
         mXRecyclerView.setAdapter(mAdapter);//设置adapter
 
         List<ProductList.DataBean.ListBean> mList = new ArrayList<>();
+
+        StringBuilder productBuilder = new StringBuilder();
         for (int i = 0; i < buyProductList.size(); i++) {
             mList.add(buyProductList.valueAt(i));
+            productBuilder.append(mList.get(i).getId()).append(",").append(mList.get(i).getBuyNum()).append("|");
         }
+        productBuilder.setLength(productBuilder.length() - 1);
+        product = productBuilder.toString();
+
         mAdapter.setItem(mList);
         mScroll.smoothScrollTo(0, 20);//解决初始显示的可滚动内容没有滚到顶部
     }
@@ -212,8 +222,9 @@ public class ProductPayActivity extends BackActivity {
                     @Override
                     public void onNext(ShoppingAddress.DataBean dataBean) {
                         if (dataBean != null) {
-                            phoneName = dataBean.getTel() + "  " + dataBean.getUname();
-                            address = dataBean.getAddr();
+                            userAddrInfo = dataBean;
+                            String phoneName = dataBean.getTel() + "  " + dataBean.getUname();
+                            String address = dataBean.getAddr();
                             tvPhoneName.setText(phoneName);
                             tvAdd.setText(address);
                         }
@@ -226,7 +237,7 @@ public class ProductPayActivity extends BackActivity {
         switch (view.getId()) {
             case R.id.img_choose_add://选择收货地址
                 Intent intent = new Intent(this, ChooseAddressActivity.class);
-                startActivityForResult(intent, REQUEST_CHOOSE);
+                startActivityForResult(intent, REQUEST_ADD);
                 break;
             case R.id.img_edit_add://添加收货地址
                 Intent intent2 = new Intent(this, EditShoppingAdressActivity.class);
@@ -241,26 +252,53 @@ public class ProductPayActivity extends BackActivity {
                 rbPayYu.setChecked(false);
                 break;
             case R.id.btn_commit://确认下单
-                if (StringTools.isEmpty(address)) {
+                if (StringTools.isEmpty(userAddrInfo.getAddr())) {
                     Toast.makeText(this, "请选择或新增收货人信息！", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                final String auth = Hawk.get(APP.USER_AUTH);
+                String uname = userAddrInfo.getUname();
+                String addr = userAddrInfo.getAddr();
+                String zCode = userAddrInfo.getZipcode();
+                String phone = userAddrInfo.getTel();
+                String postscript = etBeizhu.getEditableText().toString();
+                String vid = buyProductList.valueAt(0).getVid();
 
-                if (rbPayOnline.isChecked()) {
-                    payOnline();//在线支付
-                } else {
-                    payByYu();//余额支付
-                }
+                MyServiceClient.getService()
+                        .post_NewOrder(auth, uname, product, addr, addr, addr, addr, zCode, phone, postscript, vid, vid, vid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<ProductNewOrder>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(ProductNewOrder productNewOrder) {
+                                ProductNewOrder.DataBean data = productNewOrder.getData();
+                                if (rbPayOnline.isChecked()) {
+                                    payOnline(data);//在线支付
+                                } else {
+                                    payByYu(auth, data.getNo(), data.getTol() + "");//余额支付
+                                }
+                            }
+                        });
                 break;
         }
     }
 
-    private void payOnline() {
-
-
+    private void payOnline(ProductNewOrder.DataBean data) {
+        PayUtils payUtils = new PayUtils(ProductPayActivity.this, -1);
+        payUtils.pay("村特产", "村特产订单", String.valueOf(data.getTol()), data.getNo(), data.getUrl());
     }
 
-    private void payByYu() {
+    private void payByYu(final String auth, final String orderNo, final String money) {
         final Dialog_InputPwd.Builder pwdDialog = new Dialog_InputPwd.Builder(this);
         pwdDialog.setTitle("交易密码")
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -271,14 +309,36 @@ public class ProductPayActivity extends BackActivity {
                 })
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, int which) {
                         String pwd = pwdDialog.et_pwd.getEditableText().toString();
                         if (StringTools.isEmpty(pwd)) {
                             Toast.makeText(ProductPayActivity.this, "交易密码不能为空", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Toast.makeText(ProductPayActivity.this, "余额支付成功！", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        MyServiceClient.getService()
+                                .post_PayByYuer(auth, orderNo, pwd, money)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Subscriber<Result>() {
+                                    @Override
+                                    public void onCompleted() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+
+                                    }
+
+                                    @Override
+                                    public void onNext(Result result) {
+                                        Toast.makeText(ProductPayActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                        if (result.getErr() == 0) {
+                                            //TODO 支付成功，进入我的订单页面
+                                        }
+                                        dialog.dismiss();
+                                    }
+                                });
                     }
                 }).create().show();
     }
@@ -289,16 +349,10 @@ public class ProductPayActivity extends BackActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case REQUEST_ADD://新增收货地址后，界面显示
-                    phoneName = data.getExtras().getString(KEY_PHONE_NAME);
-                    address = data.getExtras().getString(KEY_ADDRESS);
-                    tvPhoneName.setText(phoneName);
-                    tvAdd.setText(address);
-                    break;
-
-                case REQUEST_CHOOSE://选择收货地址后，界面显示
-                    phoneName = data.getExtras().getString(KEY_PHONE_NAME);
-                    address = data.getExtras().getString(KEY_ADDRESS);
+                case REQUEST_ADD://新增收货地址or选择收货地址后，界面显示
+                    userAddrInfo = data.getParcelableExtra(KEY_USER_ADDR_INFO);
+                    String phoneName = userAddrInfo.getTel() + "  " + userAddrInfo.getUname();
+                    String address = userAddrInfo.getAddr();
                     tvPhoneName.setText(phoneName);
                     tvAdd.setText(address);
                     break;

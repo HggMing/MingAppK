@@ -7,9 +7,9 @@ public class AddFriendRequest {
 
     /**
      * msg : 姓名:哎呀不错,手机号：19910001004 请求加您为好友，是否同意？
-     * url_1 : http://121.40.105.149:9901/friend/agree?uid=13177
+     * url_1 : http://product.yibanke.com/friend/agree?uid=13177
      * title_1 : 同意
-     * url_2 : http://121.40.105.149:9901/friend/unagree?uid=13177
+     * url_2 : http://product.yibanke.com/friend/unagree?uid=13177
      * title_2 : 不同意
      * uinfo : {"uid":"13177","phone":"19910001004","sex":"1","uname":"哎呀不错","head":"/Public/head/13177/UBHTHUTUOX961467981351.jpg"}
      */

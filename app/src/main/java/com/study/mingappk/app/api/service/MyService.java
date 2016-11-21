@@ -28,6 +28,7 @@ import com.study.mingappk.model.bean.MyVillUsers;
 import com.study.mingappk.model.bean.NewsList;
 import com.study.mingappk.model.bean.OrderInfo;
 import com.study.mingappk.model.bean.ProductList;
+import com.study.mingappk.model.bean.ProductNewOrder;
 import com.study.mingappk.model.bean.QueryVillageList;
 import com.study.mingappk.model.bean.RechargeOrderList;
 import com.study.mingappk.model.bean.RecommendList;
@@ -37,6 +38,7 @@ import com.study.mingappk.model.bean.ResultOther;
 import com.study.mingappk.model.bean.SalesOrderList;
 import com.study.mingappk.model.bean.ShoppingAddress;
 import com.study.mingappk.model.bean.TravelOrderList;
+import com.study.mingappk.model.bean.UpdateAppBack;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
 import com.study.mingappk.model.bean.UserInfoByPhone;
@@ -47,14 +49,18 @@ import com.study.mingappk.model.bean.ZanList;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -1087,23 +1093,23 @@ public interface MyService {
     /**
      * 生成特产订单
      * @param auth 认证信息
-     * @param buy_uname
-     * @param product
-     * @param province
-     * @param city
-     * @param district
-     * @param address
-     * @param zipcode
-     * @param tel
-     * @param postscript
-     * @param shipping_id
-     * @param shipping_name
-     * @param vid
-     * @return
+     * @param buy_uname 购买人姓名
+     * @param product      商品列表。格式如下id1,num1|id2,num2|id3,num3|...id为商品ID，num为数量，不同商品之间用"|"分割，同一商品字段用","分割
+     * @param province 省份
+     * @param city  市
+     * @param district  区
+     * @param address  详细地址
+     * @param zipcode  邮编
+     * @param tel 电话
+     * @param postscript  备注消息
+     * @param shipping_id  用户选择的配送方式id
+     * @param shipping_name  用户选择的配送方式名称
+     * @param vid  村id
+     * @return  ProductNewOrder
      */
     @FormUrlEncoded
     @POST("orders/neworder")
-    Observable<ResultOther> post_NewOrder(
+    Observable<ProductNewOrder> post_NewOrder(
             @Field("auth") String auth,
             @Field("buy_uname") String buy_uname,
             @Field("product") String product,
@@ -1117,6 +1123,23 @@ public interface MyService {
             @Field("shipping_id") String shipping_id,
             @Field("shipping_name") String shipping_name,
             @Field("vid") String vid);
+
+
+    /**
+     * 采用余额支付
+     * @param auth 认证信息
+     * @param order_sn 订单号
+     * @param pwd 支付密码
+     * @param money 支付金额
+     * @return Result
+     */
+    @FormUrlEncoded
+    @POST("orders/yuer_pay")
+    Observable<Result> post_PayByYuer(
+            @Field("auth") String auth,
+            @Field("order_sn") String order_sn,
+            @Field("pwd") String pwd,
+            @Field("money") String money);
 
     /**
      * 获取快递列表接口
@@ -1299,4 +1322,24 @@ public interface MyService {
             @Query("auth") String auth,
             @Query("page") int page,
             @Query("pagesize") int pagesize);
+
+    /**
+     * 获取App更新
+     * @param id 应用ID
+     * @param api_token 长度为 32, 用户在 fir 的 api_token
+     * @return UpdateAppBack
+     */
+    @GET("http://api.fir.im/apps/latest/{id}")
+    Observable<UpdateAppBack> get_UpdateApp(
+            @Path("id") String id,
+            @Query("api_token") String api_token);
+
+    /**
+     * 通过Head获取App更新的真实下载地址
+     * @return  ResponseBody
+     */
+    @HEAD
+    Observable<Response<Void>> get_UpdateAppUrl(
+            @Url String url);
+
 }

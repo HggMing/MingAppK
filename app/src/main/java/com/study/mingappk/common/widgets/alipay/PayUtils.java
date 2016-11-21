@@ -43,7 +43,7 @@ public class PayUtils {
     public static final String RSA_PUBLIC = "";
     private static final int SDK_PAY_FLAG = 1;
 
-    private int fromActivity;//1、话费流量2、汽车保险3、村实惠4、旅游 -1、其他
+    private int fromActivity;//1、话费流量2、汽车保险3、村实惠4、旅游5、特产订单 -1、其他
 
     public PayUtils(Activity mContext,int fromActivity) {
         this.mContext = mContext;
@@ -86,6 +86,9 @@ public class PayUtils {
                                 break;
                             case 4://旅游
                                 intent.setClass(mContext, TravelOrderActivity.class);
+                                break;
+                            case 5://特产
+                                //Todo  跳转到特产订单界面
                                 break;
                         }
                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

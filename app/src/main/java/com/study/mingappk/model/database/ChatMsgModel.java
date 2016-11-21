@@ -58,7 +58,7 @@ public class ChatMsgModel extends BaseModel {
     private String share_title;//分享内容的标题
     private String share_detail;//分享内容详情
     private String share_image;//分享内容的图片地址
-    private String share_link;//分享内容的链接，例：http://121.40.105.149:9901/bbs/bbsinfo?id=4174
+    private String share_link;//分享内容的链接，例：http://product.yibanke.com/bbs/bbsinfo?id=4174
 
     public void setShareMsg(String share_title,String share_detail,String share_image,String share_link){
         this.share_title=share_title;

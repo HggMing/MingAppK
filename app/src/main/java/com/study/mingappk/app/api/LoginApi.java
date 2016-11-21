@@ -9,7 +9,6 @@ import java.io.File;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.http.Part;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -25,7 +24,7 @@ public class LoginApi {
      * 登录
      *
      * @param loginName 用户名
-     * @param pwd 密码
+     * @param pwd       密码
      * @return k
      */
     public static Observable<Login> login(String loginName, String pwd) {
@@ -36,9 +35,10 @@ public class LoginApi {
 
     /**
      * 实名认证接口
-     * @param data 用户数据加密字段
-     * @param faceImage  正面人脸照片
-     * @param idImage 身份证正面照片
+     *
+     * @param data      用户数据加密字段
+     * @param faceImage 正面人脸照片
+     * @param idImage   身份证正面照片
      * @return k
      */
     public static Observable<ResponseBody> faceRealBinding(String data, File faceImage, File idImage) {

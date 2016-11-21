@@ -66,7 +66,7 @@ public class ChatKeyBoard extends XhsEmoticonsKeyBoard {
     @Override
     protected void showText() {
         mEtChat.setVisibility(VISIBLE);
-        mBtnFace.setVisibility(VISIBLE);
+//        mBtnFace.setVisibility(VISIBLE);
         mBtnVoice.setVisibility(GONE);
     }
 

@@ -10,7 +10,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.6.3"
+        versionName "1.0.13"
         manifestPlaceholders = [
                 GETUI_APP_ID    : "o9Pxlf1lfH7yUHC8nGpDH8",
                 GETUI_APP_KEY   : "UyiZPy1YHX9Zop0KYP8EQ3",
@@ -23,23 +23,24 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         dependencies {
             compile fileTree(include: ['*.jar'], dir: 'libs')
             testCompile 'junit:junit:4.12'
+//            compile 'com.orhanobut:logger:1.15'
             //主题选择
             compile 'com.bilibili:magicasakura:0.1.1@aar'
             //Dagger2
             compile 'com.google.dagger:dagger:2.7'
             apt 'com.google.dagger:dagger-compiler:2.7'
             // 网络请求，采用retrofit+okhttp+RxAndroid
-            compile 'com.squareup.retrofit2:retrofit:2.0.1'
-            compile 'com.squareup.retrofit2:converter-gson:2.0.1'
-            compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
-            compile 'com.squareup.okhttp3:okhttp:3.2.0'
-            compile 'io.reactivex:rxandroid:1.1.0'
+            compile 'com.squareup.retrofit2:retrofit:2.1.0'
+            compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+            compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+            compile 'com.squareup.okhttp3:okhttp:3.4.1'
+            compile 'io.reactivex:rxandroid:1.2.0'
             //下载
             // 事件总线
             compile 'org.greenrobot:eventbus:3.0.0'

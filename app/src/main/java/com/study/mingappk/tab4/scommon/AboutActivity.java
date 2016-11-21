@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.common.base.BackActivity;
 
@@ -19,6 +20,7 @@ public class AboutActivity extends BackActivity {
     TextView version;
     @Bind(R.id.about_update)
     TextView aboutUpdate;
+    public static String KEY_CHANGE_LOG="key_change_log";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +28,13 @@ public class AboutActivity extends BackActivity {
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_about);
-       // getSupportActionBar().setTitle("关于我们");
         initAboutActivity();
+        showUpdateMsg();
+    }
+
+    private void showUpdateMsg() {
+        String changeLog= Hawk.get(KEY_CHANGE_LOG);
+        aboutUpdate.setText(changeLog);
     }
 
     /**

@@ -11,7 +11,7 @@ public class SalesOrderList {
     /**
      * cnt : 23
      * list : [{"id":"1065","order_sn":"s20160922571025150521","uid":"10","uname":"逗比","phone":"18200390595","buy_uname":"李焓","address":"四川省 成都市 高新区天仁路387号大鼎世纪广场3栋4层","tel":"18628155109","order_status":"0","pay_status":"2","shipping_id":"0","shipping_name":"","pay_type_id":"2","shipping_fee":"0.00","money_paid":"29.70","order_amount":"29.70","products":"伍田牛油火锅 成都倾城之味 醇麻柔和 香浓味厚 精选调味 3袋","ctime":"1474531961","pay_time":"1474531962","deliver_time":"0","take_time":"0","end_time":"0","other_sn":"","vid":"510107007006","available_jifen":"10","jifen":"0","tk_time":"0","f_price":"4.00","b_price":"30","business_id":"2","is_js":"0","express_sn":"","product_list":[{"id":"2007","order_s":"s20160922571025150521","goods_id":"121","goods_name":"伍田牛油火锅 成都倾城之味 醇麻柔和 香浓味厚 精选调味 3袋","goods_number":"1","b_price":"30.00","market_price":"59.00","goods_price":"29.70","ctime":"1474531961","jifen":"10","picurl":"/Public/product/7/2016-07-27/20160727s20160727575010199579_1.jpg","f_price":"4.00","shipping_fee":"0.00","business_id":"2"}]}]
-     * url : http://121.40.105.149:9901/alipay/n_url_2
+     * url : http://product.yibanke.com/alipay/n_url_2
      */
 
     private String cnt;

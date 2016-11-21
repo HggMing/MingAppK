@@ -107,8 +107,7 @@ public class Dialog_UpdateSex extends Dialog implements DialogInterface {
 
         @SuppressWarnings("deprecation")
         public Dialog_UpdateSex create() {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final Dialog_UpdateSex dialog = new Dialog_UpdateSex(context, R.style.MyDialog);
 
             View layout = inflater.inflate(R.layout.dialog_updatesex, null);

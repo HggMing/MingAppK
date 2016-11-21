@@ -27,6 +27,7 @@ import com.study.mingappk.common.utils.StringTools;
 import com.study.mingappk.common.widgets.MySpinner;
 import com.study.mingappk.common.widgets.customcamera.TakePhotoActivity;
 import com.study.mingappk.common.widgets.dialog.Dialog_Select_Date;
+import com.study.mingappk.common.widgets.dialog.MyDialog;
 import com.study.mingappk.common.widgets.gallerfinal.FunctionConfig;
 import com.study.mingappk.common.widgets.gallerfinal.GalleryFinal;
 import com.study.mingappk.common.widgets.gallerfinal.model.PhotoInfo;
@@ -34,6 +35,8 @@ import com.study.mingappk.model.bean.ApplyInfo2;
 import com.study.mingappk.model.bean.Result;
 import com.study.mingappk.model.bean.UploadFiles;
 import com.study.mingappk.model.bean.UserInfo;
+import com.study.mingappk.tab4.scommon.DataCleanManager;
+import com.study.mingappk.tab4.scommon.SettingCommonActivity;
 import com.study.mingappk.tab4.selfinfo.UpdateAdressActivity;
 
 import java.io.File;
@@ -124,6 +127,8 @@ public class ApplyShopOwnerActivity extends BackActivity {
         setContentView(R.layout.activity_apply_shop_owner);
         ButterKnife.bind(this);
         setToolbarTitle(R.string.title_activity_apply_shop_owner);
+
+        showMsg();
         //用户信息的显示
         initData();
         //设置性别
@@ -131,6 +136,36 @@ public class ApplyShopOwnerActivity extends BackActivity {
         //设置学历
         settingEducation();
     }
+
+    private void showMsg() {
+        MyDialog.Builder builder=new MyDialog.Builder(this);
+        builder.setTitle("申请店长须知")
+                .setMessage("请确定您满足以下条件：\n" +
+                        "1、年龄25至55周岁，文化水平初中以上；\n" +
+                        "2、户籍所在地在该村或周边；\n" +
+                        "3、品德好，讲诚信，村内情况较熟悉；\n" +
+                        "4、会使用电脑、手机等电子设备；\n" +
+                        "5、无不良记录，不赌博，不酗酒；\n" +
+                        "6、家庭具有稳定经济收入。")
+                .setPositiveButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+        if (!isFinishing()) {
+            builder.create().show();
+        }
+    }
+
 
     private void settingEducation() {
         //将可选内容与ArrayAdapter连接起来

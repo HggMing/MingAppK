@@ -52,6 +52,13 @@ public class ShoppingAddress {
         private String is_def;
         private String zipcode;
 
+        public DataBean(String uname, String tel, String addr, String zipcode) {
+            this.uname = uname;
+            this.tel = tel;
+            this.addr = addr;
+            this.zipcode = zipcode;
+        }
+
         public String getId() {
             return id;
         }

@@ -8,7 +8,7 @@ public class OrderInfo {
     /**
      * err : 0
      * msg : 订单不存在
-     * data : {"money":0.01,"order_sn":"s20161024985197981025","order_title":"回乡月饼","url":"http://121.40.105.149:9901/alipay/n_url","url_1":"http://121.40.105.149:9901/mobile"}
+     * data : {"money":0.01,"order_sn":"s20161024985197981025","order_title":"回乡月饼","url":"http://product.yibanke.com/alipay/n_url","url_1":"http://product.yibanke.com/mobile"}
      */
 
     private int err;
@@ -17,8 +17,8 @@ public class OrderInfo {
      * money : 0.01
      * order_sn : s20161024985197981025
      * order_title : 回乡月饼
-     * url : http://121.40.105.149:9901/alipay/n_url
-     * url_1 : http://121.40.105.149:9901/mobile
+     * url : http://product.yibanke.com/alipay/n_url
+     * url_1 : http://product.yibanke.com/mobile
      */
 
     private DataBean data;

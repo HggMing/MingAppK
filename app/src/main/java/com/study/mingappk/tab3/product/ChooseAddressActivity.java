@@ -191,9 +191,9 @@ public class ChooseAddressActivity extends BackActivity {
                 @Override
                 public void onClick(View v) {
 //                Toast.makeText(mActivity, "确认选择", Toast.LENGTH_SHORT).show();
+                    ShoppingAddress.DataBean data2 = new ShoppingAddress.DataBean(data.getUname(), data.getTel(), data.getAddr(), data.getZipcode());
                     Intent intent = new Intent();
-                    intent.putExtra(ProductPayActivity.KEY_PHONE_NAME, data.getTel() + "  " + data.getUname());
-                    intent.putExtra(ProductPayActivity.KEY_ADDRESS, data.getAddr());
+                    intent.putExtra(ProductPayActivity.KEY_USER_ADDR_INFO, data2);
                     mActivity.setResult(RESULT_OK, intent);
                     mActivity.finish();
                 }

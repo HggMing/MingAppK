@@ -10,14 +10,14 @@ public class RechargeOrderList {
 
     /**
      * err : 0
-     * data : {"cnt":"14","list":[{"id":"123214564","phone":"18410261029","amount":"10M","status":"1","msg":"0000","vid":"510107007006","ctime":"1473834743","paytime":"1473834763","rtype":"1","pay_status":"1","money_paid":"3","uid":"0","phoneinfo":"移动","code":"QGYA10","money":"3","callback":"{\"OrderCode\":\"201609140002205305\",\"Account\":\"18410261029\",\"Status\":\"ERROR\",\"Remark\":\"\\u5145\\u503c\\u5931\\u8d25\",\"Price\":\"2.7\",\"Balance\":\"178.46\"}","add_money":"0","other_sn":"2016091421001004530291753887","tk_time":"0","is_show":"0","billid":""}],"url":"http://121.40.105.149:9901/alipay/phone_url"}
+     * data : {"cnt":"14","list":[{"id":"123214564","phone":"18410261029","amount":"10M","status":"1","msg":"0000","vid":"510107007006","ctime":"1473834743","paytime":"1473834763","rtype":"1","pay_status":"1","money_paid":"3","uid":"0","phoneinfo":"移动","code":"QGYA10","money":"3","callback":"{\"OrderCode\":\"201609140002205305\",\"Account\":\"18410261029\",\"Status\":\"ERROR\",\"Remark\":\"\\u5145\\u503c\\u5931\\u8d25\",\"Price\":\"2.7\",\"Balance\":\"178.46\"}","add_money":"0","other_sn":"2016091421001004530291753887","tk_time":"0","is_show":"0","billid":""}],"url":"http://product.yibanke.com/alipay/phone_url"}
      */
 
     private int err;
     /**
      * cnt : 14
      * list : [{"id":"123214564","phone":"18410261029","amount":"10M","status":"1","msg":"0000","vid":"510107007006","ctime":"1473834743","paytime":"1473834763","rtype":"1","pay_status":"1","money_paid":"3","uid":"0","phoneinfo":"移动","code":"QGYA10","money":"3","callback":"{\"OrderCode\":\"201609140002205305\",\"Account\":\"18410261029\",\"Status\":\"ERROR\",\"Remark\":\"\\u5145\\u503c\\u5931\\u8d25\",\"Price\":\"2.7\",\"Balance\":\"178.46\"}","add_money":"0","other_sn":"2016091421001004530291753887","tk_time":"0","is_show":"0","billid":""}]
-     * url : http://121.40.105.149:9901/alipay/phone_url
+     * url : http://product.yibanke.com/alipay/phone_url
      */
 
     private DataBean data;

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,10 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bilibili.magicasakura.utils.ThemeUtils;
+import com.melnykov.fab.FloatingActionButton;
 import com.orhanobut.hawk.Hawk;
 import com.study.mingappk.R;
 import com.study.mingappk.app.APP;
@@ -25,6 +29,7 @@ import com.study.mingappk.app.api.service.MyServiceClient;
 import com.study.mingappk.common.base.BaseActivity;
 import com.study.mingappk.common.widgets.alipay.PayUtils;
 import com.study.mingappk.common.widgets.dialog.MyDialog;
+import com.study.mingappk.common.widgets.gallertools.StringUtils;
 import com.study.mingappk.model.bean.OrderInfo;
 import com.study.mingappk.tab1.webutils.X5WebView;
 import com.study.mingappk.tab2.chat.ChatActivity;
@@ -45,6 +50,7 @@ import java.net.URL;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -54,15 +60,21 @@ public class BrowserActivity extends BaseActivity {
     public static String KEY_URL = "key_url";
     TextView toolbarTitle;
     Toolbar toolbar;
-    @Bind(R.id.m_webview)
-    X5WebView mWebView;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
+//    @Bind(R.id.m_webview)
+//    X5WebView mWebView;
 
-//    private X5WebView mWebView;
-//    private ViewGroup mViewParent;
+    private X5WebView mWebView;
+    private ViewGroup mViewParent;
     private static final int MAX_LENGTH = 14;
     private ProgressBar mPageLoadingProgressBar = null;
     private URL mIntentUrl;
     WebSettings webSetting;
+
+    private boolean isShowCart;//是否显示购物车
+    private String shoppingCartUrl;//购物车地址
+    private int shoppingCartNum;//购物车中商品列表条数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +105,7 @@ public class BrowserActivity extends BaseActivity {
 
         setContentView(R.layout.activity_browser);
         ButterKnife.bind(this);
-//        mViewParent = (ViewGroup) findViewById(R.id.webView1);
+        mViewParent = (ViewGroup) findViewById(R.id.webView1);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_activity_base);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
@@ -108,6 +120,8 @@ public class BrowserActivity extends BaseActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.mipmap.ic_toolbar_back);
         }
 
+        configFab();
+
         this.webViewTransportTest();
 
         init();
@@ -120,6 +134,16 @@ public class BrowserActivity extends BaseActivity {
 //                        init();
 //                    }
 //                });
+    }
+
+    private void configFab() {
+        //设置fab
+        fab.setVisibility(View.VISIBLE);
+        int themeColor = ThemeUtils.getColorById(this, R.color.theme_color_primary);
+        int themeColor2 = ThemeUtils.getColorById(this, R.color.theme_color_primary_dark);
+        fab.setColorNormal(themeColor);//fab背景颜色
+        fab.setColorPressed(themeColor2);//fab点击后背景颜色
+        fab.setColorRipple(themeColor2);//fab点击后涟漪颜色
     }
 
     private void webViewTransportTest() {
@@ -136,8 +160,8 @@ public class BrowserActivity extends BaseActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void init() {
-//        mWebView = new X5WebView(this);
-//        mViewParent.addView(mWebView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        mWebView = new X5WebView(this);
+        mViewParent.addView(mWebView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
         initProgressBar();
         mWebView.setWebViewClient(new WebViewClient() {
@@ -157,6 +181,22 @@ public class BrowserActivity extends BaseActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
             }
+
+            @Override
+            public void onLoadResource(WebView webView, String s) {
+                super.onLoadResource(webView, s);
+                if (shoppingCartNum > 0&&isShowCart) {
+                    fab.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
+                super.onPageStarted(webView, s, bitmap);
+               fab.setVisibility(View.GONE);
+                isShowCart=false;
+            }
+
         });
 
         mWebView.setWebChromeClient(new WebChromeClient() {
@@ -288,12 +328,16 @@ public class BrowserActivity extends BaseActivity {
         //webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         // webSetting.setPreFectch(true);
         long time = System.currentTimeMillis();
-        if (mIntentUrl == null) {
-        } else {
+        if (mIntentUrl != null) {
             mWebView.loadUrl(mIntentUrl.toString());
         }
         CookieSyncManager.createInstance(this);
         CookieSyncManager.getInstance().sync();
+    }
+
+    @OnClick(R.id.fab)
+    public void onClick() {
+        mWebView.loadUrl(shoppingCartUrl);
     }
 
     class WebAppInterface {
@@ -308,6 +352,17 @@ public class BrowserActivity extends BaseActivity {
         @JavascriptInterface
         public String setTitle(String title, String isHomepage) {
             //修改标题
+            return "{\"err\":\"0\"}";
+        }
+
+        @JavascriptInterface
+        public String setPageParam(String cartUrl, String num) {
+            //购物车
+            shoppingCartUrl = cartUrl;
+            if (!StringUtils.isEmpty(num)) {
+                shoppingCartNum = Integer.parseInt(num);
+            }
+            isShowCart = true;
             return "{\"err\":\"0\"}";
         }
 

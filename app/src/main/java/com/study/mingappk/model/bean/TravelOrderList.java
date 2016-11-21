@@ -9,7 +9,7 @@ public class TravelOrderList {
     /**
      * cnt : 3
      * list : [{"travel_order_id":"3","travel_product_main_id":"1","travel_product_detail_id":"4","vid":"510107007006","if_adult":"0","name":"1212","birthday":"2016-09-01","credentials_type":"0","credentials_no":"31313","sex":"0","phone":"1313","pay_status":"2","ptime":"2016-09-01 00:00:00","stime":"0","other_sn":"2016090121001004630284038632","order_sn":"s124","price":"199.00","create_time":"2016-08-31 00:00:00","money_paid":"0.00","memos":"合并支付：s123,s124","status":"0","travel_product_main":{"travel_product_main_id":"1","small_image":"/Public/travel/image/product1.jpg","introduction_url":"/travel/product/product1_introduction","status":"0","type":"5","provinceid":"510","cityid":"0","countyid":"0","townid":"0","vid":"0","create_time":"2016-08-26 00:00:00","title":"成都包机直飞【芽庄】5晚6日半自由行","introduction":"成都包机直飞【芽庄】5晚6日半自由行"},"travel_product_detail":{"travel_product_detail_id":"4","travel_product_main_id":"1","start_date":"2016-09-01","status":"0","adult_price":"199.00","create_time":"2016-08-29 00:00:00","child_price":"100.00","enrol_end_date":"2016-08-30","price_type":null,"add_bed":null}}]
-     * url : http://121.40.105.149:9901/alipay/n_url_travel
+     * url : http://product.yibanke.com/alipay/n_url_travel
      */
 
     private String cnt;
